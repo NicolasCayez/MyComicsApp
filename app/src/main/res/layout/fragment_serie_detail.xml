@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.SerieDetailFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/custom_blue"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".SeriesDetailActivity">
+
+        <!-- Bandeau DETAIL SERIE -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginVertical="5dp"
+            android:background="@color/custom_beige"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/series_bleu" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDetailSerieTitreBandeau"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/kronika"
+                android:gravity="center_vertical"
+                android:paddingStart="50dp"
+                android:text="DETAIL SERIE"
+                android:textColor="@color/custom_blue"
+                android:textSize="20sp" />
+        </LinearLayout>
+        <!-- Body -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/rounded_corner_custom_beige"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+                    <!-- Titre série -->
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDetailSerieNom"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginVertical="15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_corner_search"
+                        android:fontFamily="@font/kronika"
+                        android:gravity="center_horizontal"
+                        android:text="titre série"
+                        android:textColor="@color/custom_blue"
+                        android:textSize="16sp" />
+                    <!-- Image et détail -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="15dp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="250px"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/tomes_bleu" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/textView6"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/kronika"
+                            android:text="TextView"
+                            android:textColor="@color/custom_blue"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    <!-- Liste tomes -->
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDetailSerieListeTomes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/kronika"
+                        android:text="Tomes"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/custom_blue"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="15dp"
+                        android:orientation="horizontal">
+
+                        <ListView
+                            android:id="@+id/lvDetailSerieListeTomes"
+                            android:layout_width="match_parent"
+                            android:layout_height="500dp"
+                            android:background="#eee"
+                            android:nestedScrollingEnabled="true" />
+                    </LinearLayout>
+                    <!-- Liste auteurs -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvDetailSerieListeAuteurs"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="15dp"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/kronika"
+                                android:text="Auteurs"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/custom_blue"
+                                android:textSize="14sp" />
+
+                            <ListView
+                                android:id="@+id/lvDetailSerieListeAuteurs"
+                                android:layout_width="match_parent"
+                                android:layout_height="120dp"
+                                android:background="#eee"
+                                android:nestedScrollingEnabled="true" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvDetailSerieListeEditeurs"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="15dp"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/kronika"
+                                android:text="Editeurs"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/custom_blue"
+                                android:textSize="14sp" />
+
+                            <ListView
+                                android:id="@+id/lvDetailSerieListeEditeurs"
+                                android:layout_width="match_parent"
+                                android:layout_height="120dp"
+                                android:background="#eee"
+                                android:nestedScrollingEnabled="true" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Liste éditeurs -->
+
+                </LinearLayout>
+                <!-- Boutons -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rounded_corner_custom_beige"
+                    android:gravity="end"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btnDetailSerieSaveSerie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:src="@drawable/btn_save_bleu" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btnDetailSerieDeleteSerie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:paddingEnd="15dp"
+                        android:src="@drawable/btn_delete_bleu" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.SearchResultFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/custom_blue"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".TomesActivity">
+
+        <!-- Bandeau TOMES -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginVertical="5dp"
+            android:background="@color/custom_beige"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/recherche_bleu" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSearchBandeau"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/kronika"
+                android:gravity="center_vertical"
+                android:paddingStart="50dp"
+                android:text="RECHERCHE"
+                android:textColor="@color/custom_blue"
+                android:textSize="20sp" />
+        </LinearLayout>
+        <!-- Body -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/custom_blue"
+                android:orientation="vertical"
+                android:weightSum="1">
+                <!-- Search Bar -->
+                <include
+                    android:id="@+id/sbSearch"
+                    layout="@layout/fragment_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp" />
+                <!-- Liste Séries -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_corner_custom_beige"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRechercheListeSeries"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/kronika"
+                        android:text="Séries"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/custom_blue"
+                        android:textSize="14sp" />
+
+                    <ListView
+                        android:id="@+id/lvRechercheListeSeries"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginHorizontal="15dp"
+                        android:background="#eee"
+                        android:nestedScrollingEnabled="true" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRechercheListeTomes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/kronika"
+                        android:text="Tomes"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/custom_blue"
+                        android:textSize="14sp" />
+
+                    <ListView
+                        android:id="@+id/lvRechercheListeTomes"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginHorizontal="15dp"
+                        android:background="#eee"
+                        android:nestedScrollingEnabled="true" />
+
+                    <!-- Liste auteurs -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvRechercheListeAuteurs"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="15dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/kronika"
+                                android:text="Auteurs"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/custom_blue"
+                                android:textSize="14sp" />
+
+                            <ListView
+                                android:id="@+id/lvRechercheListeAuteurs"
+                                android:layout_width="match_parent"
+                                android:layout_height="120dp"
+                                android:background="#eee"
+                                android:nestedScrollingEnabled="true" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvRechercheListeEditeurs"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="15dp"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/kronika"
+                                android:text="Editeurs"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/custom_blue"
+                                android:textSize="14sp" />
+
+                            <ListView
+                                android:id="@+id/lvRechercheListeEditeurs"
+                                android:layout_width="match_parent"
+                                android:layout_height="120dp"
+                                android:background="#eee"
+                                android:nestedScrollingEnabled="true" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+                <!-- Liste Tomes -->
+                <!-- Liste Auteurs -->
+                <!-- Liste Editeurs -->
+                <!-- Bouton plus -->
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

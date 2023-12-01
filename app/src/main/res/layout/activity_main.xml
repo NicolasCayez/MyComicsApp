@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/custom_blue"
+    tools:context=".MainActivity"
+    android:animateLayoutChanges="true">
+
+    <!-- Header @+id/barreMenu -->
+    <LinearLayout
+        android:id="@+id/barreMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/custom_beige"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivLogoMyComics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@color/custom_beige"
+            android:maxWidth="80dp"
+            android:src="@drawable/logo_bleu" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:fontFamily="@font/komikax"
+            android:gravity="center"
+            android:text="MyComics"
+            android:textColor="@color/custom_blue" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivHamburgLines"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:background="@color/custom_beige"
+            android:minWidth="100dp"
+            android:paddingHorizontal="20dp"
+            android:src="@drawable/ic_hamburg_lines"
+            android:tint="@color/custom_blue" />
+    </LinearLayout>
+
+
+
+    <!-- Body @+id/nav_host_fragment_container -->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barreMenu"
+        app:layout_constraintVertical_bias="0.0"
+        app:navGraph="@navigation/nav_graph" />
+
+
+
+
+
+    <!-- Menu hamburger @+id/menuHamburger -->
+    <LinearLayout
+        android:id="@+id/menuHamburger"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#99000000"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barreMenu"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner_menu_beige"
+            android:gravity="top"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutTitreMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvMenuAccueilTitre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/kronika"
+                    android:gravity="center"
+                    android:text="Menu"
+                    android:textColor="@color/custom_blue"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutMenuLigne1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:id="@+id/btnMenuCollection"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/rounded_corner_custom_bleu"
+                    android:elevation="4dp"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvMenuCollec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/kronika"
+                        android:text="COLLEC"
+                        android:textColor="@color/custom_beige" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivMenuCollec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:src="@drawable/collection_beige" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnMenuSeries"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/rounded_corner_custom_bleu"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvMenuSeries"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/kronika"
+                        android:text="SERIES"
+                        android:textColor="@color/custom_beige" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivMenuSeries"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:src="@drawable/series_beige" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnMenuTomes"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/rounded_corner_custom_bleu"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvMenuTomes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/kronika"
+                        android:text="TOMES"
+                        android:textColor="@color/custom_beige" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivMenuTomes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:src="@drawable/tomes_beige" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutMenuLigne2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:id="@+id/btnMenuAuteurs"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/rounded_corner_custom_bleu"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvMenuAuteurs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/kronika"
+                        android:text="AUTEURS"
+                        android:textColor="@color/custom_beige" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivMenuAuteurs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:src="@drawable/auteurs_beige" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnMenuEditeurs"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/rounded_corner_custom_bleu"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvMenuEditeurs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/kronika"
+                        android:text="EDITEURS"
+                        android:textColor="@color/custom_beige" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivMenuEditeurs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:src="@drawable/editeurs_beige" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnMenuReglages"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/rounded_corner_custom_bleu"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvMenuReglages"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/kronika"
+                        android:text="REGLAGES"
+                        android:textColor="@color/custom_beige" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivMenuReglages"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:src="@drawable/reglages_beige" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

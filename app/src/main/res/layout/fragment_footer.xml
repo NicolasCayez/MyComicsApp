@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/custom_beige">
+
+    <TextView
+        android:id="@+id/textView52"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:background="@color/custom_beige"
+        android:fontFamily="@font/kronika"
+        android:text="Footer à faire"
+        android:textAlignment="center"
+        android:textColor="@color/custom_blue"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/ivFacebook"
+        android:layout_width="wrap_content"
+        android:layout_gravity="end"
+        android:layout_height="50dp"
+        android:src="@drawable/editeurs_bleu" />
+</LinearLayout>

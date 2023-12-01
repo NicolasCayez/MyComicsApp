@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/accueilFragment">
+
+    <fragment
+        android:id="@+id/accueilFragment"
+        android:name="com.example.mycomics.fragments.AccueilFragment"
+        android:label="fragment_accueil"
+        tools:layout="@layout/fragment_accueil" >
+        <action
+            android:id="@+id/action_accueil_to_series"
+            app:destination="@id/seriesFragment" />
+        <action
+            android:id="@+id/action_accueil_to_auteurs"
+            app:destination="@id/auteursFragment" />
+        <action
+            android:id="@+id/action_accueil_to_editeurs"
+            app:destination="@id/editeursFragment" />
+        <action
+            android:id="@+id/action_accueil_to_tomes"
+            app:destination="@id/tomesFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/seriesFragment"
+        android:name="com.example.mycomics.fragments.SeriesFragment"
+        android:label="fragment_series"
+        tools:layout="@layout/fragment_series" >
+        <action
+            android:id="@+id/action_series_to_tomes"
+            app:destination="@id/tomesFragment" />
+        <action
+            android:id="@+id/action_series_to_auteurs"
+            app:destination="@id/auteursFragment" />
+        <action
+            android:id="@+id/action_series_to_editeurs"
+            app:destination="@id/editeursFragment" />
+        <action
+            android:id="@+id/action_series_to_auteurDetail"
+            app:destination="@id/auteurDetailFragment" />
+        <action
+            android:id="@+id/action_series_to_editeurDetail"
+            app:destination="@id/editeurDetailFragment" />
+        <action
+            android:id="@+id/action_series_to_serieDetail"
+            app:destination="@id/serieDetailFragment" />
+        <action
+            android:id="@+id/action_series_to_tomeDetail"
+            app:destination="@id/tomeDetailFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/auteursFragment"
+        android:name="com.example.mycomics.fragments.AuteursFragment"
+        android:label="fragment_auteurs"
+        tools:layout="@layout/fragment_auteurs" >
+        <action
+            android:id="@+id/action_auteurs_to_editeurs"
+            app:destination="@id/editeursFragment" />
+        <action
+            android:id="@+id/action_auteurs_to_series"
+            app:destination="@id/seriesFragment" />
+        <action
+            android:id="@+id/action_auteurs_to_tomes"
+            app:destination="@id/tomesFragment" />
+        <action
+            android:id="@+id/action_auteurs_to_auteurDetail"
+            app:destination="@id/auteurDetailFragment" />
+        <action
+            android:id="@+id/action_auteurs_to_serieDetail"
+            app:destination="@id/serieDetailFragment" />
+        <action
+            android:id="@+id/action_auteurs_to_tomeDetail"
+            app:destination="@id/tomeDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/editeursFragment"
+        android:name="com.example.mycomics.fragments.EditeursFragment"
+        android:label="fragment_editeurs"
+        tools:layout="@layout/fragment_editeurs" >
+        <action
+            android:id="@+id/action_editeurs_to_auteurs"
+            app:destination="@id/auteursFragment" />
+        <action
+            android:id="@+id/action_editeurs_to_tomes"
+            app:destination="@id/tomesFragment" />
+        <action
+            android:id="@+id/action_editeurs_to_series"
+            app:destination="@id/seriesFragment" />
+        <action
+            android:id="@+id/action_editeurs_to_auteurDetail"
+            app:destination="@id/auteurDetailFragment" />
+        <action
+            android:id="@+id/action_editeurs_to_editeurDetail"
+            app:destination="@id/editeurDetailFragment" />
+        <action
+            android:id="@+id/action_editeurs_to_serieDetail"
+            app:destination="@id/serieDetailFragment" />
+        <action
+            android:id="@+id/action_editeurs_to_tomeDetail"
+            app:destination="@id/tomeDetailFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/collectionFragment"
+        android:name="com.example.mycomics.fragments.CollectionFragment"
+        android:label="fragment_collection"
+        tools:layout="@layout/fragment_collection" >
+        <action
+            android:id="@+id/action_collection_to_auteurDetail"
+            app:destination="@id/auteurDetailFragment" />
+        <action
+            android:id="@+id/action_collection_to_editeurDetail"
+            app:destination="@id/editeurDetailFragment" />
+        <action
+            android:id="@+id/action_collection_to_tomeDetail"
+            app:destination="@id/tomeDetailFragment" />
+        <action
+            android:id="@+id/action_collection_to_serieDetail"
+            app:destination="@id/serieDetailFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/reglagesFragment"
+        android:name="com.example.mycomics.fragments.ReglagesFragment"
+        android:label="fragment_reglages"
+        tools:layout="@layout/fragment_reglages" />
+    <fragment
+        android:id="@+id/tomesFragment"
+        android:name="com.example.mycomics.fragments.TomesFragment"
+        android:label="fragment_tomes"
+        tools:layout="@layout/fragment_tomes" >
+        <action
+            android:id="@+id/action_tomes_to_series"
+            app:destination="@id/seriesFragment" />
+        <action
+            android:id="@+id/action_tomes_to_auteurs"
+            app:destination="@id/auteursFragment" />
+        <action
+            android:id="@+id/action_tomes_to_editeurs"
+            app:destination="@id/editeursFragment" />
+        <action
+            android:id="@+id/action_tomes_to_auteurDetail"
+            app:destination="@id/auteurDetailFragment" />
+        <action
+            android:id="@+id/action_tomes_to_editeurDetai"
+            app:destination="@id/editeurDetailFragment" />
+        <action
+            android:id="@+id/action_tomes_to_serieDetail"
+            app:destination="@id/serieDetailFragment" />
+        <action
+            android:id="@+id/action_tomes_to_tomeDetail"
+            app:destination="@id/tomeDetailFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/auteurDetailFragment"
+        android:name="com.example.mycomics.fragments.AuteurDetailFragment"
+        android:label="fragment_auteur_detail"
+        tools:layout="@layout/fragment_auteur_detail" >
+        <action
+            android:id="@+id/action_auteurDetail_to_editeurDetail"
+            app:destination="@id/editeurDetailFragment" />
+        <action
+            android:id="@+id/action_auteurDetail_to_tomeDetail"
+            app:destination="@id/tomeDetailFragment" />
+        <action
+            android:id="@+id/action_auteurDetail_to_serieDetail"
+            app:destination="@id/serieDetailFragment" />
+        <argument
+            android:name="auteur_id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/editeurDetailFragment"
+        android:name="com.example.mycomics.fragments.EditeurDetailFragment"
+        android:label="fragment_editeur_detail"
+        tools:layout="@layout/fragment_editeur_detail" >
+        <action
+            android:id="@+id/action_editeurDetail_to_auteurDetail"
+            app:destination="@id/auteurDetailFragment" />
+        <action
+            android:id="@+id/action_editeurDetail_to_tomeDetail"
+            app:destination="@id/tomeDetailFragment" />
+        <action
+            android:id="@+id/action_editeurDetail_to_serieDetail"
+            app:destination="@id/serieDetailFragment" />
+        <argument
+            android:name="editeur_id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.example.mycomics.fragments.SearchResultFragment"
+        android:label="fragment_search_result"
+        tools:layout="@layout/fragment_search_result" >
+        <action
+            android:id="@+id/action_searchResult_to_editeurDetail"
+            app:destination="@id/editeurDetailFragment" />
+        <action
+            android:id="@+id/action_searchResult_to_auteurDetail"
+            app:destination="@id/auteurDetailFragment" />
+        <action
+            android:id="@+id/action_searchResult_to_tomeDetail"
+            app:destination="@id/tomeDetailFragment" />
+        <action
+            android:id="@+id/action_searchResult_to_serieDetail"
+            app:destination="@id/serieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/serieDetailFragment"
+        android:name="com.example.mycomics.fragments.SerieDetailFragment"
+        android:label="fragment_serie_detail"
+        tools:layout="@layout/fragment_serie_detail" >
+        <action
+            android:id="@+id/action_serieDetail_to_auteurDetail"
+            app:destination="@id/auteurDetailFragment" />
+        <action
+            android:id="@+id/action_serieDetail_to_editeurDetai"
+            app:destination="@id/editeurDetailFragment" />
+        <action
+            android:id="@+id/action_serieDetail_to_tomeDetail"
+            app:destination="@id/tomeDetailFragment" />
+        <argument
+            android:name="serie_id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/tomeDetailFragment"
+        android:name="com.example.mycomics.fragments.TomeDetailFragment"
+        android:label="fragment_tome_detail"
+        tools:layout="@layout/fragment_tome_detail" >
+        <action
+            android:id="@+id/action_tomeDetail_to_auteurDetail"
+            app:destination="@id/auteurDetailFragment" />
+        <action
+            android:id="@+id/action_tomeDetail_to_editeurDetai"
+            app:destination="@id/editeurDetailFragment" />
+        <action
+            android:id="@+id/action_tomeDetail_to_serieDetail"
+            app:destination="@id/serieDetailFragment" />
+        <argument
+            android:name="tome_id"
+            app:argType="integer" />
+    </fragment>
+</navigation>

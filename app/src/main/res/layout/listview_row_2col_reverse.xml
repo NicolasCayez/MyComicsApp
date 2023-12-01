@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvListview_row_2col_reverse_col1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/kronika"
+        android:paddingVertical="10dp"
+        android:textAlignment="textStart"
+        android:paddingStart="10dp"
+        android:textColor="@color/custom_blue"
+        android:textSize="14sp" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvListview_row_2col_reverse_col2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/kronika"
+        android:paddingVertical="10dp"
+        android:paddingEnd="10dp"
+        android:textAlignment="center"
+        android:textColor="@color/custom_blue"
+        android:textSize="14sp" />
+</LinearLayout>

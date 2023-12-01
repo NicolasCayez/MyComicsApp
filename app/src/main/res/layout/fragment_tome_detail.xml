@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.TomeDetailFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/custom_blue"
+        android:orientation="vertical"
+        tools:context=".TomesDetailActivity">
+
+        <!-- Bandeau DETAIL TOME -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginVertical="5dp"
+            android:background="@color/custom_beige"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/tomes_bleu" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDetailTomeTitreBandeau"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/kronika"
+                android:gravity="center_vertical"
+                android:paddingStart="50dp"
+                android:text="DETAIL TOME"
+                android:textColor="@color/custom_blue"
+                android:textSize="20sp" />
+        </LinearLayout>
+        <!-- Body -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/rounded_corner_custom_beige"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+                    <!-- Titre tome -->
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/etDetailTomeTitre"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginVertical="15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_corner_search"
+                        android:fontFamily="@font/kronika"
+                        android:gravity="center_horizontal"
+                        android:text="titre tome"
+                        android:textColor="@color/custom_blue"
+                        android:textSize="16sp" />
+                    <!-- Numéro tome -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvDetailTomeNumero"
+                                android:layout_width="0dp"
+                                android:layout_height="25dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/kronika"
+                                android:text="Numéro"
+                                android:textColor="@color/custom_blue"
+                                android:textSize="14sp" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/etDetailTomeNumero"
+                                android:layout_width="0dp"
+                                android:layout_height="25dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_weight="1"
+                                android:background="#eee"
+                                android:ems="10"
+                                android:fontFamily="@font/kronika"
+                                android:hint="Numéro tome"
+                                android:inputType="number"
+                                android:textAlignment="textEnd"
+                                android:textColor="@color/custom_blue"
+                                android:textColorHint="#999"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvDetailTomeTitreSerie"
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/kronika"
+                            android:text="Série"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/custom_blue"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvDetailTomeSerie"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="#eee"
+                                android:fontFamily="@font/kronika"
+                                android:hint="Série"
+                                android:textAlignment="center"
+                                android:textColor="@color/custom_blue"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/btnDetailTomeChangeSerie"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_margin="5dp"
+                                android:src="@drawable/btn_changer_bleu" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/btnDetailTomeAddSerie"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_margin="5dp"
+                                android:src="@drawable/btn_plus_bleu" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/btnDetailTomeDeleteSerie"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_margin="5dp"
+                                android:src="@drawable/btn_delete_bleu" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- ISBN -->
+
+                    <!-- Prix éditeur -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvDetailTomeISBN"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/kronika"
+                            android:text="ISBN :"
+                            android:textColor="@color/custom_blue"
+                            android:textSize="14sp" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/etDetailTomeISBN"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:background="#eee"
+                            android:ems="10"
+                            android:fontFamily="@font/kronika"
+                            android:hint="ISBN"
+                            android:inputType="text"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/custom_blue"
+                            android:textColorHint="#999"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvDetailTomePrixEditeur"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/kronika"
+                            android:text="Prix éditeur :"
+                            android:textColor="@color/custom_blue"
+                            android:textSize="14sp" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/etDetailTomePrixEditeur"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:background="#eee"
+                            android:ems="10"
+                            android:fontFamily="@font/kronika"
+                            android:inputType="number|numberDecimal"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/custom_blue"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    <!-- Valeur actuelle -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvDetailTomeValeurActuelle"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/kronika"
+                            android:text="Valeur actuelle :"
+                            android:textColor="@color/custom_blue"
+                            android:textSize="14sp" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/etDetailTomeValeurActuelle"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:background="#eee"
+                            android:ems="10"
+                            android:fontFamily="@font/kronika"
+                            android:inputType="number|numberDecimal"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/custom_blue"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    <!-- Date édition -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvDetailTomeDateEdition"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/kronika"
+                            android:text="Date édition :"
+                            android:textColor="@color/custom_blue"
+                            android:textSize="14sp" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/etDetailTomeDateEdition"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:background="#eee"
+                            android:ems="10"
+                            android:fontFamily="@font/kronika"
+                            android:hint="MM/AAAA"
+                            android:inputType="datetime|date"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/custom_blue"
+                            android:textColorHint="#999"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    <!-- Dédicassé -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvDetailTomeDedicace"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/kronika"
+                            android:text="Dédicassé :"
+                            android:textColor="@color/custom_blue"
+                            android:textSize="14sp" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/chkDetailTomeDedicace"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp" />
+                        <!--                                        app:buttonTint="@color/custom_blue"            -->
+                    </LinearLayout>
+                    <!-- Edition spéciale -->
+                    <!-- Intitulé édition spéciale -->
+                    <!-- Image Tome -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvDetailTomeEditionSpeciale"
+                                android:layout_width="0dp"
+                                android:layout_height="25dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/kronika"
+                                android:text="Edition spéciale :"
+                                android:textColor="@color/custom_blue"
+                                android:textSize="14sp" />
+
+                            <androidx.appcompat.widget.AppCompatCheckBox
+                                android:id="@+id/chkDetailTomeEditionSpeciale"
+                                android:layout_width="wrap_content"
+                                android:layout_height="25dp" />
+                            <!--                                              app:buttonTint="@color/custom_blue"      -->
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/etDetailTomeEditionSpecialeLibelle"
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:background="#eee"
+                            android:ems="10"
+                            android:fontFamily="@font/kronika"
+                            android:hint="Intitulé édition spéciale"
+                            android:inputType="text"
+                            android:textColor="@color/custom_blue"
+                            android:textColorHint="#999"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivDetailTomeImage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:src="@drawable/tomes_bleu" />
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/btnDetailTomeAddImage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/btn_plus_bleu" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/btnDetailTomeDeleteImage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/btn_delete_bleu" />
+                    </LinearLayout>
+                    <!-- Série -->
+                    <!-- Boutons Série -->
+                    <!-- Liste auteurs -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvDetailTomeTitreAuteurs"
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/kronika"
+                            android:text="Auteurs"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/custom_blue"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="130dp">
+
+                            <ListView
+                                android:id="@+id/lvDetailTomeAuteurs"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="20dp"
+                                android:background="#eee"
+                                android:fontFamily="@font/kronika"
+                                android:nestedScrollingEnabled="true"
+                                android:textColor="@color/custom_blue"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/btnDetailTomeAddAuteur"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_margin="5dp"
+                                android:src="@drawable/btn_plus_bleu" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/btnDetailTomeDeleteAuteur"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_margin="5dp"
+                                android:src="@drawable/btn_delete_bleu" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- Boutons Auteur -->
+                    <!-- Liste éditeurs -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvDetailTomeTitreEditeurs"
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/kronika"
+                            android:text="Editeur"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/custom_blue"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvDetailTomeEditeur"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="#eee"
+                                android:fontFamily="@font/kronika"
+                                android:hint="Editeur"
+                                android:textAlignment="center"
+                                android:textColor="@color/custom_blue"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/btnDetailTomeChangeEditeur"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_margin="5dp"
+                                android:src="@drawable/btn_changer_bleu" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/btnDetailTomeAddEditeur"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_margin="5dp"
+                                android:src="@drawable/btn_plus_bleu" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/btnDetailTomeDeleteEditeur"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_margin="5dp"
+                                android:src="@drawable/btn_delete_bleu" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- Boutons Editeur -->
+                </LinearLayout>
+                <!-- Boutons -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="10dp"
+                    android:background="@drawable/rounded_corner_custom_beige"
+                    android:gravity="end"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btnDetailTomeSaveTome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:src="@drawable/btn_save_bleu" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btnDetailTomeDeleteTome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:paddingEnd="15dp"
+                        android:src="@drawable/btn_delete_bleu" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
