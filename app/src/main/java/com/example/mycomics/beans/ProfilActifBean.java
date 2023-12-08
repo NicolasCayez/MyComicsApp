@@ -3,12 +3,12 @@ package com.example.mycomics.beans;
 import static java.lang.Integer.parseInt;
 
 public class ProfilActifBean {
-    private int profil_id;
+    private Integer profil_id;
 
     /* -------------------------------------- */
     // Constructor
     /* -------------------------------------- */
-    public ProfilActifBean(int profil_id) {
+    public ProfilActifBean(Integer profil_id) {
         this.profil_id = profil_id;
     }
     public ProfilActifBean() {
@@ -17,10 +17,10 @@ public class ProfilActifBean {
     /* -------------------------------------- */
     // Get/Set
     /* -------------------------------------- */
-    public int getProfil_id() {
+    public Integer getProfil_id() {
         return profil_id;
     }
-    public void setProfil_id(int profil_id) {
+    public void setProfil_id(Integer profil_id) {
         this.profil_id = profil_id;
     }
 

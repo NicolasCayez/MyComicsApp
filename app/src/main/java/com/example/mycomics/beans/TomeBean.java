@@ -31,6 +31,9 @@ public class TomeBean {
         this.tome_id = tome_id;
         this.tome_titre = tome_titre;
     }
+    public TomeBean(Integer tome_id) {
+        this.tome_id = tome_id;
+    }
     public TomeBean() {
     }
 

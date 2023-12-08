@@ -2,12 +2,12 @@ package com.example.mycomics.beans;
 
 public class ProfilBean {
 
-    private int profil_id;
+    private Integer profil_id;
     private String profil_nom;
     /* -------------------------------------- */
     // Constructor
     /* -------------------------------------- */
-    public ProfilBean(int profil_id, String profil_nom) {
+    public ProfilBean(Integer profil_id, String profil_nom) {
         this.profil_id = profil_id;
         this.profil_nom = profil_nom;
     }
@@ -17,10 +17,10 @@ public class ProfilBean {
     /* -------------------------------------- */
     // Get/Set
     /* -------------------------------------- */
-    public int getProfil_id() {
+    public Integer getProfil_id() {
         return profil_id;
     }
-    public void setProfil_id(int profil_id) {
+    public void setProfil_id(Integer profil_id) {
         this.profil_id = profil_id;
     }
     public String getProfil_nom() {

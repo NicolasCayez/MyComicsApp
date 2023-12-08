@@ -1,13 +1,13 @@
 package com.example.mycomics.beans;
 
 public class SerieBean {
-    private int serie_id;
+    private Integer serie_id;
     private String serie_nom;
 
     /* -------------------------------------- */
     // Constructor
     /* -------------------------------------- */
-    public SerieBean(int serie_id, String serie_nom) {
+    public SerieBean(Integer serie_id, String serie_nom) {
         this.serie_id = serie_id;
         this.serie_nom = serie_nom;
     }
@@ -16,7 +16,7 @@ public class SerieBean {
     /* -------------------------------------- */
     // Get/Set
     /* -------------------------------------- */
-    public int getSerie_id() {
+    public Integer getSerie_id() {
         return serie_id;
     }
     public void setSerie_id(int serie_id) {

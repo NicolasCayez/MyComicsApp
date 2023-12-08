@@ -671,7 +671,7 @@ public class TomeDetailFragment extends Fragment {
         binding = null;
     }
 
-    private void afficherDetailTome(int tome_id){
+    private void afficherDetailTome(Integer tome_id){
         TomeBean tome = dataBaseHelper.selectTomeSelonTomeId(tome_id);
         binding.etDetailTomeTitre.setText(tome.getTome_titre());
         if (tome.getTome_numero() == 0 || tome.getTome_numero() == null) {

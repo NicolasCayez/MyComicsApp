@@ -615,7 +615,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* -------------------------------------- */
     // UPDATE TOMES SET SERIE_ID = NULL WHERE TOME_ID = tome_id
     /* -------------------------------------- */
-public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id){
+    public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id){
     SQLiteDatabase db = this.getWritableDatabase(); // accès lecture BDD
     ContentValues cv = new ContentValues();
     cv.putNull(COLUMN_SERIE_ID);
@@ -652,17 +652,6 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // AND AUTEUR_ID = auteur_id
     //
     /* -------------------------------------- */
-    /**************************************************
-    //SQLiteDatabase db = openHelper.getWritableDatabase();
-    //String whereClause = KEY_NAME + " = ?";
-    //String[] whereArgs = new String[]{String.valueOf(KEY_VALUE)};
-    //
-    ////for multiple condition, join them with AND
-    ////String whereClause = KEY_NAME1 + " = ? AND " + KEY_NAME2 + " = ?";
-    ////String[] whereArgs = new String[]{String.valueOf(KEY_VALUE1), String.valueOf(KEY_VALUE2)};
-    //
-    //int numRowsDeleted = db.delete(TABLE_NAME, whereClause, whereArgs);
-    //db.close();*************************************/
     public boolean deleteAuteurDuTome(DataBaseHelper dataBaseHelper, Integer auteur_id, Integer tome_id){
         SQLiteDatabase db = this.getWritableDatabase(); // accès écriture BDD
 
@@ -677,44 +666,12 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
             db.close();
             return false;
         }
-//        ContentValues cv = new ContentValues(); //stocke des paires clé-valeur
-//        String requete = "DELETE * FROM " + ECRIRE +
-//                " WHERE " + COLUMN_TOME_ID + " = \"" + tome_id +
-//                "\" AND " + COLUMN_AUTEUR_ID + " = \"" + auteur_id + "\"";
-//        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-//        int nbResult = 0;
-//        if (cursor.moveToFirst()) { // true si il y a des résultats
-//            nbResult = cursor.getInt(0);
-//        } else {
-//            // pas de résultats on ne fait rien
-//        }
-//        // fermeture db et cursor
-//        cursor.close();
-//        db.close();
-//        if (nbResult == 1) {
-//            db.close();
-//            return true;
-//        } else {
-//            db.close();
-//            return false;
-//        }
     }
 
     /* -------------------------------------- */
     // DELETE * FROM TOMES
     // WHERE TOME_ID = tome_id
     /* -------------------------------------- */
-    /**************************************************
-     //SQLiteDatabase db = openHelper.getWritableDatabase();
-     //String whereClause = KEY_NAME + " = ?";
-     //String[] whereArgs = new String[]{String.valueOf(KEY_VALUE)};
-     //
-     ////for multiple condition, join them with AND
-     ////String whereClause = KEY_NAME1 + " = ? AND " + KEY_NAME2 + " = ?";
-     ////String[] whereArgs = new String[]{String.valueOf(KEY_VALUE1), String.valueOf(KEY_VALUE2)};
-     //
-     //int numRowsDeleted = db.delete(TABLE_NAME, whereClause, whereArgs);
-     //db.close();*************************************/
     public boolean deleteTome(DataBaseHelper dataBaseHelper, Integer tome_id){
         SQLiteDatabase db = this.getWritableDatabase(); // accès écriture BDD
         String whereClause = COLUMN_TOME_ID + " = ?";
@@ -735,6 +692,251 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
             return false;
         }
     }
+
+
+/**************************************************************************************************/
+/** Méthodes "get..." pour les requêtes SELECT hors profil et profil actif
+/**************************************************************************************************/
+    /* -------------------------------------- */
+    // get : list<List<EditeurBean>
+    /* -------------------------------------- */
+    public List<EditeurBean> getListEditeurBean(String requete){
+        List<EditeurBean> returnList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
+        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
+        if (cursor.moveToFirst()) { // true si il y a des résultats
+            do { // pour chaque tuple
+                Integer editeur_id = cursor.getInt(0);
+                String editeur_nom = cursor.getString(1);
+                EditeurBean editeurBean = new EditeurBean(editeur_id, editeur_nom);
+                returnList.add(editeurBean);
+            } while (cursor.moveToNext()); //on passe au tuple suivant
+        } else {
+            // pas de résultats on ne fait rien
+        }
+        // fermeture db et cursor
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
+    /* -------------------------------------- */
+    // get : EditeurBean
+    /* -------------------------------------- */
+    public EditeurBean getEditeurBean(String requete){
+        EditeurBean editeurBean = new EditeurBean();
+        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
+        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
+        if (cursor.moveToFirst()) { // true si il y a des résultats
+            do { // pour chaque tuple
+                Integer editeur_id = cursor.getInt(0);
+                String editeur_nom = cursor.getString(1);
+                editeurBean = new EditeurBean(editeur_id, editeur_nom);
+            } while (cursor.moveToNext()); //on passe au tuple suivant
+        } else {
+            // pas de résultats on ne fait rien
+        }
+        // fermeture db et cursor
+        cursor.close();
+        db.close();
+        return editeurBean;
+    }
+
+    /* -------------------------------------- */
+    // get : list<AuteurBean>
+    /* -------------------------------------- */
+    public List<AuteurBean> getListAuteurBean(String requete){
+        List<AuteurBean> returnList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
+        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
+        if (cursor.moveToFirst()) { // true si il y a des résultats
+            do { // pour chaque tuple
+                Integer auteur_id = cursor.getInt(0);
+                String auteur_pseudo = cursor.getString(1);
+                String auteur_prenom = cursor.getString(2);
+                String auteur_nom = cursor.getString(3);
+                AuteurBean auteurBean = new AuteurBean(auteur_id, auteur_nom, auteur_prenom, auteur_pseudo);
+                returnList.add(auteurBean);
+            } while (cursor.moveToNext()); //on passe au tuple suivant
+        } else {
+            // pas de résultats on ne fait rien
+        }
+        // fermeture db et cursor
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
+    /* -------------------------------------- */
+    // get : AuteurBean
+    /* -------------------------------------- */
+    public AuteurBean getAuteurBean(String requete){
+        AuteurBean auteurBean = new AuteurBean();
+        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
+        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
+        if (cursor.moveToFirst()) { // true si il y a des résultats
+            do { // pour chaque tuple
+                Integer auteur_id = cursor.getInt(0);
+                String auteur_pseudo = cursor.getString(1);
+                String auteur_prenom = cursor.getString(2);
+                String auteur_nom = cursor.getString(3);
+                auteurBean = new AuteurBean(auteur_id, auteur_pseudo, auteur_prenom, auteur_nom);
+            } while (cursor.moveToNext()); //on passe au tuple suivant
+        } else {
+            // pas de résultats on ne fait rien
+        }
+        // fermeture db et cursor
+        cursor.close();
+        db.close();
+        return auteurBean;
+    }
+
+    /* -------------------------------------- */
+    // get : list<SerieBean>
+    /* -------------------------------------- */
+    public List<SerieBean> getListSerieBean(String requete){
+        List<SerieBean> returnList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
+        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
+        if (cursor.moveToFirst()) { // true si il y a des résultats
+            do { // pour chaque tuple
+                Integer serie_id = cursor.getInt(0);
+                String serie_nom = cursor.getString(1);
+                SerieBean serieBean = new SerieBean(serie_id, serie_nom);
+                returnList.add(serieBean);
+            } while (cursor.moveToNext()); //on passe au tuple suivant
+        } else {
+            // pas de résultats on ne fait rien
+        }
+        // fermeture db et cursor
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
+    /* -------------------------------------- */
+    // get : SerieBean
+    /* -------------------------------------- */
+    public SerieBean getSerieBean(String requete){
+        SerieBean serieBean = new SerieBean();
+        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
+        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
+        if (cursor.moveToFirst()) { // true si il y a des résultats
+            do { // pour chaque tuple
+                Integer serie_id = cursor.getInt(0);
+                String serie_nom = cursor.getString(1);
+                serieBean = new SerieBean(serie_id, serie_nom);
+            } while (cursor.moveToNext()); //on passe au tuple suivant
+        } else {
+            // pas de résultats on ne fait rien
+        }
+        // fermeture db et cursor
+        cursor.close();
+        db.close();
+        return serieBean;
+    }
+
+    /* -------------------------------------- */
+    // get : list<TomeBean>
+    /* -------------------------------------- */
+    public List<TomeBean> getListTomeBean(String requete){
+        List<TomeBean> returnList = new ArrayList<TomeBean>();
+        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
+        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
+        if (cursor.moveToFirst()) { // true si il y a des résultats
+            do { // pour chaque tuple
+                Integer tome_id = cursor.getInt(0);
+                String tome_titre = cursor.getString(1);
+                Integer tome_numero = cursor.getInt(2);
+                String tome_isbn = cursor.getString(3);
+                double tome_prix_achat = cursor.getDouble(4);
+                double tome_valeur_connue = cursor.getDouble(5);
+                String tome_date_edition = cursor.getString(6);
+                String tome_image = cursor.getString(7);
+                boolean tome_dedicace = cursor.getInt(8) == 1 ? true: false;
+                boolean tome_edition_speciale = cursor.getInt(9) == 1 ? true: false;
+                String tome_edition_speciale_libelle = cursor.getString(10);
+                Integer serie_id = cursor.getInt(11);
+                Integer editeur_id = cursor.getInt(12);
+                TomeBean tomeBean = new TomeBean(tome_id, tome_titre, tome_numero, tome_isbn, tome_image,
+                        tome_prix_achat, tome_valeur_connue, tome_date_edition, tome_dedicace,
+                        tome_edition_speciale, tome_edition_speciale_libelle, serie_id, editeur_id);
+                returnList.add(tomeBean);
+            } while (cursor.moveToNext()); //on passe au tuple suivant
+        }
+        else {
+            // pas de résultats on ne fait rien
+        }
+        // fermeture base de données et cursor
+        cursor.close();
+        db.close();
+        return returnList; // résultat de la requête
+    }
+
+    /* -------------------------------------- */
+    // get : TomeBean
+    /* -------------------------------------- */
+    public TomeBean getTomeBean(String requete){
+        TomeBean tomeBean = new TomeBean();
+        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
+        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
+        if (cursor.moveToFirst()) { // true si il y a des résultats
+            do { // pour chaque tuple
+                Integer tome_id = cursor.getInt(0);
+                String tome_titre = cursor.getString(1);
+                Integer tome_numero = cursor.getInt(2);
+                String tome_isbn = cursor.getString(3);
+                double tome_prix_achat = cursor.getDouble(4);
+                double tome_valeur_connue = cursor.getDouble(5);
+                String tome_date_edition = cursor.getString(6);
+                String tome_image = cursor.getString(7);
+                boolean tome_dedicace = cursor.getInt(8) == 1 ? true: false;
+                boolean tome_edition_speciale = cursor.getInt(9) == 1 ? true: false;
+                String tome_edition_speciale_libelle = cursor.getString(10);
+                Integer serie_id = cursor.getInt(11);
+                Integer editeur_id = cursor.getInt(12);
+                tomeBean = new TomeBean(tome_id, tome_titre, tome_numero, tome_isbn,  tome_image, tome_prix_achat, tome_valeur_connue, tome_date_edition, tome_dedicace, tome_edition_speciale, tome_edition_speciale_libelle, serie_id, editeur_id);
+            } while (cursor.moveToNext()); //on passe au tuple suivant
+        } else {
+            // pas de résultats on ne fait rien
+        }
+        // fermeture db et cursor
+        cursor.close();
+        db.close();
+        return tomeBean;
+    }
+
+
+    /* -------------------------------------- */
+    // get : list<TomeSerieBean>
+    /* -------------------------------------- */
+    public List<TomeSerieBean> getListTomeSerieBean(String requete){
+        List<TomeSerieBean> returnList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
+        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
+        if (cursor.moveToFirst()) { // true si il y a des résultats
+            do { // pour chaque tuple
+                Integer tome_id = cursor.getInt(0);
+                String tome_titre = cursor.getString(1);
+                int tome_numero = cursor.getInt(2);
+                Integer serie_id = cursor.getInt(11);
+                Integer editeur_id = cursor.getInt(12);
+                String serie_nom = cursor.getString(13);
+                TomeSerieBean tomeSerieBean = new TomeSerieBean(tome_id, tome_titre, tome_numero, null,
+                        null, 0, 0, null, false,
+                        false, null, serie_id, editeur_id, serie_nom);
+                returnList.add(tomeSerieBean);
+            } while (cursor.moveToNext()); //on passe au tuple suivant
+        } else {
+            // pas de résultats on ne fait rien
+        }
+        // fermeture db et cursor
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
+
 
 
 /**************************************************************************************************/
@@ -845,26 +1047,10 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // ORDER BY EDITEURS.EDITEUR_NOM
     /* -------------------------------------- */
     public List<EditeurBean> listeEditeurs(){
-        List<EditeurBean> returnList = new ArrayList<>();
         String requete = "SELECT DISTINCT * FROM " + EDITEURS +
                 " GROUP BY " + EDITEURS + "." + COLUMN_EDITEUR_ID +
                 " ORDER BY " + EDITEURS + "." + COLUMN_EDITEUR_NOM;
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int editeur_id = cursor.getInt(0);
-                String editeur_nom = cursor.getString(1);
-                EditeurBean editeurBean = new EditeurBean(editeur_id, editeur_nom);
-                returnList.add(editeurBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListEditeurBean(requete);
     }
 
     /* -------------------------------------- */
@@ -877,27 +1063,11 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // ORDER BY EDITEURS.EDITEUR_NOM
     /* -------------------------------------- */
     public List<EditeurBean> listeEditeursFiltre(String filtre){
-        List<EditeurBean> returnList = new ArrayList<>();
         String requete = "SELECT DISTINCT * FROM " + EDITEURS +
                 " WHERE " + EDITEURS + "." + COLUMN_EDITEUR_NOM + " LIKE \'%" + filtre +
                 "%\' GROUP BY " + EDITEURS + "." + COLUMN_EDITEUR_ID +
                 " ORDER BY " + EDITEURS + "." + COLUMN_EDITEUR_NOM;
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int editeur_id = cursor.getInt(0);
-                String editeur_nom = cursor.getString(1);
-                EditeurBean editeurBean = new EditeurBean(editeur_id, editeur_nom);
-                returnList.add(editeurBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListEditeurBean(requete);
     }
 
     /* -------------------------------------- */
@@ -905,24 +1075,9 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // WHERE EDITEUR_ID = editeur_id LIMIT 1
     /* -------------------------------------- */
     public EditeurBean selectEditeurSelonEditeurId(int editeur_id_voulu){
-        EditeurBean editeurBean = new EditeurBean();
         String requete = "SELECT * FROM " + EDITEURS +
                 " WHERE " + EDITEURS + "." + COLUMN_EDITEUR_ID + " = \"" + editeur_id_voulu + "\" LIMIT 1";
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int editeur_id = cursor.getInt(0);
-                String editeur_nom = cursor.getString(1);
-                editeurBean = new EditeurBean(editeur_id, editeur_nom);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return editeurBean;
+        return getEditeurBean(requete);
     }
 
     /* -------------------------------------- */
@@ -960,27 +1115,12 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // AND EDITEURS.EDITEUR_NOM = editeur_nom_voulu LIMIT 1
     /* -------------------------------------- */
     public EditeurBean selectEditeurSelonEditeurNom(String editeur_nom_voulu){
-        EditeurBean editeurBean = null;
         String requete = "SELECT * FROM " + EDITEURS +
         " INNER JOIN " + TOMES + " ON " + TOMES + "." + COLUMN_EDITEUR_ID + " = " + EDITEURS + "." + COLUMN_EDITEUR_ID +
         " INNER JOIN " + DETENIR + " ON " + TOMES + "." + COLUMN_TOME_ID + " = " + DETENIR + "." + COLUMN_TOME_ID +
         " WHERE " + DETENIR + "." + COLUMN_PROFIL_ID  + " = \"" + selectProfilActif() +
         "\" AND " + EDITEURS + "." + COLUMN_EDITEUR_NOM + " = \"" + editeur_nom_voulu+ "\" LIMIT 1";
-
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            int editeur_id = cursor.getInt(0);
-            String editeur_nom = cursor.getString(1);
-            editeurBean = new EditeurBean(editeur_id, editeur_nom);
-        } else {
-            // pas de résultats
-        editeurBean = new EditeurBean(-1, "error");
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return editeurBean;
+        return getEditeurBean(requete);
     }
 
     /* -------------------------------------- */
@@ -989,24 +1129,10 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // WHERE TOMES.TOME_ID = tome_id LIMIT 1
     /* -------------------------------------- */
     public EditeurBean selectEditeurSelonTomeId(int tome_id){
-        EditeurBean editeurBean;
         String requete = "SELECT * FROM " + EDITEURS +
                 " INNER JOIN " + TOMES + " ON " + EDITEURS + "." + COLUMN_EDITEUR_ID + " = " + TOMES + "." + COLUMN_EDITEUR_ID +
                 " WHERE " + TOMES + "." + COLUMN_TOME_ID + " = \"" + tome_id + "\" LIMIT 1";
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            int editeur_id = cursor.getInt(0);
-            String editeur_nom = cursor.getString(1);
-            editeurBean = new EditeurBean(editeur_id, editeur_nom);
-        } else {
-            // pas de résultats
-            editeurBean = new EditeurBean(-1, "Pas d'éditeur enregistré");
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return editeurBean;
+        return getEditeurBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1018,19 +1144,7 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
         String requete = "SELECT " + COLUMN_EDITEUR_ID + " FROM " + EDITEURS +
                 " WHERE " + COLUMN_EDITEUR_NOM + " = \"" + editeurBean.getEditeur_nom() +
                 "\" ORDER BY " + COLUMN_EDITEUR_ID +" DESC LIMIT 1";
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        EditeurBean result = new EditeurBean();
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            result.setEditeur_id(cursor.getInt(0));
-            result.setEditeur_nom(cursor.getString(1));
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return result;
+        return getEditeurBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1045,7 +1159,6 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
 
     /* -------------------------------------- */
     public List<EditeurBean> listeEditeursSelonAuteurId(int auteur_id){
-        List<EditeurBean> returnList = new ArrayList<>();
         String requete = "SELECT * FROM " + EDITEURS +
                 " INNER JOIN " + TOMES + " ON " + TOMES + "." + COLUMN_EDITEUR_ID + " = " + EDITEURS + "." + COLUMN_EDITEUR_ID +
                 " INNER JOIN " + ECRIRE + " ON " + ECRIRE + "." + COLUMN_TOME_ID + " = " + TOMES + "." + COLUMN_TOME_ID +
@@ -1054,22 +1167,7 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
                 "\" AND " + ECRIRE + "." + COLUMN_AUTEUR_ID + " = \"" + auteur_id +
                 "\" GROUP BY " + EDITEURS + "." + COLUMN_EDITEUR_ID +
                 " ORDER BY " + EDITEURS + "." + COLUMN_EDITEUR_NOM;
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int editeur_id = cursor.getInt(0);
-                String editeur_nom = cursor.getString(1);
-                EditeurBean editeurBean = new EditeurBean(editeur_id, editeur_nom);
-                returnList.add(editeurBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListEditeurBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1080,29 +1178,12 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // AND TOMES.SERIE_ID = serie_id_voulu
     /* -------------------------------------- */
     public List<EditeurBean> listeEditeursSelonSerieId(int serie_id_voulu){
-        List<EditeurBean> returnList = new ArrayList<>();
-        EditeurBean editeurBean;
         String requete = "SELECT * FROM " + EDITEURS +
                 " INNER JOIN " + TOMES + " ON " + TOMES + "." + COLUMN_EDITEUR_ID + " = " + EDITEURS + "." + COLUMN_EDITEUR_ID +
                 " INNER JOIN " + DETENIR + " ON " + TOMES + "." + COLUMN_TOME_ID + " = " + DETENIR + "." + COLUMN_TOME_ID +
                 " WHERE " + DETENIR + "." + COLUMN_PROFIL_ID  + " = \"" + selectProfilActif() +
                 "\" AND " + TOMES + "." + COLUMN_SERIE_ID + " = \"" + serie_id_voulu + "\"";
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int editeur_id = cursor.getInt(0);
-                String editeur_nom = cursor.getString(1);
-                editeurBean = new EditeurBean(editeur_id, editeur_nom);
-                returnList.add(editeurBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListEditeurBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1111,28 +1192,10 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // ORDER BY AUTEURS.AUTEUR_PSEUDO
     /* -------------------------------------- */
     public List<AuteurBean> listeAuteurs(){
-        List<AuteurBean> returnList = new ArrayList<>();
         String requete = "SELECT * FROM " + AUTEURS +
                 " GROUP BY " + AUTEURS + "." + COLUMN_AUTEUR_ID +
                 " ORDER BY " + AUTEURS + "." + COLUMN_AUTEUR_PSEUDO;
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int auteur_id = cursor.getInt(0);
-                String auteur_pseudo = cursor.getString(1);
-                String auteur_prenom = cursor.getString(2);
-                String auteur_nom = cursor.getString(3);
-                AuteurBean auteurBean = new AuteurBean(auteur_id, auteur_nom, auteur_prenom, auteur_pseudo);
-                returnList.add(auteurBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListAuteurBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1142,29 +1205,11 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // ORDER BY AUTEURS.AUTEUR_PSEUDO
     /* -------------------------------------- */
     public List<AuteurBean> listeAuteursFiltre(String filtre){
-        List<AuteurBean> returnList = new ArrayList<>();
         String requete = "SELECT * FROM " + AUTEURS +
                 " WHERE " + AUTEURS + "." + COLUMN_AUTEUR_PSEUDO + " LIKE \'%" + filtre +
                 "%\' GROUP BY " + AUTEURS + "." + COLUMN_AUTEUR_ID +
                 " ORDER BY " + AUTEURS + "." + COLUMN_AUTEUR_PSEUDO;
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int auteur_id = cursor.getInt(0);
-                String auteur_pseudo = cursor.getString(1);
-                String auteur_prenom = cursor.getString(2);
-                String auteur_nom = cursor.getString(3);
-                AuteurBean auteurBean = new AuteurBean(auteur_id, auteur_nom, auteur_prenom, auteur_pseudo);
-                returnList.add(auteurBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListAuteurBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1172,26 +1217,10 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // WHERE AUTEUR_ID = auteur_id
     /* -------------------------------------- */
     public AuteurBean selectAuteurSelonAuteurId(int auteur_id_voulu){
-        AuteurBean auteurBean = new AuteurBean();
         String requete = "SELECT * FROM " + AUTEURS +
                 " WHERE " + AUTEURS + "." + COLUMN_AUTEUR_ID + " = \"" + auteur_id_voulu + "\" LIMIT 1";
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int auteur_id = cursor.getInt(0);
-                String auteur_pseudo = cursor.getString(1);
-                String auteur_prenom = cursor.getString(2);
-                String auteur_nom = cursor.getString(3);
-                auteurBean = new AuteurBean(auteur_id, auteur_pseudo, auteur_prenom, auteur_nom);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return auteurBean;
+
+        return getAuteurBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1199,26 +1228,9 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // WHERE AUTEUR_PSEUDO = auteur_pseudo
     /* -------------------------------------- */
     public AuteurBean selectAuteurSelonAuteurPseudo(String auteur_pseudo_voulu){
-        AuteurBean auteurBean = new AuteurBean();
         String requete = "SELECT * FROM " + AUTEURS +
                 " WHERE " + AUTEURS + "." + COLUMN_AUTEUR_PSEUDO + " = \"" + auteur_pseudo_voulu + "\" LIMIT 1";
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int auteur_id = cursor.getInt(0);
-                String auteur_pseudo = cursor.getString(1);
-                String auteur_prenom = cursor.getString(2);
-                String auteur_nom = cursor.getString(3);
-                auteurBean = new AuteurBean(auteur_id, auteur_pseudo, auteur_prenom, auteur_nom);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return auteurBean;
+        return getAuteurBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1258,8 +1270,6 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // ORDER BY AUTEURS.AUTEUR_PSEUDO
     /* -------------------------------------- */
     public List<AuteurBean> listeAuteursSelonTomeId(int tome_id){
-        List<AuteurBean> returnList = new ArrayList<>();
-        AuteurBean auteurBean = null;
         String requete = "SELECT * FROM " + AUTEURS +
                 " INNER JOIN " + ECRIRE + " ON " + AUTEURS + "." + COLUMN_AUTEUR_ID + " = " + ECRIRE + "." + COLUMN_AUTEUR_ID +
                 " INNER JOIN " + TOMES + " ON " + TOMES + "." + COLUMN_TOME_ID + " = " + ECRIRE + "." + COLUMN_TOME_ID +
@@ -1268,22 +1278,7 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
                 "\" AND " + ECRIRE + "." + COLUMN_TOME_ID + " = \"" + tome_id +
                 "\" GROUP BY " + AUTEURS + "." + COLUMN_AUTEUR_ID +
                 " ORDER BY " + AUTEURS + "." + COLUMN_AUTEUR_PSEUDO;
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int auteur_id = cursor.getInt(0);
-                String auteur_pseudo = cursor.getString(1);
-                auteurBean = new AuteurBean(auteur_id, auteur_pseudo);
-                returnList.add(auteurBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListAuteurBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1297,8 +1292,6 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // ORDER BY AUTEURS.AUTEUR_PSEUDO
     /* -------------------------------------- */
     public List<AuteurBean> listeAuteursSelonEditeurId(int editeur_id_voulu){
-        List<AuteurBean> returnList = new ArrayList<>();
-        AuteurBean auteurBean = null;
         String requete = "SELECT * FROM " + AUTEURS +
                 " INNER JOIN " + ECRIRE + " ON " + AUTEURS + "." + COLUMN_AUTEUR_ID + " = " + ECRIRE + "." + COLUMN_AUTEUR_ID +
                 " INNER JOIN " + TOMES + " ON " + ECRIRE + "." + COLUMN_TOME_ID + " = " + TOMES + "." + COLUMN_TOME_ID +
@@ -1307,22 +1300,7 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
                 "\" AND " + TOMES + "." + COLUMN_EDITEUR_ID + " = \"" + editeur_id_voulu +
                 "\" GROUP BY " + AUTEURS + "." + COLUMN_AUTEUR_ID +
                 " ORDER BY " + AUTEURS + "." + COLUMN_AUTEUR_PSEUDO;
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int auteur_id = cursor.getInt(0);
-                String auteur_pseudo = cursor.getString(1);
-                auteurBean = new AuteurBean(auteur_id, auteur_pseudo);
-                returnList.add(auteurBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListAuteurBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1336,8 +1314,6 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // ORDER BY AUTEURS.AUTEUR_PSEUDO
     /* -------------------------------------- */
     public List<AuteurBean> listeAuteursSelonSerieId(int serie_id_voulu){
-        List<AuteurBean> returnList = new ArrayList<>();
-        AuteurBean auteurBean = new AuteurBean();
         String requete = "SELECT * FROM " + AUTEURS +
                 " JOIN " + ECRIRE + " ON " + ECRIRE + "." + COLUMN_AUTEUR_ID + " = " + AUTEURS + "." + COLUMN_AUTEUR_ID +
                 " JOIN " + TOMES + " ON " + TOMES + "." + COLUMN_TOME_ID + " = " + ECRIRE + "." + COLUMN_TOME_ID +
@@ -1346,22 +1322,7 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
                 "\" AND " + TOMES + "." + COLUMN_SERIE_ID + " = \"" + serie_id_voulu +
                 "\" GROUP BY " + AUTEURS + "." + COLUMN_AUTEUR_ID +
                 " ORDER BY " + AUTEURS + "." + COLUMN_AUTEUR_PSEUDO;
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int auteur_id = cursor.getInt(0);
-                String auteur_pseudo = cursor.getString(1);
-                auteurBean = new AuteurBean(auteur_id, auteur_pseudo);
-                returnList.add(auteurBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListAuteurBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1376,7 +1337,6 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // AND A2.AUTEUR_ID = auteur_id_voulu
     /* -------------------------------------- */
     public List<AuteurBean> listeAuteursPartenaires(int auteur_id_voulu){
-        List<AuteurBean> returnList = new ArrayList<>();
         String requete = "SELECT DISTINCT A1.* FROM " + AUTEURS + " A1" +
                 " INNER JOIN " + ECRIRE + " E1 ON A1." + COLUMN_AUTEUR_ID + " = E1." + COLUMN_AUTEUR_ID +
                 " INNER JOIN " + ECRIRE + " E2 ON E1." + COLUMN_TOME_ID + " = E2." + COLUMN_TOME_ID +
@@ -1386,24 +1346,7 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
                 " WHERE " + DETENIR + "." + COLUMN_PROFIL_ID  + " = \"" + selectProfilActif() +
                 "\" AND A1." + COLUMN_AUTEUR_ID + " <> A2." + COLUMN_AUTEUR_ID +
                 " AND A2." + COLUMN_AUTEUR_ID + " =\"" + auteur_id_voulu + "\"";
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int auteur_id = cursor.getInt(0);
-                String auteur_nom = cursor.getString(1);
-                String auteur_prenom = cursor.getString(2);
-                String auteur_pseudo = cursor.getString(3);
-                AuteurBean auteurBean = new AuteurBean(auteur_id, auteur_pseudo, auteur_prenom, auteur_nom);
-                returnList.add(auteurBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListAuteurBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1415,18 +1358,7 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
         String requete = "SELECT " + COLUMN_AUTEUR_ID + " FROM " + AUTEURS +
                 " WHERE " + COLUMN_AUTEUR_PSEUDO + " = \"" + auteurBean.getAuteur_pseudo() +
                 "\" ORDER BY " + COLUMN_AUTEUR_ID +" DESC LIMIT 1";
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        AuteurBean result = new AuteurBean();
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            result.setAuteur_id(cursor.getInt(0));
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return result;
+        return getAuteurBean(requete);
     }
 
 
@@ -1436,26 +1368,10 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // ORDER BY SERIES.SERIE_NOM
     /* -------------------------------------- */
     public List<SerieBean> listeSeries(){
-        List<SerieBean> returnList = new ArrayList<>();
         String requete = "SELECT * FROM " + SERIES +
                 " GROUP BY " + SERIES + "." + COLUMN_SERIE_ID +
                 " ORDER BY " + SERIES + "." + COLUMN_SERIE_NOM;
-                SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int serie_id = cursor.getInt(0);
-                String serie_nom = cursor.getString(1);
-                SerieBean serieBean = new SerieBean(serie_id, serie_nom);
-                returnList.add(serieBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListSerieBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1465,27 +1381,11 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // ORDER BY SERIES.SERIE_NOM
     /* -------------------------------------- */
     public List<SerieBean> listeSeriesFiltre(String filtre){
-        List<SerieBean> returnList = new ArrayList<>();
         String requete = "SELECT * FROM " + SERIES +
                 " WHERE " + SERIES + "." + COLUMN_SERIE_NOM + " LIKE \'%" + filtre +
                 "%\' GROUP BY " + SERIES + "." + COLUMN_SERIE_ID +
                 " ORDER BY " + SERIES + "." + COLUMN_SERIE_NOM;
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int serie_id = cursor.getInt(0);
-                String serie_nom = cursor.getString(1);
-                SerieBean serieBean = new SerieBean(serie_id, serie_nom);
-                returnList.add(serieBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListSerieBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1493,24 +1393,9 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // WHERE SERIE_ID = serie_id LIMIT 1
     /* -------------------------------------- */
     public SerieBean selectSerieSelonSerieId(int serie_id_voulu){
-        SerieBean serieBean = new SerieBean();
         String requete = "SELECT * FROM " + SERIES +
                 " WHERE " + SERIES + "." + COLUMN_SERIE_ID + " = \"" + serie_id_voulu + "\" LIMIT 1";
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int serie_id = cursor.getInt(0);
-                String serie_nom = cursor.getString(1);
-                serieBean = new SerieBean(serie_id, serie_nom);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return serieBean;
+        return getSerieBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1523,8 +1408,6 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // ORDER BY SERIES.SERIE_NOM
     /* -------------------------------------- */
     public List<SerieBean> listeSeriesSelonEditeurId(int editeur_id_voulu){
-        List<SerieBean> returnList = new ArrayList<>();
-        SerieBean serieBean;
         String requete = "SELECT DISTINCT * FROM " + SERIES +
                 " INNER JOIN " + TOMES + " ON " + SERIES + "." + COLUMN_SERIE_ID + " = " + TOMES + "." + COLUMN_SERIE_ID +
                 " INNER JOIN " + DETENIR + " ON " + TOMES + "." + COLUMN_TOME_ID + " = " + DETENIR + "." + COLUMN_TOME_ID +
@@ -1532,22 +1415,7 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
                 "\" AND " + TOMES + "." + COLUMN_EDITEUR_ID + " = \"" + editeur_id_voulu +
                 "\" GROUP BY " + SERIES + "." + COLUMN_SERIE_ID +
                 " ORDER BY " + SERIES + "." + COLUMN_SERIE_NOM;
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int serie_id = cursor.getInt(0);
-                String serie_nom = cursor.getString(1);
-                serieBean = new SerieBean(serie_id, serie_nom);
-                returnList.add(serieBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListSerieBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1558,26 +1426,12 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // AND TOMES.TOME_ID = tome_id LIMIT 1
     /* -------------------------------------- */
     public SerieBean selectSerieSelonTomeId(int tome_id){
-        SerieBean serieBean;
         String requete = "SELECT * FROM " + SERIES +
                 " INNER JOIN " + TOMES + " ON " + SERIES + "." + COLUMN_SERIE_ID + " = " + TOMES + "." + COLUMN_SERIE_ID +
                 " INNER JOIN " + DETENIR + " ON " + TOMES + "." + COLUMN_TOME_ID + " = " + DETENIR + "." + COLUMN_TOME_ID +
                 " WHERE " + DETENIR + "." + COLUMN_PROFIL_ID  + " = \"" + selectProfilActif() +
                 "\" AND " + TOMES + "." + COLUMN_TOME_ID + " = \"" + tome_id + "\" LIMIT 1";
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            int serie_id = cursor.getInt(0);
-            String serie_nom = cursor.getString(1);
-            serieBean = new SerieBean(serie_id, serie_nom);
-        } else {
-            // pas de résultats
-            serieBean = new SerieBean(-1, "Pas de série enregistrée");
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return serieBean;
+        return getSerieBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1615,19 +1469,7 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
         String requete = "SELECT " + COLUMN_SERIE_ID + " FROM " + EDITEURS +
                 " WHERE " + COLUMN_SERIE_NOM + " = \"" + serieBean.getSerie_nom() +
                 "\" ORDER BY " + COLUMN_SERIE_ID +" DESC LIMIT 1";
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        SerieBean result = new SerieBean();
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            result.setSerie_id(cursor.getInt(0));
-            result.setSerie_nom(cursor.getString(1));
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return result;
+        return getSerieBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1641,7 +1483,6 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // ORDER BY SERIES.SERIE_NOM
     /* -------------------------------------- */
     public List<SerieBean> listeSeriesSelonAuteurId(int auteur_id){
-        List<SerieBean> returnList = new ArrayList<>();
         String requete = "SELECT DISTINCT * FROM " + SERIES +
                 " INNER JOIN " + TOMES + " ON " + SERIES + "." + COLUMN_SERIE_ID + " = " + TOMES + "." + COLUMN_SERIE_ID +
                 " INNER JOIN " + ECRIRE + " ON " + TOMES + "." + COLUMN_TOME_ID + " = " + ECRIRE + "." + COLUMN_TOME_ID +
@@ -1650,22 +1491,7 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
                 "\" AND " + ECRIRE + "." + COLUMN_AUTEUR_ID + " = \"" + auteur_id +
                 "\" GROUP BY " + SERIES + "." + COLUMN_SERIE_ID +
                 " ORDER BY " + SERIES + "." + COLUMN_SERIE_NOM;
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                int serie_id = cursor.getInt(0);
-                String serie_nom = cursor.getString(1);
-                SerieBean serieBean = new SerieBean(serie_id, serie_nom);
-                returnList.add(serieBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListSerieBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1675,45 +1501,13 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // GROUP BY TOMES.SERIE_ID
     // ORDER BY TOMES.TOME_NUMERO, TOMES.TOME_TITRE
     /* -------------------------------------- */
-    public ArrayList<TomeBean> listeTomes(){
-        ArrayList<TomeBean> returnList = new ArrayList<>();
+    public List<TomeBean> listeTomes(){
         String requete = "SELECT * FROM " + TOMES +
                 " INNER JOIN " + DETENIR + " ON " + TOMES + "." + COLUMN_TOME_ID + " = " + DETENIR + "." + COLUMN_TOME_ID +
                 " WHERE " + DETENIR + "." + COLUMN_PROFIL_ID  + " = \"" + selectProfilActif() +
                 "\" GROUP BY " + TOMES + "." + COLUMN_SERIE_ID +
                 " ORDER BY " + TOMES + "." + COLUMN_TOME_NUMERO + ", " + TOMES + "." + COLUMN_TOME_TITRE;
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                Integer tome_id = cursor.getInt(0);
-                String tome_titre = cursor.getString(1);
-                int tome_numero = cursor.getInt(2);
-                String tome_isbn = cursor.getString(3);
-                double tome_prix_achat = cursor.getDouble(4);
-                double tome_valeur_connue = cursor.getDouble(5);
-                String tome_date_edition = cursor.getString(6);
-                String tome_image = cursor.getString(7);
-                boolean tome_dedicace = cursor.getInt(8) == 1 ? true: false;
-                boolean tome_edition_speciale = cursor.getInt(9) == 1 ? true: false;
-                String tome_edition_speciale_libelle = cursor.getString(10);
-                Integer serie_id = cursor.getInt(11);
-                Integer editeur_id = cursor.getInt(12);
-
-                TomeBean tomeBean = new TomeBean(tome_id, tome_titre, tome_numero, tome_isbn, tome_image,
-                        tome_prix_achat, tome_valeur_connue, tome_date_edition, tome_dedicace,
-                        tome_edition_speciale, tome_edition_speciale_libelle, serie_id, editeur_id);
-                returnList.add(tomeBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        }
-        else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture base de données et cursor
-        cursor.close();
-        db.close();
-        return returnList; // résultat de la requête
+        return getListTomeBean(requete); // résultat de la requête
     }
 
     /* -------------------------------------- */
@@ -1725,7 +1519,6 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // ORDER BY TOMES.TOME_NUMERO, TOMES.TOME_TITRE
     /* -------------------------------------- */
     public List<TomeBean> listeTomesFiltre(String filtre){
-        List<TomeBean> returnList = new ArrayList<>();
         String requete = "SELECT * FROM " + TOMES +
                 " INNER JOIN " + DETENIR + " ON " + TOMES + "." + COLUMN_TOME_ID + " = " + DETENIR + "." + COLUMN_TOME_ID +
                 " INNER JOIN " + PROFIL_ACTIF + " ON " + PROFIL_ACTIF + "." + COLUMN_PROFIL_ID + " = " + DETENIR + "." + COLUMN_PROFIL_ID +
@@ -1733,28 +1526,7 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
                 "\" AND (" + TOMES + "." + COLUMN_TOME_TITRE + " LIKE \'%" + filtre +
                 "%\' OR " + TOMES + "." + COLUMN_TOME_NUMERO + " LIKE \'%" + filtre +
                 "%\') ORDER BY " + TOMES + "." + COLUMN_TOME_NUMERO + ", " + TOMES + "." + COLUMN_TOME_TITRE;
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                Integer tome_id = cursor.getInt(0);
-                String tome_titre = cursor.getString(1);
-                int tome_numero = cursor.getInt(2);
-                Integer serie_id = cursor.getInt(11);
-                Integer editeur_id = cursor.getInt(12);
-                String serie_nom = cursor.getString(13);
-                TomeSerieBean tomeSerieBean = new TomeSerieBean(tome_id, tome_titre, tome_numero, null,
-                        null, 0, 0, null, false,
-                        false, null, serie_id, editeur_id, serie_nom);
-                returnList.add(tomeSerieBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListTomeBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1802,7 +1574,6 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     /* -------------------------------------- */
 
     public List<TomeSerieBean> listeTomesEtSerieSelonProfilId(){
-        List<TomeSerieBean> returnList = new ArrayList<>();
         String requete = "SELECT DISTINCT " + TOMES + ".*, " + COLUMN_SERIE_NOM + " FROM " + TOMES + ", " + SERIES +
                 " LEFT JOIN " + DETENIR + " ON " + TOMES + "." + COLUMN_TOME_ID + " = " + DETENIR + "." + COLUMN_TOME_ID +
                 " LEFT JOIN " + PROFIL_ACTIF + " ON " + PROFIL_ACTIF + "." + COLUMN_PROFIL_ID + " = " + DETENIR + "." + COLUMN_PROFIL_ID +
@@ -1816,28 +1587,7 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
                 " OR " + TOMES + "." + COLUMN_SERIE_ID + " = -1" +
                 ") AND " + DETENIR + "." + COLUMN_PROFIL_ID + " = \"" + selectProfilActif().getProfil_id() +
                 "\" ORDER BY " + SERIES + "." + COLUMN_SERIE_NOM + ", " + TOMES + "." + COLUMN_TOME_NUMERO + ", " + TOMES + "." + COLUMN_TOME_TITRE;
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                Integer tome_id = cursor.getInt(0);
-                String tome_titre = cursor.getString(1);
-                int tome_numero = cursor.getInt(2);
-                Integer serie_id = cursor.getInt(11);
-                Integer editeur_id = cursor.getInt(12);
-                String serie_nom = cursor.getString(13);
-                TomeSerieBean tomeSerieBean = new TomeSerieBean(tome_id, tome_titre, tome_numero, null,
-                        null, 0, 0, null, false,
-                        false, null, serie_id, editeur_id, serie_nom);
-                returnList.add(tomeSerieBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListTomeSerieBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1851,7 +1601,6 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // ORDER BY TOMES.TOME_NUMERO, TOMES.TOME_TITRE
     /* -------------------------------------- */
     public List<TomeSerieBean> listeTomesEtSerieSelonProfilIdFiltre(String filtre){
-        List<TomeSerieBean> returnList = new ArrayList<>();
         String requete = "SELECT " + TOMES + ".*, " + SERIES + "." + COLUMN_SERIE_NOM + " FROM " + TOMES + ", " + SERIES +
                 " INNER JOIN " + DETENIR + " ON " + TOMES + "." + COLUMN_TOME_ID + " = " + DETENIR + "." + COLUMN_TOME_ID +
                 " INNER JOIN " + PROFIL_ACTIF + " ON " + PROFIL_ACTIF + "." + COLUMN_PROFIL_ID + " = " + DETENIR + "." + COLUMN_PROFIL_ID +
@@ -1861,28 +1610,7 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
                 "%\' OR " + TOMES + "." + COLUMN_TOME_NUMERO + " LIKE \'%" + filtre +
                 "%\' OR " + SERIES + "." + COLUMN_SERIE_NOM + " LIKE \'%" + filtre +
                 "%\') ORDER BY " + SERIES + "." + COLUMN_SERIE_NOM + ", " + TOMES + "." + COLUMN_TOME_NUMERO + ", " + TOMES + "." + COLUMN_TOME_TITRE;
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                Integer tome_id = cursor.getInt(0);
-                String tome_titre = cursor.getString(1);
-                int tome_numero = cursor.getInt(2);
-                Integer serie_id = cursor.getInt(11);
-                Integer editeur_id = cursor.getInt(12);
-                String serie_nom = cursor.getString(13);
-                TomeSerieBean tomeSerieBean = new TomeSerieBean(tome_id, tome_titre, tome_numero, null,
-                        null, 0, 0, null, false,
-                        false, null, serie_id, editeur_id, serie_nom);
-                returnList.add(tomeSerieBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListTomeSerieBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1894,43 +1622,13 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // AND TOMES.SERIE_ID IS NULL
     /* -------------------------------------- */
     public List<TomeBean> listeTomesSelonEditeurIdSansSerie(int editeur_id_voulu){
-        List<TomeBean> returnList = new ArrayList<>();
         String requete = "SELECT * FROM " + TOMES +
                 " INNER JOIN " + DETENIR + " ON " + TOMES + "." + COLUMN_TOME_ID + " = " + DETENIR + "." + COLUMN_TOME_ID +
                 " INNER JOIN " + PROFIL_ACTIF + " ON " + PROFIL_ACTIF + "." + COLUMN_PROFIL_ID + " = " + DETENIR + "." + COLUMN_PROFIL_ID +
                 " WHERE " + DETENIR + "." + COLUMN_PROFIL_ID + " = \"" + selectProfilActif().getProfil_id() +
                 "\" AND " + TOMES + "." + COLUMN_EDITEUR_ID + " = \"" + editeur_id_voulu +
                 "\" AND " + TOMES + "." + COLUMN_SERIE_ID + " IS NULL";
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                Integer tome_id = cursor.getInt(0);
-                String tome_titre = cursor.getString(1);
-                int tome_numero = cursor.getInt(2);
-                String tome_isbn = cursor.getString(3);
-                double tome_prix_achat = cursor.getDouble(4);
-                double tome_valeur_connue = cursor.getDouble(5);
-                String tome_date_edition = cursor.getString(6);
-                String tome_image = cursor.getString(7);
-                boolean tome_dedicace = cursor.getInt(8) == 1 ? true: false;
-                boolean tome_edition_speciale = cursor.getInt(9) == 1 ? true: false;
-                String tome_edition_speciale_libelle = cursor.getString(10);
-                Integer serie_id = cursor.getInt(11);
-                Integer editeur_id = cursor.getInt(12);
-
-                TomeSerieBean tomeSerieBean = new TomeSerieBean(tome_id, tome_titre, tome_numero, tome_isbn, tome_image,
-                        tome_prix_achat, tome_valeur_connue, tome_date_edition, tome_dedicace,
-                        tome_edition_speciale, tome_edition_speciale_libelle, serie_id, editeur_id);
-                returnList.add(tomeSerieBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListTomeBean(requete);
     }
 
 
@@ -1944,7 +1642,6 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // AND TOMES.SERIE_ID IS NULL
     /* -------------------------------------- */
     public List<TomeBean> listeTomesSelonAuteurIdSansSerie(int auteur_id){
-        List<TomeBean> returnList = new ArrayList<>();
         String requete = "SELECT * FROM " + TOMES +
                 " INNER JOIN " + ECRIRE + " ON " + TOMES + "." + COLUMN_TOME_ID + " = " + ECRIRE + "." + COLUMN_TOME_ID +
                 " INNER JOIN " + DETENIR + " ON " + TOMES + "." + COLUMN_TOME_ID + " = " + DETENIR + "." + COLUMN_TOME_ID +
@@ -1952,36 +1649,7 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
                 " WHERE " + DETENIR + "." + COLUMN_PROFIL_ID + " = \"" + selectProfilActif().getProfil_id() +
                 "\" AND " + ECRIRE + "." + COLUMN_AUTEUR_ID + " = \"" + auteur_id +
                 "\" AND " + TOMES + "." + COLUMN_SERIE_ID + " IS NULL";
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                Integer tome_id = cursor.getInt(0);
-                String tome_titre = cursor.getString(1);
-                int tome_numero = cursor.getInt(2);
-                String tome_isbn = cursor.getString(3);
-                double tome_prix_achat = cursor.getDouble(4);
-                double tome_valeur_connue = cursor.getDouble(5);
-                String tome_date_edition = cursor.getString(6);
-                String tome_image = cursor.getString(7);
-                boolean tome_dedicace = cursor.getInt(8) == 1 ? true: false;
-                boolean tome_edition_speciale = cursor.getInt(9) == 1 ? true: false;
-                String tome_edition_speciale_libelle = cursor.getString(10);
-                Integer serie_id = cursor.getInt(11);
-                Integer editeur_id = cursor.getInt(12);
-
-                TomeSerieBean tomeSerieBean = new TomeSerieBean(tome_id, tome_titre, tome_numero, tome_isbn, tome_image,
-                        tome_prix_achat, tome_valeur_connue, tome_date_edition, tome_dedicace,
-                        tome_edition_speciale, tome_edition_speciale_libelle, serie_id, editeur_id);
-                returnList.add(tomeSerieBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListTomeBean(requete);
     }
 
     /* -------------------------------------- */
@@ -1993,18 +1661,7 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
         String requete = "SELECT " + COLUMN_TOME_ID + " FROM " + TOMES +
                 " WHERE " + COLUMN_TOME_TITRE + " = \"" + tomeBean.getTome_titre() +
                 "\" ORDER BY " + COLUMN_TOME_ID +" DESC LIMIT 1";
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        TomeBean result = new TomeBean();
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            result.setTome_id(cursor.getInt(0));
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return result;
+        return getTomeBean(requete);
     }
 
     /* -------------------------------------- */
@@ -2067,36 +1724,10 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // SELECT * FROM TOMES
     // WHERE TOME_ID = tome_id LIMIT 1
     /* -------------------------------------- */
-    public TomeBean selectTomeSelonTomeId(int tome_id_voulu){
-        TomeBean tomeBean = new TomeBean();
+    public TomeBean selectTomeSelonTomeId(Integer tome_id_voulu){
         String requete = "SELECT * FROM " + TOMES +
                 " WHERE " + TOMES + "." + COLUMN_TOME_ID + " = \"" + tome_id_voulu + "\" LIMIT 1";
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                Integer tome_id = cursor.getInt(0);
-                String tome_titre = cursor.getString(1);
-                int tome_numero = cursor.getInt(2);
-                String tome_isbn = cursor.getString(3);
-                String tome_image = cursor.getString(4);
-                double tome_prix_achat = cursor.getDouble(5);
-                double tome_valeur_connue = cursor.getDouble(6);
-                String tome_date_edition = cursor.getString(7);
-                boolean tome_dedicace = cursor.getInt(8) == 1 ? true: false;
-                boolean tome_edition_speciale = cursor.getInt(9) == 1 ? true: false;
-                String tome_edition_speciale_libelle = cursor.getString(10);
-                Integer serie_id = cursor.getInt(11);
-                Integer editeur_id = cursor.getInt(12);
-                tomeBean = new TomeBean(tome_id, tome_titre, tome_numero, tome_isbn,  tome_image, tome_prix_achat, tome_valeur_connue, tome_date_edition, tome_dedicace, tome_edition_speciale, tome_edition_speciale_libelle, serie_id, editeur_id);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return tomeBean;
+        return getTomeBean(requete);
     }
 
     /* -------------------------------------- */
@@ -2106,40 +1737,12 @@ public boolean deleteSerieDuTome(DataBaseHelper dataBaseHelper, Integer tome_id)
     // AND TOMES.SERIE_ID = serie_id_voulu
     /* -------------------------------------- */
     public List<TomeBean> listeTomesSelonSerieId(int serie_id_voulu){
-        List<TomeBean> returnList = new ArrayList<>();
-        TomeBean tomeBean = new TomeBean();
         String requete = "SELECT * FROM " + TOMES +
                 " JOIN " + DETENIR +
                 " ON " + TOMES + "." + COLUMN_TOME_ID + " = " + DETENIR + "." + COLUMN_TOME_ID +
                 " WHERE " + DETENIR + "." + COLUMN_PROFIL_ID  + " = \"" + selectProfilActif() +
                 "\" AND " + TOMES + "." + COLUMN_SERIE_ID + " = \"" + serie_id_voulu + "\"";
-        SQLiteDatabase db = this.getReadableDatabase(); // accès lecture BDD
-        Cursor cursor = db.rawQuery(requete, null); //cursor = résultat de la requête
-        if (cursor.moveToFirst()) { // true si il y a des résultats
-            do { // pour chaque tuple
-                Integer tome_id = cursor.getInt(0);
-                String tome_titre = cursor.getString(1);
-                int tome_numero = cursor.getInt(2);
-                String tome_isbn = cursor.getString(3);
-                String tome_image = cursor.getString(4);
-                double tome_prix_achat = cursor.getDouble(5);
-                double tome_valeur_connue = cursor.getDouble(6);
-                String tome_date_edition = cursor.getString(7);
-                boolean tome_dedicace = cursor.getInt(8) == 1 ? true: false;
-                boolean tome_edition_speciale = cursor.getInt(9) == 1 ? true: false;
-                String tome_edition_speciale_libelle = cursor.getString(10);
-                Integer serie_id = cursor.getInt(11);
-                Integer editeur_id = cursor.getInt(12);
-                tomeBean = new TomeBean(tome_id, tome_titre, tome_numero, tome_isbn,  tome_image, tome_prix_achat, tome_valeur_connue, tome_date_edition, tome_dedicace, tome_edition_speciale, tome_edition_speciale_libelle, serie_id, editeur_id);
-                returnList.add(tomeBean);
-            } while (cursor.moveToNext()); //on passe au tuple suivant
-        } else {
-            // pas de résultats on ne fait rien
-        }
-        // fermeture db et cursor
-        cursor.close();
-        db.close();
-        return returnList;
+        return getListTomeBean(requete);
     }
 
     /* -------------------------------------- */

@@ -1,20 +1,20 @@
 package com.example.mycomics.beans;
 
 public class AuteurBean {
-    private int auteur_id;
+    private Integer auteur_id;
     private String auteur_nom, auteur_prenom, auteur_pseudo;
 
     /* -------------------------------------- */
     // Constructor
     /* -------------------------------------- */
 
-    public AuteurBean(int auteur_id, String auteur_nom, String auteur_prenom, String auteur_pseudo) {
+    public AuteurBean(Integer auteur_id, String auteur_nom, String auteur_prenom, String auteur_pseudo) {
         this.auteur_id = auteur_id;
         this.auteur_nom = auteur_nom;
         this.auteur_prenom = auteur_prenom;
         this.auteur_pseudo = auteur_pseudo;
     }
-    public AuteurBean(int auteur_id, String auteur_pseudo) {
+    public AuteurBean(Integer auteur_id, String auteur_pseudo) {
         this.auteur_id = auteur_id;
         this.auteur_pseudo = auteur_pseudo;
     }
@@ -24,10 +24,10 @@ public class AuteurBean {
     /* -------------------------------------- */
     // Get/Set
     /* -------------------------------------- */
-    public int getAuteur_id() {
+    public Integer getAuteur_id() {
         return auteur_id;
     }
-    public void setAuteur_id(int auteur_id) {
+    public void setAuteur_id(Integer auteur_id) {
         this.auteur_id = auteur_id;
     }
     public String getAuteur_nom() {
