@@ -27,69 +27,50 @@ import com.example.mycomics.databinding.FragmentBooksBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupTextDialog;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BooksFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class BooksFragment extends Fragment {
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* View binding declaration */
+    //* ----------------------------------------------------------------------------------------- */
     FragmentBooksBinding binding;
 
-    /* -------------------------------------- */
-    // Variable BDD
-    /* -------------------------------------- */
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Database handler initialization
+    //* ----------------------------------------------------------------------------------------- */
     DataBaseHelper dataBaseHelper;
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Adapters handling listViews data display
+    //* ----------------------------------------------------------------------------------------- */
     ArrayAdapter tomesArrayAdapter;
-    ArrayAdapter tomesSerieArrayAdapter;
+    ArrayAdapter bookSerieArrayAdapter;
 
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    //* ----------------------------------------------------------------------------------------- */
+    //* Empty constructor, required
+    //* ----------------------------------------------------------------------------------------- */
     public BooksFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BooksFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static BooksFragment newInstance(String param1, String param2) {
-        BooksFragment fragment = new BooksFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
+    //* ----------------------------------------------------------------------------------------- */
+    //* onCreate inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-        /* -------------------------------------- */
-        // Initialisation Base de données
-        /* -------------------------------------- */
+        /* Database handler initialization */
         dataBaseHelper = new DataBaseHelper(getActivity());
-
-
     }
 
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* onCreateView inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,156 +79,173 @@ public class BooksFragment extends Fragment {
         return binding.getRoot();
     }
 
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* onViewCreated inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        /* -------------------------------------- */
-        // Initialisation affichage
-        /* -------------------------------------- */
-        afficherListeTomes();
-        binding.sbSearch.svSearch.setQueryHint("Filtrer ou rechercher");
-        /* -------------------------------------- */
-        // Clic Bouton Chercher
-        /* -------------------------------------- */
+
+        /* Display initialization */
+        BooksRefreshScreen();
+        /* Search bar */
+        // Search Hint initialization
+        binding.sbSearch.svSearch.setQueryHint(getString(R.string.SearchHintFilterOrSearch));
+        // Click event on Search button
         binding.sbSearch.btSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Data bundle storing search string
                 Bundle bundle = new Bundle();
                 bundle.putString("filter", binding.sbSearch.svSearch.getQuery().toString());
+                // Go to SearchResultFragment with the data bundle
                 findNavController(BooksFragment.this).navigate(R.id.searchResultFragment, bundle);
             }
         });
-        /* -------------------------------------- */
-        // saisie searchBar
-        /* -------------------------------------- */
+        // Search bar text submit listener, to filter Books list
         binding.sbSearch.svSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
-                afficherListeTomes();
+                BooksRefreshScreen(); // To refresh display
                 return false;
             }
         });
-        /* -------------------------------------- */
-        // Clic Bouton ajout Tome
-        /* -------------------------------------- */
-        binding.btnTomesAddTome.setOnClickListener(new View.OnClickListener() {
+
+        /* Add Book button handler and Book creation popup */
+        // Click event on add button
+        binding.btnBooksAddBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Création Popup
+                // Popup for Book creation with texts and see-through background
                 PopupTextDialog popupTextDialog = new PopupTextDialog(getActivity());
-                popupTextDialog.setTitle(getString(R.string.bookPopupAddTitle));
-                popupTextDialog.setHint(getString(R.string.bookPopupAddTitle));
+                popupTextDialog.setTitle(getString(R.string.BookPopupAddTitle));
+                popupTextDialog.setHint(getString(R.string.BookPopupAddTitle));
                 popupTextDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                // Click event on confirm button
                 popupTextDialog.getBtnPopupConfirm().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        // BookBean for the data to be stored in the database
                         BookBean bookBean;
                         try {
+                            // fetching text from the EditText
                             bookBean = new BookBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                         } catch (Exception e) {
+                            // error toast message
+                            Toast.makeText(getActivity(), getString(R.string.BookCreationError), Toast.LENGTH_SHORT).show();
+                            // id set to -1 for error handling
                             bookBean = new BookBean(-1, "error" );
                         }
-                        popupTextDialog.dismiss(); // Fermeture Popup
-                        //Appel DataBaseHelper
+                        // Checking if a duplicate with the same name already exists in the database
                         if (dataBaseHelper.checkBookDuplicate(bookBean.getBook_title())) {
-                            // Tome déjà existant
-                            Toast.makeText(BooksFragment.super.getContext(), "Tome déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show();
-                            popupTextDialog.dismiss(); // Fermeture Popup
+                            // duplicate, error toast message
+                            Toast.makeText(BooksFragment.super.getContext(), getString(R.string.BookDuplicateError), Toast.LENGTH_LONG).show();
                         } else {
-                            // on enregiste
-                            boolean successInsertTomes = dataBaseHelper.insertIntoBooks(bookBean);
-                            boolean successInsertDetenir = dataBaseHelper.insertIntoDetaining(dataBaseHelper.getBookLatest(bookBean));
-                            Toast.makeText(getActivity(), "Tome créé", Toast.LENGTH_SHORT).show();
-                            popupTextDialog.dismiss(); // Fermeture Popup
+                            // Database handler called with the insertion methods (Tables BOOKS and DETAINING)
+                            boolean successInsertBooks = dataBaseHelper.insertIntoBooks(bookBean);
+                            boolean successInsertDetaining = dataBaseHelper.insertIntoDetaining(dataBaseHelper.getBookLatest(bookBean));
+                            // Success toast message
+                            Toast.makeText(getActivity(), getString(R.string.BookCreationSuccess), Toast.LENGTH_SHORT).show();
                         }
-                        afficherListeTomes();
+                        popupTextDialog.dismiss(); // To close popup
+                        BooksRefreshScreen(); // To refresh display
                     }
                 });
-
+                // Key event, same behaviour as confirm button
                 popupTextDialog.getEtPopupText().setOnKeyListener(new View.OnKeyListener() {
                     @Override
                     public boolean onKey(View v, int keyCode, KeyEvent event) {
+                        // if "ENTER" key is pressed
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                            // Perform action on key press
                             BookBean bookBean;
                             try {
                                 bookBean = new BookBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                             } catch (Exception e) {
+                                Toast.makeText(getActivity(), getString(R.string.BookCreationError), Toast.LENGTH_SHORT).show();
                                 bookBean = new BookBean(-1, "error" );
                             }
-                            popupTextDialog.dismiss(); // Fermeture Popup
                             //Appel DataBaseHelper
                             if (dataBaseHelper.checkBookDuplicate(bookBean.getBook_title())) {
                                 // Tome déjà existant
-                                Toast.makeText(BooksFragment.super.getContext(), "Tome déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show();
-                                popupTextDialog.dismiss(); // Fermeture Popup
+                                Toast.makeText(BooksFragment.super.getContext(), getString(R.string.BookDuplicateError), Toast.LENGTH_LONG).show();
                             } else {
                                 // on enregiste
                                 boolean successInsertTomes = dataBaseHelper.insertIntoBooks(bookBean);
                                 boolean successInsertDetenir = dataBaseHelper.insertIntoDetaining(dataBaseHelper.getBookLatest(bookBean));
-                                Toast.makeText(getActivity(), "Tome créé", Toast.LENGTH_SHORT).show();
-                                popupTextDialog.dismiss(); // Fermeture Popup
+                                Toast.makeText(getActivity(), getString(R.string.BookCreationSuccess), Toast.LENGTH_SHORT).show();
                             }
-                            afficherListeTomes();
-                            return true;
+                            popupTextDialog.dismiss();
+                            BooksRefreshScreen();
+                            return true; // inherited, necessary
                         }
-                        return false;
+                        return false; // inherited, necessary
                     }
                 });
-
+                // Click event on abort button
                 popupTextDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        popupTextDialog.dismiss(); // Fermeture Popup
+                        popupTextDialog.dismiss(); // To close popup
                     }
                 });
-
-                popupTextDialog.build();
-                afficherListeTomes();
+                popupTextDialog.build(); // To build the popup
+                BooksRefreshScreen(); // To refresh display
             }
         });
 
-        /* -------------------------------------- */
-        // Clic Element liste Tomes
-        /* -------------------------------------- */
-        binding.lvTomesListeTomes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Books list item click */
+        // Click item
+        binding.lvBooksBooksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // BookBean for the data to be send to destination
                 BookBean bookBean;
                 try {
-                    bookBean = (BookSerieBean) binding.lvTomesListeTomes.getItemAtPosition(position);
+                    bookBean = (BookSerieBean) binding.lvBooksBooksList.getItemAtPosition(position);
                 } catch (Exception e) {
+                    // id set to -1 for error handling
                     bookBean = new BookSerieBean(-1,"error");
                 }
+                // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
                 bundle.putInt("book_id", bookBean.getBook_id());
                 bundle.putString("book_title", bookBean.getBook_title());
-
-
+                // go to EditorDetailFragment with the data bundle
                 findNavController(BooksFragment.this).navigate(R.id.action_books_to_bookDetail, bundle);
-
             }
         });
     }
 
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* onDestroy inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public void onDestroy() {
         super.onDestroy();
-        binding = null;
+        binding = null; // to prevent memory leak
     }
 
-    private void afficherListeTomes(){
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Display intitialization and refresh method
+    //* ----------------------------------------------------------------------------------------- */
+    private void BooksRefreshScreen(){
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            tomesSerieArrayAdapter = new BooksSerieListAdapter(getActivity() , R.layout.listview_row_3col, dataBaseHelper.getBooksAndSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString()));
+            // If the search bar isn't empty
+            // list filtered
+            bookSerieArrayAdapter = new BooksSerieListAdapter(getActivity() , R.layout.listview_row_3col, dataBaseHelper.getBooksAndSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString()));
         } else {
-            tomesSerieArrayAdapter = new BooksSerieListAdapter(getActivity() , R.layout.listview_row_3col, dataBaseHelper.getBooksAndBooksSeriesList());
+            // list without filter
+            bookSerieArrayAdapter = new BooksSerieListAdapter(getActivity() , R.layout.listview_row_3col, dataBaseHelper.getBooksAndBooksSeriesList());
         }
-        binding.lvTomesListeTomes.setAdapter(tomesSerieArrayAdapter);
+        // list adapter charged with data
+        binding.lvBooksBooksList.setAdapter(bookSerieArrayAdapter);
     }
 }

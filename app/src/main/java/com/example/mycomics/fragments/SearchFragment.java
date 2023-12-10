@@ -11,12 +11,16 @@ import android.view.ViewGroup;
 import com.example.mycomics.R;
 
 public class SearchFragment extends Fragment {
-
+    //* ----------------------------------------------------------------------------------------- */
+    //* onCreate inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
+    //* ----------------------------------------------------------------------------------------- */
+    //* onCreateView inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

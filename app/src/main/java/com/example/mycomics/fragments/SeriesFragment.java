@@ -27,60 +27,48 @@ import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupTextDialog;
 
 public class SeriesFragment extends Fragment {
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* View binding declaration */
+    //* ----------------------------------------------------------------------------------------- */
     FragmentSeriesBinding binding;
 
-    /* -------------------------------------- */
-    // Variable BDD
-    /* -------------------------------------- */
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Database handler initialization
+    //* ----------------------------------------------------------------------------------------- */
     DataBaseHelper dataBaseHelper;
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Adapters handling listViews data display
+    //* ----------------------------------------------------------------------------------------- */
     ArrayAdapter seriesArrayAdapter;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    //* ----------------------------------------------------------------------------------------- */
+    //* Empty constructor, required
+    //* ----------------------------------------------------------------------------------------- */
     public SeriesFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SeriesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SeriesFragment newInstance(String param1, String param2) {
-        SeriesFragment fragment = new SeriesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
+    //* ----------------------------------------------------------------------------------------- */
+    //* onCreate inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-        /* -------------------------------------- */
-        // Initialisation Base de données
-        /* -------------------------------------- */
+        /* Database handler initialization */
         dataBaseHelper = new DataBaseHelper(getActivity());
-
     }
 
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* onCreateView inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -89,148 +77,170 @@ public class SeriesFragment extends Fragment {
         return binding.getRoot();
     }
 
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* onViewCreated inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        /* -------------------------------------- */
-        // Initialisation affichage
-        /* -------------------------------------- */
-        afficherListeSeries();
-        binding.sbSearch.svSearch.setQueryHint("Filtrer ou rechercher");
-        /* -------------------------------------- */
-        // Clic Bouton Chercher
-        /* -------------------------------------- */
+
+        /* Display initialization */
+        SeriesRefreshScreen();
+
+        /* Search bar */
+        // Search Hint initialization
+        binding.sbSearch.svSearch.setQueryHint(getString(R.string.SearchHintFilterOrSearch));
+        // Click event on Search button
         binding.sbSearch.btSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Data bundle storing search string
                 Bundle bundle = new Bundle();
                 bundle.putString("filter", binding.sbSearch.svSearch.getQuery().toString());
+                // Go to SearchResultFragment with the data bundle
                 findNavController(SeriesFragment.this).navigate(R.id.searchResultFragment, bundle);
             }
         });
-        /* -------------------------------------- */
-        // saisie searchBar
-        /* -------------------------------------- */
+        // Search bar text submit listener, to filter Series list
         binding.sbSearch.svSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
-                afficherListeSeries();
+                SeriesRefreshScreen(); // To refresh display
                 return false;
             }
         });
 
-        /* -------------------------------------- */
-        // Clic Bouton ajout série
-        /* -------------------------------------- */
+        /* Add Serie button handler and Serie creation popup */
+        // Click event on add button
         binding.btnSeriesAddSerie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Création Popup
+                // Popup for Serie creation with texts and see-through background
                 PopupTextDialog popupTextDialog = new PopupTextDialog(getActivity());
-                popupTextDialog.setTitle("Entrez le nom de la série");
-                popupTextDialog.setHint("Nom de la série");
+                popupTextDialog.setTitle(getString(R.string.SeriePopupAddTitle));
+                popupTextDialog.setHint(getString(R.string.SeriePopupAddHint));
                 popupTextDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                // Click event on confirm button
                 popupTextDialog.getBtnPopupConfirm().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        // SerieBean for the data to be stored in the database
                         SerieBean serieBean;
                         try {
+                            // fetching text from the EditText
                             serieBean = new SerieBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                         } catch (Exception e) {
+                            // error toast message
+                            Toast.makeText(getActivity(), getString(R.string.SerieCreationError), Toast.LENGTH_SHORT).show();
+                            // id set to -1 for error handling
                             serieBean = new SerieBean(-1, "error" );
                         }
+                        // Checking if a duplicate with the same name already exists in the database
                         if(dataBaseHelper.checkSerieDuplicate(serieBean.getSerie_name())){
-                            Toast.makeText(getActivity(), "Série déjà existante, enregistrement annulé", Toast.LENGTH_LONG).show();
-                            popupTextDialog.dismiss(); // Fermeture Popup
+                            // duplicate, error toast message
+                            Toast.makeText(getActivity(), getString(R.string.SerieDuplicateError), Toast.LENGTH_LONG).show();
                         } else {
-                            //Appel DataBaseHelper
+                            // Database handler called with the insertion method
                             boolean success = dataBaseHelper.insertIntoSeries(serieBean);
-                            Toast.makeText(getActivity(), "Série créée", Toast.LENGTH_SHORT).show();
-                            popupTextDialog.dismiss(); // Fermeture Popup
+                            // Success toast message
+                            Toast.makeText(getActivity(), getString(R.string.SerieCreationSuccess), Toast.LENGTH_SHORT).show();
                         }
-                        afficherListeSeries();
+                        popupTextDialog.dismiss(); // To close popup
+                        SeriesRefreshScreen(); // To refresh display
                     }
                 });
-
+                // Key event, same behaviour as confirm button
                 popupTextDialog.getEtPopupText().setOnKeyListener(new View.OnKeyListener() {
                     @Override
                     public boolean onKey(View v, int keyCode, KeyEvent event) {
+                        // if "ENTER" key is pressed
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                            // Perform action on key press
                             SerieBean serieBean;
                             try {
                                 serieBean = new SerieBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                             } catch (Exception e) {
+                                Toast.makeText(getActivity(), getString(R.string.SerieCreationError), Toast.LENGTH_SHORT).show();
                                 serieBean = new SerieBean(-1, "error" );
                             }
                             if(dataBaseHelper.checkSerieDuplicate(serieBean.getSerie_name())){
-                                Toast.makeText(getActivity(), "Série déjà existante, enregistrement annulé", Toast.LENGTH_LONG).show();
-                                popupTextDialog.dismiss(); // Fermeture Popup
+                                Toast.makeText(getActivity(), getString(R.string.SerieDuplicateError), Toast.LENGTH_LONG).show();
                             } else {
                                 //Appel DataBaseHelper
                                 boolean success = dataBaseHelper.insertIntoSeries(serieBean);
-                                Toast.makeText(getActivity(), "Série créée", Toast.LENGTH_SHORT).show();
-                                popupTextDialog.dismiss(); // Fermeture Popup
+                                Toast.makeText(getActivity(), getString(R.string.SerieCreationSuccess), Toast.LENGTH_SHORT).show();
                             }
-                            afficherListeSeries();
-                            return true;
+                            popupTextDialog.dismiss();
+                            SeriesRefreshScreen();
+                            return true; // inherited, necessary
                         }
-                        return false;
+                        return false; // inherited, necessary
                     }
                 });
-
+                // Click event on abort button
                 popupTextDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        popupTextDialog.dismiss(); // Fermeture Popup
+                        popupTextDialog.dismiss(); // To close popup
                     }
                 });
-
-                popupTextDialog.build();
-                afficherListeSeries();
+                popupTextDialog.build(); // To build the popup
+                SeriesRefreshScreen(); // To refresh display
             }
         });
 
-        /* -------------------------------------- */
-        // Clic Element liste Serie
-        /* -------------------------------------- */
-        binding.lvSeriesListeSeries.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Series list item click */
+        // Click item
+        binding.lvSeriesSeriesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // SerieBean for the data to be send to destination
                 SerieBean serieBean;
                 try {
-                    serieBean = (SerieBean) binding.lvSeriesListeSeries.getItemAtPosition(position);
+                    serieBean = (SerieBean) binding.lvSeriesSeriesList.getItemAtPosition(position);
                 } catch (Exception e) {
+                    // id set to -1 for error handling
                     serieBean = new SerieBean(-1,"error");
                 }
+                // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
                 bundle.putInt("serie_id", serieBean.getSerie_id());
                 bundle.putString("serie_name", serieBean.getSerie_name());
-
+                // go to SerieDetailFragment with the data bundle
                 findNavController(SeriesFragment.this).navigate(R.id.action_series_to_serieDetail, bundle);
-
             }
         });
     }
 
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* onDestroy inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public void onDestroy() {
         super.onDestroy();
-        binding = null;
+        binding = null; // to prevent memory leak
     }
 
-    private void afficherListeSeries(){
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Display intitialization and refresh method
+    //* ----------------------------------------------------------------------------------------- */
+    private void SeriesRefreshScreen(){
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
+            // If the search bar isn't empty
+            // list filtered
             seriesArrayAdapter = new SeriesNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString()));
         } else {
+            // list without filter
             seriesArrayAdapter = new SeriesNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getSeriesList());
         }
-        binding.lvSeriesListeSeries.setAdapter(seriesArrayAdapter);
+        // list adapter charged with data
+        binding.lvSeriesSeriesList.setAdapter(seriesArrayAdapter);
     }
 }

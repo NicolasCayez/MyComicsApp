@@ -23,15 +23,16 @@
                 android:layout_gravity="center"
                 android:layout_height="30dp"
                 android:src="@drawable/editors_blue" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvEditeursTitreBandeau"
-                android:layout_height="match_parent"
                 android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:fontFamily="@font/kronika"
-                android:text="EDITEURS"
                 android:gravity="center_vertical"
                 android:paddingStart="50dp"
-                android:layout_weight="1"
+                android:text="@string/EditorsFragmentTitle"
                 android:textColor="@color/custom_blue"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -63,7 +64,7 @@
                     android:padding="5dp">
 
                     <ListView
-                        android:id="@+id/lvEditeursListeEditeurs"
+                        android:id="@+id/lv_editors_editors_list"
                         android:layout_width="match_parent"
                         android:layout_height="400dp"
                         android:layout_marginHorizontal="15dp"
@@ -78,7 +79,7 @@
                     android:layout_weight="1"
                     android:orientation="horizontal">
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/btnEditeursAddEditeur"
+                        android:id="@+id/btn_editors_add_editor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"

@@ -12,6 +12,7 @@
 
     <!--  Searchfragment  -->
     <string name="SearchHintFilterOrSearch">Filter or search</string>
+    <string name="SearchHintSearch">Search</string>
 
     <!--  Popup Buttons  -->
     <string name="btnValider">CONFIRM</string>
@@ -23,13 +24,45 @@
 
     <!--  AuthorsFragment  -->
     <string name="AuthorsFragmentTitle">AUTHORS</string>
-    <string name="AuthorPopupAddTitle">set author pseudonym or last name</string>
+    <string name="AuthorPopupAddTitle">Enter author pseudonym or last name</string>
     <string name="AuthorPopupAddHint">Author pseudonym</string>
+    <string name="AuthorCreationSuccess">Author created</string>
+    <string name="AuthorCreationError">Erreur creating Author</string>
+    <string name="AuthorDuplicateError">Author already exists, creation aborted</string>
 
+    <!--  SeriesFragment  -->
+    <string name="SeriesFragmentTitle">SERIES</string>
+    <string name="SeriePopupAddTitle">Enter serie name</string>
+    <string name="SeriePopupAddHint">Serie name</string>
+    <string name="SerieCreationSuccess">Serie created</string>
+    <string name="SerieCreationError">Erreur creating Serie</string>
+    <string name="SerieDuplicateError">Serie already exists, creation aborted</string>
+
+    <!--  EditorsFragment  -->
+    <string name="EditorsFragmentTitle">EDITORS</string>
+    <string name="EditorPopupAddTitle">Enter editor name</string>
+    <string name="EditorPopupAddHint">Editor name</string>
+    <string name="EditorCreationSuccess">Editor created</string>
+    <string name="EditorCreationError">Erreur creating Editor</string>
+    <string name="EditorDuplicateError">Editor already exists, creation aborted</string>
 
     <!--  BooksFragment  -->
-    <string name="bookPopupAddTitle">Write the book title</string>
-    <string name="bookPopupAddHint">Book title</string>
+    <string name="BooksFragmentTitle">BOOKS</string>
+    <string name="BookPopupAddTitle">Enter book title</string>
+    <string name="BookPopupAddHint">Book title</string>
+    <string name="BookCreationSuccess">Book created</string>
+    <string name="BookCreationError">Error creating Book</string>
+    <string name="BookDuplicateError">Book already exists, creation aborted</string>
+
+    <!--  SettingsFragment  -->
+    <string name="SettingsFragmentTitle">SETTINGS</string>
+    <string name="SettingsProfilePopupAddTitle">Enter Profile name</string>
+    <string name="SettingsProfilePopupAddHint">Profile name</string>
+    <string name="SettingsProfileCreationSuccess">Profile created</string>
+    <string name="SettingsProfileCreationError">Error creating Profile</string>
+    <string name="SettingsProfileDuplicateError">Profile already exists, creation aborted</string>
+    <string name="SettingsProfileChangeError">Active Profile change error</string>
+    <string name="SettingsProfileChangeSuccess">Active Profile changed</string>
 
 
 

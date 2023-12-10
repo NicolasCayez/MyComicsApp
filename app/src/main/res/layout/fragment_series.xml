@@ -24,15 +24,16 @@
                 android:layout_gravity="center"
                 android:layout_height="30dp"
                 android:src="@drawable/series_blue" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvSeriesTitreBandeau"
-                android:layout_height="match_parent"
                 android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:fontFamily="@font/kronika"
-                android:text="SERIES"
                 android:gravity="center_vertical"
                 android:paddingStart="50dp"
-                android:layout_weight="1"
+                android:text="@string/SeriesFragmentTitle"
                 android:textColor="@color/custom_blue"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -64,7 +65,7 @@
                     android:padding="5dp">
 
                     <ListView
-                        android:id="@+id/lvSeriesListeSeries"
+                        android:id="@+id/lv_series_series_list"
                         android:layout_width="match_parent"
                         android:layout_height="400dp"
                         android:layout_marginHorizontal="15dp"

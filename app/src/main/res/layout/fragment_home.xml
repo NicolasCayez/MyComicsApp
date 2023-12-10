@@ -52,7 +52,7 @@
             android:layout_margin="10dp" />
         <!-- Bouton SERIES -->
         <LinearLayout
-            android:id="@+id/btnAccueilSeries"
+            android:id="@+id/btn_home_series"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp"
@@ -80,7 +80,7 @@
         </LinearLayout>
         <!-- Bouton TOMES -->
         <LinearLayout
-            android:id="@+id/btnAccueilTomes"
+            android:id="@+id/btn_home_books"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp"
@@ -108,7 +108,7 @@
         </LinearLayout>
         <!-- Bouton AUTEURS -->
         <LinearLayout
-            android:id="@+id/btnAccueilAuteurs"
+            android:id="@+id/btn_home_authors"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp"
@@ -136,7 +136,7 @@
         </LinearLayout>
         <!-- Bouton EDITEURS -->
         <LinearLayout
-            android:id="@+id/btnAccueilEditeurs"
+            android:id="@+id/btn_home_editors"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp"

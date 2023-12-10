@@ -18,16 +18,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.provider.MediaStore;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.mycomics.R;
 import com.example.mycomics.adapters.ProfilesListAdapter;
 import com.example.mycomics.beans.ProfileBean;
+import com.example.mycomics.beans.SerieBean;
 import com.example.mycomics.databinding.FragmentSettingsBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupTextDialog;
@@ -36,92 +39,55 @@ import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.concurrent.ExecutionException;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SettingsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SettingsFragment extends Fragment {
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* View binding declaration */
+    //* ----------------------------------------------------------------------------------------- */
     FragmentSettingsBinding binding;
-    /* -------------------------------------- */
-    // Variable BDD
-    /* -------------------------------------- */
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Database handler initialization
+    //* ----------------------------------------------------------------------------------------- */
     DataBaseHelper dataBaseHelper;
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Adapters handling listViews data display
+    //* ----------------------------------------------------------------------------------------- */
     ArrayAdapter profilsArrayAdapter;
 
 
-
-
-
-    /**-------------------------------------- */
-    /** TEST
-     /**-------------------------------------- */
-    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
-
-
-
-
-
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    //* ----------------------------------------------------------------------------------------- */
+    //* Empty constructor, required
+    //* ----------------------------------------------------------------------------------------- */
     public SettingsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SettingsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SettingsFragment newInstance(String param1, String param2) {
-        SettingsFragment fragment = new SettingsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
+    //* ----------------------------------------------------------------------------------------- */
+    //* onCreate inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-        /* -------------------------------------- */
-        // Initialisation Base de données
-        /* -------------------------------------- */
+        /* Database handler initialization */
         dataBaseHelper = new DataBaseHelper(getActivity());
 
+        /*TODO*************************************************************************************/
         /**-------------------------------------- */
         /** TEST
-         /**-------------------------------------- */
+        /**-------------------------------------- */
         cameraProviderFuture = ProcessCameraProvider.getInstance(getContext());
-
     }
-    private void afficherProfilActif() {
-        try {
-            System.out.println("test: " + dataBaseHelper.getProfileByActiveProfile().getProfile_name());
-            binding.tvProfilActif.setText(dataBaseHelper.getProfileByActiveProfile().getProfile_name());
-        } catch (Exception e) {
 
-        }
 
-    }
+    //* ----------------------------------------------------------------------------------------- */
+    //* onCreateView inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -130,56 +96,153 @@ public class SettingsFragment extends Fragment {
         return binding.getRoot();
     }
 
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* onViewCreated inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        /* -------------------------------------- */
-        // Initialisation affichage
-        /* -------------------------------------- */
-        afficherProfilActif();
 
-        /* -------------------------------------- */
-        // Clic sur bouton AddProfil
-        /* -------------------------------------- */
+        /* Display initialization */
+        ActiveProfileDisplay();
+
+        /* Add Profile button handler and Profile creation popup */
+        // Click event on add button
         binding.btnAddProfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Création Popup
+                // Popup for Profile creation with texts and see-through background
                 PopupTextDialog popupTextDialog = new PopupTextDialog(getActivity());
-                popupTextDialog.setTitle("Entrez un nom de profil");
-                popupTextDialog.setHint("Nom de profil");
+                popupTextDialog.setTitle(getString(R.string.SettingsProfilePopupAddTitle));
+                popupTextDialog.setHint(getString(R.string.SettingsProfilePopupAddHint));
                 popupTextDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                // Click event on confirm button
                 popupTextDialog.getBtnPopupConfirm().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        // ProfileBean for the data to be stored in the database
                         ProfileBean profileBean;
                         try {
+                            // fetching text from the EditText
                             profileBean = new ProfileBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                         } catch (Exception e) {
-//                            Toast.makeText(ReglagesActivity.this, "Erreur création profil", Toast.LENGTH_SHORT).show();
+                            // error toast message
+                            Toast.makeText(getActivity(), getString(R.string.SettingsProfileCreationError), Toast.LENGTH_SHORT).show();
+                            // id set to -1 for error handling
                             profileBean = new ProfileBean(-1, "error" );
                         }
-                        popupTextDialog.dismiss(); // Fermeture Popup
-                        //Appel DataBaseHelper
-                        dataBaseHelper = new DataBaseHelper(getActivity());
-                        boolean success = dataBaseHelper.insertIntoProfiles(profileBean);
-//                        afficherListeProfils();
+                        // Checking if a duplicate with the same name already exists in the database
+                        if (dataBaseHelper.checkProfileDuplicate(profileBean.getProfile_name())) {
+                            // duplicate, error toast message
+                            Toast.makeText(SettingsFragment.super.getContext(), getString(R.string.SettingsProfileDuplicateError), Toast.LENGTH_LONG).show();
+                        } else {
+                            // Database handler called with the insertion method
+                            boolean success = dataBaseHelper.insertIntoProfiles(profileBean);
+                            // Success toast message
+                            Toast.makeText(getActivity(), getString(R.string.SettingsProfileCreationSuccess), Toast.LENGTH_SHORT).show();
+                        }
+                        popupTextDialog.dismiss(); // To close popup
                     }
                 });
+                // Key event, same behaviour as confirm button
+                popupTextDialog.getEtPopupText().setOnKeyListener(new View.OnKeyListener() {
+                    @Override
+                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+                        // if "ENTER" key is pressed
+                        if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                                (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                            ProfileBean profileBean;
+                            try {
+                                profileBean = new ProfileBean(-1, popupTextDialog.getEtPopupText().getText().toString());
+                            } catch (Exception e) {
+                                Toast.makeText(getActivity(), getString(R.string.SettingsProfileCreationError), Toast.LENGTH_SHORT).show();
+                                profileBean = new ProfileBean(-1, "error" );
+                            }
+                            if (dataBaseHelper.checkProfileDuplicate(profileBean.getProfile_name())) {
+                                Toast.makeText(SettingsFragment.super.getContext(), getString(R.string.SettingsProfileDuplicateError), Toast.LENGTH_LONG).show();
+                            } else {
+                                boolean success = dataBaseHelper.insertIntoProfiles(profileBean);
+                                Toast.makeText(getActivity(), getString(R.string.SettingsProfileCreationSuccess), Toast.LENGTH_SHORT).show();
+                            }
+                            popupTextDialog.dismiss();
+                            return true; // inherited, necessary
+                        }
+                        return false; // inherited, necessary
+                    }
+                });
+                // Click event on abort button
                 popupTextDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        popupTextDialog.dismiss(); // Fermeture Popup
+                        popupTextDialog.dismiss(); // To close popup
                     }
                 });
-                popupTextDialog.build();
-                afficherProfilActif();
+                popupTextDialog.build(); // To build the popup
+                ActiveProfileDisplay(); // To refresh display
             }
         });
-        /************************************************************ TEST MENU POPUP
-         /* -------------------------------------- */
-        // Clic sur bouton DeleteProfil
-        /* -------------------------------------- */
+
+        /* Active Profile click */
+        // Displays list of Profiles to choose from
+        binding.tvProfilActif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Popup for Profile list with texts and see-through background
+                PopupListDialog popupListDialog = new PopupListDialog(getActivity());
+                popupListDialog.setTitre("Choisissez un profil dans la liste");
+                popupListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                // getting access to the listView
+                ListView listView = (ListView) popupListDialog.findViewById(R.id.lvPopupList);
+                // setting up the Adapter for the list
+                profilsArrayAdapter = new ProfilesListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.getProfilesList());
+                listView.setAdapter(profilsArrayAdapter);
+                /* Profile list item click */
+                // Click item
+                popupListDialog.getLvPopupListe().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        // ProfileBean for the data from the chosen item
+                        ProfileBean profileBean;
+                        try {
+                            // fetching data from the list
+                            profileBean = (ProfileBean) popupListDialog.getLvPopupListe().getItemAtPosition(position);
+                            // updating Active Profile in the Database
+                            dataBaseHelper.updateActiveProfile(dataBaseHelper, ((ProfileBean) popupListDialog.getLvPopupListe().getItemAtPosition(position)).getProfile_id());
+                            Toast.makeText(getActivity(), getString(R.string.SettingsProfileChangeSuccess), Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            // error toast message
+                            Toast.makeText(getActivity(), getString(R.string.SettingsProfileChangeError), Toast.LENGTH_SHORT).show();
+                            // id set to -1 for error handling
+                            profileBean = new ProfileBean(-1, "error" );
+                        }
+                        popupListDialog.dismiss(); // To close popup
+                    }
+                });
+                // Click event on abort button
+                popupListDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupListDialog.dismiss(); // To close popup
+                    }
+                });
+                popupListDialog.Build(); // To build the popup
+                // action on popup closure -> refresh screen
+                popupListDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        ActiveProfileDisplay();
+                    }
+                });
+            }
+        });
+
+
+
+
+
+        /*TODO*************************************************************************************/
+        /** Clic sur bouton DeleteProfil*/
         binding.btnDeleteProfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,63 +257,10 @@ public class SettingsFragment extends Fragment {
 
 //                Intent intent = new Intent(ReglagesActivity.this, MainActivity2.class);
 //                startActivity(intent);
-
-
-            }
-
-        });
-
-
-
-        /* -------------------------------------- */
-        // Clic sur profil actif pour avoir la liste
-        /* -------------------------------------- */
-        binding.tvProfilActif.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Création Popup
-                PopupListDialog popupListDialog = new PopupListDialog(getActivity());
-                popupListDialog.setTitre("Choisissez un profil dans la liste");
-                popupListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                ListView listView = (ListView) popupListDialog.findViewById(R.id.lvPopupList);
-                profilsArrayAdapter = new ProfilesListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.getProfilesList());
-                listView.setAdapter(profilsArrayAdapter);
-                //Clic Profil choisi pour modification
-                popupListDialog.getLvPopupListe().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        ProfileBean profileBean;
-                        try {
-                            profileBean = (ProfileBean) popupListDialog.getLvPopupListe().getItemAtPosition(position);
-                            dataBaseHelper.updateActiveProfile(dataBaseHelper, ((ProfileBean) popupListDialog.getLvPopupListe().getItemAtPosition(position)).getProfile_id());
-                        } catch (Exception e) {
-                            profileBean = new ProfileBean(-1, "error" );
-                        }
-                        popupListDialog.dismiss(); // Fermeture Popup
-                        //Appel DataBaseHelper
-//                        dataBaseHelper = new DataBaseHelper(getActivity());
-                    }
-                });
-                popupListDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popupListDialog.dismiss(); // Fermeture Popup
-                    }
-                });
-                popupListDialog.Build();
-                popupListDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        afficherProfilActif();
-                    }
-                });
             }
         });
 
-
-
-
-
+/***************** TEST CAMERA ********************************************************************/
         cameraProviderFuture.addListener(() -> {
             try {
                 ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
@@ -264,22 +274,25 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 dispatchTakePictureIntent();
-
             }
         });
-
-
-
-
-
     }
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         binding = null;
     }
+    private void ActiveProfileDisplay() {
+        try {
+            System.out.println("test: " + dataBaseHelper.getProfileByActiveProfile().getProfile_name());
+            binding.tvProfilActif.setText(dataBaseHelper.getProfileByActiveProfile().getProfile_name());
+        } catch (Exception e) {
 
+        }
+
+    }
 
 
 
@@ -308,9 +321,18 @@ public class SettingsFragment extends Fragment {
         }
     }
 
-
-
-
+/**************************************************************************************************/
+/**************************************************************************************************/
+/**************************************************************************************************/
+/**************************************************************************************************/
+/**************************************************************************************************/
+/**************************************************************************************************/
+/**************************************************************************************************/
+/*TODO*********************************************************************************************/
+    /**-------------------------------------- */
+    /** TEST
+     /**-------------------------------------- */
+    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
 
 
 
