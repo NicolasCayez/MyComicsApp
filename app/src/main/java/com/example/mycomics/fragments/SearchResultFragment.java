@@ -27,68 +27,52 @@ import com.example.mycomics.beans.SerieBean;
 import com.example.mycomics.databinding.FragmentSearchResultBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchResultFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SearchResultFragment extends Fragment {
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* View binding declaration */
+    //* ----------------------------------------------------------------------------------------- */
     FragmentSearchResultBinding binding;
 
-    /* -------------------------------------- */
-    // Variable BDD
-    /* -------------------------------------- */
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Database handler initialization
+    //* ----------------------------------------------------------------------------------------- */
     DataBaseHelper dataBaseHelper;
-    ArrayAdapter tomesArrayAdapter;
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Adapters handling listViews data display
+    //* ----------------------------------------------------------------------------------------- */
+    ArrayAdapter booksArrayAdapter;
     ArrayAdapter seriesArrayAdapter;
-    ArrayAdapter auteursArrayAdapter;
-    ArrayAdapter editeursArrayAdapter;
+    ArrayAdapter authorsArrayAdapter;
+    ArrayAdapter editorsArrayAdapter;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    //* ----------------------------------------------------------------------------------------- */
+    //* Empty constructor, required
+    //* ----------------------------------------------------------------------------------------- */
     public SearchResultFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SearchResultFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SearchResultFragment newInstance(String param1, String param2) {
-        SearchResultFragment fragment = new SearchResultFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
+    //* ----------------------------------------------------------------------------------------- */
+    //* onCreate inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        /* -------------------------------------- */
-        // Initialisation Base de données
-        /* -------------------------------------- */
+        /* Database handler initialization */
         dataBaseHelper = new DataBaseHelper(getActivity());
-
     }
 
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* onCreateView inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -97,70 +81,73 @@ public class SearchResultFragment extends Fragment {
         return binding.getRoot();
     }
 
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* onViewCreated inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        /* -------------------------------------- */
-        // Récupération données
-        /* -------------------------------------- */
+
+        /* Data sent from source fragments */
         String filter = getArguments().getString("filter");
-        /* -------------------------------------- */
-        // Initialisation affichage
-        /* -------------------------------------- */
-        afficherResultatRecherche(filter);
-        /* -------------------------------------- */
-        // Bouton chercher inutile cat filter auto
-        /* -------------------------------------- */
+
+        /* Display initialization */
+        SearchResultRefreshScreen(filter);
+
+        /* hiding Search button, the search bar purpose here is only to filter */
         binding.sbSearch.btSearch.setVisibility(View.GONE);
-        /* -------------------------------------- */
-        // saisie searchBar
-        /* -------------------------------------- */
+
+        /* Search bar */
+        // Search bar text submit listener, to filter all lists
         binding.sbSearch.svSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String filter) {
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String filter) {
-                afficherResultatRecherche(filter);
+                SearchResultRefreshScreen(filter); // To refresh display, depending on filter
                 return false;
             }
         });
 
-        /* -------------------------------------- */
-        // Clic Element liste Serie
-        /* -------------------------------------- */
-        binding.lvRechercheListeSeries.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Series list item click */
+        binding.lvSearchResultSeriesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // SerieBean for the data to be send to destination
                 SerieBean serieBean;
                 try {
-                    serieBean = (SerieBean) binding.lvRechercheListeSeries.getItemAtPosition(position);
+                    // SerieBean gets data from clicked item
+                    serieBean = (SerieBean) binding.lvSearchResultSeriesList.getItemAtPosition(position);
                 } catch (Exception e) {
+                    // id set to -1 for error handling
                     serieBean = new SerieBean(-1,"error");
                 }
+                // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
                 bundle.putInt("serie_id", serieBean.getSerie_id());
                 bundle.putString("serie_name", serieBean.getSerie_name());
-
+                // go to SerieDetailFragment with the data bundle
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_serieDetail, bundle);
-
             }
         });
 
-        /* -------------------------------------- */
-        // Clic Element liste Tomes
-        /* -------------------------------------- */
-        binding.lvRechercheListeTomes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Books list item click */
+        binding.lvsearchResultBooksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // BookBean for the data to be send to destination
                 BookBean bookBean;
                 try {
-                    bookBean = dataBaseHelper.getBookById(((BookBean) binding.lvRechercheListeTomes.getItemAtPosition(position)).getBook_id());
+                    // BookBean gets data from clicked item
+                    bookBean = dataBaseHelper.getBookById(((BookBean) binding.lvsearchResultBooksList.getItemAtPosition(position)).getBook_id());
                 } catch (Exception e) {
+                    // id set to -1 for error handling
                     bookBean = new BookBean(-1,"error");
                 }
+                // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
                 bundle.putInt("book_id", bookBean.getBook_id());
                 bundle.putInt("book_number", bookBean.getBook_number());
@@ -175,65 +162,72 @@ public class SearchResultFragment extends Fragment {
                 bundle.putString("book_special_edition_label", bookBean.getBook_special_edition_label());
                 bundle.putInt("serie_id", bookBean.getSerie_id());
                 bundle.putInt("editor_id", bookBean.getEditor_id());
-
+                // go to BookDetailFragment with the data bundle
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_bookDetail, bundle);
-
             }
         });
 
-        /* -------------------------------------- */
-        // Clic Element liste Auteur
-        /* -------------------------------------- */
-        binding.lvRechercheListeAuteurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Author list item click */
+        binding.lvsearchResultAuthorsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // AuthorBean for the data to be send to destination
                 AuthorBean authorBean;
                 try {
-                    authorBean = (AuthorBean) binding.lvRechercheListeAuteurs.getItemAtPosition(position);
+                    // AuthorBean gets data from clicked item
+                    authorBean = (AuthorBean) binding.lvsearchResultAuthorsList.getItemAtPosition(position);
                 } catch (Exception e) {
+                    // id set to -1 for error handling
                     authorBean = new AuthorBean(-1,"error","error","error");
                 }
+                // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
                 bundle.putInt("author_id", authorBean.getAuthor_id());
                 bundle.putString("author_pseudonym", authorBean.getAuthor_pseudonym());
                 bundle.putString("author_last_name", authorBean.getAuthor_last_name());
                 bundle.putString("author_first_name", authorBean.getAuthor_first_name());
+                // go to AuthorDetailFragment with the data bundle
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_authorDetail, bundle);
             }
         });
 
-        /* -------------------------------------- */
-        // Clic Element liste Editeur
-        /* -------------------------------------- */
-        binding.lvRechercheListeEditeurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Editors list item click */
+        binding.lvsearchResultEditorsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // EditorBean for the data to be send to destination
                 EditorBean editorBean;
                 try {
-                    editorBean = (EditorBean) binding.lvRechercheListeEditeurs.getItemAtPosition(position);
+                    // EditorBean gets data from clicked item
+                    editorBean = (EditorBean) binding.lvsearchResultEditorsList.getItemAtPosition(position);
                 } catch (Exception e) {
+                    // id set to -1 for error handling
                     editorBean = new EditorBean(-1,"error");
                 }
+                // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
                 bundle.putInt("editor_id", editorBean.getEditor_id());
                 bundle.putString("editor_name", editorBean.getEditor_name());
+                // go to EditorDetailFragment with the data bundle
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_editorDetail, bundle);
             }
         });
 
     }
 
-    private void afficherResultatRecherche(String filter){
+    private void SearchResultRefreshScreen(String filter){
+        // list adapters charged with data x4
+
         seriesArrayAdapter = new SeriesNbListAdapter(getActivity(), R.layout.listview_row_2col_reverse, dataBaseHelper.getSeriesListByFilter(filter));
-        binding.lvRechercheListeSeries.setAdapter(seriesArrayAdapter);
+        binding.lvSearchResultSeriesList.setAdapter(seriesArrayAdapter);
 
-        tomesArrayAdapter = new BooksNumberListAdapter(getActivity(), R.layout.listview_row_2col, dataBaseHelper.getBooksListByFilter(filter));
-        binding.lvRechercheListeTomes.setAdapter(tomesArrayAdapter);
+        booksArrayAdapter = new BooksNumberListAdapter(getActivity(), R.layout.listview_row_2col, dataBaseHelper.getBooksListByFilter(filter));
+        binding.lvsearchResultBooksList.setAdapter(booksArrayAdapter);
 
-        auteursArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByFilter(filter));
-        binding.lvRechercheListeAuteurs.setAdapter(auteursArrayAdapter);
+        authorsArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByFilter(filter));
+        binding.lvsearchResultAuthorsList.setAdapter(authorsArrayAdapter);
 
-        editeursArrayAdapter = new EditorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getEditorsListByFilter(filter));
-        binding.lvRechercheListeEditeurs.setAdapter(editeursArrayAdapter);
+        editorsArrayAdapter = new EditorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getEditorsListByFilter(filter));
+        binding.lvsearchResultEditorsList.setAdapter(editorsArrayAdapter);
     }
 }

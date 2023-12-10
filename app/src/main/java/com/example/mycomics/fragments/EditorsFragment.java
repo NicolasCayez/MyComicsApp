@@ -200,6 +200,7 @@ public class EditorsFragment extends Fragment {
                 // EditorBean for the data to be send to destination
                 EditorBean editorBean;
                 try {
+                    // EditorBean gets data from clicked item
                     editorBean = (EditorBean) binding.lvEditorsEditorsList.getItemAtPosition(position);
                 } catch (Exception e) {
                     // id set to -1 for error handling

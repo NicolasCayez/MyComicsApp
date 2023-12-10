@@ -207,6 +207,7 @@ public class BooksFragment extends Fragment {
                 // BookBean for the data to be send to destination
                 BookBean bookBean;
                 try {
+                    // BookBean gets data from clicked item
                     bookBean = (BookSerieBean) binding.lvBooksBooksList.getItemAtPosition(position);
                 } catch (Exception e) {
                     // id set to -1 for error handling
@@ -216,7 +217,7 @@ public class BooksFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putInt("book_id", bookBean.getBook_id());
                 bundle.putString("book_title", bookBean.getBook_title());
-                // go to EditorDetailFragment with the data bundle
+                // go to BookDetailFragment with the data bundle
                 findNavController(BooksFragment.this).navigate(R.id.action_books_to_bookDetail, bundle);
             }
         });

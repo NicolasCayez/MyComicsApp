@@ -10,9 +10,16 @@
     <string name="HamburgerMenuEditors">EDITORS</string>
     <string name="HamburgerMenuSettings">SETTINGS</string>
 
-    <!--  Searchfragment  -->
+    <!--  Searchfragment & SearchResultfragment  -->
     <string name="SearchHintFilterOrSearch">Filter or search</string>
     <string name="SearchHintSearch">Search</string>
+    <string name="SearchResultTitle">SEARCH</string>
+
+    <!--  Common data labels  -->
+    <string name="SeriesListLabel">Series</string>
+    <string name="BooksListLabel">Books</string>
+    <string name="AuthorsListLabel">Authors</string>
+    <string name="EditorsListLabel">Editors</string>
 
     <!--  Popup Buttons  -->
     <string name="btnValider">CONFIRM</string>
@@ -56,6 +63,8 @@
 
     <!--  SettingsFragment  -->
     <string name="SettingsFragmentTitle">SETTINGS</string>
+    <string name="SettingsActiveProfileLabel">Active Profile</string>
+    <string name="SettingsDarkModeLabel">Dark mode</string>
     <string name="SettingsProfilePopupAddTitle">Enter Profile name</string>
     <string name="SettingsProfilePopupAddHint">Profile name</string>
     <string name="SettingsProfileCreationSuccess">Profile created</string>
@@ -63,7 +72,6 @@
     <string name="SettingsProfileDuplicateError">Profile already exists, creation aborted</string>
     <string name="SettingsProfileChangeError">Active Profile change error</string>
     <string name="SettingsProfileChangeSuccess">Active Profile changed</string>
-
 
 
 </resources>

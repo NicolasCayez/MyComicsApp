@@ -202,6 +202,7 @@ public class SeriesFragment extends Fragment {
                 // SerieBean for the data to be send to destination
                 SerieBean serieBean;
                 try {
+                    // SerieBean gets data from clicked item
                     serieBean = (SerieBean) binding.lvSeriesSeriesList.getItemAtPosition(position);
                 } catch (Exception e) {
                     // id set to -1 for error handling

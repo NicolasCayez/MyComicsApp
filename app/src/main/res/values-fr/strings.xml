@@ -46,4 +46,11 @@
     <string name="SettingsProfilePopupAddTitle">Entrez le nom du Profil</string>
     <string name="SettingsProfileChangeError">Erreur changementde Profil Actif</string>
     <string name="SettingsProfileChangeSuccess">Profil actif changé</string>
+    <string name="SeriesListLabel">Séries</string>
+    <string name="BooksListLabel">Tomes</string>
+    <string name="AuthorsListLabel">Auteurs</string>
+    <string name="EditorsListLabel">Editeurs</string>
+    <string name="SearchResultTitle">RECHERCHE</string>
+    <string name="SettingsActiveProfileLabel">Profil actif</string>
+    <string name="SettingsDarkModeLabel">Mode sombre</string>
 </resources>

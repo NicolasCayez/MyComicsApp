@@ -24,15 +24,16 @@
                 android:layout_gravity="center"
                 android:layout_height="30dp"
                 android:src="@drawable/settings_blue" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textView3"
-                android:layout_height="match_parent"
                 android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:fontFamily="@font/kronika"
-                android:text="REGLAGES"
                 android:gravity="center_vertical"
                 android:paddingStart="50dp"
-                android:layout_weight="1"
+                android:text="@string/SettingsFragmentTitle"
                 android:textColor="@color/custom_blue"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -66,7 +67,7 @@
                             android:layout_marginHorizontal="15dp"
                             android:layout_marginVertical="15dp"
                             android:fontFamily="@font/kronika"
-                            android:text="Profil actif"
+                            android:text="@string/SettingsActiveProfileLabel"
                             android:textAlignment="center"
                             android:textColor="@color/custom_blue"
                             android:textSize="14sp" />
@@ -125,7 +126,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="15dp"
                         android:fontFamily="@font/kronika"
-                        android:text="Mode sombre"
+                        android:text="@string/SettingsDarkModeLabel"
                         android:textColor="@color/custom_blue"
                         android:textSize="14sp" />
 <!--                                 app:thumbTint="@color/custom_blue"
