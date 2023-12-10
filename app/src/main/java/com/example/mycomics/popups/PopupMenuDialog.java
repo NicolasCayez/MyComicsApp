@@ -25,7 +25,7 @@ public class PopupMenuDialog extends Dialog {
 
 
     /* -------------------------------------- */
-    // Méthode build
+    // Build Method
     /* -------------------------------------- */
     public void build(){
         show();

@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/rounded_corner_search"
-            app:defaultQueryHint="@string/hintFiltrerRechercher"
+            app:defaultQueryHint="@string/SearchHintFilterOrSearch"
             app:iconifiedByDefault="false"
             app:queryBackground="@android:color/transparent" />
     </LinearLayout>

@@ -11,11 +11,11 @@ import com.example.mycomics.R;
 
 public class PopupConfirmDialog extends Dialog {
     /* -------------------------------------- */
-    // Référence vers les éléments du popup
+    // Référence to popup elements
     /* -------------------------------------- */
-    private String titre;
+    private String title;
     private TextView tvPopupConfirmTitle;
-    private Button btnPopupConfirmValider, btnPopupConfirmAnnuler;
+    private Button btnPopupConfirmConfirm, btnPopupConfirmAbort;
 
     /* -------------------------------------- */
     // Constructor
@@ -23,30 +23,30 @@ public class PopupConfirmDialog extends Dialog {
     public PopupConfirmDialog(@NonNull Context context) {
         super(context, androidx.appcompat.R.style.Theme_AppCompat_Dialog);
         setContentView(R.layout.dialog_popup_confirm);
-        this.titre = "Mon titre";
+        this.title = "Title";
         this.tvPopupConfirmTitle = findViewById(R.id.tvPopupTitle);
-        this.btnPopupConfirmValider = findViewById(R.id.btnPopupValider);
-        this.btnPopupConfirmAnnuler = findViewById(R.id.btnPopupAnnuler);
+        this.btnPopupConfirmConfirm = findViewById(R.id.btnPopupValider);
+        this.btnPopupConfirmAbort = findViewById(R.id.btnPopupAnnuler);
     }
 
     /* -------------------------------------- */
     // Get/Set
     /* -------------------------------------- */
-    public void setTitre(String titre) {
-        this.titre = titre;
+    public void setTitre(String title) {
+        this.title = title;
     }
     public Button getBtnPopupValider() {
-        return btnPopupConfirmValider;
+        return btnPopupConfirmConfirm;
     }
     public Button getBtnPopupAnnuler() {
-        return btnPopupConfirmAnnuler;
+        return btnPopupConfirmAbort;
     }
 
     /* -------------------------------------- */
-    // Méthode build
+    // Build Method
     /* -------------------------------------- */
     public void build(){
         show();
-        tvPopupConfirmTitle.setText(titre);
+        tvPopupConfirmTitle.setText(title);
     }
 }

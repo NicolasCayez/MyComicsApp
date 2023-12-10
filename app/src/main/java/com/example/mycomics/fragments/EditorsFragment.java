@@ -132,10 +132,10 @@ public class EditorsFragment extends Fragment {
             public void onClick(View v) {
                 //Création Popup
                 PopupTextDialog popupTextDialog = new PopupTextDialog(getActivity());
-                popupTextDialog.setTitre("Entrez le nom de l'éditeur");
+                popupTextDialog.setTitle("Entrez le nom de l'éditeur");
                 popupTextDialog.setHint("Nom de l'éditeur");
                 popupTextDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                popupTextDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
+                popupTextDialog.getBtnPopupConfirm().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         EditorBean editorBean;
@@ -185,7 +185,7 @@ public class EditorsFragment extends Fragment {
                     }
                 });
 
-                popupTextDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
+                popupTextDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popupTextDialog.dismiss(); // Fermeture Popup

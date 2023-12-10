@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
                 android:layout_height="30dp"
-                android:src="@drawable/editeurs_bleu" />
+                android:src="@drawable/editors_blue" />
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvEditeursTitreBandeau"
                 android:layout_height="match_parent"
@@ -83,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:layout_weight="1"
-                        android:src="@drawable/btn_plus_beige" />
+                        android:src="@drawable/btn_add_beige" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

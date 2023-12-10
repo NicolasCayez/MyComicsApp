@@ -140,10 +140,10 @@ public class BooksFragment extends Fragment {
             public void onClick(View v) {
                 //Création Popup
                 PopupTextDialog popupTextDialog = new PopupTextDialog(getActivity());
-                popupTextDialog.setTitre(getString(R.string.bookPopupAddTitle));
+                popupTextDialog.setTitle(getString(R.string.bookPopupAddTitle));
                 popupTextDialog.setHint(getString(R.string.bookPopupAddTitle));
                 popupTextDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                popupTextDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
+                popupTextDialog.getBtnPopupConfirm().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         BookBean bookBean;
@@ -201,7 +201,7 @@ public class BooksFragment extends Fragment {
                     }
                 });
 
-                popupTextDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
+                popupTextDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popupTextDialog.dismiss(); // Fermeture Popup

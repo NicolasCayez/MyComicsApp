@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:src="@drawable/tomes_bleu" />
+                android:src="@drawable/books_blue" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvDetailTomeTitreBandeau"
@@ -163,21 +163,21 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_changer_bleu" />
+                                android:src="@drawable/btn_change_bleu" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/btnDetailTomeAddSerie"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_plus_bleu" />
+                                android:src="@drawable/btn_add_blue" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/btnDetailTomeDeleteSerie"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_delete_bleu" />
+                                android:src="@drawable/btn_delete_blue" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -406,7 +406,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="left"
-                                android:src="@drawable/tomes_bleu" />
+                                android:src="@drawable/books_blue" />
                         </LinearLayout>
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -414,14 +414,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_margin="5dp"
-                            android:src="@drawable/btn_plus_bleu" />
+                            android:src="@drawable/btn_add_blue" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/btnDetailTomeDeleteImage"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_margin="5dp"
-                            android:src="@drawable/btn_delete_bleu" />
+                            android:src="@drawable/btn_delete_blue" />
                     </LinearLayout>
                     <!-- Série -->
                     <!-- Boutons Série -->
@@ -473,14 +473,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_plus_bleu" />
+                                android:src="@drawable/btn_add_blue" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/btnDetailTomeDeleteAuteur"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_delete_bleu" />
+                                android:src="@drawable/btn_delete_blue" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -536,21 +536,21 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_changer_bleu" />
+                                android:src="@drawable/btn_change_bleu" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/btnDetailTomeAddEditeur"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_plus_bleu" />
+                                android:src="@drawable/btn_add_blue" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/btnDetailTomeDeleteEditeur"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_delete_bleu" />
+                                android:src="@drawable/btn_delete_blue" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -574,7 +574,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
-                        android:src="@drawable/btn_save_bleu" />
+                        android:src="@drawable/btn_save_blue" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btnDetailTomeDeleteTome"
@@ -583,7 +583,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:paddingEnd="15dp"
-                        android:src="@drawable/btn_delete_bleu" />
+                        android:src="@drawable/btn_delete_blue" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

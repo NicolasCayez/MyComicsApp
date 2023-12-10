@@ -26,7 +26,7 @@
             android:adjustViewBounds="true"
             android:background="@color/custom_beige"
             android:maxWidth="80dp"
-            android:src="@drawable/logo_bleu" />
+            android:src="@drawable/logo_blue" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="0dp"
@@ -134,7 +134,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:fontFamily="@font/kronika"
-                        android:text="@string/collecMenuHamburger"
+                        android:text="@string/HamburgerMenuCollection"
                         android:textColor="@color/custom_beige" />
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -162,7 +162,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:fontFamily="@font/kronika"
-                        android:text="@string/seriesMenuHamburger"
+                        android:text="@string/HamburgerMenuSeries"
                         android:textColor="@color/custom_beige" />
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -175,7 +175,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/btnMenuTomes"
+                    android:id="@+id/btn_menu_books"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="10dp"
@@ -190,7 +190,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:fontFamily="@font/kronika"
-                        android:text="@string/tomesMenuHamburger"
+                        android:text="@string/HamburgerMenuBooks"
                         android:textColor="@color/custom_beige" />
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -199,7 +199,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
-                        android:src="@drawable/tomes_beige" />
+                        android:src="@drawable/bookss_beige" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -211,7 +211,7 @@
                 android:padding="10dp">
 
                 <LinearLayout
-                    android:id="@+id/btnMenuAuteurs"
+                    android:id="@+id/btn_menu_authors"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="10dp"
@@ -226,7 +226,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:fontFamily="@font/kronika"
-                        android:text="@string/auteursMenuHamburger"
+                        android:text="@string/HamburgerMenuAuthors"
                         android:textColor="@color/custom_beige" />
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -235,11 +235,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
-                        android:src="@drawable/auteurs_beige" />
+                        android:src="@drawable/authors_beige" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/btnMenuEditeurs"
+                    android:id="@+id/btn_menu_editors"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="10dp"
@@ -254,7 +254,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:fontFamily="@font/kronika"
-                        android:text="@string/editeursMenuHamburger"
+                        android:text="@string/HamburgerMenuEditors"
                         android:textColor="@color/custom_beige" />
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -263,11 +263,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
-                        android:src="@drawable/editeurs_beige" />
+                        android:src="@drawable/editors_beige" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/btnMenuReglages"
+                    android:id="@+id/btn_menu_settings"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="10dp"
@@ -282,7 +282,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:fontFamily="@font/kronika"
-                        android:text="@string/reglagesMenuHamburger"
+                        android:text="@string/HamburgerMenuSettings"
                         android:textColor="@color/custom_beige" />
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -291,7 +291,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
-                        android:src="@drawable/reglages_beige" />
+                        android:src="@drawable/settings_beige" />
                 </LinearLayout>
             </LinearLayout>
 

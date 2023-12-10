@@ -132,10 +132,10 @@ public class SeriesFragment extends Fragment {
             public void onClick(View v) {
                 //Création Popup
                 PopupTextDialog popupTextDialog = new PopupTextDialog(getActivity());
-                popupTextDialog.setTitre("Entrez le nom de la série");
+                popupTextDialog.setTitle("Entrez le nom de la série");
                 popupTextDialog.setHint("Nom de la série");
                 popupTextDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                popupTextDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
+                popupTextDialog.getBtnPopupConfirm().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         SerieBean serieBean;
@@ -185,7 +185,7 @@ public class SeriesFragment extends Fragment {
                     }
                 });
 
-                popupTextDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
+                popupTextDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popupTextDialog.dismiss(); // Fermeture Popup

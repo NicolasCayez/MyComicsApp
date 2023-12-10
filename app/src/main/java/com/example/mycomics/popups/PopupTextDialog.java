@@ -13,13 +13,13 @@ import com.example.mycomics.R;
 
 public class PopupTextDialog extends Dialog {
     /* -------------------------------------- */
-    // Référence vers les éléments du popup
+    // Référence to popup elements
     /* -------------------------------------- */
-    private String titre;
+    private String title;
     private String hint;
     private TextView tvPopupTitle;
     private EditText etPopupText;
-    private Button btnPopupValider, btnPopupAnnuler;
+    private Button btnPopupConfirm, btnPopupAbort;
 
     /* -------------------------------------- */
     // Constructor
@@ -27,19 +27,19 @@ public class PopupTextDialog extends Dialog {
     public PopupTextDialog(@NonNull Context context) {
         super(context, androidx.appcompat.R.style.Theme_AppCompat_Dialog);
         setContentView(R.layout.dialog_popup_txt);
-        this.titre = "Mon titre";
-        this.hint = "texte";
+        this.title = "Title";
+        this.hint = "Hint";
         this.tvPopupTitle = findViewById(R.id.tvPopupTitle);
         this.etPopupText = findViewById(R.id.etPopupText);
-        this.btnPopupValider = findViewById(R.id.btnPopupValider);
-        this.btnPopupAnnuler = findViewById(R.id.btnPopupAnnuler);
+        this.btnPopupConfirm = findViewById(R.id.btnPopupValider);
+        this.btnPopupAbort = findViewById(R.id.btnPopupAnnuler);
     }
 
     /* -------------------------------------- */
     // Get/Set
     /* -------------------------------------- */
-    public void setTitre(String titre) {
-        this.titre = titre;
+    public void setTitle(String title) {
+        this.title = title;
     }
     public void setHint(String hint) {
         this.hint = hint;
@@ -47,19 +47,19 @@ public class PopupTextDialog extends Dialog {
     public EditText getEtPopupText() {
         return etPopupText;
     }
-    public Button getBtnPopupValider() {
-        return btnPopupValider;
+    public Button getBtnPopupConfirm() {
+        return btnPopupConfirm;
     }
-    public Button getBtnPopupAnnuler() {
-        return btnPopupAnnuler;
+    public Button getBtnPopupAbort() {
+        return btnPopupAbort;
     }
 
     /* -------------------------------------- */
-    // Méthode build
+    // Build Method
     /* -------------------------------------- */
     public void build(){
         show();
-        tvPopupTitle.setText(titre);
+        tvPopupTitle.setText(title);
         etPopupText.setHint(hint);
     }
 }

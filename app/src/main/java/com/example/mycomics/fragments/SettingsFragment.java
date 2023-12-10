@@ -146,10 +146,10 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 //Création Popup
                 PopupTextDialog popupTextDialog = new PopupTextDialog(getActivity());
-                popupTextDialog.setTitre("Entrez un nom de profil");
+                popupTextDialog.setTitle("Entrez un nom de profil");
                 popupTextDialog.setHint("Nom de profil");
                 popupTextDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                popupTextDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
+                popupTextDialog.getBtnPopupConfirm().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         ProfileBean profileBean;
@@ -166,7 +166,7 @@ public class SettingsFragment extends Fragment {
 //                        afficherListeProfils();
                     }
                 });
-                popupTextDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
+                popupTextDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popupTextDialog.dismiss(); // Fermeture Popup
@@ -231,7 +231,7 @@ public class SettingsFragment extends Fragment {
 //                        dataBaseHelper = new DataBaseHelper(getActivity());
                     }
                 });
-                popupListDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
+                popupListDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popupListDialog.dismiss(); // Fermeture Popup

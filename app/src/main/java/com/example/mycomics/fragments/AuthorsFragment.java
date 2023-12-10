@@ -27,58 +27,49 @@ import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupTextDialog;
 
 public class AuthorsFragment extends Fragment {
+
+
+    /** ----------------------------------------------------------------------------------------- */
+    /** View binding declaration */
+    /** ----------------------------------------------------------------------------------------- */
     FragmentAuthorsBinding binding;
 
-    /* -------------------------------------- */
-    // Variable BDD
-    /* -------------------------------------- */
+
+    /** ----------------------------------------------------------------------------------------- */
+    /** Database handler initialization
+    /** ----------------------------------------------------------------------------------------- */
     DataBaseHelper dataBaseHelper;
-    ArrayAdapter auteursArrayAdapter;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    /** ----------------------------------------------------------------------------------------- */
+    /** Adapters handling listViews data display
+    /** ----------------------------------------------------------------------------------------- */
+    ArrayAdapter authorsArrayAdapter;
 
+
+    /** ----------------------------------------------------------------------------------------- */
+    /** Empty constructor, required
+    /** ----------------------------------------------------------------------------------------- */
     public AuthorsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AuthorsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AuthorsFragment newInstance(String param1, String param2) {
-        AuthorsFragment fragment = new AuthorsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
+    /** ----------------------------------------------------------------------------------------- */
+    /** onCreate inherited Method override
+    /** ----------------------------------------------------------------------------------------- */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        /* -------------------------------------- */
-        // Initialisation Base de données
-        /* -------------------------------------- */
+
+        /** Database handler initialization */
         dataBaseHelper = new DataBaseHelper(getActivity());
     }
 
+
+    /** ----------------------------------------------------------------------------------------- */
+    /** onCreateView inherited Method override
+    /** ----------------------------------------------------------------------------------------- */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,147 +78,170 @@ public class AuthorsFragment extends Fragment {
         return binding.getRoot();
     }
 
+
+    /** ----------------------------------------------------------------------------------------- */
+    /** onViewCreated inherited Method override
+    /** ----------------------------------------------------------------------------------------- */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        /* -------------------------------------- */
-        // Initialisation affichage
-        /* -------------------------------------- */
-        afficherListeAuteurs();
-        binding.sbSearch.svSearch.setQueryHint("Filtrer ou rechercher");
-        /* -------------------------------------- */
-        // Clic Bouton Chercher
-        /* -------------------------------------- */
+
+        /** Display initialization */
+        AuthorsDisplayRefresh();
+
+        /** Search bar */
+        // Search Hint initialization
+        binding.sbSearch.svSearch.setQueryHint(getString(R.string.SearchHintFilterOrSearch));
+        // Click event on Search button
         binding.sbSearch.btSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Data bundle storing search string
                 Bundle bundle = new Bundle();
                 bundle.putString("filter", binding.sbSearch.svSearch.getQuery().toString());
+                // Go to SearchResultFragment with the data bundle
                 findNavController(AuthorsFragment.this).navigate(R.id.searchResultFragment, bundle);
             }
         });
-        /* -------------------------------------- */
-        // saisie searchBar
-        /* -------------------------------------- */
+        // Text submit listener, filters authors list
         binding.sbSearch.svSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
-                afficherListeAuteurs();
+                AuthorsDisplayRefresh();
                 return false;
             }
         });
-        /* -------------------------------------- */
-        // Clic Bouton ajout auteur
-        /* -------------------------------------- */
+
+        /** Add Author button handler and Author creation popup */
+        // Click event on add button
         binding.btnAuteursAddAuteur.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Création Popup
+                // Popup for Author creation with texts and see-through background
                 PopupTextDialog popupTextDialog = new PopupTextDialog(getActivity());
-                popupTextDialog.setTitre("Entrez le Pseudonyme (ou le Nom) de l'auteur");
-                popupTextDialog.setHint("Pseudonyme de l'auteur");
+                popupTextDialog.setTitle(getString(R.string.AuthorPopupAddTitle));
+                popupTextDialog.setHint(getString(R.string.AuthorPopupAddHint));
                 popupTextDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                popupTextDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
+                // Click event on confirm button
+                popupTextDialog.getBtnPopupConfirm().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        // Initialization AuthorBean for the data to be stored in the database
                         AuthorBean authorBean;
                         try {
+                            // fetching text from the EditText
                             authorBean = new AuthorBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                         } catch (Exception e) {
-//                            Toast.makeText(ReglagesActivity.this, "Erreur création auteur", Toast.LENGTH_SHORT).show();
+                            // error toast message
+                            Toast.makeText(getActivity(), "Erreur création auteur", Toast.LENGTH_SHORT).show(); /*TODO strings et traduction */
+                            // id set to -1 for error handling
                             authorBean = new AuthorBean(-1, "error" );
                         }
+                        // Checking if a duplicate with the same pseudonym already exists in the database
                         if(dataBaseHelper.checkAuthorDuplicate(authorBean.getAuthor_pseudonym())){
-                            Toast.makeText(getActivity(), "Auteur déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show();
-                            popupTextDialog.dismiss(); // Fermeture Popup
+                            // duplicate, error toast message
+                            Toast.makeText(getActivity(), "Auteur déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show(); /*TODO strings et traduction */
                         } else {
-                            //Appel DataBaseHelper
+                            // Database handler called with the insertion method
                             boolean success = dataBaseHelper.insertIntoAuthors(authorBean);
-                            Toast.makeText(getActivity(), "Auteur créé", Toast.LENGTH_SHORT).show();
-                            popupTextDialog.dismiss(); // Fermeture Popup
+                            // Success toast message
+                            Toast.makeText(getActivity(), "Auteur créé", Toast.LENGTH_SHORT).show(); /*TODO strings et traduction */
                         }
-                        afficherListeAuteurs();
+                        popupTextDialog.dismiss(); // To lose popup
+                        AuthorsDisplayRefresh(); // To refresh display
                     }
                 });
-
+                // Key event, same behaviour as confirm button
                 popupTextDialog.getEtPopupText().setOnKeyListener(new View.OnKeyListener() {
                     @Override
                     public boolean onKey(View v, int keyCode, KeyEvent event) {
+                        // if "ENTER" key is pressed
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                            // Perform action on key press
                             AuthorBean authorBean;
                             try {
                                 authorBean = new AuthorBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                             } catch (Exception e) {
-//                            Toast.makeText(ReglagesActivity.this, "Erreur création auteur", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Erreur création auteur", Toast.LENGTH_SHORT).show(); /*TODO strings et traduction */
                                 authorBean = new AuthorBean(-1, "error" );
                             }
                             if(dataBaseHelper.checkAuthorDuplicate(authorBean.getAuthor_pseudonym())){
-                                Toast.makeText(getActivity(), "Auteur déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show();
-                                popupTextDialog.dismiss(); // Fermeture Popup
+                                Toast.makeText(getActivity(), "Auteur déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show(); /*TODO strings et traduction */
                             } else {
-                                //Appel DataBaseHelper
                                 boolean success = dataBaseHelper.insertIntoAuthors(authorBean);
-                                Toast.makeText(getActivity(), "Auteur créé", Toast.LENGTH_SHORT).show();
-                                popupTextDialog.dismiss(); // Fermeture Popup
+                                Toast.makeText(getActivity(), "Auteur créé", Toast.LENGTH_SHORT).show(); /*TODO strings et traduction */
                             }
-                            afficherListeAuteurs();
-                            return true;
+                            popupTextDialog.dismiss();
+                            AuthorsDisplayRefresh();
+                            return true; // inherited, necessary
                         }
-                        return false;
+                        return false; // inherited, necessary
                     }
                 });
-
-                popupTextDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
+                // Click event on abort button
+                popupTextDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        popupTextDialog.dismiss(); // Fermeture Popup
+                        popupTextDialog.dismiss(); // To close popup
                     }
                 });
-                popupTextDialog.build();
-                afficherListeAuteurs();
+                popupTextDialog.build(); // To build the popup
+                AuthorsDisplayRefresh(); // To refresh display
             }
         });
 
-        /* -------------------------------------- */
-        // Clic Element liste Auteur
-        /* -------------------------------------- */
+        /** Author list item click */
+        // Click item
         binding.lvAuteursListeAuteurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Initialization AuthorBean
                 AuthorBean authorBean;
                 try {
+                    // AuthorBean gets data from clicked item
                     authorBean = (AuthorBean) binding.lvAuteursListeAuteurs.getItemAtPosition(position);
                 } catch (Exception e) {
+                    // id set to -1 for error handling
                     authorBean = new AuthorBean(-1,"error","error","error");
                 }
+                // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
                 bundle.putInt("author_id", authorBean.getAuthor_id());
                 bundle.putString("author_pseudonym", authorBean.getAuthor_pseudonym());
                 bundle.putString("author_last_name", authorBean.getAuthor_last_name());
                 bundle.putString("author_first_name", authorBean.getAuthor_first_name());
+                // go to AuthorDetailFragment with the data bundle
                 findNavController(AuthorsFragment.this).navigate(R.id.action_authors_to_authorDetail, bundle);
             }
         });
     }
 
+    /** ----------------------------------------------------------------------------------------- */
+    /** onDestroy inherited Method override
+    /** ----------------------------------------------------------------------------------------- */
     @Override
     public void onDestroy() {
         super.onDestroy();
-        binding = null;
+        binding = null; // freeing memory
     }
-    private void afficherListeAuteurs(){
+
+    /** ----------------------------------------------------------------------------------------- */
+    /** Display intitialization and refresh method
+    /** ----------------------------------------------------------------------------------------- */
+    private void AuthorsDisplayRefresh(){
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            auteursArrayAdapter = new AuthorsNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getAuthorsListByFilter(binding.sbSearch.svSearch.getQuery().toString()));
+            // If the search bar isn't empty
+            // list filtered
+            authorsArrayAdapter = new AuthorsNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getAuthorsListByFilter(binding.sbSearch.svSearch.getQuery().toString()));
         } else {
-            auteursArrayAdapter = new AuthorsNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getAuthorsList());
+            // list without filter
+            authorsArrayAdapter = new AuthorsNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getAuthorsList());
         }
-        binding.lvAuteursListeAuteurs.setAdapter(auteursArrayAdapter);
+        // list adapter charged with data
+        binding.lvAuteursListeAuteurs.setAdapter(authorsArrayAdapter);
     }
 }

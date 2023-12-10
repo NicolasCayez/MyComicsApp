@@ -12,12 +12,12 @@ import com.example.mycomics.R;
 
 public class PopupListDialog extends Dialog {
     /* -------------------------------------- */
-    // Référence vers les éléments du popup
+    // Référence to popup elements
     /* -------------------------------------- */
-    private String titre;
+    private String title;
     private TextView tvPopupTitle;
     private ListView lvPopupList;
-    private Button btnPopupAnnuler;
+    private Button btnPopupAbort;
 
     /* -------------------------------------- */
     // Constructor
@@ -26,18 +26,18 @@ public class PopupListDialog extends Dialog {
     public PopupListDialog(@NonNull Context context) {
         super(context, androidx.appcompat.R.style.Theme_AppCompat_Dialog);
         setContentView(R.layout.dialog_popup_list);
-        this.titre = "Mon titre";
+        this.title = "Mon titre";
         this.tvPopupTitle = findViewById(R.id.tvPopupTitle);
         this.lvPopupList = findViewById(R.id.lvPopupList);
-        this.btnPopupAnnuler = findViewById(R.id.btnPopupAnnuler);
+        this.btnPopupAbort = findViewById(R.id.btnPopupAnnuler);
     }
 
     /* -------------------------------------- */
     // Get/Set
     /* -------------------------------------- */
 
-    public void setTitre(String titre) {
-        this.titre = titre;
+    public void setTitre(String title) {
+        this.title = title;
     }
 
     public void setTvPopupTitle(TextView tvPopupTitle) {
@@ -52,16 +52,16 @@ public class PopupListDialog extends Dialog {
         this.lvPopupList = lvPopupListe;
     }
 
-    public Button getBtnPopupAnnuler() {
-        return btnPopupAnnuler;
+    public Button getBtnPopupAbort() {
+        return btnPopupAbort;
     }
 
 
     /* -------------------------------------- */
-    // Méthode Build
+    // Build Method
     /* -------------------------------------- */
     public void Build(){
         show();
-        tvPopupTitle.setText(titre);
+        tvPopupTitle.setText(title);
     }
 }

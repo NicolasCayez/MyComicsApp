@@ -185,7 +185,7 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
 
-                popupAddListDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
+                popupAddListDialog.getBtnPopupConfirm().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         AuthorBean authorBean;
@@ -205,7 +205,7 @@ public class BookDetailFragment extends Fragment {
                         }
                     }
                 });
-                popupAddListDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
+                popupAddListDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popupAddListDialog.dismiss(); // Fermeture Popup
@@ -278,7 +278,7 @@ public class BookDetailFragment extends Fragment {
 //                        dataBaseHelper = new DataBaseHelper(getActivity());
                     }
                 });
-                popupListDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
+                popupListDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popupListDialog.dismiss(); // Fermeture Popup
@@ -300,11 +300,11 @@ public class BookDetailFragment extends Fragment {
                 saveTome(book_id);
                 //Création Popup
                 PopupTextDialog popupTextDialog = new PopupTextDialog(getActivity());
-                popupTextDialog.setTitre("Entrez un nouvel éditeur");
+                popupTextDialog.setTitle("Entrez un nouvel éditeur");
                 popupTextDialog.setHint("Nom de l'éditeur");
                 popupTextDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                popupTextDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
+                popupTextDialog.getBtnPopupConfirm().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         EditorBean editorBean;
@@ -331,7 +331,7 @@ public class BookDetailFragment extends Fragment {
                         afficherDetailTome(book_id);
                     }
                 });
-                popupTextDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
+                popupTextDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popupTextDialog.dismiss(); // Fermeture Popup
@@ -397,7 +397,7 @@ public class BookDetailFragment extends Fragment {
 //                        dataBaseHelper = new DataBaseHelper(getActivity());
                     }
                 });
-                popupListDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
+                popupListDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popupListDialog.dismiss(); // Fermeture Popup
@@ -419,10 +419,10 @@ public class BookDetailFragment extends Fragment {
                 saveTome(book_id);
                 //Création Popup
                 PopupTextDialog popupTextDialog = new PopupTextDialog(getActivity());
-                popupTextDialog.setTitre("Entrez une nouvelle série");
+                popupTextDialog.setTitle("Entrez une nouvelle série");
                 popupTextDialog.setHint("Nom de la série");
                 popupTextDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                popupTextDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
+                popupTextDialog.getBtnPopupConfirm().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         SerieBean serieBean;
@@ -449,7 +449,7 @@ public class BookDetailFragment extends Fragment {
                         afficherDetailTome(book_id);
                     }
                 });
-                popupTextDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
+                popupTextDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popupTextDialog.dismiss(); // Fermeture Popup
@@ -575,7 +575,7 @@ public class BookDetailFragment extends Fragment {
                         afficherDetailTome(book_id);
                     }
                 });
-                popupListDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
+                popupListDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popupListDialog.dismiss(); // Fermeture Popup
@@ -597,10 +597,10 @@ public class BookDetailFragment extends Fragment {
                 saveTome(book_id);
                 //Création Popup
                 PopupTextDialog popupTextDialog = new PopupTextDialog(getActivity());
-                popupTextDialog.setTitre( "Tome\n\" " + book_title + " \"\nOpération irréversible, confirmer la suppression");
+                popupTextDialog.setTitle( "Tome\n\" " + book_title + " \"\nOpération irréversible, confirmer la suppression");
                 popupTextDialog.setHint("Nom du tome à supprimer");
                 popupTextDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                popupTextDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
+                popupTextDialog.getBtnPopupConfirm().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         BookBean bookBean;
@@ -653,7 +653,7 @@ public class BookDetailFragment extends Fragment {
                         return false;
                     }
                 });
-                popupTextDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
+                popupTextDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popupTextDialog.dismiss(); // Fermeture Popup
