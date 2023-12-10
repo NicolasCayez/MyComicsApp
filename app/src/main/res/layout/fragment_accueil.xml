@@ -39,7 +39,7 @@
                 android:fontFamily="@font/kronika"
                 android:gravity="center_vertical"
                 android:paddingStart="50dp"
-                android:text="ACCUEIL"
+                android:text="@string/fragTitreAccueil"
                 android:textColor="@color/custom_blue"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -74,7 +74,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="6"
                 android:fontFamily="@font/kronika"
-                android:text="SERIES"
+                android:text="@string/seriesMenuHamburger"
                 android:textColor="@color/custom_blue"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -102,7 +102,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="6"
                 android:fontFamily="@font/kronika"
-                android:text="TOMES"
+                android:text="@string/tomesMenuHamburger"
                 android:textColor="@color/custom_blue"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -130,7 +130,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="6"
                 android:fontFamily="@font/kronika"
-                android:text="AUTEURS"
+                android:text="@string/auteursMenuHamburger"
                 android:textColor="@color/custom_blue"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -158,7 +158,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="6"
                 android:fontFamily="@font/kronika"
-                android:text="EDITEURS"
+                android:text="@string/editeursMenuHamburger"
                 android:textColor="@color/custom_blue"
                 android:textSize="20sp" />
         </LinearLayout>

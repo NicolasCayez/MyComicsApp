@@ -18,17 +18,14 @@ import android.widget.ArrayAdapter;
 import com.example.mycomics.R;
 import com.example.mycomics.adapters.AuteursListAdapter;
 import com.example.mycomics.adapters.EditeursListAdapter;
-import com.example.mycomics.adapters.SeriesListAdapter;
 import com.example.mycomics.adapters.SeriesNbListAdapter;
-import com.example.mycomics.adapters.TomesListAdapter;
 import com.example.mycomics.adapters.TomesNumeroListAdapter;
-import com.example.mycomics.beans.AuteurBean;
-import com.example.mycomics.beans.EditeurBean;
+import com.example.mycomics.beans.AuthorBean;
+import com.example.mycomics.beans.BookBean;
+import com.example.mycomics.beans.BookSerieBean;
+import com.example.mycomics.beans.EditorBean;
 import com.example.mycomics.beans.SerieBean;
-import com.example.mycomics.beans.TomeBean;
-import com.example.mycomics.beans.TomeSerieBean;
 import com.example.mycomics.databinding.FragmentSearchResultBinding;
-import com.example.mycomics.databinding.FragmentSerieDetailBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 
 /**
@@ -107,13 +104,13 @@ public class SearchResultFragment extends Fragment {
         /* -------------------------------------- */
         // Récupération données
         /* -------------------------------------- */
-        String filtre = getArguments().getString("filtre");
+        String filter = getArguments().getString("filter");
         /* -------------------------------------- */
         // Initialisation affichage
         /* -------------------------------------- */
-        afficherResultatRecherche(filtre);
+        afficherResultatRecherche(filter);
         /* -------------------------------------- */
-        // Bouton chercher inutile cat filtre auto
+        // Bouton chercher inutile cat filter auto
         /* -------------------------------------- */
         binding.sbSearch.btSearch.setVisibility(View.GONE);
         /* -------------------------------------- */
@@ -121,13 +118,13 @@ public class SearchResultFragment extends Fragment {
         /* -------------------------------------- */
         binding.sbSearch.svSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextSubmit(String filter) {
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String filtre) {
-                afficherResultatRecherche(filtre);
+            public boolean onQueryTextChange(String filter) {
+                afficherResultatRecherche(filter);
                 return false;
             }
         });
@@ -146,7 +143,7 @@ public class SearchResultFragment extends Fragment {
                 }
                 Bundle bundle = new Bundle();
                 bundle.putInt("serie_id", serieBean.getSerie_id());
-                bundle.putString("serie_nom", serieBean.getSerie_nom());
+                bundle.putString("serie_name", serieBean.getSerie_name());
 
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_serieDetail, bundle);
 
@@ -159,27 +156,26 @@ public class SearchResultFragment extends Fragment {
         binding.lvRechercheListeTomes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TomeSerieBean tomeSerieBean;
+                BookBean bookBean;
                 try {
-                    tomeSerieBean = (TomeSerieBean) binding.lvRechercheListeTomes.getItemAtPosition(position);
+                    bookBean = dataBaseHelper.getBookById(((BookBean) binding.lvRechercheListeTomes.getItemAtPosition(position)).getBook_id());
                 } catch (Exception e) {
-                    tomeSerieBean = new TomeSerieBean(-1,"error");
+                    bookBean = new BookBean(-1,"error");
                 }
                 Bundle bundle = new Bundle();
-                bundle.putInt("tome_id", tomeSerieBean.getTome_id());
-                bundle.putInt("tome_numero", tomeSerieBean.getTome_id());
-                bundle.putString("tome_titre", tomeSerieBean.getTome_titre());
-                bundle.putDouble("tome_prix_editeur", tomeSerieBean.getTome_prix_editeur());
-                bundle.putDouble("tome_valeur_connue", tomeSerieBean.getTome_valeur_connue());
-                bundle.putString("tome_date_edition", tomeSerieBean.getTome_date_edition());
-                bundle.putString("tome_isbn", tomeSerieBean.getTome_isbn());
-                bundle.putString("tome_image", tomeSerieBean.getTome_image());
-                bundle.putBoolean("tome_dedicace", tomeSerieBean.isTome_dedicace());
-                bundle.putBoolean("tome_edition_speciale", tomeSerieBean.isTome_edition_speciale());
-                bundle.putString("tome_edition_speciale_libelle", tomeSerieBean.getTome_edition_speciale_libelle());
-                bundle.putInt("serie_id", tomeSerieBean.getSerie_id());
-                bundle.putString("serie_nom", tomeSerieBean.getSerie_nom());
-                bundle.putInt("editeur_id", tomeSerieBean.getEditeur_id());
+                bundle.putInt("book_id", bookBean.getBook_id());
+                bundle.putInt("book_number", bookBean.getBook_number());
+                bundle.putString("book_title", bookBean.getBook_title());
+                bundle.putDouble("book_editor_price", bookBean.getBook_editor_price());
+                bundle.putDouble("book_value", bookBean.getBook_value());
+                bundle.putString("book_edition_date", bookBean.getBook_edition_date());
+                bundle.putString("book_isbn", bookBean.getBook_isbn());
+                bundle.putString("book_picture", bookBean.getBook_picture());
+                bundle.putBoolean("book_autograph", bookBean.isBook_autograph());
+                bundle.putBoolean("book_special_edition", bookBean.isBook_special_edition());
+                bundle.putString("book_special_edition_label", bookBean.getBook_special_edition_label());
+                bundle.putInt("serie_id", bookBean.getSerie_id());
+                bundle.putInt("editor_id", bookBean.getEditor_id());
 
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_tomeDetail, bundle);
 
@@ -192,17 +188,17 @@ public class SearchResultFragment extends Fragment {
         binding.lvRechercheListeAuteurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AuteurBean auteurBean;
+                AuthorBean authorBean;
                 try {
-                    auteurBean = (AuteurBean) binding.lvRechercheListeAuteurs.getItemAtPosition(position);
+                    authorBean = (AuthorBean) binding.lvRechercheListeAuteurs.getItemAtPosition(position);
                 } catch (Exception e) {
-                    auteurBean = new AuteurBean(-1,"error","error","error");
+                    authorBean = new AuthorBean(-1,"error","error","error");
                 }
                 Bundle bundle = new Bundle();
-                bundle.putInt("auteur_id", auteurBean.getAuteur_id());
-                bundle.putString("auteur_pseudo", auteurBean.getAuteur_pseudo());
-                bundle.putString("auteur_nom", auteurBean.getAuteur_nom());
-                bundle.putString("auteur_prenom", auteurBean.getAuteur_prenom());
+                bundle.putInt("author_id", authorBean.getAuthor_id());
+                bundle.putString("author_pseudonym", authorBean.getAuthor_pseudonym());
+                bundle.putString("author_last_name", authorBean.getAuthor_last_name());
+                bundle.putString("author_first_name", authorBean.getAuthor_first_name());
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_auteurDetail, bundle);
             }
         });
@@ -213,32 +209,32 @@ public class SearchResultFragment extends Fragment {
         binding.lvRechercheListeEditeurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                EditeurBean editeurBean;
+                EditorBean editorBean;
                 try {
-                    editeurBean = (EditeurBean) binding.lvRechercheListeEditeurs.getItemAtPosition(position);
+                    editorBean = (EditorBean) binding.lvRechercheListeEditeurs.getItemAtPosition(position);
                 } catch (Exception e) {
-                    editeurBean = new EditeurBean(-1,"error");
+                    editorBean = new EditorBean(-1,"error");
                 }
                 Bundle bundle = new Bundle();
-                bundle.putInt("editeur_id", editeurBean.getEditeur_id());
-                bundle.putString("editeur_nom", editeurBean.getEditeur_nom());
+                bundle.putInt("editor_id", editorBean.getEditor_id());
+                bundle.putString("editor_name", editorBean.getEditor_name());
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_editeurDetail, bundle);
             }
         });
 
     }
 
-    private void afficherResultatRecherche(String filtre){
-        seriesArrayAdapter = new SeriesNbListAdapter(getActivity(), R.layout.listview_row_2col_reverse, dataBaseHelper.listeSeriesFiltre(filtre));
+    private void afficherResultatRecherche(String filter){
+        seriesArrayAdapter = new SeriesNbListAdapter(getActivity(), R.layout.listview_row_2col_reverse, dataBaseHelper.getSeriesListByFilter(filter));
         binding.lvRechercheListeSeries.setAdapter(seriesArrayAdapter);
 
-        tomesArrayAdapter = new TomesNumeroListAdapter(getActivity(), R.layout.listview_row_2col, dataBaseHelper.listeTomesFiltre(filtre));
+        tomesArrayAdapter = new TomesNumeroListAdapter(getActivity(), R.layout.listview_row_2col, dataBaseHelper.getBooksListByFilter(filter));
         binding.lvRechercheListeTomes.setAdapter(tomesArrayAdapter);
 
-        auteursArrayAdapter = new AuteursListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.listeAuteursFiltre(filtre));
+        auteursArrayAdapter = new AuteursListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByFilter(filter));
         binding.lvRechercheListeAuteurs.setAdapter(auteursArrayAdapter);
 
-        editeursArrayAdapter = new EditeursListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.listeEditeursFiltre(filtre));
+        editeursArrayAdapter = new EditeursListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getEditorsListByFilter(filter));
         binding.lvRechercheListeEditeurs.setAdapter(editeursArrayAdapter);
     }
 }

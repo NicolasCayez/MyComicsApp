@@ -24,8 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/rounded_corner_search"
+            app:defaultQueryHint="@string/hintFiltrerRechercher"
             app:iconifiedByDefault="false"
-            app:defaultQueryHint="filtrer ou rechercher"
             app:queryBackground="@android:color/transparent" />
     </LinearLayout>
 
@@ -44,7 +44,7 @@
             android:layout_margin="5dp"
             android:background="@drawable/rounded_corner_button_blue"
             android:fontFamily="@font/kronika"
-            android:text="Chercher"
+            android:text="@string/btnChercher"
             android:textColor="@color/custom_beige" />
     </LinearLayout>
 </LinearLayout>

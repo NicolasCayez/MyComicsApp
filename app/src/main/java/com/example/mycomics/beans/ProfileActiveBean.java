@@ -2,26 +2,26 @@ package com.example.mycomics.beans;
 
 import static java.lang.Integer.parseInt;
 
-public class ProfilActifBean {
-    private Integer profil_id;
+public class ProfileActiveBean {
+    private Integer profile_id;
 
     /* -------------------------------------- */
     // Constructor
     /* -------------------------------------- */
-    public ProfilActifBean(Integer profil_id) {
-        this.profil_id = profil_id;
+    public ProfileActiveBean(Integer profile_id) {
+        this.profile_id = profile_id;
     }
-    public ProfilActifBean() {
+    public ProfileActiveBean() {
     }
 
     /* -------------------------------------- */
     // Get/Set
     /* -------------------------------------- */
-    public Integer getProfil_id() {
-        return profil_id;
+    public Integer getProfile_id() {
+        return profile_id;
     }
-    public void setProfil_id(Integer profil_id) {
-        this.profil_id = profil_id;
+    public void setProfile_id(Integer profile_id) {
+        this.profile_id = profile_id;
     }
 
     /* -------------------------------------- */
@@ -30,6 +30,6 @@ public class ProfilActifBean {
 
     @Override
     public String toString() {
-        return profil_id + "";
+        return profile_id + "";
     }
 }

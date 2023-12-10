@@ -8,18 +8,17 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.mycomics.R;
-import com.example.mycomics.beans.TomeBean;
-import com.example.mycomics.beans.TomeSerieBean;
+import com.example.mycomics.beans.BookSerieBean;
 
 import java.util.List;
 
-public class TomesSerieListAdapter extends ArrayAdapter<TomeSerieBean> {
+public class TomesSerieListAdapter extends ArrayAdapter<BookSerieBean> {
 
     private Context mContext;
     private int id;
-    private List<TomeSerieBean> items ;
+    private List<BookSerieBean> items ;
 
-    public TomesSerieListAdapter(Context context, int textViewResourceId , List<TomeSerieBean> list )
+    public TomesSerieListAdapter(Context context, int textViewResourceId , List<BookSerieBean> list )
     {
         super(context, textViewResourceId, list);
         mContext = context;
@@ -42,14 +41,14 @@ public class TomesSerieListAdapter extends ArrayAdapter<TomeSerieBean> {
 
         if(items.get(position) != null )
         {
-            text1.setText(items.get(position).getSerie_nom());
-            if (items.get(position).getTome_numero() == 0) {
+            text1.setText(items.get(position).getSerie_name());
+            if (items.get(position).getBook_number() == 0) {
                 text2.setText("");
             }else{
-                text1.setText(items.get(position).getSerie_nom());
-                text2.setText("T "+String.valueOf(items.get(position).getTome_numero()));
+                text1.setText(items.get(position).getSerie_name());
+                text2.setText("T "+String.valueOf(items.get(position).getBook_number()));
             }
-            text3.setText(items.get(position).getTome_titre());
+            text3.setText(items.get(position).getBook_title());
         }
 
         return mView;

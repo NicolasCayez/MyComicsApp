@@ -104,7 +104,7 @@ public class SeriesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("filtre", binding.sbSearch.svSearch.getQuery().toString());
+                bundle.putString("filter", binding.sbSearch.svSearch.getQuery().toString());
                 findNavController(SeriesFragment.this).navigate(R.id.searchResultFragment, bundle);
             }
         });
@@ -144,7 +144,7 @@ public class SeriesFragment extends Fragment {
                         } catch (Exception e) {
                             serieBean = new SerieBean(-1, "error" );
                         }
-                        if(dataBaseHelper.verifDoublonSerie(serieBean.getSerie_nom())){
+                        if(dataBaseHelper.checkSerieDuplicate(serieBean.getSerie_name())){
                             Toast.makeText(getActivity(), "Série déjà existante, enregistrement annulé", Toast.LENGTH_LONG).show();
                             popupTextDialog.dismiss(); // Fermeture Popup
                         } else {
@@ -169,7 +169,7 @@ public class SeriesFragment extends Fragment {
                             } catch (Exception e) {
                                 serieBean = new SerieBean(-1, "error" );
                             }
-                            if(dataBaseHelper.verifDoublonSerie(serieBean.getSerie_nom())){
+                            if(dataBaseHelper.checkSerieDuplicate(serieBean.getSerie_name())){
                                 Toast.makeText(getActivity(), "Série déjà existante, enregistrement annulé", Toast.LENGTH_LONG).show();
                                 popupTextDialog.dismiss(); // Fermeture Popup
                             } else {
@@ -211,7 +211,7 @@ public class SeriesFragment extends Fragment {
                 }
                 Bundle bundle = new Bundle();
                 bundle.putInt("serie_id", serieBean.getSerie_id());
-                bundle.putString("serie_nom", serieBean.getSerie_nom());
+                bundle.putString("serie_name", serieBean.getSerie_name());
 
                 findNavController(SeriesFragment.this).navigate(R.id.action_series_to_serieDetail, bundle);
 
@@ -227,9 +227,9 @@ public class SeriesFragment extends Fragment {
 
     private void afficherListeSeries(){
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            seriesArrayAdapter = new SeriesNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.listeSeriesFiltre(binding.sbSearch.svSearch.getQuery().toString()));
+            seriesArrayAdapter = new SeriesNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString()));
         } else {
-            seriesArrayAdapter = new SeriesNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.listeSeries());
+            seriesArrayAdapter = new SeriesNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getSeriesList());
         }
         binding.lvSeriesListeSeries.setAdapter(seriesArrayAdapter);
     }

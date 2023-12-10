@@ -27,7 +27,7 @@ import android.widget.ListView;
 
 import com.example.mycomics.R;
 import com.example.mycomics.adapters.ProfilsListAdapter;
-import com.example.mycomics.beans.ProfilBean;
+import com.example.mycomics.beans.ProfileBean;
 import com.example.mycomics.databinding.FragmentReglagesBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupTextDialog;
@@ -115,8 +115,8 @@ public class ReglagesFragment extends Fragment {
     }
     private void afficherProfilActif() {
         try {
-            System.out.println("test: " + dataBaseHelper.selectProfilSelonProfilActif().getProfil_nom());
-            binding.tvProfilActif.setText(dataBaseHelper.selectProfilSelonProfilActif().getProfil_nom());
+            System.out.println("test: " + dataBaseHelper.getProfileByActiveProfile().getProfile_name());
+            binding.tvProfilActif.setText(dataBaseHelper.getProfileByActiveProfile().getProfile_name());
         } catch (Exception e) {
 
         }
@@ -152,17 +152,17 @@ public class ReglagesFragment extends Fragment {
                 popupTextDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ProfilBean profilBean;
+                        ProfileBean profileBean;
                         try {
-                            profilBean = new ProfilBean(-1, popupTextDialog.getEtPopupText().getText().toString());
+                            profileBean = new ProfileBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                         } catch (Exception e) {
 //                            Toast.makeText(ReglagesActivity.this, "Erreur création profil", Toast.LENGTH_SHORT).show();
-                            profilBean = new ProfilBean(-1, "error" );
+                            profileBean = new ProfileBean(-1, "error" );
                         }
                         popupTextDialog.dismiss(); // Fermeture Popup
                         //Appel DataBaseHelper
                         dataBaseHelper = new DataBaseHelper(getActivity());
-                        boolean success = dataBaseHelper.insertIntoProfils(profilBean);
+                        boolean success = dataBaseHelper.insertIntoProfiles(profileBean);
 //                        afficherListeProfils();
                     }
                 });
@@ -213,18 +213,18 @@ public class ReglagesFragment extends Fragment {
                 popupListDialog.setTitre("Choisissez un profil dans la liste");
                 popupListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 ListView listView = (ListView) popupListDialog.findViewById(R.id.lvPopupList);
-                profilsArrayAdapter = new ProfilsListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.listeProfils());
+                profilsArrayAdapter = new ProfilsListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.getProfilesList());
                 listView.setAdapter(profilsArrayAdapter);
                 //Clic Profil choisi pour modification
                 popupListDialog.getLvPopupListe().setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        ProfilBean profilBean;
+                        ProfileBean profileBean;
                         try {
-                            profilBean = (ProfilBean) popupListDialog.getLvPopupListe().getItemAtPosition(position);
-                            dataBaseHelper.updateProfilActif(dataBaseHelper, ((ProfilBean) popupListDialog.getLvPopupListe().getItemAtPosition(position)).getProfil_id());
+                            profileBean = (ProfileBean) popupListDialog.getLvPopupListe().getItemAtPosition(position);
+                            dataBaseHelper.updateActiveProfile(dataBaseHelper, ((ProfileBean) popupListDialog.getLvPopupListe().getItemAtPosition(position)).getProfile_id());
                         } catch (Exception e) {
-                            profilBean = new ProfilBean(-1, "error" );
+                            profileBean = new ProfileBean(-1, "error" );
                         }
                         popupListDialog.dismiss(); // Fermeture Popup
                         //Appel DataBaseHelper

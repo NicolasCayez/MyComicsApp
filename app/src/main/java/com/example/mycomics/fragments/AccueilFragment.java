@@ -62,7 +62,7 @@ public class AccueilFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("filtre", binding.sbSearch.svSearch.getQuery().toString());
+                bundle.putString("filter", binding.sbSearch.svSearch.getQuery().toString());
                 findNavController(AccueilFragment.this).navigate(R.id.searchResultFragment, bundle);
             }
         });

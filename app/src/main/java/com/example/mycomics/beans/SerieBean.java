@@ -2,14 +2,14 @@ package com.example.mycomics.beans;
 
 public class SerieBean {
     private Integer serie_id;
-    private String serie_nom;
+    private String serie_name;
 
     /* -------------------------------------- */
     // Constructor
     /* -------------------------------------- */
-    public SerieBean(Integer serie_id, String serie_nom) {
+    public SerieBean(Integer serie_id, String serie_name) {
         this.serie_id = serie_id;
-        this.serie_nom = serie_nom;
+        this.serie_name = serie_name;
     }
     public SerieBean() {
     }
@@ -22,11 +22,11 @@ public class SerieBean {
     public void setSerie_id(int serie_id) {
         this.serie_id = serie_id;
     }
-    public String getSerie_nom() {
-        return serie_nom;
+    public String getSerie_name() {
+        return serie_name;
     }
-    public void setSerie_nom(String serie_nom) {
-        this.serie_nom = serie_nom;
+    public void setSerie_name(String serie_name) {
+        this.serie_name = serie_name;
     }
     /* -------------------------------------- */
     // ToString
@@ -36,7 +36,7 @@ public class SerieBean {
     public String toString() {
         return "SerieBean{" +
                 "serie_id=" + serie_id +
-                ", serie_nom='" + serie_nom + '\'' +
+                ", serie_name='" + serie_name + '\'' +
                 '}';
     }
 }

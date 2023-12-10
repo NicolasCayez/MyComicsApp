@@ -22,14 +22,12 @@ import android.widget.Toast;
 
 import com.example.mycomics.R;
 import com.example.mycomics.adapters.AuteursListAdapter;
-import com.example.mycomics.adapters.AuteursNbListAdapter;
 import com.example.mycomics.adapters.EditeursListAdapter;
 import com.example.mycomics.adapters.SeriesListAdapter;
-import com.example.mycomics.beans.AuteurBean;
-import com.example.mycomics.beans.EditeurBean;
+import com.example.mycomics.beans.AuthorBean;
+import com.example.mycomics.beans.BookBean;
+import com.example.mycomics.beans.EditorBean;
 import com.example.mycomics.beans.SerieBean;
-import com.example.mycomics.beans.TomeBean;
-import com.example.mycomics.beans.TomeSerieBean;
 import com.example.mycomics.databinding.FragmentTomeDetailBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupConfirmDialog;
@@ -113,35 +111,37 @@ public class TomeDetailFragment extends Fragment {
         /* -------------------------------------- */
         // Récupération données
         /* -------------------------------------- */
-        Integer tome_id = getArguments().getInt("tome_id");
-        Integer tome_numero = getArguments().getInt("tome_numero");
-        String tome_titre = getArguments().getString("tome_titre");
-        double tome_prix_editeur = getArguments().getDouble("tome_prix_editeur");
-        double tome_valeur_connue = getArguments().getDouble("tome_valeur_connue");
-        String tome_date_edition = getArguments().getString("tome_date_edition");
-        String tome_isbn = getArguments().getString("tome_isbn");
-        String tome_image = getArguments().getString("tome_image");
-        boolean tome_dedicace = getArguments().getBoolean("tome_dedicace");
-        boolean tome_edition_speciale = getArguments().getBoolean("tome_edition_speciale");
-        String tome_edition_speciale_libelle = getArguments().getString("tome_edition_speciale_libelle");
+        Integer book_id = getArguments().getInt("book_id");
+        Integer book_number = getArguments().getInt("book_number");
+        String book_title = getArguments().getString("book_title");
+        double book_editor_price = getArguments().getDouble("book_editor_price");
+        double book_value = getArguments().getDouble("book_value");
+        String book_edition_date = getArguments().getString("book_edition_date");
+        String book_isbn = getArguments().getString("book_isbn");
+        String book_picture = getArguments().getString("book_picture");
+        boolean book_autograph = getArguments().getBoolean("book_autograph");
+        boolean book_special_edition = getArguments().getBoolean("book_special_edition");
+        String book_special_edition_label = getArguments().getString("book_special_edition_label");
         Integer serie_id = getArguments().getInt("serie_id");
-        Integer editeur_id = getArguments().getInt("editeur-id");
-        TomeBean tome = new TomeBean(tome_id, tome_titre, tome_numero, tome_isbn, tome_image, tome_prix_editeur, tome_valeur_connue, tome_date_edition, tome_dedicace, tome_edition_speciale, tome_edition_speciale_libelle, serie_id, editeur_id);
+        Integer editor_id = getArguments().getInt("editor_id");
+        BookBean bookBean = new BookBean(book_id, book_title, book_number, book_isbn, book_picture,
+                book_editor_price, book_value, book_edition_date, book_autograph,
+                book_special_edition, book_special_edition_label, serie_id, editor_id);
         /* -------------------------------------- */
         // Initialisation affichage
         /* -------------------------------------- */
-        afficherDetailTome(tome_id);
+        afficherDetailTome(book_id);
         /* -------------------------------------- */
         // Initialisation Nom fiche
         /* -------------------------------------- */
-        binding.etDetailTomeTitre.setText(tome_titre);
+        binding.etDetailTomeTitre.setText(book_title);
         /* -------------------------------------- */
         // Clic Enregistrer Tome
         /* -------------------------------------- */
         binding.btnDetailTomeSaveTome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveTome(tome_id);
+                saveTome(book_id);
             }
         });
 
@@ -152,7 +152,7 @@ public class TomeDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //sauvegarde modifications non enregistrées
-                saveTome(tome_id);
+                saveTome(book_id);
                 //Création Popup
                 PopupAddListDialog popupAddListDialog = new PopupAddListDialog(getActivity());
                 popupAddListDialog.setTitre("Choisissez un Auteur dans la liste ou créez-en un nouveau");
@@ -160,48 +160,48 @@ public class TomeDetailFragment extends Fragment {
                 popupAddListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                 ListView listView = popupAddListDialog.findViewById(R.id.lvPopupList);
-                auteursArrayAdapter = new AuteursListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.listeAuteurs());
+                auteursArrayAdapter = new AuteursListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.getAuthorsList());
                 listView.setAdapter(auteursArrayAdapter);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        AuteurBean auteurBean = null;
+                        AuthorBean authorBean = null;
                         try {
-                            auteurBean = (AuteurBean) popupAddListDialog.getLvPopupList().getItemAtPosition(position);
+                            authorBean = (AuthorBean) popupAddListDialog.getLvPopupList().getItemAtPosition(position);
                         } catch (Exception e) {
                         }
                         popupAddListDialog.dismiss(); // Fermeture Popup
                         //Appel DataBaseHelper
                         dataBaseHelper = new DataBaseHelper(getActivity());
-                        if (dataBaseHelper.verifDoublonTomeAuteur(tome_id, auteurBean.getAuteur_id())) {
+                        if (dataBaseHelper.checkDetainingBookAuthorPairDuplicate(book_id, authorBean.getAuthor_id())) {
                             // Editeur déjà existant
-                            Toast.makeText(TomeDetailFragment.super.getContext(), "Auteur " + auteurBean.getAuteur_pseudo() + " déjà existant", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TomeDetailFragment.super.getContext(), "Auteur " + authorBean.getAuthor_pseudonym() + " déjà existant", Toast.LENGTH_SHORT).show();
                         } else {
                             // on enregiste
-                            boolean successInsertDetenir = dataBaseHelper.insertIntoEcrire(tome_id, auteurBean.getAuteur_id());
+                            boolean successInsertDetenir = dataBaseHelper.insertIntoWriting(book_id, authorBean.getAuthor_id());
                         }
 
-                        afficherDetailTome(tome_id);
+                        afficherDetailTome(book_id);
                     }
                 });
 
                 popupAddListDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        AuteurBean auteurBean;
+                        AuthorBean authorBean;
                         if (popupAddListDialog.getEtPopupText().getText().length() > 0) {
                             try {
-                                auteurBean = new AuteurBean(-1, popupAddListDialog.getEtPopupText().getText().toString());
+                                authorBean = new AuthorBean(-1, popupAddListDialog.getEtPopupText().getText().toString());
                             } catch (Exception e) {
     //                            Toast.makeText(ReglagesActivity.this, "Erreur création profil", Toast.LENGTH_SHORT).show();
-                                auteurBean = new AuteurBean(-1, "error" );
+                                authorBean = new AuthorBean(-1, "error" );
                             }
                             popupAddListDialog.dismiss(); // Fermeture Popup
                             //Appel DataBaseHelper
                             dataBaseHelper = new DataBaseHelper(getActivity());
-                            boolean successInsertAuteur = dataBaseHelper.insertIntoAuteurs(auteurBean);
-                            boolean successInsertEcrire = dataBaseHelper.insertIntoEcrire(tome_id, dataBaseHelper.selectDernierAuteurAjoute(auteurBean).getAuteur_id());
-    //                        afficherDetailTome(tome_id)
+                            boolean successInsertAuteur = dataBaseHelper.insertIntoAuthors(authorBean);
+                            boolean successInsertEcrire = dataBaseHelper.insertIntoWriting(book_id, dataBaseHelper.getAuthorLatest(authorBean).getAuthor_id());
+    //                        afficherDetailTome(book_id)
                         }
                     }
                 });
@@ -216,7 +216,7 @@ public class TomeDetailFragment extends Fragment {
                 popupAddListDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        afficherDetailTome(tome_id);
+                        afficherDetailTome(book_id);
                     }
                 });
             }
@@ -229,16 +229,16 @@ public class TomeDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //sauvegarde modifications non enregistrées
-                saveTome(tome_id);
-                EditeurBean editeurBean;
+                saveTome(book_id);
+                EditorBean editorBean;
                 try {
-                    editeurBean = dataBaseHelper.selectEditeurSelonTomeId(tome_id);
+                    editorBean = dataBaseHelper.getEditorByBookId(book_id);
                 } catch (Exception e) {
-                    editeurBean = new EditeurBean  (-1,"error");
+                    editorBean = new EditorBean(-1,"error");
                 }
                 Bundle bundle = new Bundle();
-                bundle.putInt("editeur_id", editeurBean.getEditeur_id());
-                bundle.putString("editeur_nom", editeurBean.getEditeur_nom());
+                bundle.putInt("editor_id", editorBean.getEditor_id());
+                bundle.putString("editeur_nom", editorBean.getEditor_name());
 
                 findNavController(TomeDetailFragment.this).navigate(R.id.action_tomeDetail_to_editeurDetai, bundle);
             }
@@ -251,28 +251,28 @@ public class TomeDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //sauvegarde modifications non enregistrées
-                saveTome(tome_id);
+                saveTome(book_id);
                 //Création Popup
                 PopupListDialog popupListDialog = new PopupListDialog(getActivity());
                 popupListDialog.setTitre("Choisissez un Editeur dans la liste");
                 popupListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                 ListView listView = (ListView) popupListDialog.findViewById(R.id.lvPopupList);
-                editeursArrayAdapter = new EditeursListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.listeEditeurs());
+                editeursArrayAdapter = new EditeursListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.getEditorsList());
                 listView.setAdapter(editeursArrayAdapter);
                 //Clic Editeur choisi pour modification
                 popupListDialog.getLvPopupListe().setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        EditeurBean editeurBean;
+                        EditorBean editorBean;
                         try {
-                            editeurBean = (EditeurBean) popupListDialog.getLvPopupListe().getItemAtPosition(position);
-                            dataBaseHelper.updateEditeurDuTome(dataBaseHelper, editeurBean, tome_id);
+                            editorBean = (EditorBean) popupListDialog.getLvPopupListe().getItemAtPosition(position);
+                            dataBaseHelper.updateBookEditor(dataBaseHelper, editorBean, book_id);
                         } catch (Exception e) {
-                            editeurBean = new EditeurBean(-1, "error" );
+                            editorBean = new EditorBean(-1, "error" );
                         }
                         popupListDialog.dismiss(); // Fermeture Popup
-                        afficherDetailTome(tome_id);
+                        afficherDetailTome(book_id);
 
                         //Appel DataBaseHelper
 //                        dataBaseHelper = new DataBaseHelper(getActivity());
@@ -285,7 +285,7 @@ public class TomeDetailFragment extends Fragment {
                     }
                 });
                 popupListDialog.Build();
-                afficherDetailTome(tome_id);
+                afficherDetailTome(book_id);
 
             }
         });
@@ -297,7 +297,7 @@ public class TomeDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //sauvegarde modifications non enregistrées
-                saveTome(tome_id);
+                saveTome(book_id);
                 //Création Popup
                 PopupTextDialog popupTextDialog = new PopupTextDialog(getActivity());
                 popupTextDialog.setTitre("Entrez un nouvel éditeur");
@@ -307,28 +307,28 @@ public class TomeDetailFragment extends Fragment {
                 popupTextDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        EditeurBean editeurBean;
+                        EditorBean editorBean;
                         boolean success = true;
                         try {
-                            editeurBean = new EditeurBean(-1, popupTextDialog.getEtPopupText().getText().toString());
+                            editorBean = new EditorBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                         } catch (Exception e) {
 //                            Toast.makeText(ReglagesActivity.this, "Erreur création Editeur", Toast.LENGTH_SHORT).show();
-                            editeurBean = new EditeurBean(-1, "error");
+                            editorBean = new EditorBean(-1, "error");
                             success = false;
                         }
                         popupTextDialog.dismiss(); // Fermeture Popup
                         //Appel DataBaseHelper
                         dataBaseHelper = new DataBaseHelper(getActivity());
-                        if (dataBaseHelper.verifDoublonEditeur(editeurBean.getEditeur_nom()) && !success) {
+                        if (dataBaseHelper.checkEditorDuplicate(editorBean.getEditor_name()) && !success) {
                             // Editeur déjà existant
                             Toast.makeText(TomeDetailFragment.super.getContext(), "Editeur " + binding.tvDetailTomeEditeur.getText().toString() + " déjà existant", Toast.LENGTH_SHORT).show();
                         } else {
                             // on enregiste
-                            boolean successInsert = dataBaseHelper.insertIntoEditeurs(editeurBean);
-                            boolean successUpdate = dataBaseHelper.updateEditeurDuTome(dataBaseHelper, dataBaseHelper.selectDernierEditeurAjoute(editeurBean), tome_id);
+                            boolean successInsert = dataBaseHelper.insertIntoEditors(editorBean);
+                            boolean successUpdate = dataBaseHelper.updateBookEditor(dataBaseHelper, dataBaseHelper.getEditorLatest(editorBean), book_id);
 
                         }
-                        afficherDetailTome(tome_id);
+                        afficherDetailTome(book_id);
                     }
                 });
                 popupTextDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
@@ -338,7 +338,7 @@ public class TomeDetailFragment extends Fragment {
                     }
                 });
                 popupTextDialog.build();
-                afficherDetailTome(tome_id);
+                afficherDetailTome(book_id);
             }
         });
 
@@ -349,16 +349,16 @@ public class TomeDetailFragment extends Fragment {
              @Override
              public void onClick(View v) {
                  //sauvegarde modifications non enregistrées
-                 saveTome(tome_id);
+                 saveTome(book_id);
                  SerieBean serieBean;
                  try {
-                     serieBean = dataBaseHelper.selectSerieSelonTomeId(tome_id);
+                     serieBean = dataBaseHelper.getSerieByBookId(book_id);
                  } catch (Exception e) {
                      serieBean = new SerieBean(-1,"error");
                  }
                  Bundle bundle = new Bundle();
                  bundle.putInt("serie_id", serieBean.getSerie_id());
-                 bundle.putString("serie_nom", serieBean.getSerie_nom());
+                 bundle.putString("serie_name", serieBean.getSerie_name());
 
                  findNavController(TomeDetailFragment.this).navigate(R.id.action_tomeDetail_to_serieDetail, bundle);
              }
@@ -371,13 +371,13 @@ public class TomeDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //sauvegarde modifications non enregistrées
-                saveTome(tome_id);
+                saveTome(book_id);
                 //Création Popup
                 PopupListDialog popupListDialog = new PopupListDialog(getActivity());
                 popupListDialog.setTitre("Choisissez une série dans la liste");
                 popupListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 ListView listView = (ListView) popupListDialog.findViewById(R.id.lvPopupList);
-                seriesArrayAdapter = new SeriesListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.listeSeries());
+                seriesArrayAdapter = new SeriesListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getSeriesList());
                 listView.setAdapter(seriesArrayAdapter);
                 //Clic Editeur choisi pour modification
                 popupListDialog.getLvPopupListe().setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -386,12 +386,12 @@ public class TomeDetailFragment extends Fragment {
                         SerieBean serieBean;
                         try {
                             serieBean = (SerieBean) popupListDialog.getLvPopupListe().getItemAtPosition(position);
-                            dataBaseHelper.updateSerieDuTome(dataBaseHelper, serieBean, tome_id);
+                            dataBaseHelper.updateBookSerie(dataBaseHelper, serieBean, book_id);
                         } catch (Exception e) {
                             serieBean = new SerieBean(-1, "error");
                         }
                         popupListDialog.dismiss(); // Fermeture Popup
-                        afficherDetailTome(tome_id);
+                        afficherDetailTome(book_id);
 
                         //Appel DataBaseHelper
 //                        dataBaseHelper = new DataBaseHelper(getActivity());
@@ -404,7 +404,7 @@ public class TomeDetailFragment extends Fragment {
                     }
                 });
                 popupListDialog.Build();
-                afficherDetailTome(tome_id);
+                afficherDetailTome(book_id);
 
             }
         });
@@ -416,7 +416,7 @@ public class TomeDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //sauvegarde modifications non enregistrées
-                saveTome(tome_id);
+                saveTome(book_id);
                 //Création Popup
                 PopupTextDialog popupTextDialog = new PopupTextDialog(getActivity());
                 popupTextDialog.setTitre("Entrez une nouvelle série");
@@ -437,16 +437,16 @@ public class TomeDetailFragment extends Fragment {
                         popupTextDialog.dismiss(); // Fermeture Popup
                         //Appel DataBaseHelper
                         dataBaseHelper = new DataBaseHelper(getActivity());
-                        if (dataBaseHelper.verifDoublonSerie(serieBean.getSerie_nom()) && !success) {
+                        if (dataBaseHelper.checkSerieDuplicate(serieBean.getSerie_name()) && !success) {
                             // Editeur déjà existant
                             Toast.makeText(TomeDetailFragment.super.getContext(), "Série " + binding.tvDetailTomeTitreSerie.getText().toString() + " déjà existante", Toast.LENGTH_SHORT).show();
                         } else {
                             // on enregiste
                             boolean successInsert = dataBaseHelper.insertIntoSeries(serieBean);
-                            boolean successUpdate = dataBaseHelper.updateSerieDuTome(dataBaseHelper, dataBaseHelper.DerniereSerieAjoutee(serieBean), tome_id);
+                            boolean successUpdate = dataBaseHelper.updateBookSerie(dataBaseHelper, dataBaseHelper.getSerieLatest(serieBean), book_id);
 
                         }
-                        afficherDetailTome(tome_id);
+                        afficherDetailTome(book_id);
                     }
                 });
                 popupTextDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
@@ -456,7 +456,7 @@ public class TomeDetailFragment extends Fragment {
                     }
                 });
                 popupTextDialog.build();
-                afficherDetailTome(tome_id);
+                afficherDetailTome(book_id);
             }
         });
 
@@ -466,17 +466,17 @@ public class TomeDetailFragment extends Fragment {
         binding.lvDetailTomeAuteurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AuteurBean auteurBean;
+                AuthorBean authorBean;
                 try {
-                    auteurBean = (AuteurBean) binding.lvDetailTomeAuteurs.getItemAtPosition(position);
+                    authorBean = (AuthorBean) binding.lvDetailTomeAuteurs.getItemAtPosition(position);
                 } catch (Exception e) {
-                    auteurBean = new AuteurBean(-1,"error","error","error");
+                    authorBean = new AuthorBean(-1,"error","error","error");
                 }
                 Bundle bundle = new Bundle();
-                bundle.putInt("auteur_id", auteurBean.getAuteur_id());
-                bundle.putString("auteur_pseudo", auteurBean.getAuteur_pseudo());
-                bundle.putString("auteur_nom", auteurBean.getAuteur_nom());
-                bundle.putString("auteur_prenom", auteurBean.getAuteur_prenom());
+                bundle.putInt("author_id", authorBean.getAuthor_id());
+                bundle.putString("author_pseudonym", authorBean.getAuthor_pseudonym());
+                bundle.putString("author_last_name", authorBean.getAuthor_last_name());
+                bundle.putString("author_first_name", authorBean.getAuthor_first_name());
 
                 findNavController(TomeDetailFragment.this).navigate(R.id.action_tomeDetail_to_auteurDetail, bundle);
 
@@ -490,17 +490,17 @@ public class TomeDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //sauvegarde modifications non enregistrées
-                saveTome(tome_id);
+                saveTome(book_id);
                 //Création Popup
                 PopupConfirmDialog popupConfirmDialog = new PopupConfirmDialog(getActivity());
-                popupConfirmDialog.setTitre( "Tome\n\" " + tome_titre + " \"\nConfirmer le retrait de la série\n\" " + dataBaseHelper.selectSerieSelonTomeId(tome_id).getSerie_nom() + " \"");
+                popupConfirmDialog.setTitre( "Tome\n\" " + book_title + " \"\nConfirmer le retrait de la série\n\" " + dataBaseHelper.getSerieByBookId(book_id).getSerie_name() + " \"");
                 popupConfirmDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 popupConfirmDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popupConfirmDialog.dismiss();
-                        boolean successUpdate = dataBaseHelper.deleteSerieDuTome(dataBaseHelper, tome_id);
-                        afficherDetailTome(tome_id);
+                        boolean successUpdate = dataBaseHelper.deleteBookSerie(dataBaseHelper, book_id);
+                        afficherDetailTome(book_id);
                     }
                 });
                 popupConfirmDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
@@ -510,7 +510,7 @@ public class TomeDetailFragment extends Fragment {
                     }
                 });
                 popupConfirmDialog.build();
-                afficherDetailTome(tome_id);
+                afficherDetailTome(book_id);
             }
         });
 
@@ -521,17 +521,17 @@ public class TomeDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //sauvegarde modifications non enregistrées
-                saveTome(tome_id);
+                saveTome(book_id);
                 //Création Popup
                 PopupConfirmDialog popupConfirmDialog = new PopupConfirmDialog(getActivity());
-                popupConfirmDialog.setTitre( "Tome\n\" " + tome_titre + " \"\nConfirmer le retrait de l'édieur\n\" " + dataBaseHelper.selectEditeurSelonTomeId(tome_id).getEditeur_nom() + " \"");
+                popupConfirmDialog.setTitre( "Tome\n\" " + book_title + " \"\nConfirmer le retrait de l'édieur\n\" " + dataBaseHelper.getEditorByBookId(book_id).getEditor_name() + " \"");
                 popupConfirmDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 popupConfirmDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popupConfirmDialog.dismiss();
-                        boolean successUpdate = dataBaseHelper.deleteEditeurDuTome(dataBaseHelper, tome_id);
-                        afficherDetailTome(tome_id);
+                        boolean successUpdate = dataBaseHelper.deleteBookEditor(dataBaseHelper, book_id);
+                        afficherDetailTome(book_id);
                     }
                 });
                 popupConfirmDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
@@ -541,7 +541,7 @@ public class TomeDetailFragment extends Fragment {
                     }
                 });
                 popupConfirmDialog.build();
-                afficherDetailTome(tome_id);
+                afficherDetailTome(book_id);
             }
         });
 
@@ -552,27 +552,27 @@ public class TomeDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //sauvegarde modifications non enregistrées
-                saveTome(tome_id);
+                saveTome(book_id);
                 //Création Popup
                 PopupListDialog popupListDialog = new PopupListDialog(getActivity());
-                popupListDialog.setTitre( "Tome\n\" " + tome_titre + " \"\nChoisissez l'auteur à retirer");
+                popupListDialog.setTitre( "Tome\n\" " + book_title + " \"\nChoisissez l'auteur à retirer");
                 popupListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 ListView listView = (ListView) popupListDialog.findViewById(R.id.lvPopupList);
-                auteursArrayAdapter = new AuteursListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.listeAuteursSelonTomeId(tome_id));
+                auteursArrayAdapter = new AuteursListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByBookId(book_id));
                 listView.setAdapter(auteursArrayAdapter);
                 //Clic Editeur choisi pour modification
                 popupListDialog.getLvPopupListe().setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        AuteurBean auteurBean;
+                        AuthorBean authorBean;
                         try {
-                            auteurBean = (AuteurBean) popupListDialog.getLvPopupListe().getItemAtPosition(position);
-                            boolean successUpdate = dataBaseHelper.deleteAuteurDuTome(dataBaseHelper, auteurBean.getAuteur_id(), tome_id);
+                            authorBean = (AuthorBean) popupListDialog.getLvPopupListe().getItemAtPosition(position);
+                            boolean successUpdate = dataBaseHelper.deleteBookAuthor(dataBaseHelper, authorBean.getAuthor_id(), book_id);
                         } catch (Exception e) {
-                            auteurBean = new AuteurBean(-1, "error");
+                            authorBean = new AuthorBean(-1, "error");
                         }
                         popupListDialog.dismiss(); // Fermeture Popup
-                        afficherDetailTome(tome_id);
+                        afficherDetailTome(book_id);
                     }
                 });
                 popupListDialog.getBtnPopupAnnuler().setOnClickListener(new View.OnClickListener() {
@@ -582,7 +582,7 @@ public class TomeDetailFragment extends Fragment {
                     }
                 });
                 popupListDialog.Build();
-                afficherDetailTome(tome_id);
+                afficherDetailTome(book_id);
             }
         });
 
@@ -594,32 +594,32 @@ public class TomeDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //sauvegarde modifications non enregistrées
-                saveTome(tome_id);
+                saveTome(book_id);
                 //Création Popup
                 PopupTextDialog popupTextDialog = new PopupTextDialog(getActivity());
-                popupTextDialog.setTitre( "Tome\n\" " + tome_titre + " \"\nOpération irréversible, confirmer la suppression");
+                popupTextDialog.setTitre( "Tome\n\" " + book_title + " \"\nOpération irréversible, confirmer la suppression");
                 popupTextDialog.setHint("Nom du tome à supprimer");
                 popupTextDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 popupTextDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        TomeBean tomeBean;
+                        BookBean bookBean;
                         boolean success = true;
                         try {
-                            tomeBean = new TomeBean(-1, popupTextDialog.getEtPopupText().getText().toString());
+                            bookBean = new BookBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                         } catch (Exception e) {
-                            tomeBean = new TomeBean(-1, "error");
+                            bookBean = new BookBean(-1, "error");
                             success = false;
                         }
                         popupTextDialog.dismiss(); // Fermeture Popup
                         //Appel DataBaseHelper
                         dataBaseHelper = new DataBaseHelper(getActivity());
-                        if (!dataBaseHelper.selectTomeSelonTomeId(tome_id).getTome_titre().equals(popupTextDialog.getEtPopupText().getText().toString())) {
+                        if (!dataBaseHelper.getBookById(book_id).getBook_title().equals(popupTextDialog.getEtPopupText().getText().toString())) {
                             // Titre saisi différent
                             Toast.makeText(TomeDetailFragment.super.getActivity(), "Le nom ne correspond pas", Toast.LENGTH_LONG).show();
                         } else {
                             // on enlève le tome et ses contraintes dans ECRIRE et DETENIR
-                            boolean successUpdate = dataBaseHelper.deleteTome(dataBaseHelper, tome_id);
+                            boolean successUpdate = dataBaseHelper.deleteBook(dataBaseHelper, book_id);
                             findNavController(TomeDetailFragment.this).navigate(R.id.tomesFragment);
                         }
                     }
@@ -630,23 +630,23 @@ public class TomeDetailFragment extends Fragment {
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
                             // Perform action on key press
-                            TomeBean tomeBean;
+                            BookBean bookBean;
                             boolean success = true;
                             try {
-                                tomeBean = new TomeBean(-1, popupTextDialog.getEtPopupText().getText().toString());
+                                bookBean = new BookBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                             } catch (Exception e) {
-                                tomeBean = new TomeBean(-1, "error");
+                                bookBean = new BookBean(-1, "error");
                                 success = false;
                             }
                             popupTextDialog.dismiss(); // Fermeture Popup
                             //Appel DataBaseHelper
                             dataBaseHelper = new DataBaseHelper(getActivity());
-                            if (!dataBaseHelper.selectTomeSelonTomeId(tome_id).getTome_titre().equals(popupTextDialog.getEtPopupText().getText().toString())) {
+                            if (!dataBaseHelper.getBookById(book_id).getBook_title().equals(popupTextDialog.getEtPopupText().getText().toString())) {
                                 // Titre saisi différent
                                 Toast.makeText(TomeDetailFragment.super.getActivity(), "Le nom ne correspond pas", Toast.LENGTH_LONG).show();
                             } else {
                                 // on enlève le tome et ses contraintes dans ECRIRE et DETENIR
-                                boolean successUpdate = dataBaseHelper.deleteTome(dataBaseHelper, tome_id);
+                                boolean successUpdate = dataBaseHelper.deleteBook(dataBaseHelper, book_id);
                                 findNavController(TomeDetailFragment.this).navigate(R.id.tomesFragment);
                             }
                         }
@@ -660,7 +660,7 @@ public class TomeDetailFragment extends Fragment {
                     }
                 });
                 popupTextDialog.build();
-                afficherDetailTome(tome_id);
+                afficherDetailTome(book_id);
             }
         });
 
@@ -671,31 +671,31 @@ public class TomeDetailFragment extends Fragment {
         binding = null;
     }
 
-    private void afficherDetailTome(Integer tome_id){
-        TomeBean tome = dataBaseHelper.selectTomeSelonTomeId(tome_id);
-        binding.etDetailTomeTitre.setText(tome.getTome_titre());
-        if (tome.getTome_numero() == 0 || tome.getTome_numero() == null) {
+    private void afficherDetailTome(Integer book_id){
+        BookBean bookBean = dataBaseHelper.getBookById(book_id);
+        binding.etDetailTomeTitre.setText(bookBean.getBook_title());
+        if (bookBean.getBook_number() == 0 || bookBean.getBook_number() == null) {
             binding.etDetailTomeNumero.setText("");
         } else {
-            binding.etDetailTomeNumero.setText(String.valueOf(tome.getTome_numero()));
+            binding.etDetailTomeNumero.setText(String.valueOf(bookBean.getBook_number()));
         }
-        binding.tvDetailTomeSerie.setText(dataBaseHelper.selectSerieSelonTomeId(tome_id).getSerie_nom());
-        binding.etDetailTomeISBN.setText(tome.getTome_isbn() == null ? "" : String.valueOf(tome.getTome_isbn()));//---------------
-        binding.etDetailTomePrixEditeur.setText(tome.getTome_prix_editeur() == 0 ? "" : String.valueOf(tome.getTome_prix_editeur()));
-        binding.etDetailTomeValeurActuelle.setText(tome.getTome_valeur_connue() == 0 ? "" : String.valueOf(tome.getTome_valeur_connue()));
-        binding.etDetailTomeDateEdition.setText(tome.getTome_date_edition() == null ? "" : String.valueOf(tome.getTome_date_edition()));//---------------
-        binding.chkDetailTomeDedicace.setChecked(Boolean.valueOf(tome.isTome_dedicace()));
-        binding.chkDetailTomeEditionSpeciale.setChecked(Boolean.valueOf(tome.isTome_edition_speciale()));
-        binding.etDetailTomeEditionSpecialeLibelle.setText(tome.getTome_edition_speciale_libelle() == null ? "" : String.valueOf( tome.getTome_edition_speciale_libelle()));//---------------
+        binding.tvDetailTomeSerie.setText(dataBaseHelper.getSerieByBookId(book_id).getSerie_name());
+        binding.etDetailTomeISBN.setText(bookBean.getBook_isbn() == null ? "" : String.valueOf(bookBean.getBook_isbn()));//---------------
+        binding.etDetailTomePrixEditeur.setText(bookBean.getBook_editor_price() == 0 ? "" : String.valueOf(bookBean.getBook_editor_price()));
+        binding.etDetailTomeValeurActuelle.setText(bookBean.getBook_value() == 0 ? "" : String.valueOf(bookBean.getBook_value()));
+        binding.etDetailTomeDateEdition.setText(bookBean.getBook_edition_date() == null ? "" : String.valueOf(bookBean.getBook_edition_date()));//---------------
+        binding.chkDetailTomeDedicace.setChecked(Boolean.valueOf(bookBean.isBook_autograph()));
+        binding.chkDetailTomeEditionSpeciale.setChecked(Boolean.valueOf(bookBean.isBook_special_edition()));
+        binding.etDetailTomeEditionSpecialeLibelle.setText(bookBean.getBook_special_edition_label() == null ? "" : String.valueOf( bookBean.getBook_special_edition_label()));//---------------
         //image ici
-        auteursArrayAdapter = new AuteursListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.listeAuteursSelonTomeId(tome_id));
+        auteursArrayAdapter = new AuteursListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByBookId(book_id));
         binding.lvDetailTomeAuteurs.setAdapter(auteursArrayAdapter);
-        binding.tvDetailTomeEditeur.setText(dataBaseHelper.selectEditeurSelonTomeId(tome_id).getEditeur_nom());
+        binding.tvDetailTomeEditeur.setText(dataBaseHelper.getEditorByBookId(book_id).getEditor_name());
     }
 
-    private void saveTome(int tome_id){
-        TomeBean tomeModif = new TomeBean(
-                tome_id,
+    private void saveTome(int book_id){
+        BookBean tomeModif = new BookBean(
+                book_id,
                 binding.etDetailTomeTitre.getText().toString(),
                 binding.etDetailTomeNumero.getText().length() == 0 ? null : Integer.parseInt(binding.etDetailTomeNumero.getText().toString()),
                 binding.etDetailTomeISBN.getText().toString(),
@@ -706,9 +706,9 @@ public class TomeDetailFragment extends Fragment {
                 binding.chkDetailTomeDedicace.isChecked(),
                 binding.chkDetailTomeEditionSpeciale.isChecked(),
                 binding.etDetailTomeEditionSpecialeLibelle.getText().toString(),
-                dataBaseHelper.selectSerieSelonTomeId(tome_id).getSerie_id(),
-                dataBaseHelper.selectEditeurSelonTomeId(tome_id).getEditeur_id());
-        boolean updateOk = dataBaseHelper.updateTome(dataBaseHelper, tomeModif);
+                dataBaseHelper.getSerieByBookId(book_id).getSerie_id(),
+                dataBaseHelper.getEditorByBookId(book_id).getEditor_id());
+        boolean updateOk = dataBaseHelper.updateBook(dataBaseHelper, tomeModif);
         if (updateOk) {
             Toast.makeText(getActivity(),"Tome modifié avec succès" , Toast.LENGTH_SHORT);
         } else {

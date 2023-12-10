@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.example.mycomics.R;
 import com.example.mycomics.adapters.EditeursNbListAdapter;
-import com.example.mycomics.beans.EditeurBean;
+import com.example.mycomics.beans.EditorBean;
 import com.example.mycomics.databinding.FragmentEditeursBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupTextDialog;
@@ -105,7 +105,7 @@ public class EditeursFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("filtre", binding.sbSearch.svSearch.getQuery().toString());
+                bundle.putString("filter", binding.sbSearch.svSearch.getQuery().toString());
                 findNavController(EditeursFragment.this).navigate(R.id.searchResultFragment, bundle);
             }
         });
@@ -138,18 +138,18 @@ public class EditeursFragment extends Fragment {
                 popupTextDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        EditeurBean editeurBean;
+                        EditorBean editorBean;
                         try {
-                            editeurBean = new EditeurBean(-1, popupTextDialog.getEtPopupText().getText().toString());
+                            editorBean = new EditorBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                         } catch (Exception e) {
-                            editeurBean = new EditeurBean(-1, "error" );
+                            editorBean = new EditorBean(-1, "error" );
                         }
-                        if(dataBaseHelper.verifDoublonEditeur(editeurBean.getEditeur_nom())){
+                        if(dataBaseHelper.checkEditorDuplicate(editorBean.getEditor_name())){
                             Toast.makeText(getActivity(), "Editeur déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show();
                             popupTextDialog.dismiss(); // Fermeture Popup
                         } else {
                             //Appel DataBaseHelper
-                            boolean success = dataBaseHelper.insertIntoEditeurs(editeurBean);
+                            boolean success = dataBaseHelper.insertIntoEditors(editorBean);
                             Toast.makeText(getActivity(), "Editeur créé", Toast.LENGTH_SHORT).show();
                             popupTextDialog.dismiss(); // Fermeture Popup
                         }
@@ -163,18 +163,18 @@ public class EditeursFragment extends Fragment {
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
                             // Perform action on key press
-                            EditeurBean editeurBean;
+                            EditorBean editorBean;
                             try {
-                                editeurBean = new EditeurBean(-1, popupTextDialog.getEtPopupText().getText().toString());
+                                editorBean = new EditorBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                             } catch (Exception e) {
-                                editeurBean = new EditeurBean(-1, "error" );
+                                editorBean = new EditorBean(-1, "error" );
                             }
-                            if(dataBaseHelper.verifDoublonEditeur(editeurBean.getEditeur_nom())){
+                            if(dataBaseHelper.checkEditorDuplicate(editorBean.getEditor_name())){
                                 Toast.makeText(getActivity(), "Editeur déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show();
                                 popupTextDialog.dismiss(); // Fermeture Popup
                             } else {
                                 //Appel DataBaseHelper
-                                boolean success = dataBaseHelper.insertIntoEditeurs(editeurBean);
+                                boolean success = dataBaseHelper.insertIntoEditors(editorBean);
                                 Toast.makeText(getActivity(), "Editeur créé", Toast.LENGTH_SHORT).show();
                                 popupTextDialog.dismiss(); // Fermeture Popup
                             }
@@ -203,15 +203,15 @@ public class EditeursFragment extends Fragment {
         binding.lvEditeursListeEditeurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                EditeurBean editeurBean;
+                EditorBean editorBean;
                 try {
-                    editeurBean = (EditeurBean) binding.lvEditeursListeEditeurs.getItemAtPosition(position);
+                    editorBean = (EditorBean) binding.lvEditeursListeEditeurs.getItemAtPosition(position);
                 } catch (Exception e) {
-                    editeurBean = new EditeurBean(-1,"error");
+                    editorBean = new EditorBean(-1,"error");
                 }
                 Bundle bundle = new Bundle();
-                bundle.putInt("editeur_id", editeurBean.getEditeur_id());
-                bundle.putString("editeur_nom", editeurBean.getEditeur_nom());
+                bundle.putInt("editor_id", editorBean.getEditor_id());
+                bundle.putString("editor_name", editorBean.getEditor_name());
                 findNavController(EditeursFragment.this).navigate(R.id.action_editeurs_to_editeurDetail, bundle);
 
             }
@@ -225,9 +225,9 @@ public class EditeursFragment extends Fragment {
     }
     private void afficherListeEditeurs(){
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            editeursArrayAdapter = new EditeursNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.listeEditeursFiltre(binding.sbSearch.svSearch.getQuery().toString()));
+            editeursArrayAdapter = new EditeursNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getEditorsListByFilter(binding.sbSearch.svSearch.getQuery().toString()));
         } else {
-            editeursArrayAdapter = new EditeursNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.listeEditeurs());
+            editeursArrayAdapter = new EditeursNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getEditorsList());
         }
         binding.lvEditeursListeEditeurs.setAdapter(editeursArrayAdapter);
     }

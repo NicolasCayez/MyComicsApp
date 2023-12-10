@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/kronika"
         android:gravity="center|top"
-        android:text="Menu"
+        android:text="@string/MenuMenuHamburger"
         android:textColor="@color/custom_blue"
         android:textSize="24sp" />
 
@@ -41,7 +41,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:fontFamily="@font/kronika"
-                android:text="COLLEC"
+                android:text="@string/collecMenuHamburger"
                 android:textColor="@color/custom_beige" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -69,7 +69,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:fontFamily="@font/kronika"
-                android:text="SERIES"
+                android:text="@string/seriesMenuHamburger"
                 android:textColor="@color/custom_beige" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -97,7 +97,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:fontFamily="@font/kronika"
-                android:text="TOMES"
+                android:text="@string/tomesMenuHamburger"
                 android:textColor="@color/custom_beige" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -132,7 +132,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:fontFamily="@font/kronika"
-                android:text="AUTEURS"
+                android:text="@string/auteursMenuHamburger"
                 android:textColor="@color/custom_beige" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -160,7 +160,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:fontFamily="@font/kronika"
-                android:text="EDITEURS"
+                android:text="@string/editeursMenuHamburger"
                 android:textColor="@color/custom_beige" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -188,7 +188,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:fontFamily="@font/kronika"
-                android:text="REGLAGES"
+                android:text="@string/reglagesMenuHamburger"
                 android:textColor="@color/custom_beige" />
 
             <androidx.appcompat.widget.AppCompatImageView

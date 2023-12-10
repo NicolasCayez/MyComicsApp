@@ -42,7 +42,7 @@ public class SeriesListAdapterFiltre extends ArrayAdapter<SerieBean> {
 
         if(items.get(position) != null )
         {
-            text.setText(items.get(position).getSerie_nom().toString());
+            text.setText(items.get(position).getSerie_name().toString());
         }
 
         return mView;

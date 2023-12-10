@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.example.mycomics.R;
 import com.example.mycomics.adapters.AuteursNbListAdapter;
-import com.example.mycomics.beans.AuteurBean;
+import com.example.mycomics.beans.AuthorBean;
 import com.example.mycomics.databinding.FragmentAuteursBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupTextDialog;
@@ -102,7 +102,7 @@ public class AuteursFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("filtre", binding.sbSearch.svSearch.getQuery().toString());
+                bundle.putString("filter", binding.sbSearch.svSearch.getQuery().toString());
                 findNavController(AuteursFragment.this).navigate(R.id.searchResultFragment, bundle);
             }
         });
@@ -135,19 +135,19 @@ public class AuteursFragment extends Fragment {
                 popupTextDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        AuteurBean auteurBean;
+                        AuthorBean authorBean;
                         try {
-                            auteurBean = new AuteurBean(-1, popupTextDialog.getEtPopupText().getText().toString());
+                            authorBean = new AuthorBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                         } catch (Exception e) {
 //                            Toast.makeText(ReglagesActivity.this, "Erreur création auteur", Toast.LENGTH_SHORT).show();
-                            auteurBean = new AuteurBean(-1, "error" );
+                            authorBean = new AuthorBean(-1, "error" );
                         }
-                        if(dataBaseHelper.verifDoublonAuteur(auteurBean.getAuteur_pseudo())){
+                        if(dataBaseHelper.checkAuthorDuplicate(authorBean.getAuthor_pseudonym())){
                             Toast.makeText(getActivity(), "Auteur déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show();
                             popupTextDialog.dismiss(); // Fermeture Popup
                         } else {
                             //Appel DataBaseHelper
-                            boolean success = dataBaseHelper.insertIntoAuteurs(auteurBean);
+                            boolean success = dataBaseHelper.insertIntoAuthors(authorBean);
                             Toast.makeText(getActivity(), "Auteur créé", Toast.LENGTH_SHORT).show();
                             popupTextDialog.dismiss(); // Fermeture Popup
                         }
@@ -161,19 +161,19 @@ public class AuteursFragment extends Fragment {
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
                             // Perform action on key press
-                            AuteurBean auteurBean;
+                            AuthorBean authorBean;
                             try {
-                                auteurBean = new AuteurBean(-1, popupTextDialog.getEtPopupText().getText().toString());
+                                authorBean = new AuthorBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                             } catch (Exception e) {
 //                            Toast.makeText(ReglagesActivity.this, "Erreur création auteur", Toast.LENGTH_SHORT).show();
-                                auteurBean = new AuteurBean(-1, "error" );
+                                authorBean = new AuthorBean(-1, "error" );
                             }
-                            if(dataBaseHelper.verifDoublonAuteur(auteurBean.getAuteur_pseudo())){
+                            if(dataBaseHelper.checkAuthorDuplicate(authorBean.getAuthor_pseudonym())){
                                 Toast.makeText(getActivity(), "Auteur déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show();
                                 popupTextDialog.dismiss(); // Fermeture Popup
                             } else {
                                 //Appel DataBaseHelper
-                                boolean success = dataBaseHelper.insertIntoAuteurs(auteurBean);
+                                boolean success = dataBaseHelper.insertIntoAuthors(authorBean);
                                 Toast.makeText(getActivity(), "Auteur créé", Toast.LENGTH_SHORT).show();
                                 popupTextDialog.dismiss(); // Fermeture Popup
                             }
@@ -201,17 +201,17 @@ public class AuteursFragment extends Fragment {
         binding.lvAuteursListeAuteurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AuteurBean auteurBean;
+                AuthorBean authorBean;
                 try {
-                    auteurBean = (AuteurBean) binding.lvAuteursListeAuteurs.getItemAtPosition(position);
+                    authorBean = (AuthorBean) binding.lvAuteursListeAuteurs.getItemAtPosition(position);
                 } catch (Exception e) {
-                    auteurBean = new AuteurBean(-1,"error","error","error");
+                    authorBean = new AuthorBean(-1,"error","error","error");
                 }
                 Bundle bundle = new Bundle();
-                bundle.putInt("auteur_id", auteurBean.getAuteur_id());
-                bundle.putString("auteur_pseudo", auteurBean.getAuteur_pseudo());
-                bundle.putString("auteur_nom", auteurBean.getAuteur_nom());
-                bundle.putString("auteur_prenom", auteurBean.getAuteur_prenom());
+                bundle.putInt("author_id", authorBean.getAuthor_id());
+                bundle.putString("author_pseudonym", authorBean.getAuthor_pseudonym());
+                bundle.putString("author_last_name", authorBean.getAuthor_last_name());
+                bundle.putString("author_first_name", authorBean.getAuthor_first_name());
                 findNavController(AuteursFragment.this).navigate(R.id.action_auteurs_to_auteurDetail, bundle);
             }
         });
@@ -224,9 +224,9 @@ public class AuteursFragment extends Fragment {
     }
     private void afficherListeAuteurs(){
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            auteursArrayAdapter = new AuteursNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.listeAuteursFiltre(binding.sbSearch.svSearch.getQuery().toString()));
+            auteursArrayAdapter = new AuteursNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getAuthorsListByFilter(binding.sbSearch.svSearch.getQuery().toString()));
         } else {
-            auteursArrayAdapter = new AuteursNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.listeAuteurs());
+            auteursArrayAdapter = new AuteursNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getAuthorsList());
         }
         binding.lvAuteursListeAuteurs.setAdapter(auteursArrayAdapter);
     }

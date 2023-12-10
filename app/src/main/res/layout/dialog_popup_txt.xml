@@ -45,7 +45,7 @@
             android:layout_margin="5dp"
             android:background="@drawable/rounded_corner_button_blue"
             android:fontFamily="@font/kronika"
-            android:text="Valider"
+            android:text="@string/btnValider"
             android:textColor="@color/custom_beige" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -55,7 +55,7 @@
             android:layout_margin="5dp"
             android:background="@drawable/rounded_corner_button_blue"
             android:fontFamily="@font/kronika"
-            android:text="Annuler"
+            android:text="@string/btnAnnuler"
             android:textColor="@color/custom_beige" />
 
     </LinearLayout>

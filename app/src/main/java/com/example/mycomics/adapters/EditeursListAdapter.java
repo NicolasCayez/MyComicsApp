@@ -8,17 +8,17 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.mycomics.R;
-import com.example.mycomics.beans.EditeurBean;
+import com.example.mycomics.beans.EditorBean;
 
 import java.util.List;
 
-public class EditeursListAdapter extends ArrayAdapter<EditeurBean> {
+public class EditeursListAdapter extends ArrayAdapter<EditorBean> {
 
     private Context mContext;
     private int id;
-    private List <EditeurBean>items ;
+    private List <EditorBean>items ;
 
-    public EditeursListAdapter(Context context, int textViewResourceId , List<EditeurBean> list )
+    public EditeursListAdapter(Context context, int textViewResourceId , List<EditorBean> list )
     {
         super(context, textViewResourceId, list);
         mContext = context;
@@ -39,7 +39,7 @@ public class EditeursListAdapter extends ArrayAdapter<EditeurBean> {
 
         if(items.get(position) != null )
         {
-            text.setText(items.get(position).getEditeur_nom());
+            text.setText(items.get(position).getEditor_name());
         }
 
         return mView;

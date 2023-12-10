@@ -43,8 +43,8 @@ public class SeriesNbListAdapter extends ArrayAdapter<SerieBean> {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext());
         if(items.get(position) != null )
         {
-            text1.setText(items.get(position).getSerie_nom());
-            nbTomes = dataBaseHelper.nbTomesSelonSerieId(items.get(position).getSerie_id());
+            text1.setText(items.get(position).getSerie_name());
+            nbTomes = dataBaseHelper.getNbBooksBySerieId(items.get(position).getSerie_id());
             if (nbTomes > 0) {
                 text2.setText(nbTomes + " tomes");
             }

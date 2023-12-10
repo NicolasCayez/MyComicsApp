@@ -173,7 +173,7 @@
             android:id="@+id/action_auteurDetail_to_serieDetail"
             app:destination="@id/serieDetailFragment" />
         <argument
-            android:name="auteur_id"
+            android:name="author_id"
             app:argType="integer" />
     </fragment>
     <fragment
@@ -191,7 +191,7 @@
             android:id="@+id/action_editeurDetail_to_serieDetail"
             app:destination="@id/serieDetailFragment" />
         <argument
-            android:name="editeur_id"
+            android:name="editor_id"
             app:argType="integer" />
     </fragment>
     <fragment
@@ -245,7 +245,7 @@
             android:id="@+id/action_tomeDetail_to_serieDetail"
             app:destination="@id/serieDetailFragment" />
         <argument
-            android:name="tome_id"
+            android:name="book_id"
             app:argType="integer" />
     </fragment>
 </navigation>
