@@ -1031,6 +1031,23 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     /* ------------------------------------------------------------------------------------------ */
+    // get id : int
+    /* ------------------------------------------------------------------------------------------ */
+    public int getId(String query){
+        int id = -1; // Result initialized
+        SQLiteDatabase db = this.getReadableDatabase(); // Database read access
+        Cursor cursor = db.rawQuery(query, null); // cursor = query result data
+        if (cursor.moveToFirst()) { // true if there is at least 1 row
+            id = cursor.getInt(0);
+        } else {
+            // false, no results -> do nothing, id = -1 by default
+        }
+        cursor.close(); // close cursor
+        db.close(); // close database
+        return id;
+    }
+
+    /* ------------------------------------------------------------------------------------------ */
     // get count : int
     /* ------------------------------------------------------------------------------------------ */
     public int getNbBooks(String query){
@@ -1211,7 +1228,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String query = "SELECT " + COLUMN_EDITOR_ID + " FROM " + EDITORS +
                 " WHERE " + COLUMN_EDITOR_NAME + " = \"" + editorBean.getEditor_name() +
                 "\" ORDER BY " + COLUMN_EDITOR_ID +" DESC LIMIT 1";
-        return getEditorBean(query);
+        return getEditorById(getId(query));
     }
 
     /* ------------------------------------------------------------------------------------------ */
@@ -1408,7 +1425,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String query = "SELECT " + COLUMN_AUTHOR_ID + " FROM " + AUTHORS +
                 " WHERE " + COLUMN_AUTHOR_PSEUDONYM + " = \"" + authorBean.getAuthor_pseudonym() +
                 "\" ORDER BY " + COLUMN_AUTHOR_ID +" DESC LIMIT 1";
-        return getAuthorBean(query);
+        return getAuthorById(getId(query));
     }
 
     /** SERIES **/
@@ -1503,7 +1520,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String query = "SELECT " + COLUMN_SERIE_ID + " FROM " + SERIES +
                 " WHERE " + COLUMN_SERIE_NAME + " = \"" + serieBean.getSerie_name() +
                 "\" ORDER BY " + COLUMN_SERIE_ID +" DESC LIMIT 1";
-        return getSerieBean(query);
+        return getSerieById(getId(query));
     }
 
     /* ------------------------------------------------------------------------------------------ */
@@ -1677,7 +1694,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String query = "SELECT " + COLUMN_BOOK_ID + " FROM " + BOOKS +
                 " WHERE " + COLUMN_BOOK_TITLE + " = \"" + bookBean.getBook_title() +
                 "\" ORDER BY " + COLUMN_BOOK_ID + " DESC LIMIT 1";
-        return getTomeBean(query);
+        return getBookById(getId(query));
     }
 
     /* ------------------------------------------------------------------------------------------ */
