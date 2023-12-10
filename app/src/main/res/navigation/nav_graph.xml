@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/accueilFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/accueilFragment"
-        android:name="com.example.mycomics.fragments.AccueilFragment"
-        android:label="fragment_accueil"
-        tools:layout="@layout/fragment_accueil" >
+        android:id="@+id/homeFragment"
+        android:name="com.example.mycomics.fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_accueil_to_series"
+            android:id="@+id/action_home_to_series"
             app:destination="@id/seriesFragment" />
         <action
-            android:id="@+id/action_accueil_to_auteurs"
-            app:destination="@id/auteursFragment" />
+            android:id="@+id/action_home_to_authors"
+            app:destination="@id/authorsFragment" />
         <action
-            android:id="@+id/action_accueil_to_editeurs"
-            app:destination="@id/editeursFragment" />
+            android:id="@+id/action_home_to_editors"
+            app:destination="@id/editorsFragment" />
         <action
-            android:id="@+id/action_accueil_to_tomes"
-            app:destination="@id/tomesFragment" />
+            android:id="@+id/action_home_to_books"
+            app:destination="@id/booksFragment" />
 
     </fragment>
     <fragment
@@ -30,80 +30,80 @@
         android:label="fragment_series"
         tools:layout="@layout/fragment_series" >
         <action
-            android:id="@+id/action_series_to_tomes"
-            app:destination="@id/tomesFragment" />
+            android:id="@+id/action_series_to_books"
+            app:destination="@id/booksFragment" />
         <action
-            android:id="@+id/action_series_to_auteurs"
-            app:destination="@id/auteursFragment" />
+            android:id="@+id/action_series_to_authors"
+            app:destination="@id/authorsFragment" />
         <action
-            android:id="@+id/action_series_to_editeurs"
-            app:destination="@id/editeursFragment" />
+            android:id="@+id/action_series_to_editors"
+            app:destination="@id/editorsFragment" />
         <action
-            android:id="@+id/action_series_to_auteurDetail"
-            app:destination="@id/auteurDetailFragment" />
+            android:id="@+id/action_series_to_authorDetail"
+            app:destination="@id/authorDetailFragment" />
         <action
-            android:id="@+id/action_series_to_editeurDetail"
-            app:destination="@id/editeurDetailFragment" />
+            android:id="@+id/action_series_to_editorDetail"
+            app:destination="@id/editorDetailFragment" />
         <action
             android:id="@+id/action_series_to_serieDetail"
             app:destination="@id/serieDetailFragment" />
         <action
-            android:id="@+id/action_series_to_tomeDetail"
-            app:destination="@id/tomeDetailFragment" />
+            android:id="@+id/action_series_to_bookDetail"
+            app:destination="@id/bookDetailFragment" />
 
     </fragment>
     <fragment
-        android:id="@+id/auteursFragment"
-        android:name="com.example.mycomics.fragments.AuteursFragment"
-        android:label="fragment_auteurs"
-        tools:layout="@layout/fragment_auteurs" >
+        android:id="@+id/authorsFragment"
+        android:name="com.example.mycomics.fragments.AuthorsFragment"
+        android:label="fragment_authors"
+        tools:layout="@layout/fragment_authors">
         <action
-            android:id="@+id/action_auteurs_to_editeurs"
-            app:destination="@id/editeursFragment" />
+            android:id="@+id/action_authors_to_editors"
+            app:destination="@id/editorsFragment" />
         <action
-            android:id="@+id/action_auteurs_to_series"
+            android:id="@+id/action_authors_to_series"
             app:destination="@id/seriesFragment" />
         <action
-            android:id="@+id/action_auteurs_to_tomes"
-            app:destination="@id/tomesFragment" />
+            android:id="@+id/action_authors_to_books"
+            app:destination="@id/booksFragment" />
         <action
-            android:id="@+id/action_auteurs_to_auteurDetail"
-            app:destination="@id/auteurDetailFragment" />
+            android:id="@+id/action_authors_to_authorDetail"
+            app:destination="@id/authorDetailFragment" />
         <action
-            android:id="@+id/action_auteurs_to_serieDetail"
+            android:id="@+id/action_authors_to_serieDetail"
             app:destination="@id/serieDetailFragment" />
         <action
-            android:id="@+id/action_auteurs_to_tomeDetail"
-            app:destination="@id/tomeDetailFragment" />
+            android:id="@+id/action_authors_to_bookDetail"
+            app:destination="@id/bookDetailFragment" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/editeursFragment"
-        android:name="com.example.mycomics.fragments.EditeursFragment"
-        android:label="fragment_editeurs"
-        tools:layout="@layout/fragment_editeurs" >
+        android:id="@+id/editorsFragment"
+        android:name="com.example.mycomics.fragments.EditorsFragment"
+        android:label="fragment_editors"
+        tools:layout="@layout/fragment_editors">
         <action
-            android:id="@+id/action_editeurs_to_auteurs"
-            app:destination="@id/auteursFragment" />
+            android:id="@+id/action_editors_to_authors"
+            app:destination="@id/authorsFragment" />
         <action
-            android:id="@+id/action_editeurs_to_tomes"
-            app:destination="@id/tomesFragment" />
+            android:id="@+id/action_editors_to_books"
+            app:destination="@id/booksFragment" />
         <action
-            android:id="@+id/action_editeurs_to_series"
+            android:id="@+id/action_editors_to_series"
             app:destination="@id/seriesFragment" />
         <action
-            android:id="@+id/action_editeurs_to_auteurDetail"
-            app:destination="@id/auteurDetailFragment" />
+            android:id="@+id/action_editors_to_authorDetail"
+            app:destination="@id/authorDetailFragment" />
         <action
-            android:id="@+id/action_editeurs_to_editeurDetail"
-            app:destination="@id/editeurDetailFragment" />
+            android:id="@+id/action_editors_to_editorDetail"
+            app:destination="@id/editorDetailFragment" />
         <action
-            android:id="@+id/action_editeurs_to_serieDetail"
+            android:id="@+id/action_editors_to_serieDetail"
             app:destination="@id/serieDetailFragment" />
         <action
-            android:id="@+id/action_editeurs_to_tomeDetail"
-            app:destination="@id/tomeDetailFragment" />
+            android:id="@+id/action_editors_to_bookDetail"
+            app:destination="@id/bookDetailFragment" />
 
     </fragment>
     <fragment
@@ -112,83 +112,83 @@
         android:label="fragment_collection"
         tools:layout="@layout/fragment_collection" >
         <action
-            android:id="@+id/action_collection_to_auteurDetail"
-            app:destination="@id/auteurDetailFragment" />
+            android:id="@+id/action_collection_to_authorDetail"
+            app:destination="@id/authorDetailFragment" />
         <action
-            android:id="@+id/action_collection_to_editeurDetail"
-            app:destination="@id/editeurDetailFragment" />
+            android:id="@+id/action_collection_to_editorDetail"
+            app:destination="@id/editorDetailFragment" />
         <action
-            android:id="@+id/action_collection_to_tomeDetail"
-            app:destination="@id/tomeDetailFragment" />
+            android:id="@+id/action_collection_to_bookDetail"
+            app:destination="@id/bookDetailFragment" />
         <action
             android:id="@+id/action_collection_to_serieDetail"
             app:destination="@id/serieDetailFragment" />
 
     </fragment>
     <fragment
-        android:id="@+id/reglagesFragment"
-        android:name="com.example.mycomics.fragments.ReglagesFragment"
-        android:label="fragment_reglages"
-        tools:layout="@layout/fragment_reglages" />
+        android:id="@+id/settingsFragment"
+        android:name="com.example.mycomics.fragments.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
     <fragment
-        android:id="@+id/tomesFragment"
-        android:name="com.example.mycomics.fragments.TomesFragment"
-        android:label="fragment_tomes"
-        tools:layout="@layout/fragment_tomes" >
+        android:id="@+id/booksFragment"
+        android:name="com.example.mycomics.fragments.BooksFragment"
+        android:label="fragment_books"
+        tools:layout="@layout/fragment_books">
         <action
-            android:id="@+id/action_tomes_to_series"
+            android:id="@+id/action_books_to_series"
             app:destination="@id/seriesFragment" />
         <action
-            android:id="@+id/action_tomes_to_auteurs"
-            app:destination="@id/auteursFragment" />
+            android:id="@+id/action_books_to_authors"
+            app:destination="@id/authorsFragment" />
         <action
-            android:id="@+id/action_tomes_to_editeurs"
-            app:destination="@id/editeursFragment" />
+            android:id="@+id/action_books_to_editors"
+            app:destination="@id/editorsFragment" />
         <action
-            android:id="@+id/action_tomes_to_auteurDetail"
-            app:destination="@id/auteurDetailFragment" />
+            android:id="@+id/action_books_to_authorDetail"
+            app:destination="@id/authorDetailFragment" />
         <action
-            android:id="@+id/action_tomes_to_editeurDetai"
-            app:destination="@id/editeurDetailFragment" />
+            android:id="@+id/action_books_to_editorDetail"
+            app:destination="@id/editorDetailFragment" />
         <action
-            android:id="@+id/action_tomes_to_serieDetail"
+            android:id="@+id/action_books_to_serieDetail"
             app:destination="@id/serieDetailFragment" />
         <action
-            android:id="@+id/action_tomes_to_tomeDetail"
-            app:destination="@id/tomeDetailFragment" />
+            android:id="@+id/action_books_to_bookDetail"
+            app:destination="@id/bookDetailFragment" />
 
     </fragment>
     <fragment
-        android:id="@+id/auteurDetailFragment"
-        android:name="com.example.mycomics.fragments.AuteurDetailFragment"
-        android:label="fragment_auteur_detail"
-        tools:layout="@layout/fragment_auteur_detail" >
+        android:id="@+id/authorDetailFragment"
+        android:name="com.example.mycomics.fragments.AuthorDetailFragment"
+        android:label="fragment_author_detail"
+        tools:layout="@layout/fragment_author_detail">
         <action
-            android:id="@+id/action_auteurDetail_to_editeurDetail"
-            app:destination="@id/editeurDetailFragment" />
+            android:id="@+id/action_authorDetail_to_editorDetail"
+            app:destination="@id/editorDetailFragment" />
         <action
-            android:id="@+id/action_auteurDetail_to_tomeDetail"
-            app:destination="@id/tomeDetailFragment" />
+            android:id="@+id/action_authorDetail_to_bookDetail"
+            app:destination="@id/bookDetailFragment" />
         <action
-            android:id="@+id/action_auteurDetail_to_serieDetail"
+            android:id="@+id/action_authorDetail_to_serieDetail"
             app:destination="@id/serieDetailFragment" />
         <argument
             android:name="author_id"
             app:argType="integer" />
     </fragment>
     <fragment
-        android:id="@+id/editeurDetailFragment"
-        android:name="com.example.mycomics.fragments.EditeurDetailFragment"
-        android:label="fragment_editeur_detail"
-        tools:layout="@layout/fragment_editeur_detail" >
+        android:id="@+id/editorDetailFragment"
+        android:name="com.example.mycomics.fragments.EditorDetailFragment"
+        android:label="fragment_editor_detail"
+        tools:layout="@layout/fragment_editor_detail">
         <action
-            android:id="@+id/action_editeurDetail_to_auteurDetail"
-            app:destination="@id/auteurDetailFragment" />
+            android:id="@+id/action_editorDetail_to_authorDetail"
+            app:destination="@id/authorDetailFragment" />
         <action
-            android:id="@+id/action_editeurDetail_to_tomeDetail"
-            app:destination="@id/tomeDetailFragment" />
+            android:id="@+id/action_editorDetail_to_bookDetail"
+            app:destination="@id/bookDetailFragment" />
         <action
-            android:id="@+id/action_editeurDetail_to_serieDetail"
+            android:id="@+id/action_editorDetail_to_serieDetail"
             app:destination="@id/serieDetailFragment" />
         <argument
             android:name="editor_id"
@@ -200,14 +200,14 @@
         android:label="fragment_search_result"
         tools:layout="@layout/fragment_search_result" >
         <action
-            android:id="@+id/action_searchResult_to_editeurDetail"
-            app:destination="@id/editeurDetailFragment" />
+            android:id="@+id/action_searchResult_to_editorDetail"
+            app:destination="@id/editorDetailFragment" />
         <action
-            android:id="@+id/action_searchResult_to_auteurDetail"
-            app:destination="@id/auteurDetailFragment" />
+            android:id="@+id/action_searchResult_to_authorDetail"
+            app:destination="@id/authorDetailFragment" />
         <action
-            android:id="@+id/action_searchResult_to_tomeDetail"
-            app:destination="@id/tomeDetailFragment" />
+            android:id="@+id/action_searchResult_to_bookDetail"
+            app:destination="@id/bookDetailFragment" />
         <action
             android:id="@+id/action_searchResult_to_serieDetail"
             app:destination="@id/serieDetailFragment" />
@@ -218,31 +218,31 @@
         android:label="fragment_serie_detail"
         tools:layout="@layout/fragment_serie_detail" >
         <action
-            android:id="@+id/action_serieDetail_to_auteurDetail"
-            app:destination="@id/auteurDetailFragment" />
+            android:id="@+id/action_serieDetail_to_authorDetail"
+            app:destination="@id/authorDetailFragment" />
         <action
-            android:id="@+id/action_serieDetail_to_editeurDetai"
-            app:destination="@id/editeurDetailFragment" />
+            android:id="@+id/action_serieDetail_to_editorDetail"
+            app:destination="@id/editorDetailFragment" />
         <action
-            android:id="@+id/action_serieDetail_to_tomeDetail"
-            app:destination="@id/tomeDetailFragment" />
+            android:id="@+id/action_serieDetail_to_bookDetail"
+            app:destination="@id/bookDetailFragment" />
         <argument
             android:name="serie_id"
             app:argType="integer" />
     </fragment>
     <fragment
-        android:id="@+id/tomeDetailFragment"
-        android:name="com.example.mycomics.fragments.TomeDetailFragment"
-        android:label="fragment_tome_detail"
-        tools:layout="@layout/fragment_tome_detail" >
+        android:id="@+id/bookDetailFragment"
+        android:name="com.example.mycomics.fragments.BookDetailFragment"
+        android:label="fragment_book_detail"
+        tools:layout="@layout/fragment_book_detail">
         <action
-            android:id="@+id/action_tomeDetail_to_auteurDetail"
-            app:destination="@id/auteurDetailFragment" />
+            android:id="@+id/action_bookDetail_to_authorDetail"
+            app:destination="@id/authorDetailFragment" />
         <action
-            android:id="@+id/action_tomeDetail_to_editeurDetai"
-            app:destination="@id/editeurDetailFragment" />
+            android:id="@+id/action_bookDetail_to_editorDetail"
+            app:destination="@id/editorDetailFragment" />
         <action
-            android:id="@+id/action_tomeDetail_to_serieDetail"
+            android:id="@+id/action_bookDetail_to_serieDetail"
             app:destination="@id/serieDetailFragment" />
         <argument
             android:name="book_id"

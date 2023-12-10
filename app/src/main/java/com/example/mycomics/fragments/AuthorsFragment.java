@@ -20,28 +20,20 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.mycomics.R;
-import com.example.mycomics.adapters.TomesSerieListAdapter;
-import com.example.mycomics.beans.BookBean;
-import com.example.mycomics.beans.BookSerieBean;
-import com.example.mycomics.databinding.FragmentTomesBinding;
+import com.example.mycomics.adapters.AuthorsNbListAdapter;
+import com.example.mycomics.beans.AuthorBean;
+import com.example.mycomics.databinding.FragmentAuthorsBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupTextDialog;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TomesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class TomesFragment extends Fragment {
-    FragmentTomesBinding binding;
+public class AuthorsFragment extends Fragment {
+    FragmentAuthorsBinding binding;
 
     /* -------------------------------------- */
     // Variable BDD
     /* -------------------------------------- */
     DataBaseHelper dataBaseHelper;
-    ArrayAdapter tomesArrayAdapter;
-    ArrayAdapter tomesSerieArrayAdapter;
-
+    ArrayAdapter auteursArrayAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,7 +44,7 @@ public class TomesFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public TomesFragment() {
+    public AuthorsFragment() {
         // Required empty public constructor
     }
 
@@ -62,11 +54,11 @@ public class TomesFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TomesFragment.
+     * @return A new instance of fragment AuthorsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TomesFragment newInstance(String param1, String param2) {
-        TomesFragment fragment = new TomesFragment();
+    public static AuthorsFragment newInstance(String param1, String param2) {
+        AuthorsFragment fragment = new AuthorsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -81,20 +73,17 @@ public class TomesFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
         /* -------------------------------------- */
         // Initialisation Base de données
         /* -------------------------------------- */
         dataBaseHelper = new DataBaseHelper(getActivity());
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentTomesBinding.inflate(inflater, container, false);
+        binding = FragmentAuthorsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -104,7 +93,7 @@ public class TomesFragment extends Fragment {
         /* -------------------------------------- */
         // Initialisation affichage
         /* -------------------------------------- */
-        afficherListeTomes();
+        afficherListeAuteurs();
         binding.sbSearch.svSearch.setQueryHint("Filtrer ou rechercher");
         /* -------------------------------------- */
         // Clic Bouton Chercher
@@ -114,7 +103,7 @@ public class TomesFragment extends Fragment {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("filter", binding.sbSearch.svSearch.getQuery().toString());
-                findNavController(TomesFragment.this).navigate(R.id.searchResultFragment, bundle);
+                findNavController(AuthorsFragment.this).navigate(R.id.searchResultFragment, bundle);
             }
         });
         /* -------------------------------------- */
@@ -128,44 +117,41 @@ public class TomesFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                afficherListeTomes();
+                afficherListeAuteurs();
                 return false;
             }
         });
         /* -------------------------------------- */
-        // Clic Bouton ajout Tome
+        // Clic Bouton ajout auteur
         /* -------------------------------------- */
-        binding.btnTomesAddTome.setOnClickListener(new View.OnClickListener() {
+        binding.btnAuteursAddAuteur.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Création Popup
                 PopupTextDialog popupTextDialog = new PopupTextDialog(getActivity());
-                popupTextDialog.setTitre("Entrez le nom du tome");
-                popupTextDialog.setHint("Nom du tome");
+                popupTextDialog.setTitre("Entrez le Pseudonyme (ou le Nom) de l'auteur");
+                popupTextDialog.setHint("Pseudonyme de l'auteur");
                 popupTextDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 popupTextDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        BookBean bookBean;
+                        AuthorBean authorBean;
                         try {
-                            bookBean = new BookBean(-1, popupTextDialog.getEtPopupText().getText().toString());
+                            authorBean = new AuthorBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                         } catch (Exception e) {
-                            bookBean = new BookBean(-1, "error" );
+//                            Toast.makeText(ReglagesActivity.this, "Erreur création auteur", Toast.LENGTH_SHORT).show();
+                            authorBean = new AuthorBean(-1, "error" );
                         }
-                        popupTextDialog.dismiss(); // Fermeture Popup
-                        //Appel DataBaseHelper
-                        if (dataBaseHelper.checkBookDuplicate(bookBean.getBook_title())) {
-                            // Tome déjà existant
-                            Toast.makeText(TomesFragment.super.getContext(), "Tome déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show();
+                        if(dataBaseHelper.checkAuthorDuplicate(authorBean.getAuthor_pseudonym())){
+                            Toast.makeText(getActivity(), "Auteur déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show();
                             popupTextDialog.dismiss(); // Fermeture Popup
                         } else {
-                            // on enregiste
-                            boolean successInsertTomes = dataBaseHelper.insertIntoBooks(bookBean);
-                            boolean successInsertDetenir = dataBaseHelper.insertIntoDetaining(dataBaseHelper.getBookLatest(bookBean));
-                            Toast.makeText(getActivity(), "Tome créé", Toast.LENGTH_SHORT).show();
+                            //Appel DataBaseHelper
+                            boolean success = dataBaseHelper.insertIntoAuthors(authorBean);
+                            Toast.makeText(getActivity(), "Auteur créé", Toast.LENGTH_SHORT).show();
                             popupTextDialog.dismiss(); // Fermeture Popup
                         }
-                        afficherListeTomes();
+                        afficherListeAuteurs();
                     }
                 });
 
@@ -175,26 +161,23 @@ public class TomesFragment extends Fragment {
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
                             // Perform action on key press
-                            BookBean bookBean;
+                            AuthorBean authorBean;
                             try {
-                                bookBean = new BookBean(-1, popupTextDialog.getEtPopupText().getText().toString());
+                                authorBean = new AuthorBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                             } catch (Exception e) {
-                                bookBean = new BookBean(-1, "error" );
+//                            Toast.makeText(ReglagesActivity.this, "Erreur création auteur", Toast.LENGTH_SHORT).show();
+                                authorBean = new AuthorBean(-1, "error" );
                             }
-                            popupTextDialog.dismiss(); // Fermeture Popup
-                            //Appel DataBaseHelper
-                            if (dataBaseHelper.checkBookDuplicate(bookBean.getBook_title())) {
-                                // Tome déjà existant
-                                Toast.makeText(TomesFragment.super.getContext(), "Tome déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show();
+                            if(dataBaseHelper.checkAuthorDuplicate(authorBean.getAuthor_pseudonym())){
+                                Toast.makeText(getActivity(), "Auteur déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show();
                                 popupTextDialog.dismiss(); // Fermeture Popup
                             } else {
-                                // on enregiste
-                                boolean successInsertTomes = dataBaseHelper.insertIntoBooks(bookBean);
-                                boolean successInsertDetenir = dataBaseHelper.insertIntoDetaining(dataBaseHelper.getBookLatest(bookBean));
-                                Toast.makeText(getActivity(), "Tome créé", Toast.LENGTH_SHORT).show();
+                                //Appel DataBaseHelper
+                                boolean success = dataBaseHelper.insertIntoAuthors(authorBean);
+                                Toast.makeText(getActivity(), "Auteur créé", Toast.LENGTH_SHORT).show();
                                 popupTextDialog.dismiss(); // Fermeture Popup
                             }
-                            afficherListeTomes();
+                            afficherListeAuteurs();
                             return true;
                         }
                         return false;
@@ -207,30 +190,29 @@ public class TomesFragment extends Fragment {
                         popupTextDialog.dismiss(); // Fermeture Popup
                     }
                 });
-
                 popupTextDialog.build();
-                afficherListeTomes();
+                afficherListeAuteurs();
             }
         });
 
         /* -------------------------------------- */
-        // Clic Element liste Tomes
+        // Clic Element liste Auteur
         /* -------------------------------------- */
-        binding.lvTomesListeTomes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.lvAuteursListeAuteurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                BookBean bookBean;
+                AuthorBean authorBean;
                 try {
-                    bookBean = (BookSerieBean) binding.lvTomesListeTomes.getItemAtPosition(position);
+                    authorBean = (AuthorBean) binding.lvAuteursListeAuteurs.getItemAtPosition(position);
                 } catch (Exception e) {
-                    bookBean = new BookSerieBean(-1,"error");
+                    authorBean = new AuthorBean(-1,"error","error","error");
                 }
                 Bundle bundle = new Bundle();
-                bundle.putInt("book_id", bookBean.getBook_id());
-
-
-                findNavController(TomesFragment.this).navigate(R.id.action_tomes_to_tomeDetail, bundle);
-
+                bundle.putInt("author_id", authorBean.getAuthor_id());
+                bundle.putString("author_pseudonym", authorBean.getAuthor_pseudonym());
+                bundle.putString("author_last_name", authorBean.getAuthor_last_name());
+                bundle.putString("author_first_name", authorBean.getAuthor_first_name());
+                findNavController(AuthorsFragment.this).navigate(R.id.action_authors_to_authorDetail, bundle);
             }
         });
     }
@@ -240,13 +222,12 @@ public class TomesFragment extends Fragment {
         super.onDestroy();
         binding = null;
     }
-
-    private void afficherListeTomes(){
+    private void afficherListeAuteurs(){
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            tomesSerieArrayAdapter = new TomesSerieListAdapter(getActivity() , R.layout.listview_row_3col, dataBaseHelper.getBooksAndSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString()));
+            auteursArrayAdapter = new AuthorsNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getAuthorsListByFilter(binding.sbSearch.svSearch.getQuery().toString()));
         } else {
-            tomesSerieArrayAdapter = new TomesSerieListAdapter(getActivity() , R.layout.listview_row_3col, dataBaseHelper.getBooksAndBooksSeriesList());
+            auteursArrayAdapter = new AuthorsNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getAuthorsList());
         }
-        binding.lvTomesListeTomes.setAdapter(tomesSerieArrayAdapter);
+        binding.lvAuteursListeAuteurs.setAdapter(auteursArrayAdapter);
     }
 }

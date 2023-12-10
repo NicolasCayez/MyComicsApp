@@ -8,17 +8,17 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.mycomics.R;
-import com.example.mycomics.beans.BookBean;
+import com.example.mycomics.beans.EditorBean;
 
 import java.util.List;
 
-public class TomesNumeroListAdapter extends ArrayAdapter<BookBean> {
+public class EditorsListAdapter extends ArrayAdapter<EditorBean> {
 
     private Context mContext;
     private int id;
-    private List<BookBean> items ;
+    private List <EditorBean>items ;
 
-    public TomesNumeroListAdapter(Context context, int textViewResourceId , List<BookBean> list )
+    public EditorsListAdapter(Context context, int textViewResourceId , List<EditorBean> list )
     {
         super(context, textViewResourceId, list);
         mContext = context;
@@ -35,15 +35,11 @@ public class TomesNumeroListAdapter extends ArrayAdapter<BookBean> {
             mView = vi.inflate(id, null);
         }
 
-        TextView text1 = (TextView) mView.findViewById(R.id.tvListview_row_2col_col1);
-        TextView text2 = (TextView) mView.findViewById(R.id.tvListview_row_2col_col2);
+        TextView text = (TextView) mView.findViewById(R.id.tvListview_row_1col_col1);
 
         if(items.get(position) != null )
         {
-            if (items.get(position).getBook_number() != null && items.get(position).getBook_number() > 0) {
-                text1.setText(items.get(position).getBook_number().toString());
-            }
-            text2.setText(items.get(position).getBook_title().toString());
+            text.setText(items.get(position).getEditor_name());
         }
 
         return mView;

@@ -39,14 +39,14 @@ public class SeriesNbListAdapter extends ArrayAdapter<SerieBean> {
 
         TextView text1 = (TextView) mView.findViewById(R.id.tvListview_row_2col_reverse_col1);
         TextView text2 = (TextView) mView.findViewById(R.id.tvListview_row_2col_reverse_col2);
-        int nbTomes = 0;
+        int nbBooks = 0;
         DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext());
         if(items.get(position) != null )
         {
             text1.setText(items.get(position).getSerie_name());
-            nbTomes = dataBaseHelper.getNbBooksBySerieId(items.get(position).getSerie_id());
-            if (nbTomes > 0) {
-                text2.setText(nbTomes + " tomes");
+            nbBooks = dataBaseHelper.getNbBooksBySerieId(items.get(position).getSerie_id());
+            if (nbBooks > 0) {
+                text2.setText(nbBooks + " books");
             }
         }
 

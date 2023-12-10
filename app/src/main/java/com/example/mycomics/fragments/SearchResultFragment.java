@@ -16,13 +16,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.example.mycomics.R;
-import com.example.mycomics.adapters.AuteursListAdapter;
-import com.example.mycomics.adapters.EditeursListAdapter;
+import com.example.mycomics.adapters.AuthorsListAdapter;
+import com.example.mycomics.adapters.EditorsListAdapter;
 import com.example.mycomics.adapters.SeriesNbListAdapter;
-import com.example.mycomics.adapters.TomesNumeroListAdapter;
+import com.example.mycomics.adapters.BooksNumberListAdapter;
 import com.example.mycomics.beans.AuthorBean;
 import com.example.mycomics.beans.BookBean;
-import com.example.mycomics.beans.BookSerieBean;
 import com.example.mycomics.beans.EditorBean;
 import com.example.mycomics.beans.SerieBean;
 import com.example.mycomics.databinding.FragmentSearchResultBinding;
@@ -177,7 +176,7 @@ public class SearchResultFragment extends Fragment {
                 bundle.putInt("serie_id", bookBean.getSerie_id());
                 bundle.putInt("editor_id", bookBean.getEditor_id());
 
-                findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_tomeDetail, bundle);
+                findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_bookDetail, bundle);
 
             }
         });
@@ -199,7 +198,7 @@ public class SearchResultFragment extends Fragment {
                 bundle.putString("author_pseudonym", authorBean.getAuthor_pseudonym());
                 bundle.putString("author_last_name", authorBean.getAuthor_last_name());
                 bundle.putString("author_first_name", authorBean.getAuthor_first_name());
-                findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_auteurDetail, bundle);
+                findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_authorDetail, bundle);
             }
         });
 
@@ -218,7 +217,7 @@ public class SearchResultFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putInt("editor_id", editorBean.getEditor_id());
                 bundle.putString("editor_name", editorBean.getEditor_name());
-                findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_editeurDetail, bundle);
+                findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_editorDetail, bundle);
             }
         });
 
@@ -228,13 +227,13 @@ public class SearchResultFragment extends Fragment {
         seriesArrayAdapter = new SeriesNbListAdapter(getActivity(), R.layout.listview_row_2col_reverse, dataBaseHelper.getSeriesListByFilter(filter));
         binding.lvRechercheListeSeries.setAdapter(seriesArrayAdapter);
 
-        tomesArrayAdapter = new TomesNumeroListAdapter(getActivity(), R.layout.listview_row_2col, dataBaseHelper.getBooksListByFilter(filter));
+        tomesArrayAdapter = new BooksNumberListAdapter(getActivity(), R.layout.listview_row_2col, dataBaseHelper.getBooksListByFilter(filter));
         binding.lvRechercheListeTomes.setAdapter(tomesArrayAdapter);
 
-        auteursArrayAdapter = new AuteursListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByFilter(filter));
+        auteursArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByFilter(filter));
         binding.lvRechercheListeAuteurs.setAdapter(auteursArrayAdapter);
 
-        editeursArrayAdapter = new EditeursListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getEditorsListByFilter(filter));
+        editeursArrayAdapter = new EditorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getEditorsListByFilter(filter));
         binding.lvRechercheListeEditeurs.setAdapter(editeursArrayAdapter);
     }
 }

@@ -12,13 +12,13 @@ import com.example.mycomics.beans.BookSerieBean;
 
 import java.util.List;
 
-public class TomesSerieListAdapter extends ArrayAdapter<BookSerieBean> {
+public class BooksSerieListAdapter extends ArrayAdapter<BookSerieBean> {
 
     private Context mContext;
     private int id;
     private List<BookSerieBean> items ;
 
-    public TomesSerieListAdapter(Context context, int textViewResourceId , List<BookSerieBean> list )
+    public BooksSerieListAdapter(Context context, int textViewResourceId , List<BookSerieBean> list )
     {
         super(context, textViewResourceId, list);
         mContext = context;

@@ -8,25 +8,23 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.mycomics.R;
-import com.example.mycomics.beans.SerieBean;
+import com.example.mycomics.beans.EditorBean;
+import com.example.mycomics.helpers.DataBaseHelper;
 
 import java.util.List;
 
-public class SeriesListAdapterFiltre extends ArrayAdapter<SerieBean> {
+public class EditorsNbListAdapter extends ArrayAdapter<EditorBean> {
 
     private Context mContext;
     private int id;
-    private List<SerieBean> items ;
+    private List <EditorBean>items ;
 
-    private String filtre;
-
-    public SeriesListAdapterFiltre(Context context, int textViewResourceId , List<SerieBean> list, String filtre )
+    public EditorsNbListAdapter(Context context, int textViewResourceId , List<EditorBean> list )
     {
         super(context, textViewResourceId, list);
         mContext = context;
         id = textViewResourceId;
         items = list ;
-        this.filtre = filtre;
     }
 
     @Override
@@ -38,11 +36,17 @@ public class SeriesListAdapterFiltre extends ArrayAdapter<SerieBean> {
             mView = vi.inflate(id, null);
         }
 
-        TextView text = (TextView) mView.findViewById(R.id.tvListview_row_1col_col1);
-
+        TextView text1 = (TextView) mView.findViewById(R.id.tvListview_row_2col_reverse_col1);
+        TextView text2 = (TextView) mView.findViewById(R.id.tvListview_row_2col_reverse_col2);
+        int nbBooks = 0;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext());
         if(items.get(position) != null )
         {
-            text.setText(items.get(position).getSerie_name().toString());
+            text1.setText(items.get(position).getEditor_name());
+            nbBooks = dataBaseHelper.getNbBooksByEditorId(items.get(position).getEditor_id());
+            if (nbBooks > 0) {
+                text2.setText(nbBooks + " books");
+            }
         }
 
         return mView;

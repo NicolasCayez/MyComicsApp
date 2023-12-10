@@ -15,23 +15,23 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.example.mycomics.R;
-import com.example.mycomics.adapters.AuteursListAdapter;
+import com.example.mycomics.adapters.AuthorsListAdapter;
 import com.example.mycomics.adapters.SeriesNbListAdapter;
-import com.example.mycomics.adapters.TomesNumeroListAdapter;
+import com.example.mycomics.adapters.BooksNumberListAdapter;
 import com.example.mycomics.beans.AuthorBean;
 import com.example.mycomics.beans.BookBean;
 import com.example.mycomics.beans.EditorBean;
 import com.example.mycomics.beans.SerieBean;
-import com.example.mycomics.databinding.FragmentEditeurDetailBinding;
+import com.example.mycomics.databinding.FragmentEditorDetailBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link EditeurDetailFragment#newInstance} factory method to
+ * Use the {@link EditorDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EditeurDetailFragment extends Fragment {
-    FragmentEditeurDetailBinding binding;
+public class EditorDetailFragment extends Fragment {
+    FragmentEditorDetailBinding binding;
 
 
     /* -------------------------------------- */
@@ -53,7 +53,7 @@ public class EditeurDetailFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public EditeurDetailFragment() {
+    public EditorDetailFragment() {
         // Required empty public constructor
     }
 
@@ -63,11 +63,11 @@ public class EditeurDetailFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment EditeurDetailFragment.
+     * @return A new instance of fragment EditorDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static EditeurDetailFragment newInstance(String param1, String param2) {
-        EditeurDetailFragment fragment = new EditeurDetailFragment();
+    public static EditorDetailFragment newInstance(String param1, String param2) {
+        EditorDetailFragment fragment = new EditorDetailFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -93,7 +93,7 @@ public class EditeurDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentEditeurDetailBinding.inflate(inflater, container, false);
+        binding = FragmentEditorDetailBinding.inflate(inflater, container, false);
         return binding.getRoot();    }
 
     @Override
@@ -129,7 +129,7 @@ public class EditeurDetailFragment extends Fragment {
                 bundle.putInt("serie_id", serieBean.getSerie_id());
                 bundle.putString("serie_name", serieBean.getSerie_name());
 
-                findNavController(EditeurDetailFragment.this).navigate(R.id.action_editeurDetail_to_serieDetail, bundle);
+                findNavController(EditorDetailFragment.this).navigate(R.id.action_editorDetail_to_serieDetail, bundle);
 
             }
         });
@@ -165,7 +165,7 @@ public class EditeurDetailFragment extends Fragment {
                 bundle.putInt("serie_id", bookBean.getSerie_id());
                 bundle.putInt("editor_id", bookBean.getEditor_id());
 
-                findNavController(EditeurDetailFragment.this).navigate(R.id.action_editeurDetail_to_tomeDetail, bundle);
+                findNavController(EditorDetailFragment.this).navigate(R.id.action_editorDetail_to_bookDetail, bundle);
 
             }
         });
@@ -188,7 +188,7 @@ public class EditeurDetailFragment extends Fragment {
                 bundle.putString("author_last_name", authorBean.getAuthor_last_name());
                 bundle.putString("author_first_name", authorBean.getAuthor_first_name());
 
-                findNavController(EditeurDetailFragment.this).navigate(R.id.action_editeurDetail_to_auteurDetail, bundle);
+                findNavController(EditorDetailFragment.this).navigate(R.id.action_editorDetail_to_authorDetail, bundle);
 
             }
         });
@@ -207,10 +207,10 @@ public class EditeurDetailFragment extends Fragment {
         seriesArrayAdapter = new SeriesNbListAdapter(getActivity(), R.layout.listview_row_2col_reverse, dataBaseHelper.getSeriesListByEditorId(editorBean.getEditor_id()));
         binding.lvDetailEditeurListeSeries.setAdapter(seriesArrayAdapter);
 
-        tomesArrayAdapter = new TomesNumeroListAdapter(getActivity(), R.layout.listview_row_2col, dataBaseHelper.getBooksListByEditorIdNoSerie(editorBean.getEditor_id()));
+        tomesArrayAdapter = new BooksNumberListAdapter(getActivity(), R.layout.listview_row_2col, dataBaseHelper.getBooksListByEditorIdNoSerie(editorBean.getEditor_id()));
         binding.lvDetailEditeurListeTomes.setAdapter(tomesArrayAdapter);
 
-        auteursArrayAdapter = new AuteursListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByEditorId(editorBean.getEditor_id()));
+        auteursArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByEditorId(editorBean.getEditor_id()));
         binding.lvDetailEditeurListelAuteurs.setAdapter(auteursArrayAdapter);
     }
 }

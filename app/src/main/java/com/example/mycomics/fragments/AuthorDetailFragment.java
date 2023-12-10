@@ -15,24 +15,24 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.example.mycomics.R;
-import com.example.mycomics.adapters.AuteursListAdapter;
-import com.example.mycomics.adapters.EditeursListAdapter;
+import com.example.mycomics.adapters.AuthorsListAdapter;
+import com.example.mycomics.adapters.EditorsListAdapter;
 import com.example.mycomics.adapters.SeriesNbListAdapter;
-import com.example.mycomics.adapters.TomesListAdapter;
+import com.example.mycomics.adapters.BooksListAdapter;
 import com.example.mycomics.beans.AuthorBean;
 import com.example.mycomics.beans.BookBean;
 import com.example.mycomics.beans.EditorBean;
 import com.example.mycomics.beans.SerieBean;
-import com.example.mycomics.databinding.FragmentAuteurDetailBinding;
+import com.example.mycomics.databinding.FragmentAuthorDetailBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AuteurDetailFragment#newInstance} factory method to
+ * Use the {@link AuthorDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AuteurDetailFragment extends Fragment {
-    FragmentAuteurDetailBinding binding;
+public class AuthorDetailFragment extends Fragment {
+    FragmentAuthorDetailBinding binding;
 
     /* -------------------------------------- */
     // Variable BDD
@@ -52,7 +52,7 @@ public class AuteurDetailFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AuteurDetailFragment() {
+    public AuthorDetailFragment() {
         // Required empty public constructor
     }
 
@@ -62,11 +62,11 @@ public class AuteurDetailFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AuteurDetailFragment.
+     * @return A new instance of fragment AuthorDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AuteurDetailFragment newInstance(String param1, String param2) {
-        AuteurDetailFragment fragment = new AuteurDetailFragment();
+    public static AuthorDetailFragment newInstance(String param1, String param2) {
+        AuthorDetailFragment fragment = new AuthorDetailFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -91,7 +91,7 @@ public class AuteurDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentAuteurDetailBinding.inflate(inflater, container, false);
+        binding = FragmentAuthorDetailBinding.inflate(inflater, container, false);
         return binding.getRoot();    }
 
     @Override
@@ -132,7 +132,7 @@ public class AuteurDetailFragment extends Fragment {
                 bundle.putInt("serie_id", serieBean.getSerie_id());
                 bundle.putString("serie_name", serieBean.getSerie_name());
 
-                findNavController(AuteurDetailFragment.this).navigate(R.id.action_auteurDetail_to_serieDetail, bundle);
+                findNavController(AuthorDetailFragment.this).navigate(R.id.action_authorDetail_to_serieDetail, bundle);
 
             }
         });
@@ -168,7 +168,7 @@ public class AuteurDetailFragment extends Fragment {
                 bundle.putInt("serie_id", bookBean.getSerie_id());
                 bundle.putInt("editor_id", bookBean.getEditor_id());
 
-                findNavController(AuteurDetailFragment.this).navigate(R.id.action_auteurDetail_to_tomeDetail, bundle);
+                findNavController(AuthorDetailFragment.this).navigate(R.id.action_authorDetail_to_bookDetail, bundle);
 
             }
         });
@@ -188,7 +188,7 @@ public class AuteurDetailFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putInt("editor_id", editorBean.getEditor_id());
                 bundle.putString("editor_name", editorBean.getEditor_name());
-                findNavController(AuteurDetailFragment.this).navigate(R.id.action_auteurDetail_to_editeurDetail, bundle);
+                findNavController(AuthorDetailFragment.this).navigate(R.id.action_authorDetail_to_editorDetail, bundle);
 
             }
         });
@@ -211,7 +211,7 @@ public class AuteurDetailFragment extends Fragment {
                 bundle.putString("author_last_name", authorBean.getAuthor_last_name());
                 bundle.putString("author_first_name", authorBean.getAuthor_first_name());
 
-                findNavController(AuteurDetailFragment.this).navigate(R.id.auteurDetailFragment, bundle);
+                findNavController(AuthorDetailFragment.this).navigate(R.id.authorDetailFragment, bundle);
 
             }
         });
@@ -229,13 +229,13 @@ public class AuteurDetailFragment extends Fragment {
         seriesArrayAdapter = new SeriesNbListAdapter(getActivity(), R.layout.listview_row_2col_reverse, dataBaseHelper.getSeriesListByAuthorId(auteur.getAuthor_id()));
         binding.lvDetailAuteurListeSeries.setAdapter(seriesArrayAdapter);
 
-        tomesArrayAdapter = new TomesListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getBooksListByAuthorIdNoSerie(auteur.getAuthor_id()));
+        tomesArrayAdapter = new BooksListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getBooksListByAuthorIdNoSerie(auteur.getAuthor_id()));
         binding.lvDetailAuteurListeTomes.setAdapter(tomesArrayAdapter);
 
-        editeursArrayAdapter = new EditeursListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getEditorsByAuthorId(auteur.getAuthor_id()));
+        editeursArrayAdapter = new EditorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getEditorsByAuthorId(auteur.getAuthor_id()));
         binding.lvDetailAuteurListeEditeurs.setAdapter(editeursArrayAdapter);
 
-        auteursArrayAdapter = new AuteursListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsTeam(auteur.getAuthor_id()));
+        auteursArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsTeam(auteur.getAuthor_id()));
         binding.lvDetailAuteurListeAuteurs.setAdapter(auteursArrayAdapter);
     }
 }

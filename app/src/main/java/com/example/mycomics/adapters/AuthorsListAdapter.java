@@ -8,18 +8,17 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.mycomics.R;
-import com.example.mycomics.beans.EditorBean;
-import com.example.mycomics.helpers.DataBaseHelper;
+import com.example.mycomics.beans.AuthorBean;
 
 import java.util.List;
 
-public class EditeursNbListAdapter extends ArrayAdapter<EditorBean> {
+public class AuthorsListAdapter extends ArrayAdapter<AuthorBean> {
 
     private Context mContext;
     private int id;
-    private List <EditorBean>items ;
+    private List<AuthorBean> items ;
 
-    public EditeursNbListAdapter(Context context, int textViewResourceId , List<EditorBean> list )
+    public AuthorsListAdapter(Context context, int textViewResourceId , List<AuthorBean> list )
     {
         super(context, textViewResourceId, list);
         mContext = context;
@@ -36,17 +35,11 @@ public class EditeursNbListAdapter extends ArrayAdapter<EditorBean> {
             mView = vi.inflate(id, null);
         }
 
-        TextView text1 = (TextView) mView.findViewById(R.id.tvListview_row_2col_reverse_col1);
-        TextView text2 = (TextView) mView.findViewById(R.id.tvListview_row_2col_reverse_col2);
-        int nbTomes = 0;
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext());
+        TextView text = (TextView) mView.findViewById(R.id.tvListview_row_1col_col1);
+
         if(items.get(position) != null )
         {
-            text1.setText(items.get(position).getEditor_name());
-            nbTomes = dataBaseHelper.getNbBooksByEditorId(items.get(position).getEditor_id());
-            if (nbTomes > 0) {
-                text2.setText(nbTomes + " tomes");
-            }
+            text.setText(items.get(position).getAuthor_pseudonym());
         }
 
         return mView;

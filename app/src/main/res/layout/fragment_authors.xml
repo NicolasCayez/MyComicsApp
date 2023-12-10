@@ -3,15 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.EditeursFragment">
+    tools:context=".fragments.AuthorsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/custom_blue"
-        tools:context=".EditeursActivitypourfonctionbdd">
-        <!-- Bandeau EDITEURS -->
+        android:background="@color/custom_blue">
+        <!-- Bandeau AUTEURS -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -23,13 +22,13 @@
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
                 android:layout_height="30dp"
-                android:src="@drawable/editeurs_bleu" />
+                android:src="@drawable/auteurs_bleu" />
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvEditeursTitreBandeau"
+                android:id="@+id/tvAuteursTitreBandeau"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
                 android:fontFamily="@font/kronika"
-                android:text="EDITEURS"
+                android:text="AUTEURS"
                 android:gravity="center_vertical"
                 android:paddingStart="50dp"
                 android:layout_weight="1"
@@ -53,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp" />
-                <!-- Liste Editeurs -->
+                <!-- Liste Auteurs -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -64,7 +63,7 @@
                     android:padding="5dp">
 
                     <ListView
-                        android:id="@+id/lvEditeursListeEditeurs"
+                        android:id="@+id/lvAuteursListeAuteurs"
                         android:layout_width="match_parent"
                         android:layout_height="400dp"
                         android:layout_marginHorizontal="15dp"
@@ -79,7 +78,7 @@
                     android:layout_weight="1"
                     android:orientation="horizontal">
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/btnEditeursAddEditeur"
+                        android:id="@+id/btnAuteursAddAuteur"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"

@@ -20,20 +20,20 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.mycomics.R;
-import com.example.mycomics.adapters.AuteursNbListAdapter;
-import com.example.mycomics.beans.AuthorBean;
-import com.example.mycomics.databinding.FragmentAuteursBinding;
+import com.example.mycomics.adapters.EditorsNbListAdapter;
+import com.example.mycomics.beans.EditorBean;
+import com.example.mycomics.databinding.FragmentEditorsBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupTextDialog;
 
-public class AuteursFragment extends Fragment {
-    FragmentAuteursBinding binding;
+public class EditorsFragment extends Fragment {
+    FragmentEditorsBinding binding;
 
     /* -------------------------------------- */
     // Variable BDD
     /* -------------------------------------- */
     DataBaseHelper dataBaseHelper;
-    ArrayAdapter auteursArrayAdapter;
+    ArrayAdapter editeursArrayAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,7 +44,7 @@ public class AuteursFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AuteursFragment() {
+    public EditorsFragment() {
         // Required empty public constructor
     }
 
@@ -54,11 +54,11 @@ public class AuteursFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AuteursFragment.
+     * @return A new instance of fragment EditorsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AuteursFragment newInstance(String param1, String param2) {
-        AuteursFragment fragment = new AuteursFragment();
+    public static EditorsFragment newInstance(String param1, String param2) {
+        EditorsFragment fragment = new EditorsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -73,17 +73,20 @@ public class AuteursFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
         /* -------------------------------------- */
         // Initialisation Base de données
         /* -------------------------------------- */
         dataBaseHelper = new DataBaseHelper(getActivity());
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentAuteursBinding.inflate(inflater, container, false);
+        binding = FragmentEditorsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -93,7 +96,7 @@ public class AuteursFragment extends Fragment {
         /* -------------------------------------- */
         // Initialisation affichage
         /* -------------------------------------- */
-        afficherListeAuteurs();
+        afficherListeEditeurs();
         binding.sbSearch.svSearch.setQueryHint("Filtrer ou rechercher");
         /* -------------------------------------- */
         // Clic Bouton Chercher
@@ -103,7 +106,7 @@ public class AuteursFragment extends Fragment {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("filter", binding.sbSearch.svSearch.getQuery().toString());
-                findNavController(AuteursFragment.this).navigate(R.id.searchResultFragment, bundle);
+                findNavController(EditorsFragment.this).navigate(R.id.searchResultFragment, bundle);
             }
         });
         /* -------------------------------------- */
@@ -117,41 +120,40 @@ public class AuteursFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                afficherListeAuteurs();
+                afficherListeEditeurs();
                 return false;
             }
         });
         /* -------------------------------------- */
-        // Clic Bouton ajout auteur
+        // Clic Bouton ajout éditeur
         /* -------------------------------------- */
-        binding.btnAuteursAddAuteur.setOnClickListener(new View.OnClickListener() {
+        binding.btnEditeursAddEditeur.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Création Popup
                 PopupTextDialog popupTextDialog = new PopupTextDialog(getActivity());
-                popupTextDialog.setTitre("Entrez le Pseudonyme (ou le Nom) de l'auteur");
-                popupTextDialog.setHint("Pseudonyme de l'auteur");
+                popupTextDialog.setTitre("Entrez le nom de l'éditeur");
+                popupTextDialog.setHint("Nom de l'éditeur");
                 popupTextDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 popupTextDialog.getBtnPopupValider().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        AuthorBean authorBean;
+                        EditorBean editorBean;
                         try {
-                            authorBean = new AuthorBean(-1, popupTextDialog.getEtPopupText().getText().toString());
+                            editorBean = new EditorBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                         } catch (Exception e) {
-//                            Toast.makeText(ReglagesActivity.this, "Erreur création auteur", Toast.LENGTH_SHORT).show();
-                            authorBean = new AuthorBean(-1, "error" );
+                            editorBean = new EditorBean(-1, "error" );
                         }
-                        if(dataBaseHelper.checkAuthorDuplicate(authorBean.getAuthor_pseudonym())){
-                            Toast.makeText(getActivity(), "Auteur déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show();
+                        if(dataBaseHelper.checkEditorDuplicate(editorBean.getEditor_name())){
+                            Toast.makeText(getActivity(), "Editeur déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show();
                             popupTextDialog.dismiss(); // Fermeture Popup
                         } else {
                             //Appel DataBaseHelper
-                            boolean success = dataBaseHelper.insertIntoAuthors(authorBean);
-                            Toast.makeText(getActivity(), "Auteur créé", Toast.LENGTH_SHORT).show();
+                            boolean success = dataBaseHelper.insertIntoEditors(editorBean);
+                            Toast.makeText(getActivity(), "Editeur créé", Toast.LENGTH_SHORT).show();
                             popupTextDialog.dismiss(); // Fermeture Popup
                         }
-                        afficherListeAuteurs();
+                        afficherListeEditeurs();
                     }
                 });
 
@@ -161,23 +163,22 @@ public class AuteursFragment extends Fragment {
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
                             // Perform action on key press
-                            AuthorBean authorBean;
+                            EditorBean editorBean;
                             try {
-                                authorBean = new AuthorBean(-1, popupTextDialog.getEtPopupText().getText().toString());
+                                editorBean = new EditorBean(-1, popupTextDialog.getEtPopupText().getText().toString());
                             } catch (Exception e) {
-//                            Toast.makeText(ReglagesActivity.this, "Erreur création auteur", Toast.LENGTH_SHORT).show();
-                                authorBean = new AuthorBean(-1, "error" );
+                                editorBean = new EditorBean(-1, "error" );
                             }
-                            if(dataBaseHelper.checkAuthorDuplicate(authorBean.getAuthor_pseudonym())){
-                                Toast.makeText(getActivity(), "Auteur déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show();
+                            if(dataBaseHelper.checkEditorDuplicate(editorBean.getEditor_name())){
+                                Toast.makeText(getActivity(), "Editeur déjà existant, enregistrement annulé", Toast.LENGTH_LONG).show();
                                 popupTextDialog.dismiss(); // Fermeture Popup
                             } else {
                                 //Appel DataBaseHelper
-                                boolean success = dataBaseHelper.insertIntoAuthors(authorBean);
-                                Toast.makeText(getActivity(), "Auteur créé", Toast.LENGTH_SHORT).show();
+                                boolean success = dataBaseHelper.insertIntoEditors(editorBean);
+                                Toast.makeText(getActivity(), "Editeur créé", Toast.LENGTH_SHORT).show();
                                 popupTextDialog.dismiss(); // Fermeture Popup
                             }
-                            afficherListeAuteurs();
+                            afficherListeEditeurs();
                             return true;
                         }
                         return false;
@@ -190,29 +191,29 @@ public class AuteursFragment extends Fragment {
                         popupTextDialog.dismiss(); // Fermeture Popup
                     }
                 });
+
                 popupTextDialog.build();
-                afficherListeAuteurs();
+                afficherListeEditeurs();
             }
         });
 
         /* -------------------------------------- */
-        // Clic Element liste Auteur
+        // Clic Element liste Editeur
         /* -------------------------------------- */
-        binding.lvAuteursListeAuteurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.lvEditeursListeEditeurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AuthorBean authorBean;
+                EditorBean editorBean;
                 try {
-                    authorBean = (AuthorBean) binding.lvAuteursListeAuteurs.getItemAtPosition(position);
+                    editorBean = (EditorBean) binding.lvEditeursListeEditeurs.getItemAtPosition(position);
                 } catch (Exception e) {
-                    authorBean = new AuthorBean(-1,"error","error","error");
+                    editorBean = new EditorBean(-1,"error");
                 }
                 Bundle bundle = new Bundle();
-                bundle.putInt("author_id", authorBean.getAuthor_id());
-                bundle.putString("author_pseudonym", authorBean.getAuthor_pseudonym());
-                bundle.putString("author_last_name", authorBean.getAuthor_last_name());
-                bundle.putString("author_first_name", authorBean.getAuthor_first_name());
-                findNavController(AuteursFragment.this).navigate(R.id.action_auteurs_to_auteurDetail, bundle);
+                bundle.putInt("editor_id", editorBean.getEditor_id());
+                bundle.putString("editor_name", editorBean.getEditor_name());
+                findNavController(EditorsFragment.this).navigate(R.id.action_editors_to_editorDetail, bundle);
+
             }
         });
     }
@@ -222,12 +223,12 @@ public class AuteursFragment extends Fragment {
         super.onDestroy();
         binding = null;
     }
-    private void afficherListeAuteurs(){
+    private void afficherListeEditeurs(){
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            auteursArrayAdapter = new AuteursNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getAuthorsListByFilter(binding.sbSearch.svSearch.getQuery().toString()));
+            editeursArrayAdapter = new EditorsNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getEditorsListByFilter(binding.sbSearch.svSearch.getQuery().toString()));
         } else {
-            auteursArrayAdapter = new AuteursNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getAuthorsList());
+            editeursArrayAdapter = new EditorsNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getEditorsList());
         }
-        binding.lvAuteursListeAuteurs.setAdapter(auteursArrayAdapter);
+        binding.lvEditeursListeEditeurs.setAdapter(editeursArrayAdapter);
     }
 }

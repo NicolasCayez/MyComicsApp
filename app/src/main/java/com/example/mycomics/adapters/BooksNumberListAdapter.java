@@ -8,17 +8,17 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.mycomics.R;
-import com.example.mycomics.beans.ProfileBean;
+import com.example.mycomics.beans.BookBean;
 
 import java.util.List;
 
-public class ProfilsListAdapter extends ArrayAdapter<ProfileBean> {
+public class BooksNumberListAdapter extends ArrayAdapter<BookBean> {
 
     private Context mContext;
     private int id;
-    private List <ProfileBean>items ;
+    private List<BookBean> items ;
 
-    public ProfilsListAdapter(Context context, int textViewResourceId , List<ProfileBean> list )
+    public BooksNumberListAdapter(Context context, int textViewResourceId , List<BookBean> list )
     {
         super(context, textViewResourceId, list);
         mContext = context;
@@ -35,11 +35,15 @@ public class ProfilsListAdapter extends ArrayAdapter<ProfileBean> {
             mView = vi.inflate(id, null);
         }
 
-        TextView text = (TextView) mView.findViewById(R.id.tvListview_row_1col_col1);
+        TextView text1 = (TextView) mView.findViewById(R.id.tvListview_row_2col_col1);
+        TextView text2 = (TextView) mView.findViewById(R.id.tvListview_row_2col_col2);
 
         if(items.get(position) != null )
         {
-            text.setText(items.get(position).getProfile_name());
+            if (items.get(position).getBook_number() != null && items.get(position).getBook_number() > 0) {
+                text1.setText(items.get(position).getBook_number().toString());
+            }
+            text2.setText(items.get(position).getBook_title().toString());
         }
 
         return mView;

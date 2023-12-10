@@ -15,9 +15,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.example.mycomics.R;
-import com.example.mycomics.adapters.AuteursListAdapter;
-import com.example.mycomics.adapters.EditeursListAdapter;
-import com.example.mycomics.adapters.TomesNumeroListAdapter;
+import com.example.mycomics.adapters.AuthorsListAdapter;
+import com.example.mycomics.adapters.EditorsListAdapter;
+import com.example.mycomics.adapters.BooksNumberListAdapter;
 import com.example.mycomics.beans.AuthorBean;
 import com.example.mycomics.beans.EditorBean;
 import com.example.mycomics.beans.SerieBean;
@@ -137,7 +137,7 @@ public class SerieDetailFragment extends Fragment {
                 bundle.putInt("serie_id", bookBean.getSerie_id());
                 bundle.putInt("editor_id", bookBean.getEditor_id());
 
-                findNavController(SerieDetailFragment.this).navigate(R.id.action_serieDetail_to_tomeDetail, bundle);
+                findNavController(SerieDetailFragment.this).navigate(R.id.action_serieDetail_to_bookDetail, bundle);
 
             }
         });
@@ -157,7 +157,7 @@ public class SerieDetailFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putInt("editor_id", editorBean.getEditor_id());
                 bundle.putString("editor_name", editorBean.getEditor_name());
-                findNavController(SerieDetailFragment.this).navigate(R.id.action_serieDetail_to_editeurDetai, bundle);
+                findNavController(SerieDetailFragment.this).navigate(R.id.action_serieDetail_to_editorDetail, bundle);
 
             }
         });
@@ -180,7 +180,7 @@ public class SerieDetailFragment extends Fragment {
                 bundle.putString("author_last_name", authorBean.getAuthor_last_name());
                 bundle.putString("author_first_name", authorBean.getAuthor_first_name());
 
-                findNavController(SerieDetailFragment.this).navigate(R.id.action_serieDetail_to_auteurDetail, bundle);
+                findNavController(SerieDetailFragment.this).navigate(R.id.action_serieDetail_to_authorDetail, bundle);
 
             }
         });
@@ -195,11 +195,11 @@ public class SerieDetailFragment extends Fragment {
     private void afficherDetailSerie(int serie_id) {
         SerieBean serieBean = dataBaseHelper.getSerieById(serie_id);
         binding.tvDetailSerieNom.setText(serieBean.getSerie_name());
-        tomesArrayAdapter = new TomesNumeroListAdapter(getActivity(), R.layout.listview_row_2col, dataBaseHelper.getBooksListBySerieId(serie_id));
+        tomesArrayAdapter = new BooksNumberListAdapter(getActivity(), R.layout.listview_row_2col, dataBaseHelper.getBooksListBySerieId(serie_id));
         binding.lvDetailSerieListeTomes.setAdapter(tomesArrayAdapter);
-        auteursArrayAdapter = new AuteursListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListBySerieId(serie_id));
+        auteursArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListBySerieId(serie_id));
         binding.lvDetailSerieListeAuteurs.setAdapter(auteursArrayAdapter);
-        editeursArrayAdapter = new EditeursListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getEditorsBySerieId(serie_id));
+        editeursArrayAdapter = new EditorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getEditorsBySerieId(serie_id));
         binding.lvDetailSerieListeEditeurs.setAdapter(editeursArrayAdapter);
 
     }

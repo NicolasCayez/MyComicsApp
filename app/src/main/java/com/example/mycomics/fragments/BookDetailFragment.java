@@ -21,14 +21,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.mycomics.R;
-import com.example.mycomics.adapters.AuteursListAdapter;
-import com.example.mycomics.adapters.EditeursListAdapter;
+import com.example.mycomics.adapters.AuthorsListAdapter;
+import com.example.mycomics.adapters.EditorsListAdapter;
 import com.example.mycomics.adapters.SeriesListAdapter;
 import com.example.mycomics.beans.AuthorBean;
 import com.example.mycomics.beans.BookBean;
 import com.example.mycomics.beans.EditorBean;
 import com.example.mycomics.beans.SerieBean;
-import com.example.mycomics.databinding.FragmentTomeDetailBinding;
+import com.example.mycomics.databinding.FragmentBookDetailBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupConfirmDialog;
 import com.example.mycomics.popups.PopupTextDialog;
@@ -37,11 +37,11 @@ import com.example.mycomics.popups.PopupListDialog;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TomeDetailFragment#newInstance} factory method to
+ * Use the {@link BookDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TomeDetailFragment extends Fragment {
-    FragmentTomeDetailBinding binding;
+public class BookDetailFragment extends Fragment {
+    FragmentBookDetailBinding binding;
 
     /* -------------------------------------- */
     // Variable BDD
@@ -62,7 +62,7 @@ public class TomeDetailFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public TomeDetailFragment() {
+    public BookDetailFragment() {
         // Required empty public constructor
     }
 
@@ -72,11 +72,11 @@ public class TomeDetailFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TomeDetailFragment.
+     * @return A new instance of fragment BookDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TomeDetailFragment newInstance(String param1, String param2) {
-        TomeDetailFragment fragment = new TomeDetailFragment();
+    public static BookDetailFragment newInstance(String param1, String param2) {
+        BookDetailFragment fragment = new BookDetailFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -101,7 +101,7 @@ public class TomeDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentTomeDetailBinding.inflate(inflater, container, false);
+        binding = FragmentBookDetailBinding.inflate(inflater, container, false);
         return binding.getRoot();    }
 
     @Override
@@ -160,7 +160,7 @@ public class TomeDetailFragment extends Fragment {
                 popupAddListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                 ListView listView = popupAddListDialog.findViewById(R.id.lvPopupList);
-                auteursArrayAdapter = new AuteursListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.getAuthorsList());
+                auteursArrayAdapter = new AuthorsListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.getAuthorsList());
                 listView.setAdapter(auteursArrayAdapter);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -175,7 +175,7 @@ public class TomeDetailFragment extends Fragment {
                         dataBaseHelper = new DataBaseHelper(getActivity());
                         if (dataBaseHelper.checkDetainingBookAuthorPairDuplicate(book_id, authorBean.getAuthor_id())) {
                             // Editeur déjà existant
-                            Toast.makeText(TomeDetailFragment.super.getContext(), "Auteur " + authorBean.getAuthor_pseudonym() + " déjà existant", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BookDetailFragment.super.getContext(), "Auteur " + authorBean.getAuthor_pseudonym() + " déjà existant", Toast.LENGTH_SHORT).show();
                         } else {
                             // on enregiste
                             boolean successInsertDetenir = dataBaseHelper.insertIntoWriting(book_id, authorBean.getAuthor_id());
@@ -240,7 +240,7 @@ public class TomeDetailFragment extends Fragment {
                 bundle.putInt("editor_id", editorBean.getEditor_id());
                 bundle.putString("editeur_nom", editorBean.getEditor_name());
 
-                findNavController(TomeDetailFragment.this).navigate(R.id.action_tomeDetail_to_editeurDetai, bundle);
+                findNavController(BookDetailFragment.this).navigate(R.id.action_bookDetail_to_editorDetail, bundle);
             }
         });
 
@@ -258,7 +258,7 @@ public class TomeDetailFragment extends Fragment {
                 popupListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                 ListView listView = (ListView) popupListDialog.findViewById(R.id.lvPopupList);
-                editeursArrayAdapter = new EditeursListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.getEditorsList());
+                editeursArrayAdapter = new EditorsListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.getEditorsList());
                 listView.setAdapter(editeursArrayAdapter);
                 //Clic Editeur choisi pour modification
                 popupListDialog.getLvPopupListe().setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -321,7 +321,7 @@ public class TomeDetailFragment extends Fragment {
                         dataBaseHelper = new DataBaseHelper(getActivity());
                         if (dataBaseHelper.checkEditorDuplicate(editorBean.getEditor_name()) && !success) {
                             // Editeur déjà existant
-                            Toast.makeText(TomeDetailFragment.super.getContext(), "Editeur " + binding.tvDetailTomeEditeur.getText().toString() + " déjà existant", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BookDetailFragment.super.getContext(), "Editeur " + binding.tvDetailTomeEditeur.getText().toString() + " déjà existant", Toast.LENGTH_SHORT).show();
                         } else {
                             // on enregiste
                             boolean successInsert = dataBaseHelper.insertIntoEditors(editorBean);
@@ -360,7 +360,7 @@ public class TomeDetailFragment extends Fragment {
                  bundle.putInt("serie_id", serieBean.getSerie_id());
                  bundle.putString("serie_name", serieBean.getSerie_name());
 
-                 findNavController(TomeDetailFragment.this).navigate(R.id.action_tomeDetail_to_serieDetail, bundle);
+                 findNavController(BookDetailFragment.this).navigate(R.id.action_bookDetail_to_serieDetail, bundle);
              }
         });
 
@@ -439,7 +439,7 @@ public class TomeDetailFragment extends Fragment {
                         dataBaseHelper = new DataBaseHelper(getActivity());
                         if (dataBaseHelper.checkSerieDuplicate(serieBean.getSerie_name()) && !success) {
                             // Editeur déjà existant
-                            Toast.makeText(TomeDetailFragment.super.getContext(), "Série " + binding.tvDetailTomeTitreSerie.getText().toString() + " déjà existante", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BookDetailFragment.super.getContext(), "Série " + binding.tvDetailTomeTitreSerie.getText().toString() + " déjà existante", Toast.LENGTH_SHORT).show();
                         } else {
                             // on enregiste
                             boolean successInsert = dataBaseHelper.insertIntoSeries(serieBean);
@@ -478,7 +478,7 @@ public class TomeDetailFragment extends Fragment {
                 bundle.putString("author_last_name", authorBean.getAuthor_last_name());
                 bundle.putString("author_first_name", authorBean.getAuthor_first_name());
 
-                findNavController(TomeDetailFragment.this).navigate(R.id.action_tomeDetail_to_auteurDetail, bundle);
+                findNavController(BookDetailFragment.this).navigate(R.id.action_bookDetail_to_authorDetail, bundle);
 
             }
         });
@@ -558,7 +558,7 @@ public class TomeDetailFragment extends Fragment {
                 popupListDialog.setTitre( "Tome\n\" " + book_title + " \"\nChoisissez l'auteur à retirer");
                 popupListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 ListView listView = (ListView) popupListDialog.findViewById(R.id.lvPopupList);
-                auteursArrayAdapter = new AuteursListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByBookId(book_id));
+                auteursArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByBookId(book_id));
                 listView.setAdapter(auteursArrayAdapter);
                 //Clic Editeur choisi pour modification
                 popupListDialog.getLvPopupListe().setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -616,11 +616,11 @@ public class TomeDetailFragment extends Fragment {
                         dataBaseHelper = new DataBaseHelper(getActivity());
                         if (!dataBaseHelper.getBookById(book_id).getBook_title().equals(popupTextDialog.getEtPopupText().getText().toString())) {
                             // Titre saisi différent
-                            Toast.makeText(TomeDetailFragment.super.getActivity(), "Le nom ne correspond pas", Toast.LENGTH_LONG).show();
+                            Toast.makeText(BookDetailFragment.super.getActivity(), "Le nom ne correspond pas", Toast.LENGTH_LONG).show();
                         } else {
                             // on enlève le tome et ses contraintes dans ECRIRE et DETENIR
                             boolean successUpdate = dataBaseHelper.deleteBook(dataBaseHelper, book_id);
-                            findNavController(TomeDetailFragment.this).navigate(R.id.tomesFragment);
+                            findNavController(BookDetailFragment.this).navigate(R.id.booksFragment);
                         }
                     }
                 });
@@ -643,11 +643,11 @@ public class TomeDetailFragment extends Fragment {
                             dataBaseHelper = new DataBaseHelper(getActivity());
                             if (!dataBaseHelper.getBookById(book_id).getBook_title().equals(popupTextDialog.getEtPopupText().getText().toString())) {
                                 // Titre saisi différent
-                                Toast.makeText(TomeDetailFragment.super.getActivity(), "Le nom ne correspond pas", Toast.LENGTH_LONG).show();
+                                Toast.makeText(BookDetailFragment.super.getActivity(), "Le nom ne correspond pas", Toast.LENGTH_LONG).show();
                             } else {
                                 // on enlève le tome et ses contraintes dans ECRIRE et DETENIR
                                 boolean successUpdate = dataBaseHelper.deleteBook(dataBaseHelper, book_id);
-                                findNavController(TomeDetailFragment.this).navigate(R.id.tomesFragment);
+                                findNavController(BookDetailFragment.this).navigate(R.id.booksFragment);
                             }
                         }
                         return false;
@@ -688,7 +688,7 @@ public class TomeDetailFragment extends Fragment {
         binding.chkDetailTomeEditionSpeciale.setChecked(Boolean.valueOf(bookBean.isBook_special_edition()));
         binding.etDetailTomeEditionSpecialeLibelle.setText(bookBean.getBook_special_edition_label() == null ? "" : String.valueOf( bookBean.getBook_special_edition_label()));//---------------
         //image ici
-        auteursArrayAdapter = new AuteursListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByBookId(book_id));
+        auteursArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByBookId(book_id));
         binding.lvDetailTomeAuteurs.setAdapter(auteursArrayAdapter);
         binding.tvDetailTomeEditeur.setText(dataBaseHelper.getEditorByBookId(book_id).getEditor_name());
     }

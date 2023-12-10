@@ -1,26 +1,14 @@
 package com.example.mycomics;
 
-import static androidx.navigation.fragment.FragmentKt.findNavController;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.example.mycomics.databinding.ActivityMainBinding;
-import com.example.mycomics.fragments.AccueilFragment;
-import com.example.mycomics.fragments.CollectionFragment;
 import com.example.mycomics.helpers.DataBaseHelper;
 
 
@@ -48,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         binding.ivLogoMyComics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).popBackStack(R.id.accueilFragment, false);
+                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).popBackStack(R.id.homeFragment, false);
 //                        .navigate(R.id.action_accueilFragment_to_collectionFragment);
                 binding.menuHamburger.setVisibility(View.INVISIBLE);
             }
@@ -101,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.action_accueilFragment_to_tomesFragment);
-                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.tomesFragment);
+                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.booksFragment);
 
                 binding.menuHamburger.setVisibility(View.INVISIBLE);
             }
@@ -114,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.action_accueilFragment_to_auteursFragment);
-                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.auteursFragment);
+                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.authorsFragment);
 
                 binding.menuHamburger.setVisibility(View.INVISIBLE);
             }
@@ -127,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.action_accueilFragment_to_editeursFragment);
-                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.editeursFragment);
+                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.editorsFragment);
 
                 binding.menuHamburger.setVisibility(View.INVISIBLE);
             }
@@ -140,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.action_accueilFragment_to_reglagesFragment);
-                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.reglagesFragment);
+                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.settingsFragment);
 
                 binding.menuHamburger.setVisibility(View.INVISIBLE);
             }

@@ -26,9 +26,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.mycomics.R;
-import com.example.mycomics.adapters.ProfilsListAdapter;
+import com.example.mycomics.adapters.ProfilesListAdapter;
 import com.example.mycomics.beans.ProfileBean;
-import com.example.mycomics.databinding.FragmentReglagesBinding;
+import com.example.mycomics.databinding.FragmentSettingsBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupTextDialog;
 import com.example.mycomics.popups.PopupListDialog;
@@ -38,11 +38,11 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ReglagesFragment#newInstance} factory method to
+ * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ReglagesFragment extends Fragment {
-    FragmentReglagesBinding binding;
+public class SettingsFragment extends Fragment {
+    FragmentSettingsBinding binding;
     /* -------------------------------------- */
     // Variable BDD
     /* -------------------------------------- */
@@ -72,7 +72,7 @@ public class ReglagesFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ReglagesFragment() {
+    public SettingsFragment() {
         // Required empty public constructor
     }
 
@@ -82,11 +82,11 @@ public class ReglagesFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ReglagesFragment.
+     * @return A new instance of fragment SettingsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ReglagesFragment newInstance(String param1, String param2) {
-        ReglagesFragment fragment = new ReglagesFragment();
+    public static SettingsFragment newInstance(String param1, String param2) {
+        SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -126,7 +126,7 @@ public class ReglagesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentReglagesBinding.inflate(inflater, container, false);
+        binding = FragmentSettingsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -213,7 +213,7 @@ public class ReglagesFragment extends Fragment {
                 popupListDialog.setTitre("Choisissez un profil dans la liste");
                 popupListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 ListView listView = (ListView) popupListDialog.findViewById(R.id.lvPopupList);
-                profilsArrayAdapter = new ProfilsListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.getProfilesList());
+                profilsArrayAdapter = new ProfilesListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.getProfilesList());
                 listView.setAdapter(profilsArrayAdapter);
                 //Clic Profil choisi pour modification
                 popupListDialog.getLvPopupListe().setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -6,15 +6,14 @@
     android:layout_height="wrap_content"
     android:minHeight="120dp"
     app:layout_collapseMode="none"
-    tools:context=".fragments.AuteurDetailFragment">
+    tools:context=".fragments.AuthorDetailFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/custom_blue"
         android:fitsSystemWindows="true"
-        android:orientation="vertical"
-        tools:context=".AuteursDetailActivity">
+        android:orientation="vertical">
 
         <!-- Bandeau DETAIL SERIE -->
         <LinearLayout

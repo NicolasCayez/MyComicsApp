@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyComics</string>
+    <string name="MenuMenuHamburger">Menu</string>
+    <string name="collecMenuHamburger">COLLEC</string>
+    <string name="seriesMenuHamburger">SERIES</string>
+    <string name="tomesMenuHamburger">TOMES</string>
+    <string name="auteursMenuHamburger">AUTEURS</string>
+    <string name="editeursMenuHamburger">EDITEURS</string>
+    <string name="reglagesMenuHamburger">REGLAGES</string>
+    <string name="btnValider">VALIDER</string>
+    <string name="btnAnnuler">ANNULER</string>
+    <string name="btnChercher">CHERCHER</string>
+    <string name="fragTitreAccueil">ACCUEIL</string>
+    <string name="hintFiltrerRechercher">Filtrer ou rechercher</string>
+    <string name="bookPopupAddTitle">Entrez le titre du tome</string>
+    <string name="bookPopupAddHint">Titre du tome</string>
+</resources>

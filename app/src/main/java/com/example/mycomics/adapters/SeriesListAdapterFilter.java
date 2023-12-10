@@ -8,22 +8,25 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.mycomics.R;
-import com.example.mycomics.beans.BookBean;
+import com.example.mycomics.beans.SerieBean;
 
 import java.util.List;
 
-public class TomesListAdapter extends ArrayAdapter<BookBean> {
+public class SeriesListAdapterFilter extends ArrayAdapter<SerieBean> {
 
     private Context mContext;
     private int id;
-    private List<BookBean> items ;
+    private List<SerieBean> items ;
 
-    public TomesListAdapter(Context context, int textViewResourceId , List<BookBean> list )
+    private String filtre;
+
+    public SeriesListAdapterFilter(Context context, int textViewResourceId , List<SerieBean> list, String filtre )
     {
         super(context, textViewResourceId, list);
         mContext = context;
         id = textViewResourceId;
         items = list ;
+        this.filtre = filtre;
     }
 
     @Override
@@ -35,11 +38,11 @@ public class TomesListAdapter extends ArrayAdapter<BookBean> {
             mView = vi.inflate(id, null);
         }
 
-        TextView text1 = (TextView) mView.findViewById(R.id.tvListview_row_1col_col1);
+        TextView text = (TextView) mView.findViewById(R.id.tvListview_row_1col_col1);
 
         if(items.get(position) != null )
         {
-            text1.setText(items.get(position).getBook_title().toString());
+            text.setText(items.get(position).getSerie_name().toString());
         }
 
         return mView;

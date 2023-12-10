@@ -1,21 +1,24 @@
 <resources>
     <string name="app_name">MyComics</string>
-    <!--  Menu Hamburger  -->
+    <!--  HAMBURGER MENU  -->
     <string name="MenuMenuHamburger">Menu</string>
     <string name="collecMenuHamburger">COLLEC</string>
     <string name="seriesMenuHamburger">SERIES</string>
-    <string name="tomesMenuHamburger">TOMES</string>
-    <string name="auteursMenuHamburger">AUTEURS</string>
-    <string name="editeursMenuHamburger">EDITEURS</string>
-    <string name="reglagesMenuHamburger">REGLAGES</string>
-    <!--  Boutons  -->
-    <string name="btnValider">VALIDER</string>
-    <string name="btnAnnuler">ANNULER</string>
-    <string name="btnChercher">CHERCHER</string>
-    <!--  TITRES FRAGMENTS  -->
-    <string name="fragTitreAccueil">ACCUEIL</string>
+    <string name="tomesMenuHamburger">BOOKS</string>
+    <string name="auteursMenuHamburger">AUTHORS</string>
+    <string name="editeursMenuHamburger">EDITORS</string>
+    <string name="reglagesMenuHamburger">SETTINGS</string>
+    <!--  BUTTONS  -->
+    <string name="btnValider">CONFIRM</string>
+    <string name="btnAnnuler">ABORT</string>
+    <string name="btnChercher">SEARCH</string>
+    <!--  FRAGMENT TITLES  -->
+    <string name="fragTitreAccueil">HOME</string>
+    <!--  BOOK POPUP TEXTS  -->
+    <string name="bookPopupAddTitle">Write the book title</string>
+    <string name="bookPopupAddHint">Book title</string>
     <!--  hint barre de recherche  -->
-    <string name="hintFiltrerRechercher">Filtrer ou rechercher</string>
+    <string name="hintFiltrerRechercher">Filtrer or search</string>
     <!--  A faire fragment auteur detail  -->
 
 
