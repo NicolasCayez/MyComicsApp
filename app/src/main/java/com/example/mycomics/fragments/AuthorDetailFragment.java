@@ -26,67 +26,52 @@ import com.example.mycomics.beans.SerieBean;
 import com.example.mycomics.databinding.FragmentAuthorDetailBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AuthorDetailFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AuthorDetailFragment extends Fragment {
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* View binding declaration */
+    //* ----------------------------------------------------------------------------------------- */
     FragmentAuthorDetailBinding binding;
 
-    /* -------------------------------------- */
-    // Variable BDD
-    /* -------------------------------------- */
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Database handler initialization
+    //* ----------------------------------------------------------------------------------------- */
     DataBaseHelper dataBaseHelper;
-    ArrayAdapter tomesArrayAdapter;
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Adapters handling listViews data display
+    //* ----------------------------------------------------------------------------------------- */
+    ArrayAdapter booksArrayAdapter;
     ArrayAdapter seriesArrayAdapter;
-    ArrayAdapter auteursArrayAdapter;
-    ArrayAdapter editeursArrayAdapter;
+    ArrayAdapter authorsArrayAdapter;
+    ArrayAdapter editorsArrayAdapter;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    //* ----------------------------------------------------------------------------------------- */
+    //* Empty constructor, required
+    //* ----------------------------------------------------------------------------------------- */
     public AuthorDetailFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AuthorDetailFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AuthorDetailFragment newInstance(String param1, String param2) {
-        AuthorDetailFragment fragment = new AuthorDetailFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
+    //* ----------------------------------------------------------------------------------------- */
+    //* onCreate inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        /* -------------------------------------- */
-        // Initialisation Base de données
-        /* -------------------------------------- */
+        /* Database handler initialization */
         dataBaseHelper = new DataBaseHelper(getActivity());
     }
 
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* onCreateView inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -94,149 +79,136 @@ public class AuthorDetailFragment extends Fragment {
         binding = FragmentAuthorDetailBinding.inflate(inflater, container, false);
         return binding.getRoot();    }
 
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* onViewCreated inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        /* -------------------------------------- */
-        // Récupération données
-        /* -------------------------------------- */
-        Integer author_id = getArguments().getInt("author_id");
-        String author_pseudonym = getArguments().getString("author_pseudonym");
-        String author_first_name = getArguments().getString("author_first_name");
-        String author_last_name = getArguments().getString("author_last_name");
-        /* -------------------------------------- */
-        // Initialisation affichage
-        /* -------------------------------------- */
+
+        /* Data sent from source fragments */
+        int author_id = getArguments().getInt("author_id");
+
+        /* Display initialization */
         AuthorBean authorBean = dataBaseHelper.getAuthorById(author_id);
-        afficherDetailAuteur(authorBean);
+        AuthorDetailRefreshScreen(authorBean);
 
-        /* -------------------------------------- */
-        // Initialisation Nom fiche
-        /* -------------------------------------- */
-        binding.tvDetailAuteurPseudo.setText(author_pseudonym);
-
-
-        /* -------------------------------------- */
-        // Clic Element liste Serie
-        /* -------------------------------------- */
-        binding.lvDetailAuteurListeSeries.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Series list item click */
+        binding.lvAuthorDetailSeriesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // SerieBean for the data to be send to destination
                 SerieBean serieBean;
                 try {
-                    serieBean = (SerieBean) binding.lvDetailAuteurListeSeries.getItemAtPosition(position);
+                    // SerieBean gets data from clicked item
+                    serieBean = (SerieBean) binding.lvAuthorDetailSeriesList.getItemAtPosition(position);
                 } catch (Exception e) {
+                    // id set to -1 for error handling
                     serieBean = new SerieBean(-1,"error");
                 }
+                // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
                 bundle.putInt("serie_id", serieBean.getSerie_id());
-                bundle.putString("serie_name", serieBean.getSerie_name());
-
+                // go to SerieDetailFragment with the data bundle
                 findNavController(AuthorDetailFragment.this).navigate(R.id.action_authorDetail_to_serieDetail, bundle);
-
             }
         });
 
-        /* -------------------------------------- */
-        // Clic Element liste Tomes
-        /* -------------------------------------- */
-        binding.lvDetailAuteurListeTomes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Books list item click */
+        binding.lvAuthorDetailBooksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                BookBean tome;
+                // BookBean for the data to be send to destination
                 BookBean bookBean;
                 try {
-                    tome = (BookBean) binding.lvDetailAuteurListeTomes.getItemAtPosition(position);
-                    bookBean = dataBaseHelper.getBookById(tome.getBook_id());
+                    // BookBean gets data from clicked item
+                    bookBean = (BookBean) binding.lvAuthorDetailBooksList.getItemAtPosition(position);
                 } catch (Exception e) {
-                    tome = new BookBean(-1,"error");
+                    // id set to -1 for error handling
                     bookBean = new BookBean(-1,"error");
                 }
-
+                // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
                 bundle.putInt("book_id", bookBean.getBook_id());
-                bundle.putInt("book_number", bookBean.getBook_number());
-                bundle.putString("book_title", bookBean.getBook_title());
-                bundle.putDouble("book_editor_price", bookBean.getBook_editor_price());
-                bundle.putDouble("book_value", bookBean.getBook_value());
-                bundle.putString("book_edition_date", bookBean.getBook_edition_date());
-                bundle.putString("book_isbn", bookBean.getBook_isbn());
-                bundle.putString("book_picture", bookBean.getBook_picture());
-                bundle.putBoolean("book_autograph", bookBean.isBook_autograph());
-                bundle.putBoolean("book_special_edition", bookBean.isBook_special_edition());
-                bundle.putString("book_special_edition_label", bookBean.getBook_special_edition_label());
-                bundle.putInt("serie_id", bookBean.getSerie_id());
-                bundle.putInt("editor_id", bookBean.getEditor_id());
-
+                // go to BookDetailFragment with the data bundle
                 findNavController(AuthorDetailFragment.this).navigate(R.id.action_authorDetail_to_bookDetail, bundle);
-
             }
         });
 
-        /* -------------------------------------- */
-        // Clic Element liste Editeur
-        /* -------------------------------------- */
-        binding.lvDetailAuteurListeEditeurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                EditorBean editorBean;
-                try {
-                    editorBean = (EditorBean) binding.lvDetailAuteurListeEditeurs.getItemAtPosition(position);
-                } catch (Exception e) {
-                    editorBean = new EditorBean(-1,"error");
-                }
-                Bundle bundle = new Bundle();
-                bundle.putInt("editor_id", editorBean.getEditor_id());
-                bundle.putString("editor_name", editorBean.getEditor_name());
-                findNavController(AuthorDetailFragment.this).navigate(R.id.action_authorDetail_to_editorDetail, bundle);
-
-            }
-        });
-
-        /* -------------------------------------- */
-        // Clic Element liste Auteur
-        /* -------------------------------------- */
+        /* Authors list item click */
         binding.lvDetailAuteurListeAuteurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // AuthorBean for the data to be send to destination
                 AuthorBean authorBean;
                 try {
+                    // AuthorBean gets data from clicked item
                     authorBean = (AuthorBean) binding.lvDetailAuteurListeAuteurs.getItemAtPosition(position);
                 } catch (Exception e) {
+                    // id set to -1 for error handling
                     authorBean = new AuthorBean(-1,"error","error","error");
                 }
                 Bundle bundle = new Bundle();
+                // Data bundle storing key-value pairs
                 bundle.putInt("author_id", authorBean.getAuthor_id());
-                bundle.putString("author_pseudonym", authorBean.getAuthor_pseudonym());
-                bundle.putString("author_last_name", authorBean.getAuthor_last_name());
-                bundle.putString("author_first_name", authorBean.getAuthor_first_name());
-
+                // go to AuthorDetailFragment with the data bundle
                 findNavController(AuthorDetailFragment.this).navigate(R.id.authorDetailFragment, bundle);
+            }
+        });
 
+        /* Editors list item click */
+        binding.lvAuthorDetailEditorsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // EditorBean for the data to be send to destination
+                EditorBean editorBean;
+                try {
+                    // EditorBean gets data from clicked item
+                    editorBean = (EditorBean) binding.lvAuthorDetailEditorsList.getItemAtPosition(position);
+                } catch (Exception e) {
+                    // id set to -1 for error handling
+                    editorBean = new EditorBean(-1,"error");
+                }
+                // Data bundle storing key-value pairs
+                Bundle bundle = new Bundle();
+                bundle.putInt("editor_id", editorBean.getEditor_id());
+                bundle.putString("editor_name", editorBean.getEditor_name());
+                // go to EditorDetailFragment with the data bundle
+                findNavController(AuthorDetailFragment.this).navigate(R.id.action_authorDetail_to_editorDetail, bundle);
             }
         });
     }
 
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* onDestroy inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public void onDestroy() {
         super.onDestroy();
-        binding = null;
+        binding = null; // to prevent memory leak
     }
 
-    private void afficherDetailAuteur(AuthorBean auteur){
-        binding.tvDetailAuteurPseudo.setText(auteur.getAuthor_pseudonym());
 
-        seriesArrayAdapter = new SeriesNbListAdapter(getActivity(), R.layout.listview_row_2col_reverse, dataBaseHelper.getSeriesListByAuthorId(auteur.getAuthor_id()));
-        binding.lvDetailAuteurListeSeries.setAdapter(seriesArrayAdapter);
-
-        tomesArrayAdapter = new BooksListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getBooksListByAuthorIdNoSerie(auteur.getAuthor_id()));
-        binding.lvDetailAuteurListeTomes.setAdapter(tomesArrayAdapter);
-
-        editeursArrayAdapter = new EditorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getEditorsByAuthorId(auteur.getAuthor_id()));
-        binding.lvDetailAuteurListeEditeurs.setAdapter(editeursArrayAdapter);
-
-        auteursArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsTeam(auteur.getAuthor_id()));
-        binding.lvDetailAuteurListeAuteurs.setAdapter(auteursArrayAdapter);
+    //* ----------------------------------------------------------------------------------------- */
+    //* Display initialization and refresh method
+    //* ----------------------------------------------------------------------------------------- */
+    private void AuthorDetailRefreshScreen(AuthorBean authorBean){
+        // Serie Name
+        binding.tvAuthorDetailAuthorPseudonym.setText(authorBean.getAuthor_pseudonym());
+        // Series list adapters charger with data
+        seriesArrayAdapter = new SeriesNbListAdapter(getActivity(), R.layout.listview_row_2col_reverse, dataBaseHelper.getSeriesListByAuthorId(authorBean.getAuthor_id()));
+        binding.lvAuthorDetailSeriesList.setAdapter(seriesArrayAdapter);
+        // Books list adapters charger with data
+        booksArrayAdapter = new BooksListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getBooksListByAuthorIdNoSerie(authorBean.getAuthor_id()));
+        binding.lvAuthorDetailBooksList.setAdapter(booksArrayAdapter);
+        // Authors list adapters charger with data
+        authorsArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsTeam(authorBean.getAuthor_id()));
+        binding.lvDetailAuteurListeAuteurs.setAdapter(authorsArrayAdapter);
+        // Editors list adapters charger with data
+        editorsArrayAdapter = new EditorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getEditorsByAuthorId(authorBean.getAuthor_id()));
+        binding.lvAuthorDetailEditorsList.setAdapter(editorsArrayAdapter);
     }
 }
 

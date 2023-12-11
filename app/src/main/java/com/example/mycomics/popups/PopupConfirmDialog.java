@@ -32,13 +32,13 @@ public class PopupConfirmDialog extends Dialog {
     /* -------------------------------------- */
     // Get/Set
     /* -------------------------------------- */
-    public void setTitre(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
-    public Button getBtnPopupValider() {
+    public Button getBtnPopupConfirm() {
         return btnPopupConfirmConfirm;
     }
-    public Button getBtnPopupAnnuler() {
+    public Button getBtnPopupABort() {
         return btnPopupConfirmAbort;
     }
 

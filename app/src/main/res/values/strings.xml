@@ -17,9 +17,15 @@
 
     <!--  Common data labels  -->
     <string name="SeriesListLabel">Series</string>
+    <string name="SerieLabel">Serie :</string>
     <string name="BooksListLabel">Books</string>
+    <string name="BooksNoSerieListLabel">Books not in a serie</string>
     <string name="AuthorsListLabel">Authors</string>
+    <string name="AuthorLabel">Author</string>
+    <string name="AuthorsPartnersListLabel">Authors who worked together</string>
     <string name="EditorsListLabel">Editors</string>
+    <string name="EditorLabel">Editor</string>
+    <string name="EditorLabelHint">Editor name</string>
 
     <!--  Popup Buttons  -->
     <string name="btnValider">CONFIRM</string>
@@ -29,37 +35,73 @@
     <!--  HomeFragment  -->
     <string name="HomeFragmentTitle">HOME</string>
 
-    <!--  AuthorsFragment  -->
-    <string name="AuthorsFragmentTitle">AUTHORS</string>
-    <string name="AuthorPopupAddTitle">Enter author pseudonym or last name</string>
-    <string name="AuthorPopupAddHint">Author pseudonym</string>
-    <string name="AuthorCreationSuccess">Author created</string>
-    <string name="AuthorCreationError">Erreur creating Author</string>
-    <string name="AuthorDuplicateError">Author already exists, creation aborted</string>
-
-    <!--  SeriesFragment  -->
+    <!--  Series  -->
     <string name="SeriesFragmentTitle">SERIES</string>
+    <string name="SerieDetailFragmentTitle">SERIE DETAIL</string>
+    <string name="SerieDetailTitle">Serie name</string>
     <string name="SeriePopupAddTitle">Enter serie name</string>
     <string name="SeriePopupAddHint">Serie name</string>
     <string name="SerieCreationSuccess">Serie created</string>
     <string name="SerieCreationError">Erreur creating Serie</string>
     <string name="SerieDuplicateError">Serie already exists, creation aborted</string>
+    <string name="SeriePopupListTitle">Choose an existing Serie in the list</string>
 
-    <!--  EditorsFragment  -->
-    <string name="EditorsFragmentTitle">EDITORS</string>
-    <string name="EditorPopupAddTitle">Enter editor name</string>
-    <string name="EditorPopupAddHint">Editor name</string>
-    <string name="EditorCreationSuccess">Editor created</string>
-    <string name="EditorCreationError">Erreur creating Editor</string>
-    <string name="EditorDuplicateError">Editor already exists, creation aborted</string>
-
-    <!--  BooksFragment  -->
+    <!--  Books  -->
     <string name="BooksFragmentTitle">BOOKS</string>
+    <string name="BookDetailFragmentTitle">BOOK DETAIL</string>
+    <string name="BookDetailTitle">Book title</string>
+    <string name="BookDetailNumber">Number :</string>
+    <string name="BookDetailNumberHint">Book number</string>
+    <string name="BookDetailEditorPrice">Editor price :</string>
+    <string name="BookDetailValue">Value :</string>
+    <string name="BookDetailEditionDate">Edition date :</string>
+    <string name="BookDetailEditionDateHint">MM/AAAA</string>
+    <string name="BookDetailAutograph">Autographed :</string>
+    <string name="BookDetailSpecialEdition">Special Edition :</string>
+    <string name="BookDetailSpecialEditionHint">Special Edition label</string>
+
     <string name="BookPopupAddTitle">Enter book title</string>
     <string name="BookPopupAddHint">Book title</string>
     <string name="BookCreationSuccess">Book created</string>
     <string name="BookCreationError">Error creating Book</string>
     <string name="BookDuplicateError">Book already exists, creation aborted</string>
+    <string name="BookAuthorPairDuplicate">is already linked to the Book</string>
+    <string name="Book">Book</string>
+    <string name="BookConfirmSerieRemoval">Confirm removal of Serie</string>
+    <string name="BookConfirmEditorRemoval">Confirm removal of Editor</string>
+    <string name="BookChooseAuthorRemoval">Choose Author to remove</string>
+    <string name="BookWarningBookDelete">Final operation, confirm to delete</string>
+    <string name="BookDeleteConfirmTitle">Title of the book to be deleted</string>
+    <string name="BookTitleDoesntMatch">The title doesn\'t match</string>
+    <string name="BookUpdateError">Book update error</string>
+    <string name="BookUpdateSuccess">Book update success</string>
+
+    <!--  Authors  -->
+    <string name="AuthorsFragmentTitle">AUTHORS</string>
+    <string name="AuthorDetailFragmentTitle">AUTHOR DETAIL</string>
+    <string name="AuthorDetailPseudonym">Author pseudonym</string>
+    <string name="AuthorDetailLastNameTitle">Author last name</string>
+    <string name="AuthorDetailLastName">Last name</string>
+    <string name="AuthorDetailFirstNameTitle">Author first name</string>
+    <string name="AuthorDetailFirstName">First name</string>
+    <string name="AuthorPopupAddTitle">Enter author pseudonym or last name</string>
+    <string name="AuthorPopupAddHint">Author pseudonym</string>
+    <string name="AuthorCreationSuccess">Author created</string>
+    <string name="AuthorCreationError">Erreur creating Author</string>
+    <string name="AuthorDuplicateError">Author already exists, creation aborted</string>
+    <string name="AuthorPopupAddListTitle">Choose an existing Author in the list or create new Author</string>
+    <string name="AuthorPopupAddListHint">New Author pseudonym</string>
+
+    <!--  Editors  -->
+    <string name="EditorsFragmentTitle">EDITORS</string>
+    <string name="EditorDetailFragmentTitle">EDITOR DETAIL</string>
+    <string name="EditorDetailName">Editor name</string>
+    <string name="EditorPopupAddTitle">Enter editor name</string>
+    <string name="EditorPopupAddHint">Editor name</string>
+    <string name="EditorCreationSuccess">Editor created</string>
+    <string name="EditorCreationError">Erreur creating Editor</string>
+    <string name="EditorDuplicateError">Editor already exists, creation aborted</string>
+    <string name="EditorPopupListTitle">Choose an existing Editor in the list</string>
 
     <!--  SettingsFragment  -->
     <string name="SettingsFragmentTitle">SETTINGS</string>
@@ -72,6 +114,7 @@
     <string name="SettingsProfileDuplicateError">Profile already exists, creation aborted</string>
     <string name="SettingsProfileChangeError">Active Profile change error</string>
     <string name="SettingsProfileChangeSuccess">Active Profile changed</string>
+    <string name="SettingsChooseProfile">Choose a profile</string>
 
 
 </resources>

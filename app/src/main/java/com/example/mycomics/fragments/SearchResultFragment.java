@@ -128,7 +128,6 @@ public class SearchResultFragment extends Fragment {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
                 bundle.putInt("serie_id", serieBean.getSerie_id());
-                bundle.putString("serie_name", serieBean.getSerie_name());
                 // go to SerieDetailFragment with the data bundle
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_serieDetail, bundle);
             }
@@ -142,7 +141,7 @@ public class SearchResultFragment extends Fragment {
                 BookBean bookBean;
                 try {
                     // BookBean gets data from clicked item
-                    bookBean = dataBaseHelper.getBookById(((BookBean) binding.lvsearchResultBooksList.getItemAtPosition(position)).getBook_id());
+                    bookBean = (BookBean) binding.lvsearchResultBooksList.getItemAtPosition(position);
                 } catch (Exception e) {
                     // id set to -1 for error handling
                     bookBean = new BookBean(-1,"error");
@@ -150,19 +149,6 @@ public class SearchResultFragment extends Fragment {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
                 bundle.putInt("book_id", bookBean.getBook_id());
-                bundle.putInt("book_number", bookBean.getBook_number());
-                bundle.putString("book_title", bookBean.getBook_title());
-                bundle.putDouble("book_editor_price", bookBean.getBook_editor_price());
-                bundle.putDouble("book_value", bookBean.getBook_value());
-                bundle.putString("book_edition_date", bookBean.getBook_edition_date());
-                bundle.putString("book_isbn", bookBean.getBook_isbn());
-                bundle.putString("book_picture", bookBean.getBook_picture());
-                bundle.putBoolean("book_autograph", bookBean.isBook_autograph());
-                bundle.putBoolean("book_special_edition", bookBean.isBook_special_edition());
-                bundle.putString("book_special_edition_label", bookBean.getBook_special_edition_label());
-                bundle.putInt("serie_id", bookBean.getSerie_id());
-                bundle.putInt("editor_id", bookBean.getEditor_id());
-                // go to BookDetailFragment with the data bundle
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_bookDetail, bundle);
             }
         });
@@ -183,9 +169,7 @@ public class SearchResultFragment extends Fragment {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
                 bundle.putInt("author_id", authorBean.getAuthor_id());
-                bundle.putString("author_pseudonym", authorBean.getAuthor_pseudonym());
-                bundle.putString("author_last_name", authorBean.getAuthor_last_name());
-                bundle.putString("author_first_name", authorBean.getAuthor_first_name());
+//                bundle.putString("author_pseudonym", authorBean.getAuthor_pseudonym());
                 // go to AuthorDetailFragment with the data bundle
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_authorDetail, bundle);
             }
@@ -207,26 +191,38 @@ public class SearchResultFragment extends Fragment {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
                 bundle.putInt("editor_id", editorBean.getEditor_id());
-                bundle.putString("editor_name", editorBean.getEditor_name());
+//                bundle.putString("editor_name", editorBean.getEditor_name());
                 // go to EditorDetailFragment with the data bundle
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_editorDetail, bundle);
             }
         });
-
     }
 
-    private void SearchResultRefreshScreen(String filter){
-        // list adapters charged with data x4
 
+    //* ----------------------------------------------------------------------------------------- */
+    //* onDestroy inherited Method override
+    //* ----------------------------------------------------------------------------------------- */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null; // to prevent memory leak
+    }
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Display initialization and refresh method
+    //* ----------------------------------------------------------------------------------------- */
+    private void SearchResultRefreshScreen(String filter){
+        // Series list adapters charger with data
         seriesArrayAdapter = new SeriesNbListAdapter(getActivity(), R.layout.listview_row_2col_reverse, dataBaseHelper.getSeriesListByFilter(filter));
         binding.lvSearchResultSeriesList.setAdapter(seriesArrayAdapter);
-
+        // Books list adapters charger with data
         booksArrayAdapter = new BooksNumberListAdapter(getActivity(), R.layout.listview_row_2col, dataBaseHelper.getBooksListByFilter(filter));
         binding.lvsearchResultBooksList.setAdapter(booksArrayAdapter);
-
+        // Authors list adapters charger with data
         authorsArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByFilter(filter));
         binding.lvsearchResultAuthorsList.setAdapter(authorsArrayAdapter);
-
+        // Editors list adapters charger with data
         editorsArrayAdapter = new EditorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getEditorsListByFilter(filter));
         binding.lvsearchResultEditorsList.setAdapter(editorsArrayAdapter);
     }

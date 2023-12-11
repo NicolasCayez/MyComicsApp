@@ -170,14 +170,11 @@ public class BooksFragment extends Fragment {
                                 Toast.makeText(getActivity(), getString(R.string.BookCreationError), Toast.LENGTH_SHORT).show();
                                 bookBean = new BookBean(-1, "error" );
                             }
-                            //Appel DataBaseHelper
                             if (dataBaseHelper.checkBookDuplicate(bookBean.getBook_title())) {
-                                // Tome déjà existant
                                 Toast.makeText(BooksFragment.super.getContext(), getString(R.string.BookDuplicateError), Toast.LENGTH_LONG).show();
                             } else {
-                                // on enregiste
-                                boolean successInsertTomes = dataBaseHelper.insertIntoBooks(bookBean);
-                                boolean successInsertDetenir = dataBaseHelper.insertIntoDetaining(dataBaseHelper.getBookLatest(bookBean));
+                                boolean successInsertBooks = dataBaseHelper.insertIntoBooks(bookBean);
+                                boolean successInsertDetaining = dataBaseHelper.insertIntoDetaining(dataBaseHelper.getBookLatest(bookBean));
                                 Toast.makeText(getActivity(), getString(R.string.BookCreationSuccess), Toast.LENGTH_SHORT).show();
                             }
                             popupTextDialog.dismiss();
@@ -235,7 +232,7 @@ public class BooksFragment extends Fragment {
 
 
     //* ----------------------------------------------------------------------------------------- */
-    //* Display intitialization and refresh method
+    //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
     private void BooksRefreshScreen(){
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {

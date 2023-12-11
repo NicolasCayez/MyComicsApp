@@ -39,7 +39,7 @@
                 android:fontFamily="@font/kronika"
                 android:gravity="center_vertical"
                 android:paddingStart="50dp"
-                android:text="DETAIL EDITEUR"
+                android:text="@string/EditorDetailFragmentTitle"
                 android:textColor="@color/custom_blue"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -65,7 +65,7 @@
                     android:padding="5dp">
                     <!-- Nom éditeur -->
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvDetailEditeurNom"
+                        android:id="@+id/tv_editor_detail_editor_name"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="15dp"
@@ -74,7 +74,7 @@
                         android:background="@drawable/rounded_corner_search"
                         android:fontFamily="@font/kronika"
                         android:gravity="center_horizontal"
-                        android:text="Nom Editeur"
+                        android:text="@string/EditorDetailName"
                         android:textColor="@color/custom_blue"
                         android:textSize="16sp" />
                     <!-- Liste Séries -->
@@ -85,7 +85,7 @@
                         android:layout_marginHorizontal="15dp"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/kronika"
-                        android:text="Séries"
+                        android:text="@string/SeriesListLabel"
                         android:textAlignment="textStart"
                         android:textColor="@color/custom_blue"
                         android:textSize="14sp" />
@@ -97,7 +97,7 @@
                         android:orientation="horizontal">
 
                         <ListView
-                            android:id="@+id/lvDetailEditeurListeSeries"
+                            android:id="@+id/lv_editor_detail_series_list"
                             android:layout_width="match_parent"
                             android:layout_height="300dp"
                             android:background="#eee"
@@ -111,7 +111,7 @@
                         android:layout_marginHorizontal="15dp"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/kronika"
-                        android:text="Tomes sans série"
+                        android:text="@string/BooksNoSerieListLabel"
                         android:textAlignment="textStart"
                         android:textColor="@color/custom_blue"
                         android:textSize="14sp" />
@@ -123,7 +123,7 @@
                         android:orientation="horizontal">
 
                         <ListView
-                            android:id="@+id/lvDetailEditeurListeTomes"
+                            android:id="@+id/lv_editor_detail_books_list"
                             android:layout_width="match_parent"
                             android:layout_height="300dp"
                             android:background="#eee"
@@ -137,7 +137,7 @@
                         android:layout_marginHorizontal="15dp"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/kronika"
-                        android:text="Auteurs"
+                        android:text="@string/AuthorsListLabel"
                         android:textAlignment="textStart"
                         android:textColor="@color/custom_blue"
                         android:textSize="14sp" />
@@ -149,7 +149,7 @@
                         android:orientation="horizontal">
 
                         <ListView
-                            android:id="@+id/lvDetailEditeurListelAuteurs"
+                            android:id="@+id/lv_editor_detail_authors_list"
                             android:layout_width="match_parent"
                             android:layout_height="120dp"
                             android:layout_marginBottom="15dp"

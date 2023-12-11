@@ -34,7 +34,7 @@
                 android:fontFamily="@font/kronika"
                 android:gravity="center_vertical"
                 android:paddingStart="50dp"
-                android:text="DETAIL TOME"
+                android:text="@string/BookDetailFragmentTitle"
                 android:textColor="@color/custom_blue"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -59,6 +59,8 @@
                     android:orientation="vertical"
                     android:padding="5dp">
                     <!-- Titre tome -->
+                    <!-- Numéro tome -->
+
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/etDetailTomeTitre"
                         android:layout_width="match_parent"
@@ -69,10 +71,9 @@
                         android:background="@drawable/rounded_corner_search"
                         android:fontFamily="@font/kronika"
                         android:gravity="center_horizontal"
-                        android:text="titre tome"
+                        android:text="@string/BookDetailTitle"
                         android:textColor="@color/custom_blue"
                         android:textSize="16sp" />
-                    <!-- Numéro tome -->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -93,7 +94,7 @@
                                 android:layout_height="25dp"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/kronika"
-                                android:text="Numéro"
+                                android:text="@string/BookDetailNumber"
                                 android:textColor="@color/custom_blue"
                                 android:textSize="14sp" />
 
@@ -106,7 +107,7 @@
                                 android:background="#eee"
                                 android:ems="10"
                                 android:fontFamily="@font/kronika"
-                                android:hint="Numéro tome"
+                                android:hint="@string/BookDetailNumberHint"
                                 android:inputType="number"
                                 android:textAlignment="textEnd"
                                 android:textColor="@color/custom_blue"
@@ -128,7 +129,7 @@
                             android:layout_height="25dp"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/kronika"
-                            android:text="Série"
+                            android:text="@string/SerieLabel"
                             android:textAlignment="textStart"
                             android:textColor="@color/custom_blue"
                             android:textSize="14sp" />
@@ -144,7 +145,7 @@
                                 android:layout_height="wrap_content"
                                 android:background="#eee"
                                 android:fontFamily="@font/kronika"
-                                android:hint="Série"
+                                android:hint="@string/SeriePopupAddHint"
                                 android:textAlignment="center"
                                 android:textColor="@color/custom_blue"
                                 android:textSize="14sp" />
@@ -159,21 +160,21 @@
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btnDetailTomeChangeSerie"
+                                android:id="@+id/btn_book_detail_change_serie"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:src="@drawable/btn_change_bleu" />
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btnDetailTomeAddSerie"
+                                android:id="@+id/btn_book_detail_add_serie"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:src="@drawable/btn_add_blue" />
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btnDetailTomeDeleteSerie"
+                                android:id="@+id/btn_book_detail_delete_serie"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
@@ -231,7 +232,7 @@
                             android:layout_height="25dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/kronika"
-                            android:text="Prix éditeur :"
+                            android:text="@string/BookDetailEditorPrice"
                             android:textColor="@color/custom_blue"
                             android:textSize="14sp" />
 
@@ -263,7 +264,7 @@
                             android:layout_height="25dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/kronika"
-                            android:text="Valeur actuelle :"
+                            android:text="@string/BookDetailValue"
                             android:textColor="@color/custom_blue"
                             android:textSize="14sp" />
 
@@ -295,7 +296,7 @@
                             android:layout_height="25dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/kronika"
-                            android:text="Date édition :"
+                            android:text="@string/BookDetailEditionDate"
                             android:textColor="@color/custom_blue"
                             android:textSize="14sp" />
 
@@ -308,7 +309,7 @@
                             android:background="#eee"
                             android:ems="10"
                             android:fontFamily="@font/kronika"
-                            android:hint="MM/AAAA"
+                            android:hint="@string/BookDetailEditionDateHint"
                             android:inputType="datetime|date"
                             android:textAlignment="textEnd"
                             android:textColor="@color/custom_blue"
@@ -330,7 +331,7 @@
                             android:layout_height="25dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/kronika"
-                            android:text="Dédicassé :"
+                            android:text="@string/BookDetailAutograph"
                             android:textColor="@color/custom_blue"
                             android:textSize="14sp" />
 
@@ -361,7 +362,7 @@
                                 android:layout_height="25dp"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/kronika"
-                                android:text="Edition spéciale :"
+                                android:text="@string/BookDetailSpecialEdition"
                                 android:textColor="@color/custom_blue"
                                 android:textSize="14sp" />
 
@@ -381,7 +382,7 @@
                             android:background="#eee"
                             android:ems="10"
                             android:fontFamily="@font/kronika"
-                            android:hint="Intitulé édition spéciale"
+                            android:hint="@string/BookDetailSpecialEditionHint"
                             android:inputType="text"
                             android:textColor="@color/custom_blue"
                             android:textColorHint="#999"
@@ -440,7 +441,7 @@
                             android:layout_height="25dp"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/kronika"
-                            android:text="Auteurs"
+                            android:text="@string/AuthorLabel"
                             android:textAlignment="textStart"
                             android:textColor="@color/custom_blue"
                             android:textSize="14sp" />
@@ -450,7 +451,7 @@
                             android:layout_height="130dp">
 
                             <ListView
-                                android:id="@+id/lvDetailTomeAuteurs"
+                                android:id="@+id/lv_book_detail_authors_list"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginBottom="20dp"
@@ -469,14 +470,14 @@
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btnDetailTomeAddAuteur"
+                                android:id="@+id/btn_book_detail_add_author"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:src="@drawable/btn_add_blue" />
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btnDetailTomeDeleteAuteur"
+                                android:id="@+id/btn_book_detail_delete_author"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
@@ -501,7 +502,7 @@
                             android:layout_height="25dp"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/kronika"
-                            android:text="Editeur"
+                            android:text="@string/EditorLabel"
                             android:textAlignment="textStart"
                             android:textColor="@color/custom_blue"
                             android:textSize="14sp" />
@@ -512,12 +513,12 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/tvDetailTomeEditeur"
+                                android:id="@+id/tv_book_detail_editor"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="#eee"
                                 android:fontFamily="@font/kronika"
-                                android:hint="Editeur"
+                                android:hint="@string/EditorLabelHint"
                                 android:textAlignment="center"
                                 android:textColor="@color/custom_blue"
                                 android:textSize="14sp" />
@@ -532,21 +533,21 @@
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btnDetailTomeChangeEditeur"
+                                android:id="@+id/btn_book_detail_change_editor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:src="@drawable/btn_change_bleu" />
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btnDetailTomeAddEditeur"
+                                android:id="@+id/btn_book_detail_add_editor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:src="@drawable/btn_add_blue" />
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btnDetailTomeDeleteEditeur"
+                                android:id="@+id/btn_book_detail_delete_editor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
@@ -569,7 +570,7 @@
                     android:padding="5dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/btnDetailTomeSaveTome"
+                        android:id="@+id/btn_book_detail_save_book"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
@@ -577,7 +578,7 @@
                         android:src="@drawable/btn_save_blue" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/btnDetailTomeDeleteTome"
+                        android:id="@+id/btn_book_detail_delete_book"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center"

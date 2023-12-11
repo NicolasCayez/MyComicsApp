@@ -41,7 +41,7 @@
                 android:fontFamily="@font/kronika"
                 android:gravity="center_vertical"
                 android:paddingStart="50dp"
-                android:text="DETAIL SERIE"
+                android:text="@string/SerieDetailFragmentTitle"
                 android:textColor="@color/custom_blue"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -67,7 +67,7 @@
                     android:padding="5dp">
                     <!-- Titre série -->
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvDetailSerieNom"
+                        android:id="@+id/tv_serie_detail_serie_name"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="15dp"
@@ -76,7 +76,7 @@
                         android:background="@drawable/rounded_corner_search"
                         android:fontFamily="@font/kronika"
                         android:gravity="center_horizontal"
-                        android:text="titre série"
+                        android:text="@string/SerieDetailTitle"
                         android:textColor="@color/custom_blue"
                         android:textSize="16sp" />
                     <!-- Image et détail -->
@@ -110,7 +110,7 @@
                         android:layout_marginHorizontal="15dp"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/kronika"
-                        android:text="Tomes"
+                        android:text="@string/BooksListLabel"
                         android:textAlignment="textStart"
                         android:textColor="@color/custom_blue"
                         android:textSize="14sp" />
@@ -122,7 +122,7 @@
                         android:orientation="horizontal">
 
                         <ListView
-                            android:id="@+id/lvDetailSerieListeTomes"
+                            android:id="@+id/lv_serie_detail_books_list"
                             android:layout_width="match_parent"
                             android:layout_height="500dp"
                             android:background="#eee"
@@ -150,13 +150,13 @@
                                 android:layout_marginHorizontal="15dp"
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/kronika"
-                                android:text="Auteurs"
+                                android:text="@string/AuthorsListLabel"
                                 android:textAlignment="textStart"
                                 android:textColor="@color/custom_blue"
                                 android:textSize="14sp" />
 
                             <ListView
-                                android:id="@+id/lvDetailSerieListeAuteurs"
+                                android:id="@+id/lv_serie_detail_authors_list"
                                 android:layout_width="match_parent"
                                 android:layout_height="120dp"
                                 android:background="#eee"
@@ -178,13 +178,13 @@
                                 android:layout_marginHorizontal="15dp"
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/kronika"
-                                android:text="Editeurs"
+                                android:text="@string/EditorsListLabel"
                                 android:textAlignment="textStart"
                                 android:textColor="@color/custom_blue"
                                 android:textSize="14sp" />
 
                             <ListView
-                                android:id="@+id/lvDetailSerieListeEditeurs"
+                                android:id="@+id/lv_serie_detail_editors_list"
                                 android:layout_width="match_parent"
                                 android:layout_height="120dp"
                                 android:background="#eee"

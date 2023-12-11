@@ -194,7 +194,6 @@ public class AuthorsFragment extends Fragment {
         });
 
         /* Author list item click */
-        // Click item
         binding.lvAuthorsAuthorsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -209,10 +208,7 @@ public class AuthorsFragment extends Fragment {
                 }
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("author_id", authorBean.getAuthor_id());
-                bundle.putString("author_pseudonym", authorBean.getAuthor_pseudonym());
-                bundle.putString("author_last_name", authorBean.getAuthor_last_name());
-                bundle.putString("author_first_name", authorBean.getAuthor_first_name());
+                bundle.putInt("author_id", authorBean.getAuthor_id());;
                 // go to AuthorDetailFragment with the data bundle
                 findNavController(AuthorsFragment.this).navigate(R.id.action_authors_to_authorDetail, bundle);
             }
@@ -231,7 +227,7 @@ public class AuthorsFragment extends Fragment {
 
 
     //* ----------------------------------------------------------------------------------------- */
-    //* Display intitialization and refresh method
+    //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
     private void AuthorsRefreshScreen(){
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {

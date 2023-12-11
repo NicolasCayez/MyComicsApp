@@ -190,7 +190,7 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 // Popup for Profile list with texts and see-through background
                 PopupListDialog popupListDialog = new PopupListDialog(getActivity());
-                popupListDialog.setTitre("Choisissez un profil dans la liste");
+                popupListDialog.setTitle(getString(R.string.SettingsChooseProfile));
                 popupListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 // getting access to the listView
                 ListView listView = (ListView) popupListDialog.findViewById(R.id.lvPopupList);
@@ -198,7 +198,6 @@ public class SettingsFragment extends Fragment {
                 profilsArrayAdapter = new ProfilesListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.getProfilesList());
                 listView.setAdapter(profilsArrayAdapter);
                 /* Profile list item click */
-                // Click item
                 popupListDialog.getLvPopupListe().setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

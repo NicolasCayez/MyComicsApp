@@ -171,7 +171,6 @@ public class SeriesFragment extends Fragment {
                             if(dataBaseHelper.checkSerieDuplicate(serieBean.getSerie_name())){
                                 Toast.makeText(getActivity(), getString(R.string.SerieDuplicateError), Toast.LENGTH_LONG).show();
                             } else {
-                                //Appel DataBaseHelper
                                 boolean success = dataBaseHelper.insertIntoSeries(serieBean);
                                 Toast.makeText(getActivity(), getString(R.string.SerieCreationSuccess), Toast.LENGTH_SHORT).show();
                             }
@@ -230,7 +229,7 @@ public class SeriesFragment extends Fragment {
 
 
     //* ----------------------------------------------------------------------------------------- */
-    //* Display intitialization and refresh method
+    //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
     private void SeriesRefreshScreen(){
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {

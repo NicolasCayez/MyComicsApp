@@ -209,7 +209,6 @@ public class EditorsFragment extends Fragment {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
                 bundle.putInt("editor_id", editorBean.getEditor_id());
-                bundle.putString("editor_name", editorBean.getEditor_name());
                 // go to EditorDetailFragment with the data bundle
                 findNavController(EditorsFragment.this).navigate(R.id.action_editors_to_editorDetail, bundle);
             }
@@ -228,7 +227,7 @@ public class EditorsFragment extends Fragment {
 
 
     //* ----------------------------------------------------------------------------------------- */
-    //* Display intitialization and refresh method
+    //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
     private void EditorsRefreshScreen(){
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
