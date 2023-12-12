@@ -91,7 +91,7 @@ public class EditorsFragment extends Fragment {
         // Search Hint initialization
         binding.sbSearch.svSearch.setQueryHint(getString(R.string.SearchHintFilterOrSearch));
         // Click event on Search button
-        binding.sbSearch.btSearch.setOnClickListener(new View.OnClickListener() {
+        binding.sbSearch.btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Data bundle storing search string

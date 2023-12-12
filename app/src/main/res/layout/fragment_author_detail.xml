@@ -24,14 +24,14 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imageView"
+                android:id="@+id/ivFragAuthorDetailLogo"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:src="@drawable/series_blue" />
+                android:src="@drawable/authors_blue" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDetailAuteurTitreBandeau"
+                android:id="@+id/tvFragAuthorDetailTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -64,7 +64,7 @@
                     android:padding="5dp">
                     <!-- Nom Auteur -->
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_author_detail_author_pseudonym"
+                        android:id="@+id/tvAuthorDetailAuthorPseudonym"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="15dp"
@@ -79,7 +79,7 @@
                         android:textSize="16sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvDetailAuteurTitreNom"
+                        android:id="@+id/tvAuthorDetailAuthorLastNameLabel"
                         android:layout_width="match_parent"
                         android:layout_height="25dp"
                         android:layout_marginHorizontal="15dp"
@@ -97,7 +97,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/tvDetailAuteurNom"
+                            android:id="@+id/tvAuthorDetailAuthorLastName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="#eee"
@@ -110,7 +110,7 @@
                     </LinearLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvDetailAuteurTitrePrenom"
+                        android:id="@+id/tvAuthorDetailAuthorFirstNameLabel"
                         android:layout_width="match_parent"
                         android:layout_height="25dp"
                         android:layout_marginHorizontal="15dp"
@@ -128,7 +128,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/tvDetailAuteurPrenom"
+                            android:id="@+id/tvAuthorDetailAuthorFirstName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="#eee"
@@ -141,7 +141,7 @@
                     </LinearLayout>
                     <!-- Liste Séries -->
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvDetailAuteurListeSeries"
+                        android:id="@+id/tvAuthorDetailSeriesListLabel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="15dp"
@@ -159,7 +159,7 @@
                         android:orientation="horizontal">
 
                         <ListView
-                            android:id="@+id/lv_author_detail_series_list"
+                            android:id="@+id/lvAuthorDetailSeriesList"
                             android:layout_width="match_parent"
                             android:layout_height="150dp"
                             android:background="#eee"
@@ -167,7 +167,7 @@
                     </LinearLayout>
                     <!-- Liste tomes -->
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvDetailAuteurListeTomes"
+                        android:id="@+id/tvAuthorDetailBooksListLabel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="15dp"
@@ -185,7 +185,7 @@
                         android:orientation="horizontal">
 
                         <ListView
-                            android:id="@+id/lv_author_detail_books_list"
+                            android:id="@+id/lvAuthorDetailBooksList"
                             android:layout_width="match_parent"
                             android:layout_height="150dp"
                             android:background="#eee"
@@ -206,11 +206,12 @@
                             android:layout_weight="1">
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvDetailAuteurListeEditeurs"
+                                android:id="@+id/tvAuthorDetailEditorsListLabel"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="15dp"
+                                android:layout_marginStart="0dp"
                                 android:layout_marginTop="5dp"
+                                android:layout_marginEnd="15dp"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/kronika"
                                 android:text="@string/EditorsListLabel"
@@ -219,11 +220,12 @@
                                 android:textSize="12sp" />
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvDetailAuteurListeAuteurs"
+                                android:id="@+id/tvAuthorDetailAuthorsListLabel"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="15dp"
+                                android:layout_marginStart="30dp"
                                 android:layout_marginTop="5dp"
+                                android:layout_marginEnd="15dp"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/kronika"
                                 android:text="@string/AuthorsPartnersListLabel"
@@ -240,7 +242,7 @@
                             android:layout_weight="1">
 
                             <ListView
-                                android:id="@+id/lv_author_detail_editors_list"
+                                android:id="@+id/lvAuthorDetailEditorsList"
                                 android:layout_width="0dp"
                                 android:layout_height="120dp"
                                 android:layout_marginEnd="15dp"
@@ -251,7 +253,7 @@
                             </ListView>
 
                             <ListView
-                                android:id="@+id/lvDetailAuteurListeAuteurs"
+                                android:id="@+id/lvAuthorDetailAuthorsList"
                                 android:layout_width="0dp"
                                 android:layout_height="120dp"
                                 android:layout_marginStart="15dp"
@@ -278,7 +280,7 @@
                     android:padding="5dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/btnDetailAuteurSaveAuteur"
+                        android:id="@+id/btnAuthorDetailSaveAuthor"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
@@ -286,7 +288,7 @@
                         android:src="@drawable/btn_save_blue" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/btnDetailAuteurDeleteAuteur"
+                        android:id="@+id/btnAuthorDetailDeleteAuthor"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center"

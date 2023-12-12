@@ -96,7 +96,7 @@ public class SearchResultFragment extends Fragment {
         SearchResultRefreshScreen(filter);
 
         /* hiding Search button, the search bar purpose here is only to filter */
-        binding.sbSearch.btSearch.setVisibility(View.GONE);
+        binding.sbSearch.btnSearch.setVisibility(View.GONE);
 
         /* Search bar */
         // Search bar text submit listener, to filter all lists
@@ -134,14 +134,14 @@ public class SearchResultFragment extends Fragment {
         });
 
         /* Books list item click */
-        binding.lvsearchResultBooksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.lvSearchResultBooksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // BookBean for the data to be send to destination
                 BookBean bookBean;
                 try {
                     // BookBean gets data from clicked item
-                    bookBean = (BookBean) binding.lvsearchResultBooksList.getItemAtPosition(position);
+                    bookBean = (BookBean) binding.lvSearchResultBooksList.getItemAtPosition(position);
                 } catch (Exception e) {
                     // id set to -1 for error handling
                     bookBean = new BookBean(-1,"error");
@@ -154,14 +154,14 @@ public class SearchResultFragment extends Fragment {
         });
 
         /* Author list item click */
-        binding.lvsearchResultAuthorsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.lvSearchResultAuthorsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // AuthorBean for the data to be send to destination
                 AuthorBean authorBean;
                 try {
                     // AuthorBean gets data from clicked item
-                    authorBean = (AuthorBean) binding.lvsearchResultAuthorsList.getItemAtPosition(position);
+                    authorBean = (AuthorBean) binding.lvSearchResultAuthorsList.getItemAtPosition(position);
                 } catch (Exception e) {
                     // id set to -1 for error handling
                     authorBean = new AuthorBean(-1,"error","error","error");
@@ -176,14 +176,14 @@ public class SearchResultFragment extends Fragment {
         });
 
         /* Editors list item click */
-        binding.lvsearchResultEditorsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.lvSearchResultEditorsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // EditorBean for the data to be send to destination
                 EditorBean editorBean;
                 try {
                     // EditorBean gets data from clicked item
-                    editorBean = (EditorBean) binding.lvsearchResultEditorsList.getItemAtPosition(position);
+                    editorBean = (EditorBean) binding.lvSearchResultEditorsList.getItemAtPosition(position);
                 } catch (Exception e) {
                     // id set to -1 for error handling
                     editorBean = new EditorBean(-1,"error");
@@ -218,12 +218,12 @@ public class SearchResultFragment extends Fragment {
         binding.lvSearchResultSeriesList.setAdapter(seriesArrayAdapter);
         // Books list adapters charger with data
         booksArrayAdapter = new BooksNumberListAdapter(getActivity(), R.layout.listview_row_2col, dataBaseHelper.getBooksListByFilter(filter));
-        binding.lvsearchResultBooksList.setAdapter(booksArrayAdapter);
+        binding.lvSearchResultBooksList.setAdapter(booksArrayAdapter);
         // Authors list adapters charger with data
         authorsArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByFilter(filter));
-        binding.lvsearchResultAuthorsList.setAdapter(authorsArrayAdapter);
+        binding.lvSearchResultAuthorsList.setAdapter(authorsArrayAdapter);
         // Editors list adapters charger with data
         editorsArrayAdapter = new EditorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getEditorsListByFilter(filter));
-        binding.lvsearchResultEditorsList.setAdapter(editorsArrayAdapter);
+        binding.lvSearchResultEditorsList.setAdapter(editorsArrayAdapter);
     }
 }

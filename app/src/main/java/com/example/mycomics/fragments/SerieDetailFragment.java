@@ -175,6 +175,8 @@ public class SerieDetailFragment extends Fragment {
     private void SerieDetailRefreshScreen(SerieBean serieBean) {
         // Serie Name
         binding.tvSerieDetailSerieName.setText(serieBean.getSerie_name());
+        //SeriePicture
+        /* TODO******************************************* */
         // Books list adapters charger with data
         booksArrayAdapter = new BooksNumberListAdapter(getActivity(), R.layout.listview_row_2col, dataBaseHelper.getBooksListBySerieId(serieBean.getSerie_id()));
         binding.lvSerieDetailBooksList.setAdapter(booksArrayAdapter);

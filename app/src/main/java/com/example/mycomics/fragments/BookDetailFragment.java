@@ -322,7 +322,7 @@ public class BookDetailFragment extends Fragment {
         });
 
         /* Click event on Editor name */
-        binding.tvDetailTomeSerie.setOnClickListener(new View.OnClickListener() {
+        binding.tvBookDetailSerie.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
                  // Saving Book in database before changing fragment
@@ -684,31 +684,31 @@ public class BookDetailFragment extends Fragment {
         // Bookbean from the Database thanks to ID
         BookBean bookBean = dataBaseHelper.getBookById(book_id);
         // Book Title
-        binding.etDetailTomeTitre.setText(bookBean.getBook_title());
+        binding.etBookDetailBookTitle.setText(bookBean.getBook_title());
         // Book number if exists
         if (bookBean.getBook_number() == 0 || bookBean.getBook_number() == null) {
-            binding.etDetailTomeNumero.setText("");
+            binding.etBookDetailBookNumber.setText("");
         } else {
-            binding.etDetailTomeNumero.setText(String.valueOf(bookBean.getBook_number()));
+            binding.etBookDetailBookNumber.setText(String.valueOf(bookBean.getBook_number()));
         }
         // Serie name
-        binding.tvDetailTomeSerie.setText(dataBaseHelper.getSerieByBookId(book_id).getSerie_name());
+        binding.tvBookDetailSerie.setText(dataBaseHelper.getSerieByBookId(book_id).getSerie_name());
         // Book ISBN
-        binding.etDetailTomeISBN.setText(bookBean.getBook_isbn() == null ? "" : String.valueOf(bookBean.getBook_isbn()));
+        binding.etBookDetailISBN.setText(bookBean.getBook_isbn() == null ? "" : String.valueOf(bookBean.getBook_isbn()));
         // Editor price
-        binding.etDetailTomePrixEditeur.setText(bookBean.getBook_editor_price() == 0 ? "" : String.valueOf(bookBean.getBook_editor_price()));
+        binding.etBookDetailEditorPrice.setText(bookBean.getBook_editor_price() == 0 ? "" : String.valueOf(bookBean.getBook_editor_price()));
         // Value
-        binding.etDetailTomeValeurActuelle.setText(bookBean.getBook_value() == 0 ? "" : String.valueOf(bookBean.getBook_value()));
+        binding.etBookDetailValue.setText(bookBean.getBook_value() == 0 ? "" : String.valueOf(bookBean.getBook_value()));
         // Edition date
-        binding.etDetailTomeDateEdition.setText(bookBean.getBook_edition_date() == null ? "" : String.valueOf(bookBean.getBook_edition_date()));
+        binding.etBookDetailEditionDate.setText(bookBean.getBook_edition_date() == null ? "" : String.valueOf(bookBean.getBook_edition_date()));
         // Autographed ?
-        binding.chkDetailTomeDedicace.setChecked(Boolean.valueOf(bookBean.isBook_autograph()));
+        binding.chkBookDetailAutograph.setChecked(Boolean.valueOf(bookBean.isBook_autograph()));
         // Speciel Edition ?
-        binding.chkDetailTomeEditionSpeciale.setChecked(Boolean.valueOf(bookBean.isBook_special_edition()));
+        binding.chkBookDetailSpecialEdition.setChecked(Boolean.valueOf(bookBean.isBook_special_edition()));
         // Special Edition Label
-        binding.etDetailTomeEditionSpecialeLibelle.setText(bookBean.getBook_special_edition_label() == null ? "" : String.valueOf( bookBean.getBook_special_edition_label()));
+        binding.etBookDetailSpecialEditionLabel.setText(bookBean.getBook_special_edition_label() == null ? "" : String.valueOf( bookBean.getBook_special_edition_label()));
         // Picture from url
-        /* TODO **************************       binding.ivDetailTomeImage; */
+        /* TODO **************************       binding.ivBookDetailPicture; */
         // Authors list
         authorsArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByBookId(book_id));
         binding.lvBookDetailAuthorsList.setAdapter(authorsArrayAdapter);
@@ -724,16 +724,16 @@ public class BookDetailFragment extends Fragment {
         // Bookbean from fragment items data
         BookBean bookBean = new BookBean(
                 book_id,
-                binding.etDetailTomeTitre.getText().toString(),
-                binding.etDetailTomeNumero.getText().length() == 0 ? null : Integer.parseInt(binding.etDetailTomeNumero.getText().toString()),
-                binding.etDetailTomeISBN.getText().toString(),
+                binding.etBookDetailBookTitle.getText().toString(),
+                binding.etBookDetailBookNumber.getText().length() == 0 ? null : Integer.parseInt(binding.etBookDetailBookNumber.getText().toString()),
+                binding.etBookDetailISBN.getText().toString(),
                 "pas d'image", /* TODO************************************* */
-                binding.etDetailTomePrixEditeur.getText().length() == 0 ? 0.0 : Double.parseDouble(binding.etDetailTomePrixEditeur.getText().toString()),
-                binding.etDetailTomeValeurActuelle.getText().length() == 0 ? 0.0 : Double.parseDouble(binding.etDetailTomeValeurActuelle.getText().toString()),
-                binding.etDetailTomeDateEdition.getText().toString(),
-                binding.chkDetailTomeDedicace.isChecked(),
-                binding.chkDetailTomeEditionSpeciale.isChecked(),
-                binding.etDetailTomeEditionSpecialeLibelle.getText().toString(),
+                binding.etBookDetailEditorPrice.getText().length() == 0 ? 0.0 : Double.parseDouble(binding.etBookDetailEditorPrice.getText().toString()),
+                binding.etBookDetailValue.getText().length() == 0 ? 0.0 : Double.parseDouble(binding.etBookDetailValue.getText().toString()),
+                binding.etBookDetailEditionDate.getText().toString(),
+                binding.chkBookDetailAutograph.isChecked(),
+                binding.chkBookDetailSpecialEdition.isChecked(),
+                binding.etBookDetailSpecialEditionLabel.getText().toString(),
                 dataBaseHelper.getSerieByBookId(book_id).getSerie_id(),
                 dataBaseHelper.getEditorByBookId(book_id).getEditor_id());
         // Database update of the Book

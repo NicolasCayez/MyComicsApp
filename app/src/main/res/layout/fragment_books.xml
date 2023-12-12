@@ -19,14 +19,14 @@
             android:orientation="horizontal"
             android:background="@color/custom_beige">
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imageView"
+                android:id="@+id/ivFragBooksLogo"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
                 android:layout_height="30dp"
                 android:src="@drawable/books_blue" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvTomesTitreBandeau"
+                android:id="@+id/tvFragBooksTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -66,7 +66,7 @@
                     android:padding="5dp">
 
                     <ListView
-                        android:id="@+id/lv_books_books_list"
+                        android:id="@+id/lvBooksBooksList"
                         android:layout_width="match_parent"
                         android:layout_height="400dp"
                         android:layout_marginHorizontal="15dp"
@@ -81,7 +81,7 @@
                     android:layout_weight="1"
                     android:orientation="horizontal">
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/btn_books_add_book"
+                        android:id="@+id/btnBooksAddBook"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"

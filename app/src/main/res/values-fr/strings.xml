@@ -95,4 +95,11 @@
     <string name="EditorLabelHint">Nom éditeur</string>
     <string name="EditorDetailName">Nom éditeur</string>
     <string name="SerieDetailTitle">Nom série</string>
+    <string name="CollectionFragmentTitle">COLLECTION</string>
+    <string name="CollectionNbBooks">Nombre de tomes enregistrés</string>
+    <string name="CollectionNbSeries">Nombre de séries enregistrées</string>
+    <string name="CollectionNbBooksNoSerie">Nombre de tomes sans série</string>
+    <string name="CollectionLastBook">Dernier tome ajouté</string>
+    <string name="CollectionBookNameOnly">Tomes n\'ayant que le titre</string>
+    <string name="CollectionAloneItem">Enregistrements sans lien</string>
 </resources>

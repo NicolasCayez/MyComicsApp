@@ -29,7 +29,7 @@ public class PopupListDialog extends Dialog {
         this.title = "Mon titre";
         this.tvPopupTitle = findViewById(R.id.tvPopupTitle);
         this.lvPopupList = findViewById(R.id.lvPopupList);
-        this.btnPopupAbort = findViewById(R.id.btnPopupAnnuler);
+        this.btnPopupAbort = findViewById(R.id.btnPopupAbort);
     }
 
     /* -------------------------------------- */

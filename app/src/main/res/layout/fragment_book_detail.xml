@@ -20,14 +20,14 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imageView"
+                android:id="@+id/ivFragBookDetailLogo"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:src="@drawable/books_blue" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDetailTomeTitreBandeau"
+                android:id="@+id/tvFragBookDetailTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -62,7 +62,7 @@
                     <!-- Numéro tome -->
 
                     <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/etDetailTomeTitre"
+                        android:id="@+id/etBookDetailBookTitle"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="15dp"
@@ -89,7 +89,7 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/tvDetailTomeNumero"
+                                android:id="@+id/tvBookDetailBookNumberLabel"
                                 android:layout_width="0dp"
                                 android:layout_height="25dp"
                                 android:layout_weight="1"
@@ -99,7 +99,7 @@
                                 android:textSize="14sp" />
 
                             <androidx.appcompat.widget.AppCompatEditText
-                                android:id="@+id/etDetailTomeNumero"
+                                android:id="@+id/etBookDetailBookNumber"
                                 android:layout_width="0dp"
                                 android:layout_height="25dp"
                                 android:layout_marginTop="5dp"
@@ -124,7 +124,7 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvDetailTomeTitreSerie"
+                            android:id="@+id/tvBookDetailSerieLabel"
                             android:layout_width="match_parent"
                             android:layout_height="25dp"
                             android:layout_marginTop="5dp"
@@ -140,7 +140,7 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/tvDetailTomeSerie"
+                                android:id="@+id/tvBookDetailSerie"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="#eee"
@@ -160,21 +160,21 @@
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btn_book_detail_change_serie"
+                                android:id="@+id/btnBookDetailChangeSerie"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:src="@drawable/btn_change_bleu" />
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btn_book_detail_add_serie"
+                                android:id="@+id/btnBookDetailAddSerie"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:src="@drawable/btn_add_blue" />
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btn_book_detail_delete_serie"
+                                android:id="@+id/btnBookDetailDeleteSerie"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
@@ -193,7 +193,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/tvDetailTomeISBN"
+                            android:id="@+id/tvBookDetailISBNLabel"
                             android:layout_width="0dp"
                             android:layout_height="25dp"
                             android:layout_weight="1"
@@ -203,7 +203,7 @@
                             android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/etDetailTomeISBN"
+                            android:id="@+id/etBookDetailISBN"
                             android:layout_width="0dp"
                             android:layout_height="25dp"
                             android:layout_marginTop="5dp"
@@ -227,7 +227,7 @@
                         android:orientation="horizontal">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvDetailTomePrixEditeur"
+                            android:id="@+id/tvBookDetailEditorPriceLabel"
                             android:layout_width="0dp"
                             android:layout_height="25dp"
                             android:layout_weight="1"
@@ -237,7 +237,7 @@
                             android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/etDetailTomePrixEditeur"
+                            android:id="@+id/etBookDetailEditorPrice"
                             android:layout_width="0dp"
                             android:layout_height="25dp"
                             android:layout_marginTop="5dp"
@@ -259,7 +259,7 @@
                         android:orientation="horizontal">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvDetailTomeValeurActuelle"
+                            android:id="@+id/tvBookDetailValueLabel"
                             android:layout_width="0dp"
                             android:layout_height="25dp"
                             android:layout_weight="1"
@@ -269,7 +269,7 @@
                             android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/etDetailTomeValeurActuelle"
+                            android:id="@+id/etBookDetailValue"
                             android:layout_width="0dp"
                             android:layout_height="25dp"
                             android:layout_marginTop="5dp"
@@ -291,7 +291,7 @@
                         android:orientation="horizontal">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvDetailTomeDateEdition"
+                            android:id="@+id/tvBookDetailEditionDateLabel"
                             android:layout_width="0dp"
                             android:layout_height="25dp"
                             android:layout_weight="1"
@@ -301,7 +301,7 @@
                             android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/etDetailTomeDateEdition"
+                            android:id="@+id/etBookDetailEditionDate"
                             android:layout_width="0dp"
                             android:layout_height="25dp"
                             android:layout_marginTop="5dp"
@@ -326,7 +326,7 @@
                         android:orientation="horizontal">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvDetailTomeDedicace"
+                            android:id="@+id/tvBookDetailAutographLabel"
                             android:layout_width="0dp"
                             android:layout_height="25dp"
                             android:layout_weight="1"
@@ -336,7 +336,7 @@
                             android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatCheckBox
-                            android:id="@+id/chkDetailTomeDedicace"
+                            android:id="@+id/chkBookDetailAutograph"
                             android:layout_width="wrap_content"
                             android:layout_height="25dp" />
                         <!--                                        app:buttonTint="@color/custom_blue"            -->
@@ -357,7 +357,7 @@
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvDetailTomeEditionSpeciale"
+                                android:id="@+id/tvBookDetailSpecialEditionLabel"
                                 android:layout_width="0dp"
                                 android:layout_height="25dp"
                                 android:layout_weight="1"
@@ -367,14 +367,14 @@
                                 android:textSize="14sp" />
 
                             <androidx.appcompat.widget.AppCompatCheckBox
-                                android:id="@+id/chkDetailTomeEditionSpeciale"
+                                android:id="@+id/chkBookDetailSpecialEdition"
                                 android:layout_width="wrap_content"
                                 android:layout_height="25dp" />
                             <!--                                              app:buttonTint="@color/custom_blue"      -->
                         </LinearLayout>
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/etDetailTomeEditionSpecialeLibelle"
+                            android:id="@+id/etBookDetailSpecialEditionLabel"
                             android:layout_width="match_parent"
                             android:layout_height="25dp"
                             android:layout_marginTop="5dp"
@@ -403,7 +403,7 @@
                             android:orientation="vertical">
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/ivDetailTomeImage"
+                                android:id="@+id/ivBookDetailPicture"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="left"
@@ -411,14 +411,14 @@
                         </LinearLayout>
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/btnDetailTomeAddImage"
+                            android:id="@+id/btnBookDetailAddPicture"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_margin="5dp"
                             android:src="@drawable/btn_add_blue" />
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/btnDetailTomeDeleteImage"
+                            android:id="@+id/btnBookDetailDeletePicture"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_margin="5dp"
@@ -436,7 +436,7 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvDetailTomeTitreAuteurs"
+                            android:id="@+id/tvBookDetailAuthorsListLabel"
                             android:layout_width="match_parent"
                             android:layout_height="25dp"
                             android:layout_marginTop="5dp"
@@ -451,7 +451,7 @@
                             android:layout_height="130dp">
 
                             <ListView
-                                android:id="@+id/lv_book_detail_authors_list"
+                                android:id="@+id/lvBookDetailAuthorsList"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginBottom="20dp"
@@ -470,14 +470,14 @@
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btn_book_detail_add_author"
+                                android:id="@+id/btnBookDetailAddAuthor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:src="@drawable/btn_add_blue" />
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btn_book_detail_delete_author"
+                                android:id="@+id/btnBookDetailDeleteAuthor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
@@ -497,7 +497,7 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvDetailTomeTitreEditeurs"
+                            android:id="@+id/tvBookDetailEditorLabel"
                             android:layout_width="match_parent"
                             android:layout_height="25dp"
                             android:layout_marginTop="5dp"
@@ -513,7 +513,7 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/tv_book_detail_editor"
+                                android:id="@+id/tvBookDetailEditor"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="#eee"
@@ -533,21 +533,21 @@
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btn_book_detail_change_editor"
+                                android:id="@+id/btnBookDetailChangeEditor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:src="@drawable/btn_change_bleu" />
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btn_book_detail_add_editor"
+                                android:id="@+id/btnBookDetailAddEditor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:src="@drawable/btn_add_blue" />
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btn_book_detail_delete_editor"
+                                android:id="@+id/btnBookDetailDeleteEditor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
@@ -570,7 +570,7 @@
                     android:padding="5dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/btn_book_detail_save_book"
+                        android:id="@+id/btnBookDetailSaveBook"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
@@ -578,7 +578,7 @@
                         android:src="@drawable/btn_save_blue" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/btn_book_detail_delete_book"
+                        android:id="@+id/btnBookDetailDeleteBook"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center"

@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment{
         // Search Hint initialization
         binding.sbSearch.svSearch.setQueryHint(getString(R.string.SearchHintSearch));
         // Click event on Search button
-        binding.sbSearch.btSearch.setOnClickListener(new View.OnClickListener() {
+        binding.sbSearch.btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Data bundle storing search string
@@ -85,28 +85,28 @@ public class HomeFragment extends Fragment{
             }
         });
         // Click event on SERIES button
-        binding.btnHomeSeries.setOnClickListener(new View.OnClickListener() {
+        binding.btnHomeMenuSeries.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 findNavController(HomeFragment.this).navigate(R.id.action_home_to_series);
             }
         });
         // Click event on BOOKS button
-        binding.btnHomeBooks.setOnClickListener(new View.OnClickListener() {
+        binding.btnHomeMenuBooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 findNavController(HomeFragment.this).navigate(R.id.action_home_to_books);
             }
         });
         // Click event on AUTHORS button
-        binding.btnHomeAuthors.setOnClickListener(new View.OnClickListener() {
+        binding.btnHomeMenuAuthors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 findNavController(HomeFragment.this).navigate(R.id.action_home_to_authors);
             }
         });
         // Click event on EDITORS button
-        binding.btnHomeEditors.setOnClickListener(new View.OnClickListener() {
+        binding.btnHomeMenuEditors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 findNavController(HomeFragment.this).navigate(R.id.action_home_to_editors);

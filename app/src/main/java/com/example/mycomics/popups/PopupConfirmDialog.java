@@ -25,8 +25,8 @@ public class PopupConfirmDialog extends Dialog {
         setContentView(R.layout.dialog_popup_confirm);
         this.title = "Title";
         this.tvPopupConfirmTitle = findViewById(R.id.tvPopupTitle);
-        this.btnPopupConfirmConfirm = findViewById(R.id.btnPopupValider);
-        this.btnPopupConfirmAbort = findViewById(R.id.btnPopupAnnuler);
+        this.btnPopupConfirmConfirm = findViewById(R.id.btnPopupConfirm);
+        this.btnPopupConfirmAbort = findViewById(R.id.btnPopupAbort);
     }
 
     /* -------------------------------------- */

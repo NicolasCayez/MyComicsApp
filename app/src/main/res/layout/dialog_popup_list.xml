@@ -33,7 +33,7 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnPopupAnnuler"
+            android:id="@+id/btnPopupAbort"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_margin="5dp"

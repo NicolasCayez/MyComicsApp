@@ -27,14 +27,14 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imageView"
+                android:id="@+id/ivFragSerieDetailLogo"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:src="@drawable/series_blue" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDetailSerieTitreBandeau"
+                android:id="@+id/tvFragSerieDetailTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -67,7 +67,7 @@
                     android:padding="5dp">
                     <!-- Titre série -->
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_serie_detail_serie_name"
+                        android:id="@+id/tvSerieDetailSerieName"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="15dp"
@@ -87,7 +87,7 @@
                         android:orientation="horizontal">
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/imageView2"
+                            android:id="@+id/ivSerieDetailPicture"
                             android:layout_width="250px"
                             android:layout_height="wrap_content"
                             android:src="@drawable/books_blue" />
@@ -104,7 +104,7 @@
                     </LinearLayout>
                     <!-- Liste tomes -->
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvDetailSerieListeTomes"
+                        android:id="@+id/tvSerieDetailBooksListLabel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="15dp"
@@ -122,7 +122,7 @@
                         android:orientation="horizontal">
 
                         <ListView
-                            android:id="@+id/lv_serie_detail_books_list"
+                            android:id="@+id/lvSerieDetailBooksList"
                             android:layout_width="match_parent"
                             android:layout_height="500dp"
                             android:background="#eee"
@@ -144,7 +144,7 @@
                             android:orientation="vertical">
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvDetailSerieListeAuteurs"
+                                android:id="@+id/tvSerieDetailAuthorsListLabel"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="15dp"
@@ -156,7 +156,7 @@
                                 android:textSize="14sp" />
 
                             <ListView
-                                android:id="@+id/lv_serie_detail_authors_list"
+                                android:id="@+id/lvSerieDetailAuthorsList"
                                 android:layout_width="match_parent"
                                 android:layout_height="120dp"
                                 android:background="#eee"
@@ -172,7 +172,7 @@
                             android:orientation="vertical">
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvDetailSerieListeEditeurs"
+                                android:id="@+id/tvSerieDetailEditorsListLabel"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="15dp"
@@ -184,7 +184,7 @@
                                 android:textSize="14sp" />
 
                             <ListView
-                                android:id="@+id/lv_serie_detail_editors_list"
+                                android:id="@+id/lvSerieDetailEditorsList"
                                 android:layout_width="match_parent"
                                 android:layout_height="120dp"
                                 android:background="#eee"
@@ -208,7 +208,7 @@
                     android:padding="5dp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/btnDetailSerieSaveSerie"
+                        android:id="@+id/btnSerieDetailSaveSerie"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
@@ -216,7 +216,7 @@
                         android:src="@drawable/btn_save_blue" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/btnDetailSerieDeleteSerie"
+                        android:id="@+id/btnSerieDetailDeleteSerie"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center"

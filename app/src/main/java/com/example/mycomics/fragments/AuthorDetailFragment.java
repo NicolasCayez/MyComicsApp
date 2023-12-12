@@ -137,14 +137,14 @@ public class AuthorDetailFragment extends Fragment {
         });
 
         /* Authors list item click */
-        binding.lvDetailAuteurListeAuteurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.lvAuthorDetailAuthorsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // AuthorBean for the data to be send to destination
                 AuthorBean authorBean;
                 try {
                     // AuthorBean gets data from clicked item
-                    authorBean = (AuthorBean) binding.lvDetailAuteurListeAuteurs.getItemAtPosition(position);
+                    authorBean = (AuthorBean) binding.lvAuthorDetailAuthorsList.getItemAtPosition(position);
                 } catch (Exception e) {
                     // id set to -1 for error handling
                     authorBean = new AuthorBean(-1,"error","error","error");
@@ -205,7 +205,7 @@ public class AuthorDetailFragment extends Fragment {
         binding.lvAuthorDetailBooksList.setAdapter(booksArrayAdapter);
         // Authors list adapters charger with data
         authorsArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsTeam(authorBean.getAuthor_id()));
-        binding.lvDetailAuteurListeAuteurs.setAdapter(authorsArrayAdapter);
+        binding.lvAuthorDetailAuthorsList.setAdapter(authorsArrayAdapter);
         // Editors list adapters charger with data
         editorsArrayAdapter = new EditorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getEditorsByAuthorId(authorBean.getAuthor_id()));
         binding.lvAuthorDetailEditorsList.setAdapter(editorsArrayAdapter);

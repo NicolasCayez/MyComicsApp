@@ -9,9 +9,9 @@
     tools:context=".MainActivity"
     android:animateLayoutChanges="true">
 
-    <!-- Header @+id/barreMenu -->
+    <!-- Header @+id/MenuBar -->
     <LinearLayout
-        android:id="@+id/barreMenu"
+        android:id="@+id/MenuBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/custom_beige"
@@ -29,6 +29,7 @@
             android:src="@drawable/logo_blue" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAppTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -63,7 +64,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barreMenu"
+        app:layout_constraintTop_toBottomOf="@id/MenuBar"
         app:layout_constraintVertical_bias="0.0"
         app:navGraph="@navigation/nav_graph" />
 
@@ -82,7 +83,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barreMenu"
+        app:layout_constraintTop_toBottomOf="@id/MenuBar"
         app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
@@ -100,7 +101,7 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvMenuAccueilTitre"
+                    android:id="@+id/tvHomeMenuTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/kronika"
@@ -128,7 +129,7 @@
                     android:padding="5dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvMenuCollec"
+                        android:id="@+id/tvMenuCollecLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -156,7 +157,7 @@
                     android:padding="5dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvMenuSeries"
+                        android:id="@+id/tvMenuSeriesLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -175,7 +176,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/btn_menu_books"
+                    android:id="@+id/btnMenuBooks"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="10dp"
@@ -184,7 +185,7 @@
                     android:padding="5dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvMenuTomes"
+                        android:id="@+id/tvMenuBooksLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -194,7 +195,7 @@
                         android:textColor="@color/custom_beige" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivMenuTomes"
+                        android:id="@+id/ivMenuBooks"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -211,7 +212,7 @@
                 android:padding="10dp">
 
                 <LinearLayout
-                    android:id="@+id/btn_menu_authors"
+                    android:id="@+id/btnMenuAuthors"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="10dp"
@@ -220,7 +221,7 @@
                     android:padding="5dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvMenuAuteurs"
+                        android:id="@+id/tvMenuAuthorsLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -230,7 +231,7 @@
                         android:textColor="@color/custom_beige" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivMenuAuteurs"
+                        android:id="@+id/ivMenuAuthors"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -239,7 +240,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/btn_menu_editors"
+                    android:id="@+id/btnMenuEditors"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="10dp"
@@ -248,7 +249,7 @@
                     android:padding="5dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvMenuEditeurs"
+                        android:id="@+id/tvMenuEditorsLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -258,7 +259,7 @@
                         android:textColor="@color/custom_beige" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivMenuEditeurs"
+                        android:id="@+id/ivMenuEditors"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -267,7 +268,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/btn_menu_settings"
+                    android:id="@+id/btnMenuSettings"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="10dp"
@@ -276,7 +277,7 @@
                     android:padding="5dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvMenuReglages"
+                        android:id="@+id/tvMenuSettingsLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -286,7 +287,7 @@
                         android:textColor="@color/custom_beige" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivMenuReglages"
+                        android:id="@+id/ivMenuSettings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"

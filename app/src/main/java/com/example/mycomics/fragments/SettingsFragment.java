@@ -109,7 +109,7 @@ public class SettingsFragment extends Fragment {
 
         /* Add Profile button handler and Profile creation popup */
         // Click event on add button
-        binding.btnAddProfil.setOnClickListener(new View.OnClickListener() {
+        binding.btnSettingsAddProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Popup for Profile creation with texts and see-through background
@@ -185,7 +185,7 @@ public class SettingsFragment extends Fragment {
 
         /* Active Profile click */
         // Displays list of Profiles to choose from
-        binding.tvProfilActif.setOnClickListener(new View.OnClickListener() {
+        binding.tvSettingsActiveProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Popup for Profile list with texts and see-through background
@@ -242,7 +242,7 @@ public class SettingsFragment extends Fragment {
 
         /*TODO*************************************************************************************/
         /** Clic sur bouton DeleteProfil*/
-        binding.btnDeleteProfil.setOnClickListener(new View.OnClickListener() {
+        binding.btnSettingsDeleteProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                //Création Popup
@@ -286,7 +286,7 @@ public class SettingsFragment extends Fragment {
     private void ActiveProfileDisplay() {
         try {
             System.out.println("test: " + dataBaseHelper.getProfileByActiveProfile().getProfile_name());
-            binding.tvProfilActif.setText(dataBaseHelper.getProfileByActiveProfile().getProfile_name());
+            binding.tvSettingsActiveProfile.setText(dataBaseHelper.getProfileByActiveProfile().getProfile_name());
         } catch (Exception e) {
 
         }

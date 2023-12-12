@@ -25,14 +25,14 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imageViewMaison"
+                android:id="@+id/ivFragHomeLogo"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:src="@drawable/home_bleu" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textView3"
+                android:id="@+id/tvFragSettingsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -52,7 +52,7 @@
             android:layout_margin="10dp" />
         <!-- Bouton SERIES -->
         <LinearLayout
-            android:id="@+id/btn_home_series"
+            android:id="@+id/btnHomeMenuSeries"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp"
@@ -60,7 +60,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivMenuAccueilSeries"
+                android:id="@+id/ivHomeMenuSeries"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
@@ -68,7 +68,7 @@
                 android:src="@drawable/series_blue" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvMenuAccueilSeries"
+                android:id="@+id/tvHomeMenuSeries"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -80,7 +80,7 @@
         </LinearLayout>
         <!-- Bouton TOMES -->
         <LinearLayout
-            android:id="@+id/btn_home_books"
+            android:id="@+id/btnHomeMenuBooks"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp"
@@ -88,7 +88,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivMenuAccueilTomes"
+                android:id="@+id/ivHomeMenuBooks"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
@@ -96,7 +96,7 @@
                 android:src="@drawable/books_blue" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvMenuAccueiTomes"
+                android:id="@+id/tvHomeMenuBooks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -108,7 +108,7 @@
         </LinearLayout>
         <!-- Bouton AUTEURS -->
         <LinearLayout
-            android:id="@+id/btn_home_authors"
+            android:id="@+id/btnHomeMenuAuthors"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp"
@@ -116,7 +116,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivMenuAccueilAuteurs"
+                android:id="@+id/ivHomeMenuAuthors"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
@@ -124,7 +124,7 @@
                 android:src="@drawable/authors_blue" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvMenuAccueilAuteurs"
+                android:id="@+id/tvHomeMenuAuthors"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -136,7 +136,7 @@
         </LinearLayout>
         <!-- Bouton EDITEURS -->
         <LinearLayout
-            android:id="@+id/btn_home_editors"
+            android:id="@+id/btnHomeMenuEditors"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp"
@@ -144,7 +144,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivMenuAccueilEditeurs"
+                android:id="@+id/ivHomeMenuEditors"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
@@ -152,7 +152,7 @@
                 android:src="@drawable/editors_blue" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvMenuAccueilEditeurs"
+                android:id="@+id/tvHomeMenuEditors"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

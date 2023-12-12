@@ -31,8 +31,8 @@ public class PopupTextDialog extends Dialog {
         this.hint = "Hint";
         this.tvPopupTitle = findViewById(R.id.tvPopupTitle);
         this.etPopupText = findViewById(R.id.etPopupText);
-        this.btnPopupConfirm = findViewById(R.id.btnPopupValider);
-        this.btnPopupAbort = findViewById(R.id.btnPopupAnnuler);
+        this.btnPopupConfirm = findViewById(R.id.btnPopupConfirm);
+        this.btnPopupAbort = findViewById(R.id.btnPopupAbort);
     }
 
     /* -------------------------------------- */

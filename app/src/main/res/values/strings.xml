@@ -35,6 +35,15 @@
     <!--  HomeFragment  -->
     <string name="HomeFragmentTitle">HOME</string>
 
+    <!--  CollectionFragment  -->
+    <string name="CollectionFragmentTitle">COLLECTION</string>
+    <string name="CollectionNbBooks">Number of Books</string>
+    <string name="CollectionNbSeries">Number of Series</string>
+    <string name="CollectionNbBooksNoSerie">Number of Book without Serie</string>
+    <string name="CollectionLastBook">Last Book saved</string>
+    <string name="CollectionBookNameOnly">Books having name only</string>Tomes à compléter/string>
+    <string name="CollectionAloneItem">Enregistrements sans lien</string>
+
     <!--  Series  -->
     <string name="SeriesFragmentTitle">SERIES</string>
     <string name="SerieDetailFragmentTitle">SERIE DETAIL</string>
