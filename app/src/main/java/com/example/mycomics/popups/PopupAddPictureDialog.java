@@ -2,6 +2,7 @@ package com.example.mycomics.popups;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -12,73 +13,61 @@ import androidx.annotation.NonNull;
 import com.example.mycomics.R;
 
 
-public class PopupAddListDialog extends Dialog {
-    /* -------------------------------------- */
-    // Référence to popup elements
-    /* -------------------------------------- */
+public class PopupAddPictureDialog extends Dialog {
     private String title;
-    private String hint;
-    private TextView tvPopupTitle;
-    private EditText etPopupText;
-    private ListView lvPopupList;
+    private View preview;
     private Button btnPopupConfirm, btnPopupAbort;
-
     /* -------------------------------------- */
     // Constructor
     /* -------------------------------------- */
-
-    public PopupAddListDialog(@NonNull Context context) {
+    public PopupAddPictureDialog(@NonNull Context context) {
         super(context, androidx.appcompat.R.style.Theme_AppCompat_Dialog);
-        setContentView(R.layout.dialog_popup_txt_list);
+        setContentView(R.layout.dialog_popup_add_picture);
         this.title = "Title";
-        this.tvPopupTitle = findViewById(R.id.tvPopupTitle);
-        this.etPopupText = findViewById(R.id.etPopupText);
-        this.lvPopupList = findViewById(R.id.lvPopupList);
+        this.preview = findViewById(R.id.pvPopupPreview);
         this.btnPopupConfirm = findViewById(R.id.btnPopupConfirm);
         this.btnPopupAbort = findViewById(R.id.btnPopupAbort);
     }
-
     /* -------------------------------------- */
     // Get/Set
     /* -------------------------------------- */
+
+    public String getTitle() {
+        return title;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
-    public void setHint(String hint) {
-        this.hint = hint;
+
+    public View getPreview() {
+        return preview;
     }
 
-    public EditText getEtPopupText() {
-        return etPopupText;
+    public void setPreview(View preview) {
+        this.preview = preview;
     }
 
-
-    public TextView getTvPopupTitle() {
-        return tvPopupTitle;
-    }
-    public void setTvPopupTitle(TextView tvPopupTitle) {
-        this.tvPopupTitle = tvPopupTitle;
-    }
-
-    public ListView getLvPopupList() {
-        return lvPopupList;
-    }
-    public void setLvPopupList(ListView lvPopupList) {
-        this.lvPopupList = lvPopupList;
-    }
     public Button getBtnPopupConfirm() {
         return btnPopupConfirm;
     }
+
+    public void setBtnPopupConfirm(Button btnPopupConfirm) {
+        this.btnPopupConfirm = btnPopupConfirm;
+    }
+
     public Button getBtnPopupAbort() {
         return btnPopupAbort;
     }
 
+    public void setBtnPopupAbort(Button btnPopupAbort) {
+        this.btnPopupAbort = btnPopupAbort;
+    }
 
     /* -------------------------------------- */
     // Build Method
     /* -------------------------------------- */
     public void Build(){
         show();
-        tvPopupTitle.setText(title);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.mycomics.fragments;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
@@ -24,6 +26,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Rational;
 import android.util.Size;
 import android.view.KeyEvent;
@@ -48,12 +51,20 @@ import com.example.mycomics.popups.PopupListDialog;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class SettingsFragment extends Fragment {
+    /*********************************************/
+    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
+    private ImageCapture imageCapture;
+    /*********************************************/
+
 
     //* ----------------------------------------------------------------------------------------- */
     //* View binding declaration */
@@ -90,12 +101,49 @@ public class SettingsFragment extends Fragment {
         /* Database handler initialization */
         dataBaseHelper = new DataBaseHelper(getActivity());
 
-        /*TODO*************************************************************************************/
-        /**-------------------------------------- */
-        /** TEST
-        /**-------------------------------------- */
-
+        /*********************************************/
+        cameraProviderFuture = ProcessCameraProvider.getInstance(getContext());
+        cameraProviderFuture.addListener(() -> {
+            try {
+                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                startCameraX(cameraProvider);
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }, getExecutor());
+        /*********************************************/
     }
+
+    /*********************************************/
+
+    private Executor getExecutor() {
+        return ContextCompat.getMainExecutor(getContext());
+    }
+    /*********************************************/
+    /*********************************************/
+
+    private void startCameraX(ProcessCameraProvider cameraProvider) {
+        cameraProvider.unbindAll();
+
+        // CameraSelector use case
+        CameraSelector cameraSelector = new CameraSelector.Builder()
+                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                .build();
+
+        // Preview use case
+        Preview preview = new Preview.Builder().build();
+        preview.setSurfaceProvider(binding.previewView.getSurfaceProvider());
+
+        // Image capture use case
+        imageCapture = new ImageCapture.Builder()
+                .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                .build();
+
+        cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageCapture);
+    }
+    /*********************************************/
 
 
     //* ----------------------------------------------------------------------------------------- */
@@ -272,15 +320,53 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-/***************** TEST CAMERA ********************************************************************/
-        binding.buttonphoto.setOnClickListener(new View.OnClickListener() {
+        /***************** TEST CAMERA ***************/
+        binding.btnphoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                capturePicture();
 
             }
         });
+        /*********************************************/
+
     }
+
+
+    /*********************************************/
+    private void capturePicture() {
+
+        long timestamp = System.currentTimeMillis();
+
+        ContentValues cv = new ContentValues();
+        cv.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/MyComics");
+        cv.put(MediaStore.MediaColumns.DISPLAY_NAME, timestamp);
+        cv.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
+
+        imageCapture.takePicture(
+                new ImageCapture.OutputFileOptions.Builder(
+                        getContext().getContentResolver(),
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        cv
+                ).build(),
+                getExecutor(),
+                new ImageCapture.OnImageSavedCallback() {
+                    @Override
+                    public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
+                        Toast.makeText(getActivity(), "Photo sauvegardée", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(@NonNull ImageCaptureException exception) {
+                        Toast.makeText(getActivity(), "Photo erreur bordel de merde : " + exception.getMessage(), Toast.LENGTH_LONG).show();
+
+                    }
+                }
+        );
+    }
+    /*********************************************/
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();

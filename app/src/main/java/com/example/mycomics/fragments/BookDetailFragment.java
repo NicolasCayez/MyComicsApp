@@ -2,6 +2,7 @@ package com.example.mycomics.fragments;
 
 import static androidx.navigation.fragment.FragmentKt.findNavController;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,8 +10,17 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageCapture;
+import androidx.camera.core.ImageCaptureException;
+import androidx.camera.core.Preview;
+import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,10 +40,15 @@ import com.example.mycomics.beans.EditorBean;
 import com.example.mycomics.beans.SerieBean;
 import com.example.mycomics.databinding.FragmentBookDetailBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
+import com.example.mycomics.popups.PopupAddPictureDialog;
 import com.example.mycomics.popups.PopupConfirmDialog;
 import com.example.mycomics.popups.PopupTextDialog;
 import com.example.mycomics.popups.PopupAddListDialog;
 import com.example.mycomics.popups.PopupListDialog;
+import com.google.common.util.concurrent.ListenableFuture;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
 
 public class BookDetailFragment extends Fragment {
 
@@ -59,6 +74,13 @@ public class BookDetailFragment extends Fragment {
 
 
     //* ----------------------------------------------------------------------------------------- */
+    //* Camera Provider declarations
+    //* ----------------------------------------------------------------------------------------- */
+    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
+    private ImageCapture imageCapture;
+
+
+    //* ----------------------------------------------------------------------------------------- */
     //* Empty constructor, required
     //* ----------------------------------------------------------------------------------------- */
     public BookDetailFragment() {
@@ -74,6 +96,19 @@ public class BookDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         /* Database handler initialization */
         dataBaseHelper = new DataBaseHelper(getActivity());
+        /* Camera provider */
+        cameraProviderFuture = ProcessCameraProvider.getInstance(getContext());
+        cameraProviderFuture.addListener(() -> {
+            try {
+                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                startCameraX(cameraProvider);
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }, getExecutor());
+
     }
 
 
@@ -118,7 +153,7 @@ public class BookDetailFragment extends Fragment {
                 saveBook(book_id);
                 // Popup for Author : link existing or create new) with texts and see-through background
                 PopupAddListDialog popupAddListDialog = new PopupAddListDialog(getActivity());
-                popupAddListDialog.setTitre(getString(R.string.AuthorPopupAddListTitle));
+                popupAddListDialog.setTitle(getString(R.string.AuthorPopupAddListTitle));
                 popupAddListDialog.setHint(getString(R.string.AuthorPopupAddListHint));
                 popupAddListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 // getting access to the listView
@@ -585,7 +620,6 @@ public class BookDetailFragment extends Fragment {
             }
         });
 
-
         /* Delete Book click */
         binding.btnBookDetailDeleteBook.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -661,6 +695,38 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupTextDialog.build(); // To build the popup
+                bookDetailRefreshScreen(book_id); // To refresh display
+            }
+        });
+
+        /* AddPicture Click */
+        binding.btnBookDetailAddPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Saving Book in database before switching to popup
+                saveBook(book_id);
+                // Popup for deleting an Author from the list
+                PopupAddPictureDialog popupAddPictureDialog = new PopupAddPictureDialog(getActivity());
+                popupAddPictureDialog.setTitle(getString(R.string.Book) + "\n"
+                        + dataBaseHelper.getBookById(book_id).getBook_title() + "\n"
+                        + getString(R.string.BookChooseAuthorRemoval));
+                popupAddPictureDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                popupAddPictureDialog.getBtnPopupConfirm().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        capturePicture(book_id);
+                    }
+                });
+                popupAddPictureDialog.dismiss(); // To close popup
+                // Click event on abort button
+                popupAddPictureDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupAddPictureDialog.dismiss(); // To close Popup
+                    }
+                });
+                popupAddPictureDialog.Build(); // To build the popup
                 bookDetailRefreshScreen(book_id); // To refresh display
             }
         });
@@ -743,5 +809,70 @@ public class BookDetailFragment extends Fragment {
         } else {
             Toast.makeText(getActivity(), getString(R.string.BookUpdateError), Toast.LENGTH_SHORT);
         }
+    }
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Camera : Executor
+    //* ----------------------------------------------------------------------------------------- */
+    private Executor getExecutor() {
+        return ContextCompat.getMainExecutor(getContext());
+    }
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* CameraX configuration
+    //* ----------------------------------------------------------------------------------------- */
+    private void startCameraX(ProcessCameraProvider cameraProvider) {
+        cameraProvider.unbindAll();
+
+        // CameraSelector use case
+        CameraSelector cameraSelector = new CameraSelector.Builder()
+                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                .build();
+
+        // Preview use case
+        Preview preview = new Preview.Builder().build();
+//        preview.setSurfaceProvider(binding.previewView.getSurfaceProvider());
+
+        // Image capture use case
+        imageCapture = new ImageCapture.Builder()
+                .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                .build();
+
+        cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageCapture);
+    }
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* CameraX use
+    //* ----------------------------------------------------------------------------------------- */
+    private void capturePicture(int book_id) {
+
+        ContentValues cv = new ContentValues();
+        cv.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/MyComics");
+        cv.put(MediaStore.MediaColumns.DISPLAY_NAME, "bookID_" + book_id);
+        cv.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
+
+        imageCapture.takePicture(
+                new ImageCapture.OutputFileOptions.Builder(
+                        getContext().getContentResolver(),
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        cv
+                ).build(),
+                getExecutor(),
+                new ImageCapture.OnImageSavedCallback() {
+                    @Override
+                    public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
+                        Toast.makeText(getActivity(), "Photo sauvegardée", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(@NonNull ImageCaptureException exception) {
+                        Toast.makeText(getActivity(), "Photo erreur bordel de merde : " + exception.getMessage(), Toast.LENGTH_LONG).show();
+
+                    }
+                }
+        );
     }
 }
