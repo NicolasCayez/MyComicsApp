@@ -64,8 +64,8 @@
                     android:orientation="vertical"
                     android:padding="5dp">
                     <!-- Nom éditeur -->
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvEditorDetailEditorName"
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/etEditorDetailEditorName"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="15dp"

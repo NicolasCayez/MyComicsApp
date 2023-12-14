@@ -66,8 +66,8 @@
                     android:orientation="vertical"
                     android:padding="5dp">
                     <!-- Titre série -->
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvSerieDetailSerieName"
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/etSerieDetailSerieName"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="15dp"

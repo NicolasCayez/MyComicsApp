@@ -93,7 +93,7 @@ public class SearchResultFragment extends Fragment {
         String filter = getArguments().getString("filter");
 
         /* Display initialization */
-        SearchResultRefreshScreen(filter);
+        searchResultRefreshScreen(filter);
 
         /* hiding Search button, the search bar purpose here is only to filter */
         binding.sbSearch.btnSearch.setVisibility(View.GONE);
@@ -107,7 +107,7 @@ public class SearchResultFragment extends Fragment {
             }
             @Override
             public boolean onQueryTextChange(String filter) {
-                SearchResultRefreshScreen(filter); // To refresh display, depending on filter
+                searchResultRefreshScreen(filter); // To refresh display, depending on filter
                 return false;
             }
         });
@@ -212,7 +212,7 @@ public class SearchResultFragment extends Fragment {
     //* ----------------------------------------------------------------------------------------- */
     //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
-    private void SearchResultRefreshScreen(String filter){
+    private void searchResultRefreshScreen(String filter){
         // Series list adapters charger with data
         seriesArrayAdapter = new SeriesNbListAdapter(getActivity(), R.layout.listview_row_2col_reverse, dataBaseHelper.getSeriesListByFilter(filter));
         binding.lvSearchResultSeriesList.setAdapter(seriesArrayAdapter);

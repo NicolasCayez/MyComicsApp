@@ -86,7 +86,7 @@ public class AuthorsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         /* Display initialization */
-        AuthorsRefreshScreen();
+        authorsRefreshScreen();
 
         /* Search bar */
         // Search Hint initialization
@@ -110,7 +110,7 @@ public class AuthorsFragment extends Fragment {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-                AuthorsRefreshScreen(); // To refresh display
+                authorsRefreshScreen(); // To refresh display
                 return false;
             }
         });
@@ -151,7 +151,7 @@ public class AuthorsFragment extends Fragment {
                             Toast.makeText(getActivity(), getString(R.string.AuthorCreationSuccess), Toast.LENGTH_SHORT).show();
                         }
                         popupTextDialog.dismiss(); // To close popup
-                        AuthorsRefreshScreen(); // To refresh display
+                        authorsRefreshScreen(); // To refresh display
                     }
                 });
                 // Key event, same behaviour as confirm button
@@ -175,7 +175,7 @@ public class AuthorsFragment extends Fragment {
                                 Toast.makeText(getActivity(), getString(R.string.AuthorCreationSuccess), Toast.LENGTH_SHORT).show();
                             }
                             popupTextDialog.dismiss();
-                            AuthorsRefreshScreen();
+                            authorsRefreshScreen();
                             return true; // inherited, necessary
                         }
                         return false; // inherited, necessary
@@ -189,7 +189,7 @@ public class AuthorsFragment extends Fragment {
                     }
                 });
                 popupTextDialog.build(); // To build the popup
-                AuthorsRefreshScreen(); // To refresh display
+                authorsRefreshScreen(); // To refresh display
             }
         });
 
@@ -229,7 +229,7 @@ public class AuthorsFragment extends Fragment {
     //* ----------------------------------------------------------------------------------------- */
     //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
-    private void AuthorsRefreshScreen(){
+    private void authorsRefreshScreen(){
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
             // If the search bar isn't empty
             // list filtered

@@ -86,7 +86,7 @@ public class SeriesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         /* Display initialization */
-        SeriesRefreshScreen();
+        seriesRefreshScreen();
 
         /* Search bar */
         // Search Hint initialization
@@ -110,7 +110,7 @@ public class SeriesFragment extends Fragment {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-                SeriesRefreshScreen(); // To refresh display
+                seriesRefreshScreen(); // To refresh display
                 return false;
             }
         });
@@ -151,7 +151,7 @@ public class SeriesFragment extends Fragment {
                             Toast.makeText(getActivity(), getString(R.string.SerieCreationSuccess), Toast.LENGTH_SHORT).show();
                         }
                         popupTextDialog.dismiss(); // To close popup
-                        SeriesRefreshScreen(); // To refresh display
+                        seriesRefreshScreen(); // To refresh display
                     }
                 });
                 // Key event, same behaviour as confirm button
@@ -175,7 +175,7 @@ public class SeriesFragment extends Fragment {
                                 Toast.makeText(getActivity(), getString(R.string.SerieCreationSuccess), Toast.LENGTH_SHORT).show();
                             }
                             popupTextDialog.dismiss();
-                            SeriesRefreshScreen();
+                            seriesRefreshScreen();
                             return true; // inherited, necessary
                         }
                         return false; // inherited, necessary
@@ -189,7 +189,7 @@ public class SeriesFragment extends Fragment {
                     }
                 });
                 popupTextDialog.build(); // To build the popup
-                SeriesRefreshScreen(); // To refresh display
+                seriesRefreshScreen(); // To refresh display
             }
         });
 
@@ -231,7 +231,7 @@ public class SeriesFragment extends Fragment {
     //* ----------------------------------------------------------------------------------------- */
     //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
-    private void SeriesRefreshScreen(){
+    private void seriesRefreshScreen(){
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
             // If the search bar isn't empty
             // list filtered

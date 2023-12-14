@@ -102,4 +102,16 @@
     <string name="CollectionLastBook">Dernier tome ajouté</string>
     <string name="CollectionBookNameOnly">Tomes n\'ayant que le titre</string>
     <string name="CollectionAloneItem">Enregistrements sans lien</string>
+    <string name="SerieDeleteConfirmName">Confirmez la suppression de la Série en écrivant son nom</string>
+    <string name="SerieNameDoesntMatch">Le nom de la Série ne correspond pas</string>
+    <string name="SerieUpdateError">Erreur modification Série</string>
+    <string name="SerieUpdateSuccess">Série modifiée avec succès</string>
+    <string name="AuthorDeleteConfirmPseudonym">Confirmez la suppression de l\'Auteur en écrivant son pseudonyme</string>
+    <string name="AuthorPseudonymDoesntMatch">Le pseudonyme de l\'Auteur ne correspond pas</string>
+    <string name="AuthorUpdateError">Erreur modification Auteur</string>
+    <string name="AuthorUpdateSuccess">Auteur modifié avec succès</string>
+    <string name="EditorDeleteConfirmName">Confirmez la suppression de l\'Editeur en écrivant son nom</string>
+    <string name="EditorNameDoesntMatch">Le nom de l\'Editeur ne correspond pas</string>
+    <string name="EditorUpdateError">Erreur modification Editeur</string>
+    <string name="EditorUpdateSuccess">Editeur modifié avec succès</string>
 </resources>

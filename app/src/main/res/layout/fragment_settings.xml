@@ -130,10 +130,9 @@
                         android:text="@string/SettingsDarkModeLabel"
                         android:textColor="@color/custom_blue"
                         android:textSize="14sp" />
-                    <!--                                 app:thumbTint="@color/custom_blue"
-                                            app:trackTint="#ccc"           -->
+
                 </LinearLayout>
-                <!-- Bloc mode sombre -->
+                <!-- Bloc TEST *********************************************************** -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -161,6 +160,21 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
                     </FrameLayout>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/capture"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/captureImg"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="capture"
+
+                             />
+
+                    </androidx.cardview.widget.CardView>
 
                     <Button
                         android:id="@+id/buttonphoto"

@@ -54,6 +54,11 @@
     <string name="SerieCreationError">Erreur creating Serie</string>
     <string name="SerieDuplicateError">Serie already exists, creation aborted</string>
     <string name="SeriePopupListTitle">Choose an existing Serie in the list</string>
+    <string name="SerieDeleteConfirmName">Confirm delete Serie by writing the Serie name</string>
+    <string name="SerieNameDoesntMatch">The Serie Name doesn\'t match</string>
+    <string name="SerieUpdateError">Serie update error</string>
+    <string name="SerieUpdateSuccess">Serie update success</string>
+
 
     <!--  Books  -->
     <string name="BooksFragmentTitle">BOOKS</string>
@@ -100,6 +105,10 @@
     <string name="AuthorDuplicateError">Author already exists, creation aborted</string>
     <string name="AuthorPopupAddListTitle">Choose an existing Author in the list or create new Author</string>
     <string name="AuthorPopupAddListHint">New Author pseudonym</string>
+    <string name="AuthorDeleteConfirmPseudonym">Confirm delete Author by writing the Author pseudonym</string>
+    <string name="AuthorPseudonymDoesntMatch">The Author Pseudonym doesn\'t match</string>
+    <string name="AuthorUpdateError">Author update error</string>
+    <string name="AuthorUpdateSuccess">Author update success</string>
 
     <!--  Editors  -->
     <string name="EditorsFragmentTitle">EDITORS</string>
@@ -111,6 +120,10 @@
     <string name="EditorCreationError">Erreur creating Editor</string>
     <string name="EditorDuplicateError">Editor already exists, creation aborted</string>
     <string name="EditorPopupListTitle">Choose an existing Editor in the list</string>
+    <string name="EditorDeleteConfirmName">Confirm delete Editor by writing the Editor name</string>
+    <string name="EditorNameDoesntMatch">The Editor Name doesn\'t match</string>
+    <string name="EditorUpdateError">Editor update error</string>
+    <string name="EditorUpdateSuccess">Editor update success</string>
 
     <!--  SettingsFragment  -->
     <string name="SettingsFragmentTitle">SETTINGS</string>

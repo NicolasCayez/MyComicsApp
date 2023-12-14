@@ -88,7 +88,7 @@ public class BooksFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         /* Display initialization */
-        BooksRefreshScreen();
+        booksRefreshScreen();
         /* Search bar */
         // Search Hint initialization
         binding.sbSearch.svSearch.setQueryHint(getString(R.string.SearchHintFilterOrSearch));
@@ -111,7 +111,7 @@ public class BooksFragment extends Fragment {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-                BooksRefreshScreen(); // To refresh display
+                booksRefreshScreen(); // To refresh display
                 return false;
             }
         });
@@ -153,7 +153,7 @@ public class BooksFragment extends Fragment {
                             Toast.makeText(getActivity(), getString(R.string.BookCreationSuccess), Toast.LENGTH_SHORT).show();
                         }
                         popupTextDialog.dismiss(); // To close popup
-                        BooksRefreshScreen(); // To refresh display
+                        booksRefreshScreen(); // To refresh display
                     }
                 });
                 // Key event, same behaviour as confirm button
@@ -178,7 +178,7 @@ public class BooksFragment extends Fragment {
                                 Toast.makeText(getActivity(), getString(R.string.BookCreationSuccess), Toast.LENGTH_SHORT).show();
                             }
                             popupTextDialog.dismiss();
-                            BooksRefreshScreen();
+                            booksRefreshScreen();
                             return true; // inherited, necessary
                         }
                         return false; // inherited, necessary
@@ -192,7 +192,7 @@ public class BooksFragment extends Fragment {
                     }
                 });
                 popupTextDialog.build(); // To build the popup
-                BooksRefreshScreen(); // To refresh display
+                booksRefreshScreen(); // To refresh display
             }
         });
 
@@ -234,7 +234,7 @@ public class BooksFragment extends Fragment {
     //* ----------------------------------------------------------------------------------------- */
     //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
-    private void BooksRefreshScreen(){
+    private void booksRefreshScreen(){
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
             // If the search bar isn't empty
             // list filtered

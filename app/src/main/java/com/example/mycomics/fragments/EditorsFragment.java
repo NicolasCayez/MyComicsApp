@@ -86,7 +86,7 @@ public class EditorsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         /* Display initialization */
-        EditorsRefreshScreen();
+        editorsRefreshScreen();
         /* Search bar */
         // Search Hint initialization
         binding.sbSearch.svSearch.setQueryHint(getString(R.string.SearchHintFilterOrSearch));
@@ -109,7 +109,7 @@ public class EditorsFragment extends Fragment {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-                EditorsRefreshScreen(); // To refresh display
+                editorsRefreshScreen(); // To refresh display
                 return false;
             }
         });
@@ -150,7 +150,7 @@ public class EditorsFragment extends Fragment {
                             Toast.makeText(getActivity(), getString(R.string.EditorCreationSuccess), Toast.LENGTH_SHORT).show();
                         }
                         popupTextDialog.dismiss(); // To close popup
-                        EditorsRefreshScreen(); // To refresh display
+                        editorsRefreshScreen(); // To refresh display
                     }
                 });
                 // Key event, same behaviour as confirm button
@@ -174,7 +174,7 @@ public class EditorsFragment extends Fragment {
                                 Toast.makeText(getActivity(), getString(R.string.EditorCreationSuccess), Toast.LENGTH_SHORT).show();
                             }
                             popupTextDialog.dismiss();
-                            EditorsRefreshScreen();
+                            editorsRefreshScreen();
                             return true; // inherited, necessary
                         }
                         return false; // inherited, necessary
@@ -188,7 +188,7 @@ public class EditorsFragment extends Fragment {
                     }
                 });
                 popupTextDialog.build(); // To build the popup
-                EditorsRefreshScreen(); // To refresh display
+                editorsRefreshScreen(); // To refresh display
             }
         });
 
@@ -229,7 +229,7 @@ public class EditorsFragment extends Fragment {
     //* ----------------------------------------------------------------------------------------- */
     //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
-    private void EditorsRefreshScreen(){
+    private void editorsRefreshScreen(){
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
             // If the search bar isn't empty
             // list filtered

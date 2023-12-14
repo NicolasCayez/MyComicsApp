@@ -100,7 +100,7 @@ public class BookDetailFragment extends Fragment {
 
         /* Display initialization */
         BookBean bookBean = dataBaseHelper.getBookById(book_id);
-        BookDetailRefreshScreen(book_id);
+        bookDetailRefreshScreen(book_id);
 
         /* Click event on Save Book button */
         binding.btnBookDetailSaveBook.setOnClickListener(new View.OnClickListener() {
@@ -149,7 +149,7 @@ public class BookDetailFragment extends Fragment {
                             // Database handler called with the insertion method
                             boolean successInsertWriting = dataBaseHelper.insertIntoWriting(book_id, authorBean.getAuthor_id());
                         }
-                        BookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailRefreshScreen(book_id); // To refresh display
                     }
                 });
                 // Click event on confirm button (new Author)
@@ -176,7 +176,7 @@ public class BookDetailFragment extends Fragment {
                             // insertion of the Book-Author pair in WRITING Table
                             boolean successInsertEcrire = dataBaseHelper.insertIntoWriting(book_id, dataBaseHelper.getAuthorLatest(authorBean).getAuthor_id());
                         }
-                        BookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailRefreshScreen(book_id); // To refresh display
                     }
                 });
                 // Click event on abort button
@@ -191,7 +191,7 @@ public class BookDetailFragment extends Fragment {
                 popupAddListDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        BookDetailRefreshScreen(book_id);
+                        bookDetailRefreshScreen(book_id);
                     }
                 });
             }
@@ -208,15 +208,15 @@ public class BookDetailFragment extends Fragment {
                 try {
                     // EditorBean gets data from clicked item
                     editorBean = dataBaseHelper.getEditorByBookId(book_id);
+                    // Data bundle storing key-value pairs
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("editor_id", editorBean.getEditor_id());
+                    // go to EditorDetailFragment with the data bundle
+                    findNavController(BookDetailFragment.this).navigate(R.id.action_bookDetail_to_editorDetail, bundle);
                 } catch (Exception e) {
                     // id set to -1 for error handling
                     editorBean = new EditorBean(-1,"error");
                 }
-                // Data bundle storing key-value pairs
-                Bundle bundle = new Bundle();
-                bundle.putInt("editor_id", editorBean.getEditor_id());
-                // go to EditorDetailFragment with the data bundle
-                findNavController(BookDetailFragment.this).navigate(R.id.action_bookDetail_to_editorDetail, bundle);
             }
         });
 
@@ -251,7 +251,7 @@ public class BookDetailFragment extends Fragment {
                             editorBean = new EditorBean(-1, "error" );
                         }
                         popupListDialog.dismiss(); // To close popup
-                        BookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailRefreshScreen(book_id); // To refresh display
                     }
                 });
                 // Click event on abort button
@@ -262,7 +262,7 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupListDialog.Build(); // To build the popup
-                BookDetailRefreshScreen(book_id); // To refresh display
+                bookDetailRefreshScreen(book_id); // To refresh display
             }
         });
 
@@ -306,7 +306,7 @@ public class BookDetailFragment extends Fragment {
                             boolean successUpdate = dataBaseHelper.updateBookEditor(dataBaseHelper, dataBaseHelper.getEditorLatest(editorBean), book_id);
                         }
                         popupTextDialog.dismiss(); // To close popup
-                        BookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailRefreshScreen(book_id); // To refresh display
                     }
                 });
                 // Click event on abort button
@@ -317,11 +317,11 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupTextDialog.build(); // To build the popup
-                BookDetailRefreshScreen(book_id); // To refresh display
+                bookDetailRefreshScreen(book_id); // To refresh display
             }
         });
 
-        /* Click event on Editor name */
+        /* Click event on Serie name */
         binding.tvBookDetailSerie.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
@@ -332,16 +332,16 @@ public class BookDetailFragment extends Fragment {
                  try {
                      // SerieBean gets data from clicked item
                      serieBean = dataBaseHelper.getSerieByBookId(book_id);
+                     // Data bundle storing key-value pairs
+                     Bundle bundle = new Bundle();
+                     bundle.putInt("serie_id", serieBean.getSerie_id());
+                     bundle.putString("serie_name", serieBean.getSerie_name());
+                     // go to SerieDetailFragment with the data bundle
+                     findNavController(BookDetailFragment.this).navigate(R.id.action_bookDetail_to_serieDetail, bundle);
                  } catch (Exception e) {
                      // id set to -1 for error handling
                      serieBean = new SerieBean(-1,"error");
                  }
-                 // Data bundle storing key-value pairs
-                 Bundle bundle = new Bundle();
-                 bundle.putInt("serie_id", serieBean.getSerie_id());
-                 bundle.putString("serie_name", serieBean.getSerie_name());
-                 // go to SerieDetailFragment with the data bundle
-                 findNavController(BookDetailFragment.this).navigate(R.id.action_bookDetail_to_serieDetail, bundle);
              }
         });
 
@@ -376,7 +376,7 @@ public class BookDetailFragment extends Fragment {
                             serieBean = new SerieBean(-1, "error");
                         }
                         popupListDialog.dismiss(); // To close popup
-                        BookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailRefreshScreen(book_id); // To refresh display
                     }
                 });
                 // Click event on abort button
@@ -387,7 +387,7 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupListDialog.Build(); // To build the popup
-                BookDetailRefreshScreen(book_id); // To refresh display
+                bookDetailRefreshScreen(book_id); // To refresh display
             }
         });
 
@@ -431,7 +431,7 @@ public class BookDetailFragment extends Fragment {
                             boolean successUpdate = dataBaseHelper.updateBookSerie(dataBaseHelper, dataBaseHelper.getSerieLatest(serieBean), book_id);
                         }
                         popupTextDialog.dismiss(); // To close popup
-                        BookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailRefreshScreen(book_id); // To refresh display
                     }
                 });
                 // Click event on abort button
@@ -442,7 +442,7 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupTextDialog.build(); // To build the popup
-                BookDetailRefreshScreen(book_id); // To refresh display
+                bookDetailRefreshScreen(book_id); // To refresh display
             }
         });
 
@@ -487,7 +487,7 @@ public class BookDetailFragment extends Fragment {
                         popupConfirmDialog.dismiss(); // To close popup
                         // Database delete Serie_id from Book
                         boolean successUpdate = dataBaseHelper.deleteBookSerie(dataBaseHelper, book_id);
-                        BookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailRefreshScreen(book_id); // To refresh display
                     }
                 });
                 // Click event on abort button
@@ -498,7 +498,7 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupConfirmDialog.build(); // To build the popup
-                BookDetailRefreshScreen(book_id); // To refresh display
+                bookDetailRefreshScreen(book_id); // To refresh display
             }
         });
 
@@ -522,7 +522,7 @@ public class BookDetailFragment extends Fragment {
                         popupConfirmDialog.dismiss(); // To close popup
                         // Database delete Editor_id from Book
                         boolean successUpdate = dataBaseHelper.deleteBookEditor(dataBaseHelper, book_id);
-                        BookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailRefreshScreen(book_id); // To refresh display
                     }
                 });
                 // Click event on abort button
@@ -533,7 +533,7 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupConfirmDialog.build(); // To build the popup
-                BookDetailRefreshScreen(book_id); // To refresh display
+                bookDetailRefreshScreen(book_id); // To refresh display
             }
         });
 
@@ -570,7 +570,7 @@ public class BookDetailFragment extends Fragment {
                             authorBean = new AuthorBean(-1, "error");
                         }
                         popupListDialog.dismiss(); // To close popup
-                        BookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailRefreshScreen(book_id); // To refresh display
                     }
                 });
                 // Click event on abort button
@@ -581,7 +581,7 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupListDialog.Build(); // To build the popup
-                BookDetailRefreshScreen(book_id); // To refresh display
+                bookDetailRefreshScreen(book_id); // To refresh display
             }
         });
 
@@ -661,7 +661,7 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupTextDialog.build(); // To build the popup
-                BookDetailRefreshScreen(book_id); // To refresh display
+                bookDetailRefreshScreen(book_id); // To refresh display
             }
         });
     }
@@ -680,7 +680,7 @@ public class BookDetailFragment extends Fragment {
     //* ----------------------------------------------------------------------------------------- */
     //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
-    private void BookDetailRefreshScreen(Integer book_id){
+    private void bookDetailRefreshScreen(Integer book_id){
         // Bookbean from the Database thanks to ID
         BookBean bookBean = dataBaseHelper.getBookById(book_id);
         // Book Title

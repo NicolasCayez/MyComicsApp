@@ -426,6 +426,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     /* ------------------------------------------------------------------------------------------ */
+    // UPDATE SERIES WHERE SERIE_ID = serie_id
+    /* ------------------------------------------------------------------------------------------ */
+    public boolean updateSerie(DataBaseHelper dataBaseHelper, SerieBean serieBean){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_SERIE_NAME, serieBean.getSerie_name());
+        long update =  db.update(SERIES,cv,"SERIE_ID = ?",new String[]{String.valueOf(serieBean.getSerie_id())});
+        if (update == -1){
+            System.out.println("update request : error");
+            db.close();
+            return false;
+        } else {
+            System.out.println("update request : OK");
+            db.close();
+            return true;
+        }
+    }
+
+    /* ------------------------------------------------------------------------------------------ */
     // UPDATE BOOKS WHERE BOOK_ID = book_id
     /* ------------------------------------------------------------------------------------------ */
     public boolean updateBook(DataBaseHelper dataBaseHelper, BookBean bookBean){
@@ -443,6 +462,46 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_BOOK_SPECIAL_EDITION_LABEL, bookBean.getBook_special_edition_label());
         cv.put(COLUMN_SERIE_ID, bookBean.getSerie_id());
         long update =  db.update(BOOKS,cv,"BOOK_ID = ?",new String[]{String.valueOf(bookBean.getBook_id())});
+        if (update == -1){
+            System.out.println("update request : error");
+            db.close();
+            return false;
+        } else {
+            System.out.println("update request : OK");
+            db.close();
+            return true;
+        }
+    }
+
+    /* ------------------------------------------------------------------------------------------ */
+    // UPDATE AUTHORS WHERE AUTHOR_ID = author_id
+    /* ------------------------------------------------------------------------------------------ */
+    public boolean updateAuthor(DataBaseHelper dataBaseHelper, AuthorBean authorBean){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_AUTHOR_PSEUDONYM, authorBean.getAuthor_pseudonym());
+        cv.put(COLUMN_AUTHOR_LAST_NAME, authorBean.getAuthor_last_name());
+        cv.put(COLUMN_AUTHOR_FIRST_NAME, authorBean.getAuthor_first_name());
+        long update =  db.update(AUTHORS,cv,"AUTHOR_ID = ?",new String[]{String.valueOf(authorBean.getAuthor_id())});
+        if (update == -1){
+            System.out.println("update request : error");
+            db.close();
+            return false;
+        } else {
+            System.out.println("update request : OK");
+            db.close();
+            return true;
+        }
+    }
+
+    /* ------------------------------------------------------------------------------------------ */
+    // UPDATE EDITORS WHERE EDITOR_ID = editor_id
+    /* ------------------------------------------------------------------------------------------ */
+    public boolean updateEditor(DataBaseHelper dataBaseHelper, EditorBean editorBean){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_EDITOR_NAME, editorBean.getEditor_name());
+        long update =  db.update(EDITORS,cv,"EDITOR_ID = ?",new String[]{String.valueOf(editorBean.getEditor_id())});
         if (update == -1){
             System.out.println("update request : error");
             db.close();
@@ -703,6 +762,86 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         int numRowsDeletedBooks = db.delete(BOOKS, whereClause, whereArgs);
         db.close();
         if (numRowsDeletedBooks >= 1) { // Test if at least 1 row from Books got deleted -> OK
+            db.close();
+            return true;
+        } else {
+            db.close();
+            return false;
+        }
+    }
+
+    /* ------------------------------------------------------------------------------------------ */
+    // DELETE * FROM SERIES
+    // WHERE SERIE_ID = serie_id
+    /* ------------------------------------------------------------------------------------------ */
+    public boolean deleteSerie(DataBaseHelper dataBaseHelper, Integer serie_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Delete CONSTRAINT in BOOKS
+        // SET serie_id  to NULL in Table BOOKS where the serie_id matches
+        String query = "UPDATE " + BOOKS +
+                " SET " + COLUMN_SERIE_ID + " = NULL" +
+                " WHERE " + COLUMN_SERIE_ID + " = \"" + serie_id + "\"";
+        db.execSQL(query);
+
+        // Whrere clause
+        String whereClause = COLUMN_SERIE_ID + " = ?";
+        // At last Delete from BOOKS
+        String[] whereArgs = new String[]{String.valueOf(serie_id)};
+        int numRowsDeletedSeries = db.delete(SERIES, whereClause, whereArgs);
+        db.close();
+        if (numRowsDeletedSeries >= 1) { // Test if at least 1 row from SERIES got deleted -> OK
+            db.close();
+            return true;
+        } else {
+            db.close();
+            return false;
+        }
+    }
+
+    /* ------------------------------------------------------------------------------------------ */
+    // DELETE * FROM AUTHORS
+    // WHERE AUTHOR_ID = author_id
+    /* ------------------------------------------------------------------------------------------ */
+    public boolean deleteAuthor(DataBaseHelper dataBaseHelper, Integer author_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Whrere clause creation, used twice
+        String whereClause = COLUMN_AUTHOR_ID + " = ?";
+        // Delete constraint in WRITING
+        String[] whereArgs = new String[]{String.valueOf(author_id)};
+        int numRowsDeletedWriting = db.delete(WRITING, whereClause, whereArgs);
+        // At last Delete from BOOKS
+        whereArgs = new String[]{String.valueOf(author_id)};
+        int numRowsDeletedAuthors = db.delete(AUTHORS, whereClause, whereArgs);
+        db.close();
+        if (numRowsDeletedAuthors >= 1) { // Test if at least 1 row from AUTHORS got deleted -> OK
+            db.close();
+            return true;
+        } else {
+            db.close();
+            return false;
+        }
+    }
+
+    /* ------------------------------------------------------------------------------------------ */
+    // DELETE * FROM EDITORS
+    // WHERE EDITOR_ID = editor_id
+    /* ------------------------------------------------------------------------------------------ */
+    public boolean deleteEditor(DataBaseHelper dataBaseHelper, Integer editor_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Delete CONSTRAINT in BOOKS
+        // SET serie_id  to NULL in Table BOOKS where the serie_id matches
+        String query = "UPDATE " + BOOKS +
+                " SET " + COLUMN_EDITOR_ID + " = NULL" +
+                " WHERE " + COLUMN_EDITOR_ID + " = \"" + editor_id + "\"";
+        db.execSQL(query);
+
+        // Whrere clause
+        String whereClause = COLUMN_EDITOR_ID + " = ?";
+        // At last Delete from EDITORS
+        String[] whereArgs = new String[]{String.valueOf(editor_id)};
+        int numRowsDeletedEditors = db.delete(EDITORS, whereClause, whereArgs);
+        db.close();
+        if (numRowsDeletedEditors >= 1) { // Test if at least 1 row from SERIES got deleted -> OK
             db.close();
             return true;
         } else {
