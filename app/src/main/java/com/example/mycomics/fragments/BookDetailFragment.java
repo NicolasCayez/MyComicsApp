@@ -1,13 +1,22 @@
 package com.example.mycomics.fragments;
 
+import static androidx.camera.core.impl.utils.ContextUtil.getApplicationContext;
 import static androidx.navigation.fragment.FragmentKt.findNavController;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.camera.core.CameraSelector;
@@ -30,6 +39,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.mycomics.R;
 import com.example.mycomics.adapters.AuthorsListAdapter;
 import com.example.mycomics.adapters.EditorsListAdapter;
@@ -40,13 +50,13 @@ import com.example.mycomics.beans.EditorBean;
 import com.example.mycomics.beans.SerieBean;
 import com.example.mycomics.databinding.FragmentBookDetailBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
-import com.example.mycomics.popups.PopupAddPictureDialog;
 import com.example.mycomics.popups.PopupConfirmDialog;
 import com.example.mycomics.popups.PopupTextDialog;
 import com.example.mycomics.popups.PopupAddListDialog;
 import com.example.mycomics.popups.PopupListDialog;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.io.File;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
@@ -58,6 +68,7 @@ public class BookDetailFragment extends Fragment {
     //* ----------------------------------------------------------------------------------------- */
     FragmentBookDetailBinding binding;
 
+    private String picturePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/MyComics/";
 
     //* ----------------------------------------------------------------------------------------- */
     //* Database handler initialization
@@ -705,33 +716,31 @@ public class BookDetailFragment extends Fragment {
             public void onClick(View v) {
                 // Saving Book in database before switching to popup
                 saveBook(book_id);
-                // Popup for deleting an Author from the list
-                PopupAddPictureDialog popupAddPictureDialog = new PopupAddPictureDialog(getActivity());
-                popupAddPictureDialog.setTitle(getString(R.string.Book) + "\n"
-                        + dataBaseHelper.getBookById(book_id).getBook_title() + "\n"
-                        + getString(R.string.BookChooseAuthorRemoval));
-                popupAddPictureDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                /** VERSION PRISE DE PHOTO */
+//                // Data bundle to give book_id to the Picture Fragment
+                Bundle bundle = new Bundle();
+                bundle.putInt("book_id", book_id);
+//                // Go to SearchResultFragment with the data bundle
+                findNavController(BookDetailFragment.this).navigate(R.id.action_bookDetail_to_picture, bundle);
+//                /** VERSION PICKER */
+//                launcher.launch(new PickVisualMediaRequest.Builder()
+//                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+//                        .build());
 
-                popupAddPictureDialog.getBtnPopupConfirm().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        capturePicture(book_id);
-                    }
-                });
-                popupAddPictureDialog.dismiss(); // To close popup
-                // Click event on abort button
-                popupAddPictureDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popupAddPictureDialog.dismiss(); // To close Popup
-                    }
-                });
-                popupAddPictureDialog.Build(); // To build the popup
-                bookDetailRefreshScreen(book_id); // To refresh display
             }
         });
     }
-
+    ActivityResultLauncher<PickVisualMediaRequest> launcher = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), new ActivityResultCallback<Uri>() {
+        @SuppressLint("RestrictedApi")
+        @Override
+        public void onActivityResult(Uri o) {
+            if (o == null) {
+                Toast.makeText(getContext(), "No image Selected", Toast.LENGTH_SHORT).show();
+            } else {
+                Glide.with(getApplicationContext(getContext())).load(o).into(binding.ivBookDetailPicture);
+            }
+        }
+    });
 
     //* ----------------------------------------------------------------------------------------- */
     //* onDestroy inherited Method override
@@ -775,6 +784,12 @@ public class BookDetailFragment extends Fragment {
         binding.etBookDetailSpecialEditionLabel.setText(bookBean.getBook_special_edition_label() == null ? "" : String.valueOf( bookBean.getBook_special_edition_label()));
         // Picture from url
         /* TODO **************************       binding.ivBookDetailPicture; */
+        File imgBook = new File(picturePath + "book_" + book_id + ".jpg");
+        if (imgBook.exists()){
+            // Show book picture
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgBook.getAbsolutePath());
+            binding.ivBookDetailPicture.setImageBitmap(myBitmap);
+        }
         // Authors list
         authorsArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByBookId(book_id));
         binding.lvBookDetailAuthorsList.setAdapter(authorsArrayAdapter);

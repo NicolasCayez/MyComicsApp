@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:background="@color/custom_blue"
     tools:context=".MainActivity"
-    android:animateLayoutChanges="true">
+    android:animateLayoutChanges="true"
+    android:screenOrientation="portrait">
 
     <!-- Header @+id/MenuBar -->
     <LinearLayout

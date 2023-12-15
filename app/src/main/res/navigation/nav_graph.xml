@@ -247,5 +247,20 @@
         <argument
             android:name="book_id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_bookDetail_to_picture"
+            app:destination="@id/pictureFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pictureFragment"
+        android:name="com.example.mycomics.fragments.PictureFragment"
+        android:label="fragment_picture"
+        tools:layout="@layout/fragment_picture" >
+        <action
+            android:id="@+id/action_picture_to_bookDetail"
+            app:destination="@id/bookDetailFragment" />
+        <argument
+            android:name="book_id"
+            app:argType="integer" />
     </fragment>
 </navigation>

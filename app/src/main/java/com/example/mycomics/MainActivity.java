@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.Menu;
+import android.view.OrientationEventListener;
 import android.view.View;
 
 import com.example.mycomics.databinding.ActivityMainBinding;
