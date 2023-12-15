@@ -2,13 +2,15 @@ package com.example.mycomics;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.Menu;
-import android.view.OrientationEventListener;
 import android.view.View;
 
 import com.example.mycomics.databinding.ActivityMainBinding;
@@ -22,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
     /** View binding declaration
     /** ----------------------------------------------------------------------------------------- */
     private ActivityMainBinding binding = null;
-
+    private int REQUEST_CODE_PERMISSIONS = 1001;
+    private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.READ_EXTERNAL_STORAGE"};
 
     /** ----------------------------------------------------------------------------------------- */
     /** onCreate inherited Method override
@@ -130,10 +133,26 @@ public class MainActivity extends AppCompatActivity {
                 binding.menuHamburger.setVisibility(View.INVISIBLE);
             }
         });
+
+        if(allPermissionsGranted()){
+            //ok
+        } else{
+            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
+        }
     }
 
     @Override
     public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onPostCreate(savedInstanceState, persistentState);
+    }
+
+    private boolean allPermissionsGranted(){
+
+        for(String permission : REQUIRED_PERMISSIONS){
+            if(ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED){
+                return false;
+            }
+        }
+        return true;
     }
 }
