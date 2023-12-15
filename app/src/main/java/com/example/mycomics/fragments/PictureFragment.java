@@ -22,6 +22,7 @@ import androidx.lifecycle.LifecycleOwner;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -199,7 +200,6 @@ public class PictureFragment extends Fragment {
         File img = new File(picturePath + "temp.jpg");
         if (img.exists()) {
             Bitmap myBitmap = BitmapFactory.decodeFile(img.getAbsolutePath());
-//            pictureHelper.imageOreintationValidator(myBitmap, img.getAbsolutePath());
             binding.ivPicturePreview.setImageBitmap(myBitmap);
         }
     }
