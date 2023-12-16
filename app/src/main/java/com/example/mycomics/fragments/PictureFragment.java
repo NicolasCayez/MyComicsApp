@@ -216,7 +216,7 @@ public class PictureFragment extends Fragment {
                     // Delete origin file
                     imgToSave.delete();
                     // update book picture in database
-                    dataBaseHelper.updateBookPicture(dataBaseHelper,book_id,  imgName);
+                    dataBaseHelper.updateBookPicture(dataBaseHelper,book_id, imgName);
                     // update gallery
                     //sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(myNewFile)));
                     refreshGallery(getContext(), imgResized);
