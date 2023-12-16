@@ -5,14 +5,20 @@ import static androidx.navigation.fragment.FragmentKt.findNavController;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.icu.number.IntegerWidth;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
@@ -29,6 +35,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -56,7 +63,12 @@ import com.example.mycomics.popups.PopupAddListDialog;
 import com.example.mycomics.popups.PopupListDialog;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
@@ -69,6 +81,7 @@ public class BookDetailFragment extends Fragment {
     FragmentBookDetailBinding binding;
 
     private String picturePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/MyComics/";
+    int SELECT_PICTURE = 200; /****************************/
 
     //* ----------------------------------------------------------------------------------------- */
     //* Database handler initialization
@@ -710,6 +723,22 @@ public class BookDetailFragment extends Fragment {
             }
         });
 
+        /* ChangePicture Click */
+        registerResult();
+//        binding.btnBookDetailChangePicture.setOnClickListener(binding -> pickImage());
+//        binding.btnBookDetailChangePicture.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+                // Saving Book in database before switching to popup
+//                saveBook(book_id);
+//                /** VERSION PICKER */
+//                launcher.launch(new PickVisualMediaRequest.Builder()
+//                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+//                        .build());
+
+//            }
+//        });
+
         /* AddPicture Click */
         binding.btnBookDetailAddPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -722,25 +751,47 @@ public class BookDetailFragment extends Fragment {
                 bundle.putInt("book_id", book_id);
 //                // Go to SearchResultFragment with the data bundle
                 findNavController(BookDetailFragment.this).navigate(R.id.action_bookDetail_to_picture, bundle);
-//                /** VERSION PICKER */
-//                launcher.launch(new PickVisualMediaRequest.Builder()
-//                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-//                        .build());
+            }
+        });
 
+        /* DeletePicture Click */
+        binding.btnBookDetailDeletePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Saving Book in database before switching to popup
+                saveBook(book_id);
+                // Popup for deleting an Editor
+                PopupConfirmDialog popupConfirmDialog = new PopupConfirmDialog(getActivity());
+                popupConfirmDialog.setTitle(getString(R.string.Book) + "\n"
+                        + dataBaseHelper.getBookById(book_id).getBook_title() + "\n"
+                        + getString(R.string.BookConfirmEditorRemoval));
+                popupConfirmDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                // Click event on confirm button
+                popupConfirmDialog.getBtnPopupConfirm().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Delete old picture
+                        File imgFileOld = new File(picturePath + bookBean.getBook_picture());
+                        if (imgFileOld.exists()) {
+                            imgFileOld.delete();
+                        }
+                        // Removing picture from display because of physical delete delay
+                        binding.ivBookDetailPicture.setImageResource(R.drawable.books_blue);
+                        popupConfirmDialog.dismiss(); // To close popup
+                    }
+                });
+                // Click event on abort button
+                popupConfirmDialog.getBtnPopupABort().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupConfirmDialog.dismiss(); // To close Popup
+                    }
+                });
+                popupConfirmDialog.build(); // To build the popup
+                bookDetailRefreshScreen(book_id); // To refresh display
             }
         });
     }
-    ActivityResultLauncher<PickVisualMediaRequest> launcher = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), new ActivityResultCallback<Uri>() {
-        @SuppressLint("RestrictedApi")
-        @Override
-        public void onActivityResult(Uri o) {
-            if (o == null) {
-                Toast.makeText(getContext(), "No image Selected", Toast.LENGTH_SHORT).show();
-            } else {
-                Glide.with(getApplicationContext(getContext())).load(o).into(binding.ivBookDetailPicture);
-            }
-        }
-    });
 
     //* ----------------------------------------------------------------------------------------- */
     //* onDestroy inherited Method override
@@ -784,7 +835,8 @@ public class BookDetailFragment extends Fragment {
         binding.etBookDetailSpecialEditionLabel.setText(bookBean.getBook_special_edition_label() == null ? "" : String.valueOf( bookBean.getBook_special_edition_label()));
         // Picture from url
         /* TODO **************************       binding.ivBookDetailPicture; */
-        File imgBook = new File(picturePath + "book_" + book_id + ".jpg");
+        File imgBook = new File(picturePath + bookBean.getBook_picture());
+        System.out.println(picturePath + bookBean.getBook_picture());
         if (imgBook.exists()){
             // Show book picture
             Bitmap myBitmap = BitmapFactory.decodeFile(imgBook.getAbsolutePath());
@@ -808,7 +860,7 @@ public class BookDetailFragment extends Fragment {
                 binding.etBookDetailBookTitle.getText().toString(),
                 binding.etBookDetailBookNumber.getText().length() == 0 ? null : Integer.parseInt(binding.etBookDetailBookNumber.getText().toString()),
                 binding.etBookDetailISBN.getText().toString(),
-                "pas d'image", /* TODO************************************* */
+                dataBaseHelper.getBookById(book_id).getBook_picture(),
                 binding.etBookDetailEditorPrice.getText().length() == 0 ? 0.0 : Double.parseDouble(binding.etBookDetailEditorPrice.getText().toString()),
                 binding.etBookDetailValue.getText().length() == 0 ? 0.0 : Double.parseDouble(binding.etBookDetailValue.getText().toString()),
                 binding.etBookDetailEditionDate.getText().toString(),
@@ -826,6 +878,24 @@ public class BookDetailFragment extends Fragment {
         }
     }
 
+    public static void refreshGallery(Context mContext, File file) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        Uri contentUri = Uri.fromFile(file);
+        mediaScanIntent.setData(contentUri);
+        mContext.sendBroadcast(mediaScanIntent);
+    }
+    /* Glide picture picker */
+//    ActivityResultLauncher<PickVisualMediaRequest> launcher = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), new ActivityResultCallback<Uri>() {
+//        @SuppressLint("RestrictedApi")
+//        @Override
+//        public void onActivityResult(Uri o) {
+//            if (o == null) {
+//                Toast.makeText(getContext(), "No image Selected", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Glide.with(getApplicationContext(getContext())).load(o).into(binding.ivBookDetailPicture);
+//            }
+//        }
+//    });
 
     //* ----------------------------------------------------------------------------------------- */
     //* Camera : Executor
@@ -889,5 +959,37 @@ public class BookDetailFragment extends Fragment {
                     }
                 }
         );
+    }
+
+
+    ActivityResultLauncher<Intent> resultLauncher;
+    private void registerResult() {
+        resultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        try {
+                            Uri imageUri = result.getData().getData();
+                            binding.ivBookDetailPicture.setImageURI(imageUri);
+                            /************************************************/
+
+
+                            /************************************************/
+
+
+
+                        } catch (Exception e) {
+                            Toast.makeText(getActivity(), "No Image selected", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }
+        );
+    }
+
+    private void pickImage() {
+        Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+        resultLauncher.launch(intent);
     }
 }

@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     /** ----------------------------------------------------------------------------------------- */
     private ActivityMainBinding binding = null;
     private int REQUEST_CODE_PERMISSIONS = 1001;
-    private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.READ_EXTERNAL_STORAGE"};
+    private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.READ_MEDIA_IMAGES"};
 
     /** ----------------------------------------------------------------------------------------- */
     /** onCreate inherited Method override

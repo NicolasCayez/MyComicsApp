@@ -551,6 +551,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /* ------------------------------------------------------------------------------------------ */
+    // UPDATE BOOKS SET BOOK_PICTURE = book_picture WHERE BOOK_ID = book_id
+    /* ------------------------------------------------------------------------------------------ */
+    public boolean updateBookPicture(DataBaseHelper dataBaseHelper, Integer book_id, String book_picture){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_BOOK_PICTURE, book_picture);
+        long update = db.update(BOOKS,cv,"BOOK_ID = ?",new String[]{String.valueOf(book_id)});
+        if (update == -1){
+            System.out.println("update request : error");
+            db.close();
+            return false;
+        } else {
+            System.out.println("update request : OK");
+            db.close();
+            return true;
+        }
+    }
+
 /**************************************************************************************************/
     /** INSERT QUERIES, only the NAMEs/PSEUDONYM, the IDs are auto-incremented.
     /** for association Tables, the IDs are stored
@@ -722,6 +741,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+
 
     /* ------------------------------------------------------------------------------------------ */
     // DELETE * FROM WRITING
@@ -1089,10 +1109,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String book_title = cursor.getString(1);
                 Integer book_number = cursor.getInt(2);
                 String book_isbn = cursor.getString(3);
-                double book_editor_price = cursor.getDouble(4);
-                double book_value = cursor.getDouble(5);
+                String book_picture = cursor.getString(4).replace("\"", "");
+                double book_editor_price = cursor.getDouble(5);
+                double book_value = cursor.getDouble(6);
                 String book_edition_date = cursor.getString(6);
-                String book_picture = cursor.getString(7);
                 boolean book_autograph = cursor.getInt(8) == 1 ? true: false;
                 boolean book_special_edition = cursor.getInt(9) == 1 ? true: false;
                 String book_special_edition_label = cursor.getString(10);

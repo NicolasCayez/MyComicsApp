@@ -181,7 +181,65 @@
                                 android:src="@drawable/btn_delete_blue" />
                         </LinearLayout>
                     </LinearLayout>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvBookDetailPictureLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginHorizontal="15dp"
+                        android:fontFamily="@font/kronika"
+                        android:text="Picture"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/custom_blue"
+                        android:textSize="14sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
 
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_marginVertical="5dp"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivBookDetailPicture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="150dp"
+                                android:layout_marginStart="5dp"
+                                android:layout_gravity="left"
+                                android:src="@drawable/books_blue" />
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/btnBookDetailChangePicture"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:layout_gravity="center_vertical"
+
+                            android:src="@drawable/btn_change_bleu" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/btnBookDetailAddPicture"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/btn_add_blue" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/btnBookDetailDeletePicture"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/btn_delete_blue" />
+                    </LinearLayout>
                     <!-- ISBN -->
 
                     <!-- Prix éditeur -->
@@ -389,41 +447,6 @@
                             android:textSize="14sp" />
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/ivBookDetailPicture"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:src="@drawable/books_blue" />
-                        </LinearLayout>
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/btnBookDetailAddPicture"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:layout_margin="5dp"
-                            android:src="@drawable/btn_add_blue" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/btnBookDetailDeletePicture"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:layout_margin="5dp"
-                            android:src="@drawable/btn_delete_blue" />
-                    </LinearLayout>
                     <!-- Série -->
                     <!-- Boutons Série -->
                     <!-- Liste auteurs -->
