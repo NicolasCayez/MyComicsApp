@@ -1109,7 +1109,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String book_title = cursor.getString(1);
                 Integer book_number = cursor.getInt(2);
                 String book_isbn = cursor.getString(3);
-                String book_picture = cursor.getString(4).replace("\"", "");
+                String book_picture = cursor.getString(4);
                 double book_editor_price = cursor.getDouble(5);
                 double book_value = cursor.getDouble(6);
                 String book_edition_date = cursor.getString(6);

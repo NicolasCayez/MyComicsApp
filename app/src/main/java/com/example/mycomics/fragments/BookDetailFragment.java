@@ -871,7 +871,7 @@ public class BookDetailFragment extends Fragment {
                 binding.etBookDetailBookTitle.getText().toString(),
                 binding.etBookDetailBookNumber.getText().length() == 0 ? null : Integer.parseInt(binding.etBookDetailBookNumber.getText().toString()),
                 binding.etBookDetailISBN.getText().toString(),
-                dataBaseHelper.getBookById(book_id).getBook_picture(),
+                dataBaseHelper.getBookById(book_id).getBook_picture().replace("\"", ""),
                 binding.etBookDetailEditorPrice.getText().length() == 0 ? 0.0 : Double.parseDouble(binding.etBookDetailEditorPrice.getText().toString()),
                 binding.etBookDetailValue.getText().length() == 0 ? 0.0 : Double.parseDouble(binding.etBookDetailValue.getText().toString()),
                 binding.etBookDetailEditionDate.getText().toString(),
