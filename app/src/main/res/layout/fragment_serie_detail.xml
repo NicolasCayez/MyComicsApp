@@ -121,12 +121,11 @@
                         android:layout_marginHorizontal="15dp"
                         android:orientation="horizontal">
 
-                        <ListView
-                            android:id="@+id/lvSerieDetailBooksList"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvSerieDetailBooksList"
                             android:layout_width="match_parent"
-                            android:layout_height="500dp"
-                            android:background="#eee"
-                            android:nestedScrollingEnabled="true" />
+                            android:layout_height="200dp"
+                            android:background="#eee" />
                     </LinearLayout>
                     <!-- Liste auteurs -->
 
@@ -155,12 +154,11 @@
                                 android:textColor="@color/custom_blue"
                                 android:textSize="14sp" />
 
-                            <ListView
-                                android:id="@+id/lvSerieDetailAuthorsList"
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvSerieDetailAuthorsList"
                                 android:layout_width="match_parent"
                                 android:layout_height="120dp"
-                                android:background="#eee"
-                                android:nestedScrollingEnabled="true" />
+                                android:background="#eee" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -183,12 +181,11 @@
                                 android:textColor="@color/custom_blue"
                                 android:textSize="14sp" />
 
-                            <ListView
-                                android:id="@+id/lvSerieDetailEditorsList"
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvSerieDetailEditorsList"
                                 android:layout_width="match_parent"
                                 android:layout_height="120dp"
-                                android:background="#eee"
-                                android:nestedScrollingEnabled="true" />
+                                android:background="#eee" />
                         </LinearLayout>
                     </LinearLayout>
 

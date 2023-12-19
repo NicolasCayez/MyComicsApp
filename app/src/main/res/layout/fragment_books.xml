@@ -65,14 +65,13 @@
                     android:background="@drawable/rounded_corner_custom_beige"
                     android:padding="5dp">
 
-                    <ListView
-                        android:id="@+id/lvBooksBooksList"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvBooksBooksList"
                         android:layout_width="match_parent"
                         android:layout_height="400dp"
                         android:layout_marginHorizontal="15dp"
                         android:layout_marginVertical="15dp"
-                        android:background="#eee"
-                        android:nestedScrollingEnabled="true" />
+                        android:background="#eee" />
                 </LinearLayout>
                 <!-- Bouton plus -->
                 <LinearLayout

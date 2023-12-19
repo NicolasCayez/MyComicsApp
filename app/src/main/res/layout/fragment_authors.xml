@@ -61,22 +61,22 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/rounded_corner_custom_beige"
+                    android:orientation="vertical"
                     android:padding="5dp">
 
-                    <ListView
-                        android:id="@+id/lvAuthorsAuthorsList"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvAuthorsAuthorsList"
                         android:layout_width="match_parent"
                         android:layout_height="400dp"
                         android:layout_marginHorizontal="15dp"
                         android:layout_marginVertical="15dp"
-                        android:background="#eee"
-                        android:nestedScrollingEnabled="true" />
+                        android:background="#eee" />
+
                 </LinearLayout>
                 <!-- Bouton plus -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:orientation="horizontal">
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btnAuthorsAddAuthor"

@@ -1,9 +1,7 @@
 package com.example.mycomics.fragments;
 
-import static androidx.camera.core.impl.utils.ContextUtil.getApplicationContext;
 import static androidx.navigation.fragment.FragmentKt.findNavController;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,17 +10,20 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.icu.number.IntegerWidth;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,46 +35,32 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Environment;
-import android.os.Handler;
-import android.os.ParcelFileDescriptor;
-import android.provider.MediaStore;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 import com.example.mycomics.R;
-import com.example.mycomics.adapters.AuthorsListAdapter;
-import com.example.mycomics.adapters.EditorsListAdapter;
-import com.example.mycomics.adapters.SeriesListAdapter;
+import com.example.mycomics.adapters.AuthorsAdapter;
+import com.example.mycomics.adapters.EditorsAdapter;
+import com.example.mycomics.adapters.SeriesAdapter;
 import com.example.mycomics.beans.AuthorBean;
 import com.example.mycomics.beans.BookBean;
 import com.example.mycomics.beans.EditorBean;
 import com.example.mycomics.beans.SerieBean;
 import com.example.mycomics.databinding.FragmentBookDetailBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
-import com.example.mycomics.popups.PopupConfirmDialog;
-import com.example.mycomics.popups.PopupTextDialog;
 import com.example.mycomics.popups.PopupAddListDialog;
+import com.example.mycomics.popups.PopupConfirmDialog;
 import com.example.mycomics.popups.PopupListDialog;
+import com.example.mycomics.popups.PopupTextDialog;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
@@ -87,7 +74,7 @@ public class BookDetailFragment extends Fragment {
     FragmentBookDetailBinding binding;
 
     private String picturePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/MyComics/";
-    int SELECT_PICTURE = 200; /****************************/
+    int SELECT_PICTURE = 200;
     private String imgName = "";
 
     //* ----------------------------------------------------------------------------------------- */
@@ -97,11 +84,11 @@ public class BookDetailFragment extends Fragment {
 
 
     //* ----------------------------------------------------------------------------------------- */
-    //* Adapters handling listViews data display
+    //* Adapters handling RecycleViews data display
     //* ----------------------------------------------------------------------------------------- */
-    ArrayAdapter seriesArrayAdapter;
-    ArrayAdapter authorsArrayAdapter;
-    ArrayAdapter editorsArrayAdapter;
+    SeriesAdapter seriesAdapter;
+    AuthorsAdapter authorsAdapter;
+    EditorsAdapter editorsAdapter;
 
 
     //* ----------------------------------------------------------------------------------------- */
@@ -187,26 +174,22 @@ public class BookDetailFragment extends Fragment {
                 popupAddListDialog.setTitle(getString(R.string.AuthorPopupAddListTitle));
                 popupAddListDialog.setHint(getString(R.string.AuthorPopupAddListHint));
                 popupAddListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                // getting access to the listView
-                ListView listView = popupAddListDialog.findViewById(R.id.lvPopupList);
-                // setting up the Adapter for the list
-                authorsArrayAdapter = new AuthorsListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.getAuthorsList());
-                listView.setAdapter(authorsArrayAdapter);
+                popupAddListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                // Linking the RecyclerView
+                RecyclerView recyclerView = popupAddListDialog.getRvPopupList();
+                // Creating the list to display
+                ArrayList<AuthorBean> authorsList = dataBaseHelper.getAuthorsList();
+                // The adapter gets the list and the string value "books" needed for translations
+                authorsAdapter = new AuthorsAdapter(authorsList);
+                // the adapter and the layout are defined for the RecyclerView
+                recyclerView.setAdapter(authorsAdapter);
+                recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+                // The list is submitted to the adapter
+                authorsAdapter.submitList(authorsList);
                 /* Authors list item click */
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                authorsAdapter.setOnClickListener(new AuthorsAdapter.OnClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        // AuthorBean for the Author to be linked with the book
-                        AuthorBean authorBean = null;
-                        try {
-                            // AuthorBean gets data from clicked item
-                            authorBean = (AuthorBean) popupAddListDialog.getLvPopupList().getItemAtPosition(position);
-                        } catch (Exception e) {
-                            // do nothing
-                        }
-                        popupAddListDialog.dismiss();  // To close popup
-                        // new instance of Database Handler
-                        dataBaseHelper = new DataBaseHelper(getActivity());
+                    public void onClick(int position, AuthorBean authorBean) {
                         // Checking if a duplicate of the pair Book-Author already exists in the Database
                         if (dataBaseHelper.checkDetainingBookAuthorPairDuplicate(book_id, authorBean.getAuthor_id())) {
                             // duplicate, error toast message
@@ -215,6 +198,7 @@ public class BookDetailFragment extends Fragment {
                             // Database handler called with the insertion method
                             boolean successInsertWriting = dataBaseHelper.insertIntoWriting(book_id, authorBean.getAuthor_id());
                         }
+                        popupAddListDialog.dismiss();  // To close popup
                         bookDetailRefreshScreen(book_id); // To refresh display
                     }
                 });
@@ -296,25 +280,26 @@ public class BookDetailFragment extends Fragment {
                 PopupListDialog popupListDialog = new PopupListDialog(getActivity());
                 popupListDialog.setTitle(getString(R.string.EditorPopupListTitle));
                 popupListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                // getting access to the listView
-                ListView listView = (ListView) popupListDialog.findViewById(R.id.lvPopupList);
-                // setting up the Adapter for the list
-                editorsArrayAdapter = new EditorsListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.getEditorsList());
-                listView.setAdapter(editorsArrayAdapter);
+                // Linking the RecyclerView
+                RecyclerView recyclerView = popupListDialog.getRvPopupList();
+                // Creating the list to display
+                ArrayList<EditorBean> editorsList = dataBaseHelper.getEditorsList();
+                // The adapter gets the list and the string value "books" needed for translations
+                editorsAdapter = new EditorsAdapter(editorsList);
+                // the adapter and the layout are defined for the RecyclerView
+                recyclerView.setAdapter(editorsAdapter);
+                recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+                // The list is submitted to the adapter
+                editorsAdapter.submitList(editorsList);
                 /* Editors list item click */
-                popupListDialog.getLvPopupListe().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                editorsAdapter.setOnClickListener(new EditorsAdapter.OnClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        // EditorBean for the data to be send to destination
-                        EditorBean editorBean;
+                    public void onClick(int position, EditorBean editorBean) {
                         try {
-                            // EditorBean gets data from clicked item
-                            editorBean = (EditorBean) popupListDialog.getLvPopupListe().getItemAtPosition(position);
                             // updating Book Editor in the Database
                             dataBaseHelper.updateBookEditor(dataBaseHelper, editorBean, book_id);
                         } catch (Exception e) {
-                            // id set to -1 for error handling
-                            editorBean = new EditorBean(-1, "error" );
+                            // Do nothing
                         }
                         popupListDialog.dismiss(); // To close popup
                         bookDetailRefreshScreen(book_id); // To refresh display
@@ -421,25 +406,26 @@ public class BookDetailFragment extends Fragment {
                 PopupListDialog popupListDialog = new PopupListDialog(getActivity());
                 popupListDialog.setTitle(getString(R.string.SeriePopupListTitle));
                 popupListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                // getting access to the listView
-                ListView listView = (ListView) popupListDialog.findViewById(R.id.lvPopupList);
-                // setting up the Adapter for the list
-                seriesArrayAdapter = new SeriesListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getSeriesList());
-                listView.setAdapter(seriesArrayAdapter);
+                // Linking the RecyclerView
+                RecyclerView recyclerView = popupListDialog.getRvPopupList();
+                // Creating the list to display
+                ArrayList<SerieBean> seriesList = dataBaseHelper.getSeriesList();
+                // The adapter gets the list and the string value "books" needed for translations
+                seriesAdapter = new SeriesAdapter(seriesList);
+                // the adapter and the layout are defined for the RecyclerView
+                recyclerView.setAdapter(seriesAdapter);
+                recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+                // The list is submitted to the adapter
+                seriesAdapter.submitList(seriesList);
                 /* Series list item click */
-                popupListDialog.getLvPopupListe().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                seriesAdapter.setOnClickListener(new SeriesAdapter.OnClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        // SerieBean for the data to be send to destination
-                        SerieBean serieBean;
+                    public void onClick(int position, SerieBean serieBean) {
                         try {
-                            // SerieBean gets data from clicked item
-                            serieBean = (SerieBean) popupListDialog.getLvPopupListe().getItemAtPosition(position);
                             // updating Book Serie in the Database
                             dataBaseHelper.updateBookSerie(dataBaseHelper, serieBean, book_id);
                         } catch (Exception e) {
-                            // id set to -1 for error handling
-                            serieBean = new SerieBean(-1, "error");
+                            // Do nothing
                         }
                         popupListDialog.dismiss(); // To close popup
                         bookDetailRefreshScreen(book_id); // To refresh display
@@ -512,19 +498,10 @@ public class BookDetailFragment extends Fragment {
             }
         });
 
-        /* Author list item click */
-        binding.lvBookDetailAuthorsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Click on Author in the list (RecyclerView) */
+        authorsAdapter.setOnClickListener(new AuthorsAdapter.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // AuthorBean for the data to be send to destination
-                AuthorBean authorBean;
-                try {
-                    // AuthorBean gets data from clicked item
-                    authorBean = (AuthorBean) binding.lvBookDetailAuthorsList.getItemAtPosition(position);
-                } catch (Exception e) {
-                    // id set to -1 for error handling
-                    authorBean = new AuthorBean(-1,"error","error","error");
-                }
+            public void onClick(int position, AuthorBean authorBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
                 bundle.putInt("author_id", authorBean.getAuthor_id());;
@@ -615,25 +592,27 @@ public class BookDetailFragment extends Fragment {
                         + dataBaseHelper.getBookById(book_id).getBook_title() + "\n"
                         + getString(R.string.BookChooseAuthorRemoval));
                 popupListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                // getting access to the listView
-                ListView listView = (ListView) popupListDialog.findViewById(R.id.lvPopupList);
-                // setting up the Adapter for the list
-                authorsArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByBookId(book_id));
-                listView.setAdapter(authorsArrayAdapter);
+                // Linking the RecyclerView
+                RecyclerView recyclerView = popupListDialog.getRvPopupList();
+                // Creating the list to display
+                ArrayList<AuthorBean> authorsList = dataBaseHelper.getAuthorsListByBookId(book_id);
+                // The adapter gets the list and the string value "books" needed for translations
+                authorsAdapter = new AuthorsAdapter(authorsList);
+                // the adapter and the layout are defined for the RecyclerView
+                recyclerView.setAdapter(authorsAdapter);
+                recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+                // The list is submitted to the adapter
+                authorsAdapter.submitList(authorsList);
                 /* Authors list item click */
-                popupListDialog.getLvPopupListe().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                authorsAdapter.setOnClickListener(new AuthorsAdapter.OnClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        // AuthorBean for the Author to be removed
-                        AuthorBean authorBean;
+                    public void onClick(int position, AuthorBean authorBean) {
                         try {
-                            // AuthorBean gets data from clicked item
-                            authorBean = (AuthorBean) popupListDialog.getLvPopupListe().getItemAtPosition(position);
                             // Database delete Book-Author pair
                             boolean successUpdate = dataBaseHelper.deleteBookAuthor(dataBaseHelper, authorBean.getAuthor_id(), book_id);
                         } catch (Exception e) {
-                            // id set to -1 for error handling
-                            authorBean = new AuthorBean(-1, "error");
+                            // error toast message
+                            Toast.makeText(getActivity(), getString(R.string.BookRemoveAuthorError), Toast.LENGTH_SHORT).show();
                         }
                         popupListDialog.dismiss(); // To close popup
                         bookDetailRefreshScreen(book_id); // To refresh display
@@ -731,24 +710,8 @@ public class BookDetailFragment extends Fragment {
         });
 
         /* ChangePicture Click */
-        /*****************/
         registerResult(book_id);
         binding.btnBookDetailChangePicture.setOnClickListener(binding -> pickImage());
-        /***************/
-
-        /****************/
-//        binding.btnBookDetailChangePicture.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                 Saving Book in database before switching to popup
-//                saveBook(book_id);
-//                /** VERSION PICKER */
-//                launcher.launch(new PickVisualMediaRequest.Builder()
-//                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-//                        .build());
-
-//            }
-//        });
 
         /* AddPicture Click */
         binding.btnBookDetailAddPicture.setOnClickListener(new View.OnClickListener() {
@@ -756,11 +719,10 @@ public class BookDetailFragment extends Fragment {
             public void onClick(View v) {
                 // Saving Book in database before switching to popup
                 saveBook(book_id);
-                /** VERSION PRISE DE PHOTO */
-//                // Data bundle to give book_id to the Picture Fragment
+                // Data bundle to give book_id to the Picture Fragment
                 Bundle bundle = new Bundle();
                 bundle.putInt("book_id", book_id);
-//                // Go to SearchResultFragment with the data bundle
+                // Go to SearchResultFragment with the data bundle
                 findNavController(BookDetailFragment.this).navigate(R.id.action_bookDetail_to_picture, bundle);
             }
         });
@@ -853,9 +815,18 @@ public class BookDetailFragment extends Fragment {
             Bitmap myBitmap = BitmapFactory.decodeFile(imgBook.getAbsolutePath());
             binding.ivBookDetailPicture.setImageBitmap(myBitmap);
         }
-        // Authors list
-        authorsArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByBookId(book_id));
-        binding.lvBookDetailAuthorsList.setAdapter(authorsArrayAdapter);
+
+        /* Authors list adapters charged with data */
+        // Creating the list to display
+        ArrayList<AuthorBean> AuthorsList = dataBaseHelper.getAuthorsListByBookId(bookBean.getBook_id());
+        // The adapter gets the list and the string value "books" needed for translations
+        authorsAdapter = new AuthorsAdapter(AuthorsList);
+        // the adapter and the layout are defined for the RecyclerView
+        binding.rvBookDetailAuthorsList.setAdapter(authorsAdapter);
+        binding.rvBookDetailAuthorsList.setLayoutManager(new GridLayoutManager(getContext(),1));
+        // The list is submitted to the adapter
+        authorsAdapter.submitList(AuthorsList);
+
         // Editor Name
         binding.tvBookDetailEditor.setText(dataBaseHelper.getEditorByBookId(book_id).getEditor_name());
     }

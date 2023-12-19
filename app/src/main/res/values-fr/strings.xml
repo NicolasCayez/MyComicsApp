@@ -114,4 +114,7 @@
     <string name="EditorNameDoesntMatch">Le nom de l\'Editeur ne correspond pas</string>
     <string name="EditorUpdateError">Erreur modification Editeur</string>
     <string name="EditorUpdateSuccess">Editeur modifié avec succès</string>
+    <string name="Books">Tomes</string>
+    <string name="BookNumber">T.</string>
+    <string name="BookRemoveAuthorError">Erreur retrait Auteur</string>
 </resources>

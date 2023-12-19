@@ -96,12 +96,11 @@
                         android:layout_marginHorizontal="15dp"
                         android:orientation="horizontal">
 
-                        <ListView
-                            android:id="@+id/lvEditorDetailSeriesList"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvEditorDetailSeriesList"
                             android:layout_width="match_parent"
-                            android:layout_height="300dp"
-                            android:background="#eee"
-                            android:nestedScrollingEnabled="true" />
+                            android:layout_height="200dp"
+                            android:background="#eee" />
                     </LinearLayout>
                     <!-- Liste tomes -->
                     <androidx.appcompat.widget.AppCompatTextView
@@ -122,12 +121,11 @@
                         android:layout_marginHorizontal="15dp"
                         android:orientation="horizontal">
 
-                        <ListView
-                            android:id="@+id/lvEditorDetailBooksList"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvEditorDetailBooksList"
                             android:layout_width="match_parent"
-                            android:layout_height="300dp"
-                            android:background="#eee"
-                            android:nestedScrollingEnabled="true" />
+                            android:layout_height="100dp"
+                            android:background="#eee" />
                     </LinearLayout>
                     <!-- Liste auteurs -->
                     <androidx.appcompat.widget.AppCompatTextView
@@ -146,15 +144,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="15dp"
+                        android:layout_marginBottom="5dp"
                         android:orientation="horizontal">
 
-                        <ListView
-                            android:id="@+id/lvEditorDetailAuthorsList"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvEditorDetailAuthorsList"
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
-                            android:layout_marginBottom="15dp"
-                            android:background="#eee"
-                            android:nestedScrollingEnabled="true" />
+                            android:layout_height="100dp"
+                            android:background="#eee" />
                     </LinearLayout>
                 </LinearLayout>
                 <!-- Boutons -->

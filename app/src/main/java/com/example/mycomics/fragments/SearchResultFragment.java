@@ -3,29 +3,29 @@ package com.example.mycomics.fragments;
 import static androidx.navigation.fragment.FragmentKt.findNavController;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.mycomics.R;
-import com.example.mycomics.adapters.AuthorsListAdapter;
-import com.example.mycomics.adapters.EditorsListAdapter;
-import com.example.mycomics.adapters.SeriesNbListAdapter;
-import com.example.mycomics.adapters.BooksNumberListAdapter;
+import com.example.mycomics.adapters.AuthorsAdapter;
+import com.example.mycomics.adapters.BooksBookNbAdapter;
+import com.example.mycomics.adapters.EditorsAdapter;
+import com.example.mycomics.adapters.SeriesNbAdapter;
 import com.example.mycomics.beans.AuthorBean;
 import com.example.mycomics.beans.BookBean;
 import com.example.mycomics.beans.EditorBean;
 import com.example.mycomics.beans.SerieBean;
 import com.example.mycomics.databinding.FragmentSearchResultBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
+
+import java.util.ArrayList;
 
 public class SearchResultFragment extends Fragment {
 
@@ -43,12 +43,12 @@ public class SearchResultFragment extends Fragment {
 
 
     //* ----------------------------------------------------------------------------------------- */
-    //* Adapters handling listViews data display
+    //* Adapters handling RecycleViews data display
     //* ----------------------------------------------------------------------------------------- */
-    ArrayAdapter booksArrayAdapter;
-    ArrayAdapter seriesArrayAdapter;
-    ArrayAdapter authorsArrayAdapter;
-    ArrayAdapter editorsArrayAdapter;
+    SeriesNbAdapter seriesAdapter;
+    BooksBookNbAdapter booksAdapter;
+    AuthorsAdapter authorsAdapter;
+    EditorsAdapter editorsAdapter;
 
 
     //* ----------------------------------------------------------------------------------------- */
@@ -112,87 +112,50 @@ public class SearchResultFragment extends Fragment {
             }
         });
 
-        /* Series list item click */
-        binding.lvSearchResultSeriesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Click on Serie in the list (RecyclerView) */
+        seriesAdapter.setOnClickListener(new SeriesNbAdapter.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // SerieBean for the data to be send to destination
-                SerieBean serieBean;
-                try {
-                    // SerieBean gets data from clicked item
-                    serieBean = (SerieBean) binding.lvSearchResultSeriesList.getItemAtPosition(position);
-                } catch (Exception e) {
-                    // id set to -1 for error handling
-                    serieBean = new SerieBean(-1,"error");
-                }
+            public void onClick(int position, SerieBean serieBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("serie_id", serieBean.getSerie_id());
-                // go to SerieDetailFragment with the data bundle
+                bundle.putInt("serie_id", serieBean.getSerie_id());;
+                // go to AuthorDetailFragment with the data bundle
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_serieDetail, bundle);
             }
         });
 
-        /* Books list item click */
-        binding.lvSearchResultBooksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Click on Book in the list (RecyclerView) */
+        booksAdapter.setOnClickListener(new BooksBookNbAdapter.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // BookBean for the data to be send to destination
-                BookBean bookBean;
-                try {
-                    // BookBean gets data from clicked item
-                    bookBean = (BookBean) binding.lvSearchResultBooksList.getItemAtPosition(position);
-                } catch (Exception e) {
-                    // id set to -1 for error handling
-                    bookBean = new BookBean(-1,"error");
-                }
+            public void onClick(int position, BookBean bookBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("book_id", bookBean.getBook_id());
+                bundle.putInt("book_id", bookBean.getBook_id());;
+                // go to AuthorDetailFragment with the data bundle
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_bookDetail, bundle);
             }
         });
 
-        /* Author list item click */
-        binding.lvSearchResultAuthorsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Click on Author in the list (RecyclerView) */
+        authorsAdapter.setOnClickListener(new AuthorsAdapter.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // AuthorBean for the data to be send to destination
-                AuthorBean authorBean;
-                try {
-                    // AuthorBean gets data from clicked item
-                    authorBean = (AuthorBean) binding.lvSearchResultAuthorsList.getItemAtPosition(position);
-                } catch (Exception e) {
-                    // id set to -1 for error handling
-                    authorBean = new AuthorBean(-1,"error","error","error");
-                }
+            public void onClick(int position, AuthorBean authorBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("author_id", authorBean.getAuthor_id());
-//                bundle.putString("author_pseudonym", authorBean.getAuthor_pseudonym());
+                bundle.putInt("author_id", authorBean.getAuthor_id());;
                 // go to AuthorDetailFragment with the data bundle
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_authorDetail, bundle);
             }
         });
 
-        /* Editors list item click */
-        binding.lvSearchResultEditorsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Click on Editor in the list (RecyclerView) */
+        editorsAdapter.setOnClickListener(new EditorsAdapter.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // EditorBean for the data to be send to destination
-                EditorBean editorBean;
-                try {
-                    // EditorBean gets data from clicked item
-                    editorBean = (EditorBean) binding.lvSearchResultEditorsList.getItemAtPosition(position);
-                } catch (Exception e) {
-                    // id set to -1 for error handling
-                    editorBean = new EditorBean(-1,"error");
-                }
+            public void onClick(int position, EditorBean editorBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("editor_id", editorBean.getEditor_id());
-//                bundle.putString("editor_name", editorBean.getEditor_name());
-                // go to EditorDetailFragment with the data bundle
+                bundle.putInt("editor_id", editorBean.getEditor_id());;
+                // go to AuthorDetailFragment with the data bundle
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_editorDetail, bundle);
             }
         });
@@ -213,17 +176,64 @@ public class SearchResultFragment extends Fragment {
     //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
     private void searchResultRefreshScreen(String filter){
-        // Series list adapters charger with data
-        seriesArrayAdapter = new SeriesNbListAdapter(getActivity(), R.layout.listview_row_2col_reverse, dataBaseHelper.getSeriesListByFilter(filter));
-        binding.lvSearchResultSeriesList.setAdapter(seriesArrayAdapter);
-        // Books list adapters charger with data
-        booksArrayAdapter = new BooksNumberListAdapter(getActivity(), R.layout.listview_row_2col, dataBaseHelper.getBooksListByFilter(filter));
-        binding.lvSearchResultBooksList.setAdapter(booksArrayAdapter);
-        // Authors list adapters charger with data
-        authorsArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByFilter(filter));
-        binding.lvSearchResultAuthorsList.setAdapter(authorsArrayAdapter);
-        // Editors list adapters charger with data
-        editorsArrayAdapter = new EditorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getEditorsListByFilter(filter));
-        binding.lvSearchResultEditorsList.setAdapter(editorsArrayAdapter);
+        /* Series list adapters charged with data */
+        // Creating the list to display
+        ArrayList<SerieBean> SeriesList = dataBaseHelper.getSeriesList();
+        // If the search bar contains a filter
+        if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
+            SeriesList = dataBaseHelper.getSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString());
+        }
+        // The adapter gets the list and the string value "books" needed for translations
+        seriesAdapter = new SeriesNbAdapter(SeriesList, getString(R.string.Books));
+        // the adapter and the layout are defined for the RecyclerView
+        binding.rvSearchResultSeriesList.setAdapter(seriesAdapter);
+        binding.rvSearchResultSeriesList.setLayoutManager(new GridLayoutManager(getContext(),1));
+        // The list is submitted to the adapter
+        seriesAdapter.submitList(SeriesList);
+
+        /* Books list adapters charged with data */
+        // Creating the list to display
+        ArrayList<BookBean> BooksList = dataBaseHelper.getBooksList();
+        // If the search bar contains a filter
+        if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
+            BooksList = dataBaseHelper.getBooksListByFilter(binding.sbSearch.svSearch.getQuery().toString());
+        }
+        // The adapter gets the list and the string value "books" needed for translations
+        booksAdapter = new BooksBookNbAdapter(BooksList, getString(R.string.BookNumber));
+        // the adapter and the layout are defined for the RecyclerView
+        binding.rvSearchResultBooksList.setAdapter(booksAdapter);
+        binding.rvSearchResultBooksList.setLayoutManager(new GridLayoutManager(getContext(),1));
+        // The list is submitted to the adapter
+        booksAdapter.submitList(BooksList);
+
+        /* Authors list adapters charged with data */
+        // Creating the list to display
+        ArrayList<AuthorBean> AuthorsList = dataBaseHelper.getAuthorsList();
+        // If the search bar contains a filter
+        if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
+            AuthorsList = dataBaseHelper.getAuthorsListByFilter(binding.sbSearch.svSearch.getQuery().toString());
+        }
+        // The adapter gets the list and the string value "books" needed for translations
+        authorsAdapter = new AuthorsAdapter(AuthorsList);
+        // the adapter and the layout are defined for the RecyclerView
+        binding.rvSearchResultAuthorsList.setAdapter(authorsAdapter);
+        binding.rvSearchResultAuthorsList.setLayoutManager(new GridLayoutManager(getContext(),1));
+        // The list is submitted to the adapter
+        authorsAdapter.submitList(AuthorsList);
+
+        /* Editors list adapters charger with data */
+        // Creating the list to display
+        ArrayList<EditorBean> EditorsList = dataBaseHelper.getEditorsList();
+        // If the search bar contains a filter
+        if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
+            EditorsList = dataBaseHelper.getEditorsListByFilter(binding.sbSearch.svSearch.getQuery().toString());
+        }
+        // The adapter gets the list and the string value "books" needed for translations
+        editorsAdapter = new EditorsAdapter(EditorsList);
+        // the adapter and the layout are defined for the RecyclerView
+        binding.rvSearchResultEditorsList.setAdapter(editorsAdapter);
+        binding.rvSearchResultEditorsList.setLayoutManager(new GridLayoutManager(getContext(),1));
+        // The list is submitted to the adapter
+        editorsAdapter.submitList(EditorsList);
     }
 }

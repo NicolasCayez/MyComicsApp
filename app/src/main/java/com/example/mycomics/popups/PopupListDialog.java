@@ -3,10 +3,10 @@ package com.example.mycomics.popups;
 import android.app.Dialog;
 import android.content.Context;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mycomics.R;
 
@@ -16,7 +16,7 @@ public class PopupListDialog extends Dialog {
     /* -------------------------------------- */
     private String title;
     private TextView tvPopupTitle;
-    private ListView lvPopupList;
+    private RecyclerView rvPopupList;
     private Button btnPopupAbort;
 
     /* -------------------------------------- */
@@ -28,7 +28,7 @@ public class PopupListDialog extends Dialog {
         setContentView(R.layout.dialog_popup_list);
         this.title = "Mon titre";
         this.tvPopupTitle = findViewById(R.id.tvPopupTitle);
-        this.lvPopupList = findViewById(R.id.lvPopupList);
+        this.rvPopupList = findViewById(R.id.rvPopupList);
         this.btnPopupAbort = findViewById(R.id.btnPopupAbort);
     }
 
@@ -44,18 +44,17 @@ public class PopupListDialog extends Dialog {
         this.tvPopupTitle = tvPopupTitle;
     }
 
-    public ListView getLvPopupListe() {
-        return lvPopupList;
-    }
-
-    public void setLvPopupListe(ListView lvPopupListe) {
-        this.lvPopupList = lvPopupListe;
-    }
-
     public Button getBtnPopupAbort() {
         return btnPopupAbort;
     }
 
+    public RecyclerView getRvPopupList() {
+        return rvPopupList;
+    }
+
+    public void setRvPopupList(RecyclerView rvPopupList) {
+        this.rvPopupList = rvPopupList;
+    }
 
     /* -------------------------------------- */
     // Build Method

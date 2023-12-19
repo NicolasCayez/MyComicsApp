@@ -5,23 +5,21 @@ import static androidx.navigation.fragment.FragmentKt.findNavController;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+
 import com.example.mycomics.R;
-import com.example.mycomics.adapters.AuthorsListAdapter;
-import com.example.mycomics.adapters.SeriesNbListAdapter;
-import com.example.mycomics.adapters.BooksNumberListAdapter;
+import com.example.mycomics.adapters.AuthorsAdapter;
+import com.example.mycomics.adapters.BooksBookNbAdapter;
+import com.example.mycomics.adapters.SeriesNbAdapter;
 import com.example.mycomics.beans.AuthorBean;
 import com.example.mycomics.beans.BookBean;
 import com.example.mycomics.beans.EditorBean;
@@ -29,6 +27,8 @@ import com.example.mycomics.beans.SerieBean;
 import com.example.mycomics.databinding.FragmentEditorDetailBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupTextDialog;
+
+import java.util.ArrayList;
 
 public class EditorDetailFragment extends Fragment {
 
@@ -46,11 +46,11 @@ public class EditorDetailFragment extends Fragment {
 
 
     //* ----------------------------------------------------------------------------------------- */
-    //* Adapters handling listViews data display
+    //* Adapters handling RecycleViews data display
     //* ----------------------------------------------------------------------------------------- */
-    ArrayAdapter booksArrayAdapter;
-    ArrayAdapter seriesArrayAdapter;
-    ArrayAdapter authorsArrayAdapter;
+    SeriesNbAdapter seriesAdapter;
+    BooksBookNbAdapter booksAdapter;
+    AuthorsAdapter authorsAdapter;
 
 
     //* ----------------------------------------------------------------------------------------- */
@@ -97,65 +97,37 @@ public class EditorDetailFragment extends Fragment {
         EditorBean editorBean = dataBaseHelper.getEditorById(editor_id);
         editorDetailRefreshScreen(editorBean);
 
-        /* Series list item click */
-        binding.lvEditorDetailSeriesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Click on Serie in the list (RecyclerView) */
+        seriesAdapter.setOnClickListener(new SeriesNbAdapter.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // SerieBean for the data to be send to destination
-                SerieBean serieBean;
-                try {
-                    // SerieBean gets data from clicked item
-                    serieBean = (SerieBean) binding.lvEditorDetailSeriesList.getItemAtPosition(position);
-                } catch (Exception e) {
-                    // id set to -1 for error handling
-                    serieBean = new SerieBean(-1,"error");
-                }
+            public void onClick(int position, SerieBean serieBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("serie_id", serieBean.getSerie_id());
-                // go to SerieDetailFragment with the data bundle
+                bundle.putInt("serie_id", serieBean.getSerie_id());;
+                // go to AuthorDetailFragment with the data bundle
                 findNavController(EditorDetailFragment.this).navigate(R.id.action_editorDetail_to_serieDetail, bundle);
             }
         });
 
-        /* Books list item click */
-        binding.lvEditorDetailBooksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Click on Book in the list (RecyclerView) */
+        booksAdapter.setOnClickListener(new BooksBookNbAdapter.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // BookBean for the data to be send to destination
-                BookBean bookBean;
-                try {
-                    // BookBean gets data from clicked item
-                    bookBean = (BookBean) binding.lvEditorDetailBooksList.getItemAtPosition(position);
-//                    bookBean = dataBaseHelper.getBookById(((BookBean) binding.lvEditorDetailBooksList.getItemAtPosition(position)).getBook_id());
-                } catch (Exception e) {
-                    // id set to -1 for error handling
-                    bookBean = new BookBean(-1,"error");
-                }
+            public void onClick(int position, BookBean bookBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("book_id", bookBean.getBook_id());
-                // go to BookDetailFragment with the data bundle
+                bundle.putInt("book_id", bookBean.getBook_id());;
+                // go to AuthorDetailFragment with the data bundle
                 findNavController(EditorDetailFragment.this).navigate(R.id.action_editorDetail_to_bookDetail, bundle);
             }
         });
 
-        /* Authors list item click */
-        binding.lvEditorDetailAuthorsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Click on Author in the list (RecyclerView) */
+        authorsAdapter.setOnClickListener(new AuthorsAdapter.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // AuthorBean for the data to be send to destination
-                AuthorBean authorBean;
-                try {
-                    // AuthorBean gets data from clicked item
-                    authorBean = (AuthorBean) binding.lvEditorDetailAuthorsList.getItemAtPosition(position);
-                } catch (Exception e) {
-                    // id set to -1 for error handling
-                    authorBean = new AuthorBean(-1,"error","error","error");
-                }
-                Bundle bundle = new Bundle();
+            public void onClick(int position, AuthorBean authorBean) {
                 // Data bundle storing key-value pairs
-                bundle.putInt("author_id", authorBean.getAuthor_id());
+                Bundle bundle = new Bundle();
+                bundle.putInt("author_id", authorBean.getAuthor_id());;
                 // go to AuthorDetailFragment with the data bundle
                 findNavController(EditorDetailFragment.this).navigate(R.id.action_editorDetail_to_authorDetail, bundle);
             }
@@ -259,17 +231,42 @@ public class EditorDetailFragment extends Fragment {
     //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
     private void editorDetailRefreshScreen(EditorBean editorBean){
+
         // Editor Name
         binding.etEditorDetailEditorName.setText(editorBean.getEditor_name());
-        // Series list adapters charger with data
-        seriesArrayAdapter = new SeriesNbListAdapter(getActivity(), R.layout.listview_row_2col_reverse, dataBaseHelper.getSeriesListByEditorId(editorBean.getEditor_id()));
-        binding.lvEditorDetailSeriesList.setAdapter(seriesArrayAdapter);
-        // Books list adapters charger with data
-        booksArrayAdapter = new BooksNumberListAdapter(getActivity(), R.layout.listview_row_2col, dataBaseHelper.getBooksListByEditorIdNoSerie(editorBean.getEditor_id()));
-        binding.lvEditorDetailBooksList.setAdapter(booksArrayAdapter);
-        // Authors list adapters charger with data
-        authorsArrayAdapter = new AuthorsListAdapter(getActivity(), R.layout.listview_row_1col, dataBaseHelper.getAuthorsListByEditorId(editorBean.getEditor_id()));
-        binding.lvEditorDetailAuthorsList.setAdapter(authorsArrayAdapter);
+
+        /* Series list adapters charged with data */
+        // Creating the list to display
+        ArrayList<SerieBean> SeriesList = dataBaseHelper.getSeriesListByEditorId(editorBean.getEditor_id());
+        // The adapter gets the list and the string value "books" needed for translations
+        seriesAdapter = new SeriesNbAdapter(SeriesList, getString(R.string.Books));
+        // the adapter and the layout are defined for the RecyclerView
+        binding.rvEditorDetailSeriesList.setAdapter(seriesAdapter);
+        binding.rvEditorDetailSeriesList.setLayoutManager(new GridLayoutManager(getContext(),1));
+        // The list is submitted to the adapter
+        seriesAdapter.submitList(SeriesList);
+
+        /* Books list adapters charged with data */
+        // Creating the list to display
+        ArrayList<BookBean> BooksList = dataBaseHelper.getBooksListByEditorIdNoSerie(editorBean.getEditor_id());
+        // The adapter gets the list and the string value "books" needed for translations
+        booksAdapter = new BooksBookNbAdapter(BooksList, getString(R.string.BookNumber));
+        // the adapter and the layout are defined for the RecyclerView
+        binding.rvEditorDetailBooksList.setAdapter(booksAdapter);
+        binding.rvEditorDetailBooksList.setLayoutManager(new GridLayoutManager(getContext(),1));
+        // The list is submitted to the adapter
+        booksAdapter.submitList(BooksList);
+
+        /* Authors list adapters charged with data */
+        // Creating the list to display
+        ArrayList<AuthorBean> AuthorsList = dataBaseHelper.getAuthorsListByEditorId(editorBean.getEditor_id());
+        // The adapter gets the list and the string value "books" needed for translations
+        authorsAdapter = new AuthorsAdapter(AuthorsList);
+        // the adapter and the layout are defined for the RecyclerView
+        binding.rvEditorDetailAuthorsList.setAdapter(authorsAdapter);
+        binding.rvEditorDetailAuthorsList.setLayoutManager(new GridLayoutManager(getContext(),1));
+        // The list is submitted to the adapter
+        authorsAdapter.submitList(AuthorsList);
     }
 
     //* ----------------------------------------------------------------------------------------- */

@@ -2,12 +2,17 @@ package com.example.mycomics.beans;
 
 public class EditorBean {
 
-    private Integer editor_id;
+    private Integer editor_id, nb_books;
     private String editor_name;
 
     /* -------------------------------------- */
     // Constructor
     /* -------------------------------------- */
+    public EditorBean(Integer editor_id, String editor_name, Integer nb_books) {
+        this.editor_id = editor_id;
+        this.editor_name = editor_name;
+        this.nb_books = nb_books;
+    }
     public EditorBean(Integer editor_id, String editor_name) {
         this.editor_id = editor_id;
         this.editor_name = editor_name;
@@ -31,6 +36,14 @@ public class EditorBean {
         this.editor_name = editor_name;
     }
 
+    public Integer getNb_books() {
+        return nb_books;
+    }
+
+    public void setNb_books(Integer nb_books) {
+        this.nb_books = nb_books;
+    }
+
     /* -------------------------------------- */
     // ToString
     /* -------------------------------------- */
@@ -39,6 +52,7 @@ public class EditorBean {
         return "EditorBean{" +
                 "editor_id=" + editor_id +
                 ", editor_name='" + editor_name + '\'' +
+                ", nb_books='" + nb_books + '\'' +
                 '}';
     }
 }

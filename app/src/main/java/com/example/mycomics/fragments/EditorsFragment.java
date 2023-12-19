@@ -5,26 +5,26 @@ import static androidx.navigation.fragment.FragmentKt.findNavController;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.mycomics.R;
-import com.example.mycomics.adapters.EditorsNbListAdapter;
+import com.example.mycomics.adapters.EditorsNbAdapter;
 import com.example.mycomics.beans.EditorBean;
 import com.example.mycomics.databinding.FragmentEditorsBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupTextDialog;
+
+import java.util.ArrayList;
 
 public class EditorsFragment extends Fragment {
 
@@ -42,9 +42,9 @@ public class EditorsFragment extends Fragment {
 
 
     //* ----------------------------------------------------------------------------------------- */
-    //* Adapters handling listViews data display
+    //* Adapters handling RecycleViews data display
     //* ----------------------------------------------------------------------------------------- */
-    ArrayAdapter editorsArrayAdapter;
+    EditorsNbAdapter editorsAdapter;
 
 
     //* ----------------------------------------------------------------------------------------- */
@@ -192,24 +192,14 @@ public class EditorsFragment extends Fragment {
             }
         });
 
-        /* Editors list item click */
-        // Click item
-        binding.lvEditorsEditorsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Click on Editor in the list (RecyclerView) */
+       editorsAdapter.setOnClickListener(new EditorsNbAdapter.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // EditorBean for the data to be send to destination
-                EditorBean editorBean;
-                try {
-                    // EditorBean gets data from clicked item
-                    editorBean = (EditorBean) binding.lvEditorsEditorsList.getItemAtPosition(position);
-                } catch (Exception e) {
-                    // id set to -1 for error handling
-                    editorBean = new EditorBean(-1,"error");
-                }
+            public void onClick(int position, EditorBean editorBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("editor_id", editorBean.getEditor_id());
-                // go to EditorDetailFragment with the data bundle
+                bundle.putInt("editor_id", editorBean.getEditor_id());;
+                // go to AuthorDetailFragment with the data bundle
                 findNavController(EditorsFragment.this).navigate(R.id.action_editors_to_editorDetail, bundle);
             }
         });
@@ -230,15 +220,18 @@ public class EditorsFragment extends Fragment {
     //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
     private void editorsRefreshScreen(){
+        // Creating the list to display
+        ArrayList<EditorBean> EditorsList = dataBaseHelper.getEditorsList();
+        // If the search bar contains a filter
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            // If the search bar isn't empty
-            // list filtered
-            editorsArrayAdapter = new EditorsNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getEditorsListByFilter(binding.sbSearch.svSearch.getQuery().toString()));
-        } else {
-            // list without filter
-            editorsArrayAdapter = new EditorsNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getEditorsList());
+            EditorsList = dataBaseHelper.getEditorsListByFilter(binding.sbSearch.svSearch.getQuery().toString());
         }
-        // list adapter charged with data
-        binding.lvEditorsEditorsList.setAdapter(editorsArrayAdapter);
+        // The adapter gets the list and the string value "books" needed for translations
+        editorsAdapter = new EditorsNbAdapter(EditorsList, getString(R.string.Books));
+        // the adapter and the layout are defined for the RecyclerView
+        binding.rvEditorsEditorsList.setAdapter(editorsAdapter);
+        binding.rvEditorsEditorsList.setLayoutManager(new GridLayoutManager(getContext(),1));
+        // The list is submitted to the adapter
+        editorsAdapter.submitList(EditorsList);
     }
 }

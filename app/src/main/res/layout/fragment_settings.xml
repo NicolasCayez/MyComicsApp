@@ -133,43 +133,6 @@
 
                 </LinearLayout>
                 <!-- Bloc TEST *********************************************************** -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/rounded_corner_custom_beige"
-                    android:baselineAligned="false"
-                    android:orientation="vertical"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="ZONE TEST FONCTIONNALITES" />
-
-                    <FrameLayout
-                        android:id="@+id/container"
-                        android:layout_width="300dp"
-                        android:layout_height="200dp">
-
-                        <androidx.camera.view.PreviewView
-                            android:id="@+id/previewView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-                    </FrameLayout>
-
-                    <Button
-                        android:id="@+id/btnphoto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Button" />
-
-
-                </LinearLayout>
 
                 <!-- Bloc de test -->
             </LinearLayout>

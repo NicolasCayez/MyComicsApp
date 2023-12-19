@@ -5,26 +5,26 @@ import static androidx.navigation.fragment.FragmentKt.findNavController;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.mycomics.R;
-import com.example.mycomics.adapters.SeriesNbListAdapter;
+import com.example.mycomics.adapters.SeriesNbAdapter;
 import com.example.mycomics.beans.SerieBean;
 import com.example.mycomics.databinding.FragmentSeriesBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupTextDialog;
+
+import java.util.ArrayList;
 
 public class SeriesFragment extends Fragment {
 
@@ -42,9 +42,9 @@ public class SeriesFragment extends Fragment {
 
 
     //* ----------------------------------------------------------------------------------------- */
-    //* Adapters handling listViews data display
+    //* Adapters handling RecycleViews data display
     //* ----------------------------------------------------------------------------------------- */
-    ArrayAdapter seriesArrayAdapter;
+    SeriesNbAdapter seriesAdapter;
 
 
     //* ----------------------------------------------------------------------------------------- */
@@ -193,25 +193,14 @@ public class SeriesFragment extends Fragment {
             }
         });
 
-        /* Series list item click */
-        // Click item
-        binding.lvSeriesSeriesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Click on Serie in the list (RecyclerView) */
+        seriesAdapter.setOnClickListener(new SeriesNbAdapter.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // SerieBean for the data to be send to destination
-                SerieBean serieBean;
-                try {
-                    // SerieBean gets data from clicked item
-                    serieBean = (SerieBean) binding.lvSeriesSeriesList.getItemAtPosition(position);
-                } catch (Exception e) {
-                    // id set to -1 for error handling
-                    serieBean = new SerieBean(-1,"error");
-                }
+            public void onClick(int position, SerieBean serieBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("serie_id", serieBean.getSerie_id());
-                bundle.putString("serie_name", serieBean.getSerie_name());
-                // go to SerieDetailFragment with the data bundle
+                bundle.putInt("serie_id", serieBean.getSerie_id());;
+                // go to AuthorDetailFragment with the data bundle
                 findNavController(SeriesFragment.this).navigate(R.id.action_series_to_serieDetail, bundle);
             }
         });
@@ -232,15 +221,18 @@ public class SeriesFragment extends Fragment {
     //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
     private void seriesRefreshScreen(){
+        // Creating the list to display
+        ArrayList<SerieBean> SeriesList = dataBaseHelper.getSeriesList();
+        // If the search bar contains a filter
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            // If the search bar isn't empty
-            // list filtered
-            seriesArrayAdapter = new SeriesNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString()));
-        } else {
-            // list without filter
-            seriesArrayAdapter = new SeriesNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getSeriesList());
+            SeriesList = dataBaseHelper.getSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString());
         }
-        // list adapter charged with data
-        binding.lvSeriesSeriesList.setAdapter(seriesArrayAdapter);
+        // The adapter gets the list and the string value "books" needed for translations
+        seriesAdapter = new SeriesNbAdapter(SeriesList, getString(R.string.Books));
+        // the adapter and the layout are defined for the RecyclerView
+        binding.rvSeriesSeriesList.setAdapter(seriesAdapter);
+        binding.rvSeriesSeriesList.setLayoutManager(new GridLayoutManager(getContext(),1));
+        // The list is submitted to the adapter
+        seriesAdapter.submitList(SeriesList);
     }
 }

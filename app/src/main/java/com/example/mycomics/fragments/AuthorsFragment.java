@@ -5,26 +5,26 @@ import static androidx.navigation.fragment.FragmentKt.findNavController;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.mycomics.R;
-import com.example.mycomics.adapters.AuthorsNbListAdapter;
+import com.example.mycomics.adapters.AuthorsNbAdapter;
 import com.example.mycomics.beans.AuthorBean;
 import com.example.mycomics.databinding.FragmentAuthorsBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupTextDialog;
+
+import java.util.ArrayList;
 
 public class AuthorsFragment extends Fragment {
 
@@ -42,9 +42,9 @@ public class AuthorsFragment extends Fragment {
 
 
     //* ----------------------------------------------------------------------------------------- */
-    //* Adapters handling listViews data display
+    //* Adapters handling RecycleViews data display
     //* ----------------------------------------------------------------------------------------- */
-    ArrayAdapter authorsArrayAdapter;
+    AuthorsNbAdapter authorsAdapter;
 
 
     //* ----------------------------------------------------------------------------------------- */
@@ -87,7 +87,6 @@ public class AuthorsFragment extends Fragment {
 
         /* Display initialization */
         authorsRefreshScreen();
-
         /* Search bar */
         // Search Hint initialization
         binding.sbSearch.svSearch.setQueryHint(getString(R.string.SearchHintFilterOrSearch));
@@ -193,19 +192,10 @@ public class AuthorsFragment extends Fragment {
             }
         });
 
-        /* Author list item click */
-        binding.lvAuthorsAuthorsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Click on Author in the list (RecyclerView) */
+        authorsAdapter.setOnClickListener(new AuthorsNbAdapter.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // AuthorBean for the data to be send to destination
-                AuthorBean authorBean;
-                try {
-                    // AuthorBean gets data from clicked item
-                    authorBean = (AuthorBean) binding.lvAuthorsAuthorsList.getItemAtPosition(position);
-                } catch (Exception e) {
-                    // id set to -1 for error handling
-                    authorBean = new AuthorBean(-1,"error","error","error");
-                }
+            public void onClick(int position, AuthorBean authorBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
                 bundle.putInt("author_id", authorBean.getAuthor_id());;
@@ -230,15 +220,18 @@ public class AuthorsFragment extends Fragment {
     //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
     private void authorsRefreshScreen(){
+        // Creating the list to display
+        ArrayList<AuthorBean> AuthorsList = dataBaseHelper.getAuthorsList();
+        // If the search bar contains a filter
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            // If the search bar isn't empty
-            // list filtered
-            authorsArrayAdapter = new AuthorsNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getAuthorsListByFilter(binding.sbSearch.svSearch.getQuery().toString()));
-        } else {
-            // list without filter
-            authorsArrayAdapter = new AuthorsNbListAdapter(getActivity() , R.layout.listview_row_2col_reverse, dataBaseHelper.getAuthorsList());
+            AuthorsList = dataBaseHelper.getAuthorsListByFilter(binding.sbSearch.svSearch.getQuery().toString());
         }
-        // list adapter charged with data
-        binding.lvAuthorsAuthorsList.setAdapter(authorsArrayAdapter);
+        // The adapter gets the list and the string value "books" needed for translations
+        authorsAdapter = new AuthorsNbAdapter(AuthorsList, getString(R.string.Books));
+        // the adapter and the layout are defined for the RecyclerView
+        binding.rvAuthorsAuthorsList.setAdapter(authorsAdapter);
+        binding.rvAuthorsAuthorsList.setLayoutManager(new GridLayoutManager(getContext(),1));
+        // The list is submitted to the adapter
+        authorsAdapter.submitList(AuthorsList);
     }
 }

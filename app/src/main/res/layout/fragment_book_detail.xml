@@ -473,8 +473,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="130dp">
 
-                            <ListView
-                                android:id="@+id/lvBookDetailAuthorsList"
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvBookDetailAuthorsList"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginBottom="20dp"

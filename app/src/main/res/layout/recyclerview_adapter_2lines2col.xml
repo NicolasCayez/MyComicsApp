@@ -10,7 +10,7 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvListview_row_3col_col1"
+            android:id="@+id/tvRecyclerView_2lines2col_line1col1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="7"
@@ -21,7 +21,7 @@
             android:textSize="10sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvListview_row_3col_col2"
+            android:id="@+id/tvRecyclerView_2lines2col_line1col2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -33,7 +33,7 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvListview_row_3col_col3"
+        android:id="@+id/tvRecyclerView_2lines2col_line2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/kronika"

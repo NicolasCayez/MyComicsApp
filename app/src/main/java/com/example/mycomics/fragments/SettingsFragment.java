@@ -1,69 +1,33 @@
 package com.example.mycomics.fragments;
 
-import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.core.Camera;
-import androidx.camera.core.CameraSelector;
-import androidx.camera.core.ImageAnalysis;
-import androidx.camera.core.ImageCapture;
-import androidx.camera.core.ImageCaptureException;
-import androidx.camera.core.Preview;
-import androidx.camera.core.UseCaseGroup;
-import androidx.camera.core.ViewPort;
-import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.camera.view.PreviewView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Rational;
-import android.util.Size;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.Surface;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import com.example.mycomics.MainActivity;
 import com.example.mycomics.R;
-import com.example.mycomics.adapters.ProfilesListAdapter;
+import com.example.mycomics.adapters.ProfilesAdapter;
 import com.example.mycomics.beans.ProfileBean;
 import com.example.mycomics.databinding.FragmentSettingsBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
-import com.example.mycomics.popups.PopupTextDialog;
 import com.example.mycomics.popups.PopupListDialog;
-import com.google.common.util.concurrent.ListenableFuture;
+import com.example.mycomics.popups.PopupTextDialog;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.ArrayList;
 
 public class SettingsFragment extends Fragment {
-    /*********************************************/
-    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
-    private ImageCapture imageCapture;
-    /*********************************************/
 
 
     //* ----------------------------------------------------------------------------------------- */
@@ -82,6 +46,7 @@ public class SettingsFragment extends Fragment {
     //* Adapters handling listViews data display
     //* ----------------------------------------------------------------------------------------- */
     ArrayAdapter profilsArrayAdapter;
+    ProfilesAdapter profilesAdapter;
 
 
     //* ----------------------------------------------------------------------------------------- */
@@ -100,50 +65,7 @@ public class SettingsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         /* Database handler initialization */
         dataBaseHelper = new DataBaseHelper(getActivity());
-
-        /*********************************************/
-        cameraProviderFuture = ProcessCameraProvider.getInstance(getContext());
-        cameraProviderFuture.addListener(() -> {
-            try {
-                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
-                startCameraX(cameraProvider);
-            } catch (ExecutionException e) {
-                throw new RuntimeException(e);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }, getExecutor());
-        /*********************************************/
     }
-
-    /*********************************************/
-
-    private Executor getExecutor() {
-        return ContextCompat.getMainExecutor(getContext());
-    }
-    /*********************************************/
-    /*********************************************/
-
-    private void startCameraX(ProcessCameraProvider cameraProvider) {
-        cameraProvider.unbindAll();
-
-        // CameraSelector use case
-        CameraSelector cameraSelector = new CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                .build();
-
-        // Preview use case
-        Preview preview = new Preview.Builder().build();
-        preview.setSurfaceProvider(binding.previewView.getSurfaceProvider());
-
-        // Image capture use case
-        imageCapture = new ImageCapture.Builder()
-                .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
-                .build();
-
-        cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageCapture);
-    }
-    /*********************************************/
 
 
     //* ----------------------------------------------------------------------------------------- */
@@ -253,28 +175,29 @@ public class SettingsFragment extends Fragment {
                 PopupListDialog popupListDialog = new PopupListDialog(getActivity());
                 popupListDialog.setTitle(getString(R.string.SettingsChooseProfile));
                 popupListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                // getting access to the listView
-                ListView listView = (ListView) popupListDialog.findViewById(R.id.lvPopupList);
-                // setting up the Adapter for the list
-                profilsArrayAdapter = new ProfilesListAdapter(getActivity() , R.layout.listview_row_1col, dataBaseHelper.getProfilesList());
-                listView.setAdapter(profilsArrayAdapter);
+                // Linking the RecyclerView
+                RecyclerView recyclerView = popupListDialog.getRvPopupList();
+                // Creating the list to display
+                ArrayList<ProfileBean> profilesList = dataBaseHelper.getProfilesList();
+                // The adapter gets the list and the string value "books" needed for translations
+                profilesAdapter = new ProfilesAdapter(profilesList);
+                // the adapter and the layout are defined for the RecyclerView
+                recyclerView.setAdapter(profilesAdapter);
+                recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+                // The list is submitted to the adapter
+                profilesAdapter.submitList(profilesList);
+
                 /* Profile list item click */
-                popupListDialog.getLvPopupListe().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                profilesAdapter.setOnClickListener(new ProfilesAdapter.OnClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        // ProfileBean for the data from the chosen item
-                        ProfileBean profileBean;
+                    public void onClick(int position, ProfileBean profileBean) {
                         try {
-                            // fetching data from the list
-                            profileBean = (ProfileBean) popupListDialog.getLvPopupListe().getItemAtPosition(position);
                             // updating Active Profile in the Database
-                            dataBaseHelper.updateActiveProfile(dataBaseHelper, ((ProfileBean) popupListDialog.getLvPopupListe().getItemAtPosition(position)).getProfile_id());
+                            dataBaseHelper.updateActiveProfile(dataBaseHelper, profileBean.getProfile_id());
                             Toast.makeText(getActivity(), getString(R.string.SettingsProfileChangeSuccess), Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
                             // error toast message
                             Toast.makeText(getActivity(), getString(R.string.SettingsProfileChangeError), Toast.LENGTH_SHORT).show();
-                            // id set to -1 for error handling
-                            profileBean = new ProfileBean(-1, "error" );
                         }
                         popupListDialog.dismiss(); // To close popup
                     }
@@ -319,53 +242,7 @@ public class SettingsFragment extends Fragment {
 //                startActivity(intent);
             }
         });
-
-        /***************** TEST CAMERA ***************/
-        binding.btnphoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                capturePicture();
-
-            }
-        });
-        /*********************************************/
-
     }
-
-
-    /*********************************************/
-    private void capturePicture() {
-
-        long timestamp = System.currentTimeMillis();
-
-        ContentValues cv = new ContentValues();
-        cv.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/MyComics");
-        cv.put(MediaStore.MediaColumns.DISPLAY_NAME, timestamp);
-        cv.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
-
-        imageCapture.takePicture(
-                new ImageCapture.OutputFileOptions.Builder(
-                        getContext().getContentResolver(),
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        cv
-                ).build(),
-                getExecutor(),
-                new ImageCapture.OnImageSavedCallback() {
-                    @Override
-                    public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-                        Toast.makeText(getActivity(), "Photo sauvegardée", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(@NonNull ImageCaptureException exception) {
-                        Toast.makeText(getActivity(), "Photo erreur bordel de merde : " + exception.getMessage(), Toast.LENGTH_LONG).show();
-
-                    }
-                }
-        );
-    }
-    /*********************************************/
-
 
     @Override
     public void onDestroy() {

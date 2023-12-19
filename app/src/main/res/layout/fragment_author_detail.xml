@@ -159,12 +159,11 @@
                         android:layout_marginHorizontal="15dp"
                         android:orientation="horizontal">
 
-                        <ListView
-                            android:id="@+id/lvAuthorDetailSeriesList"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvAuthorDetailSeriesList"
                             android:layout_width="match_parent"
                             android:layout_height="150dp"
-                            android:background="#eee"
-                            android:nestedScrollingEnabled="true" />
+                            android:background="#eee" />
                     </LinearLayout>
                     <!-- Liste tomes -->
                     <androidx.appcompat.widget.AppCompatTextView
@@ -191,6 +190,11 @@
                             android:layout_height="150dp"
                             android:background="#eee"
                             android:nestedScrollingEnabled="true" />
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvAuthorDetailBooksList"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:background="#eee" />
                     </LinearLayout>
                     <!-- Liste Editeurs -->
                     <LinearLayout
@@ -207,7 +211,8 @@
                             android:layout_weight="1">
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvAuthorDetailEditorsListLabel"
+                                android:id="@+id/tvAuthorDetailAuthorsListLabel"
+
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="0dp"
@@ -215,13 +220,14 @@
                                 android:layout_marginEnd="15dp"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/kronika"
-                                android:text="@string/EditorsListLabel"
+                                android:text="@string/AuthorsPartnersListLabel"
+
                                 android:textAlignment="textStart"
                                 android:textColor="@color/custom_blue"
                                 android:textSize="12sp" />
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvAuthorDetailAuthorsListLabel"
+                                android:id="@+id/tvAuthorDetailEditorsListLabel"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="30dp"
@@ -229,7 +235,7 @@
                                 android:layout_marginEnd="15dp"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/kronika"
-                                android:text="@string/AuthorsPartnersListLabel"
+                                android:text="@string/EditorsListLabel"
                                 android:textAlignment="textStart"
                                 android:textColor="@color/custom_blue"
                                 android:textSize="12sp" />
@@ -242,25 +248,21 @@
                             android:layout_marginHorizontal="15dp"
                             android:layout_weight="1">
 
-                            <ListView
-                                android:id="@+id/lvAuthorDetailEditorsList"
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvAuthorDetailAuthorsList"
                                 android:layout_width="0dp"
                                 android:layout_height="120dp"
                                 android:layout_marginEnd="15dp"
                                 android:layout_weight="1"
-                                android:background="#eee"
-                                android:nestedScrollingEnabled="true">
+                                android:background="#eee" />
 
-                            </ListView>
-
-                            <ListView
-                                android:id="@+id/lvAuthorDetailAuthorsList"
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvAuthorDetailEditorsList"
                                 android:layout_width="0dp"
                                 android:layout_height="120dp"
                                 android:layout_marginStart="15dp"
                                 android:layout_weight="1"
-                                android:background="#eee"
-                                android:nestedScrollingEnabled="true" />
+                                android:background="#eee" />
 
                         </LinearLayout>
                     </LinearLayout>

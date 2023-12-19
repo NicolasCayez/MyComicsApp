@@ -16,11 +16,10 @@
         android:gravity="center"
         android:textColor="@color/custom_blue"
         android:textSize="14sp" />
-
-    <ListView
-        android:id="@+id/lvPopupList"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPopupList"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:background="#eee"
         android:fontFamily="@font/kronika"
         android:textColor="@color/custom_blue"

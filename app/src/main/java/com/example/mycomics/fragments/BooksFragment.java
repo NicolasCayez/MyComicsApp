@@ -5,27 +5,27 @@ import static androidx.navigation.fragment.FragmentKt.findNavController;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.mycomics.R;
-import com.example.mycomics.adapters.BooksSerieListAdapter;
+import com.example.mycomics.adapters.BookSerieAdapter;
 import com.example.mycomics.beans.BookBean;
 import com.example.mycomics.beans.BookSerieBean;
 import com.example.mycomics.databinding.FragmentBooksBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupTextDialog;
+
+import java.util.ArrayList;
 
 public class BooksFragment extends Fragment {
 
@@ -43,10 +43,9 @@ public class BooksFragment extends Fragment {
 
 
     //* ----------------------------------------------------------------------------------------- */
-    //* Adapters handling listViews data display
+    //* Adapters handling RecycleViews data display
     //* ----------------------------------------------------------------------------------------- */
-    ArrayAdapter tomesArrayAdapter;
-    ArrayAdapter bookSerieArrayAdapter;
+    BookSerieAdapter bookSerieAdapter;
 
 
     //* ----------------------------------------------------------------------------------------- */
@@ -196,25 +195,14 @@ public class BooksFragment extends Fragment {
             }
         });
 
-        /* Books list item click */
-        // Click item
-        binding.lvBooksBooksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /* Click on Book in the list (RecyclerView) */
+        bookSerieAdapter.setOnClickListener(new BookSerieAdapter.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // BookBean for the data to be send to destination
-                BookBean bookBean;
-                try {
-                    // BookBean gets data from clicked item
-                    bookBean = (BookSerieBean) binding.lvBooksBooksList.getItemAtPosition(position);
-                } catch (Exception e) {
-                    // id set to -1 for error handling
-                    bookBean = new BookSerieBean(-1,"error");
-                }
+            public void onClick(int position, BookSerieBean bookSerieBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("book_id", bookBean.getBook_id());
-                bundle.putString("book_title", bookBean.getBook_title());
-                // go to BookDetailFragment with the data bundle
+                bundle.putInt("book_id", bookSerieBean.getBook_id());;
+                // go to AuthorDetailFragment with the data bundle
                 findNavController(BooksFragment.this).navigate(R.id.action_books_to_bookDetail, bundle);
             }
         });
@@ -235,15 +223,18 @@ public class BooksFragment extends Fragment {
     //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
     private void booksRefreshScreen(){
+        // Creating the list to display
+        ArrayList<BookSerieBean> BooksList = dataBaseHelper.getBooksAndBooksSeriesList();
+        // If the search bar contains a filter
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            // If the search bar isn't empty
-            // list filtered
-            bookSerieArrayAdapter = new BooksSerieListAdapter(getActivity() , R.layout.listview_row_3col, dataBaseHelper.getBooksAndSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString()));
-        } else {
-            // list without filter
-            bookSerieArrayAdapter = new BooksSerieListAdapter(getActivity() , R.layout.listview_row_3col, dataBaseHelper.getBooksAndBooksSeriesList());
+            BooksList = dataBaseHelper.getBooksAndSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString());
         }
-        // list adapter charged with data
-        binding.lvBooksBooksList.setAdapter(bookSerieArrayAdapter);
+        // The adapter gets the list and the string value "books" needed for translations
+        bookSerieAdapter = new BookSerieAdapter(BooksList, getString(R.string.BookNumber));
+        // the adapter and the layout are defined for the RecyclerView
+        binding.rvBooksBooksList.setAdapter(bookSerieAdapter);
+        binding.rvBooksBooksList.setLayoutManager(new GridLayoutManager(getContext(),1));
+        // The list is submitted to the adapter
+        bookSerieAdapter.submitList(BooksList);
     }
 }

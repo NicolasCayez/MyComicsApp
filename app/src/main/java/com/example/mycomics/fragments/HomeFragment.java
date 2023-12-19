@@ -3,18 +3,15 @@ package com.example.mycomics.fragments;
 import static androidx.navigation.fragment.FragmentKt.findNavController;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.mycomics.R;
-
 import com.example.mycomics.databinding.FragmentHomeBinding;
 import com.example.mycomics.helpers.DataBaseHelper;
 

@@ -4,10 +4,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mycomics.R;
 
@@ -20,7 +20,7 @@ public class PopupAddListDialog extends Dialog {
     private String hint;
     private TextView tvPopupTitle;
     private EditText etPopupText;
-    private ListView lvPopupList;
+    private RecyclerView rvPopupList;
     private Button btnPopupConfirm, btnPopupAbort;
 
     /* -------------------------------------- */
@@ -33,7 +33,7 @@ public class PopupAddListDialog extends Dialog {
         this.title = "Title";
         this.tvPopupTitle = findViewById(R.id.tvPopupTitle);
         this.etPopupText = findViewById(R.id.etPopupText);
-        this.lvPopupList = findViewById(R.id.lvPopupList);
+        this.rvPopupList = findViewById(R.id.rvPopupList);
         this.btnPopupConfirm = findViewById(R.id.btnPopupConfirm);
         this.btnPopupAbort = findViewById(R.id.btnPopupAbort);
     }
@@ -60,12 +60,14 @@ public class PopupAddListDialog extends Dialog {
         this.tvPopupTitle = tvPopupTitle;
     }
 
-    public ListView getLvPopupList() {
-        return lvPopupList;
+    public RecyclerView getRvPopupList() {
+        return rvPopupList;
     }
-    public void setLvPopupList(ListView lvPopupList) {
-        this.lvPopupList = lvPopupList;
+
+    public void setRvPopupList(RecyclerView rvPopupList) {
+        this.rvPopupList = rvPopupList;
     }
+
     public Button getBtnPopupConfirm() {
         return btnPopupConfirm;
     }

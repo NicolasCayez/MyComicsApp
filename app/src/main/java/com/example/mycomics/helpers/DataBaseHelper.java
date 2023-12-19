@@ -881,8 +881,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // get : List<ProfileBean>
     /* ------------------------------------------------------------------------------------------ */
-    public List<ProfileBean> getListProfileBean(String query){
-        List<ProfileBean> returnList = new ArrayList<>(); // list to be returned
+    public ArrayList<ProfileBean> getListProfileBean(String query){
+        ArrayList<ProfileBean> returnList = new ArrayList<>(); // list to be returned
         SQLiteDatabase db = this.getReadableDatabase(); // Database read access
         Cursor cursor = db.rawQuery(query, null); // cursor = query result data
         if (cursor.moveToFirst()) { // true if there is at least 1 row
@@ -926,15 +926,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // get : List<EditorBean>
     /* ------------------------------------------------------------------------------------------ */
-    public List<EditorBean> getListEditorBean(String query){
-        List<EditorBean> returnList = new ArrayList<>(); // list to be returned
+    public ArrayList<EditorBean> getListEditorBean(String query){
+        ArrayList<EditorBean> returnList = new ArrayList<>(); // list to be returned
         SQLiteDatabase db = this.getReadableDatabase(); // Database read access
         Cursor cursor = db.rawQuery(query, null); // cursor = query result data
         if (cursor.moveToFirst()) { // true if there is at least 1 row
             do { // For each tuple in the cursor
                 Integer editor_id = cursor.getInt(0); // 1 key-value pair at index 0
                 String editor_name = cursor.getString(1); // 1 key-value pair at index 1
-                EditorBean editorBean = new EditorBean(editor_id, editor_name); // bean created from this tuple
+                EditorBean editorBean = new EditorBean(editor_id, editor_name, getNbBooksByEditorId(editor_id)); // bean created from this tuple
                 returnList.add(editorBean); // to put the bean in the list to be returned
             } while (cursor.moveToNext()); // go to next tuple if there is more results and repeat
         } else {
@@ -970,8 +970,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // get : List<AuthorBean>
     /* ------------------------------------------------------------------------------------------ */
-    public List<AuthorBean> getListAuthorBean(String query){
-        List<AuthorBean> returnList = new ArrayList<>();
+    public ArrayList<AuthorBean> getListAuthorBean(String query){
+        ArrayList<AuthorBean> returnList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
@@ -980,7 +980,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String author_pseudonym = cursor.getString(1);
                 String author_first_name = cursor.getString(2);
                 String author_last_name = cursor.getString(3);
-                AuthorBean authorBean = new AuthorBean(author_id, author_pseudonym, author_last_name, author_first_name);
+                AuthorBean authorBean = new AuthorBean(author_id, author_pseudonym, author_last_name, author_first_name, getNbBooksByAuthorId(author_id));
                 returnList.add(authorBean);
             } while (cursor.moveToNext());
         } else {
@@ -1005,7 +1005,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String author_pseudonym = cursor.getString(1);
                 String author_first_name = cursor.getString(2);
                 String author_last_name = cursor.getString(3);
-                authorBean = new AuthorBean(author_id, author_pseudonym, author_last_name, author_first_name);
+                authorBean = new AuthorBean(author_id, author_pseudonym, author_last_name, author_first_name, getNbBooksByAuthorId(author_id));
             } while (cursor.moveToNext());
         } else {
             // do nothing
@@ -1018,15 +1018,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // get : List<SerieBean>
     /* ------------------------------------------------------------------------------------------ */
-    public List<SerieBean> getListSerieBean(String query){
-        List<SerieBean> returnList = new ArrayList<>();
+    public ArrayList<SerieBean> getListSerieBean(String query){
+        ArrayList<SerieBean> returnList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
                 Integer serie_id = cursor.getInt(0);
                 String serie_name = cursor.getString(1);
-                SerieBean serieBean = new SerieBean(serie_id, serie_name);
+                SerieBean serieBean = new SerieBean(serie_id, serie_name, getNbBooksBySerieId(serie_id));
                 returnList.add(serieBean);
             } while (cursor.moveToNext());
         } else {
@@ -1062,8 +1062,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // get : List<BookBean>
     /* ------------------------------------------------------------------------------------------ */
-    public List<BookBean> getListBookBean(String query){
-        List<BookBean> returnList = new ArrayList<BookBean>();
+    public ArrayList<BookBean> getListBookBean(String query){
+        ArrayList<BookBean> returnList = new ArrayList<BookBean>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
@@ -1134,8 +1134,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // get : List<BookSerieBean>
     /* ------------------------------------------------------------------------------------------ */
-    public List<BookSerieBean> getListBookSerieBean(String query){
-        List<BookSerieBean> returnList = new ArrayList<>();
+    public ArrayList<BookSerieBean> getListBookSerieBean(String query){
+        ArrayList<BookSerieBean> returnList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
@@ -1275,7 +1275,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // SELECT * FROM PROFILES
     /* ------------------------------------------------------------------------------------------ */
-    public List<ProfileBean> getProfilesList(){
+    public ArrayList<ProfileBean> getProfilesList(){
         String query = "SELECT * FROM " + PROFILES +
                 " ORDER BY " + PROFILES + "." + COLUMN_PROFILE_NAME; // query
         return getListProfileBean(query); // the list is returned
@@ -1309,7 +1309,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // GROUP BY EDITORS.EDITOR_ID
     // ORDER BY EDITORS.EDITOR_NAME
     /* ------------------------------------------------------------------------------------------ */
-    public List<EditorBean> getEditorsList(){
+    public ArrayList<EditorBean> getEditorsList(){
         String query = "SELECT DISTINCT * FROM " + EDITORS +
                 " GROUP BY " + EDITORS + "." + COLUMN_EDITOR_ID +
                 " ORDER BY " + EDITORS + "." + COLUMN_EDITOR_NAME;
@@ -1322,7 +1322,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // GROUP BY EDITORS.EDITOR_ID
     // ORDER BY EDITORS.EDITOR_NAME
     /* ------------------------------------------------------------------------------------------ */
-    public List<EditorBean> getEditorsListByFilter(String filter){
+    public ArrayList<EditorBean> getEditorsListByFilter(String filter){
         String query = "SELECT DISTINCT * FROM " + EDITORS +
                 " WHERE " + EDITORS + "." + COLUMN_EDITOR_NAME + " LIKE \'%" + filter +
                 "%\' GROUP BY " + EDITORS + "." + COLUMN_EDITOR_ID +
@@ -1400,7 +1400,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // GROUP BY EDITORS.EDITOR_ID
     // ORDER BY EDITORS.EDITOR_NAME;
     /* ------------------------------------------------------------------------------------------ */
-    public List<EditorBean> getEditorsByAuthorId(int author_id){
+    public ArrayList<EditorBean> getEditorsByAuthorId(int author_id){
         String query = "SELECT * FROM " + EDITORS +
                 " INNER JOIN " + BOOKS + " ON " + BOOKS + "." + COLUMN_EDITOR_ID + " = " + EDITORS + "." + COLUMN_EDITOR_ID +
                 " INNER JOIN " + WRITING + " ON " + WRITING + "." + COLUMN_BOOK_ID + " = " + BOOKS + "." + COLUMN_BOOK_ID +
@@ -1419,7 +1419,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
     // AND BOOKS.SERIE_ID = serie_id
     /* ------------------------------------------------------------------------------------------ */
-    public List<EditorBean> getEditorsBySerieId(int serie_id){
+    public ArrayList<EditorBean> getEditorsBySerieId(int serie_id){
         String query = "SELECT * FROM " + EDITORS +
                 " INNER JOIN " + BOOKS + " ON " + BOOKS + "." + COLUMN_EDITOR_ID + " = " + EDITORS + "." + COLUMN_EDITOR_ID +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
@@ -1434,7 +1434,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // GROUP BY AUTHORS.AUTHOR_ID
     // ORDER BY AUTHORS.AUTHOR_PSEUDONYM
     /* ------------------------------------------------------------------------------------------ */
-    public List<AuthorBean> getAuthorsList(){
+    public ArrayList<AuthorBean> getAuthorsList(){
         String query = "SELECT * FROM " + AUTHORS +
                 " GROUP BY " + AUTHORS + "." + COLUMN_AUTHOR_ID +
                 " ORDER BY " + AUTHORS + "." + COLUMN_AUTHOR_PSEUDONYM;
@@ -1447,7 +1447,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // GROUP BY AUTHORS.AUTHOR_ID
     // ORDER BY AUTHORS.AUTHOR_PSEUDONYM
     /* ------------------------------------------------------------------------------------------ */
-    public List<AuthorBean> getAuthorsListByFilter(String filter){
+    public ArrayList<AuthorBean> getAuthorsListByFilter(String filter){
         String query = "SELECT * FROM " + AUTHORS +
                 " WHERE " + AUTHORS + "." + COLUMN_AUTHOR_PSEUDONYM + " LIKE \'%" + filter +
                 "%\' GROUP BY " + AUTHORS + "." + COLUMN_AUTHOR_ID +
@@ -1495,7 +1495,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // GROUP BY AUTHORS.AUTHOR_ID
     // ORDER BY AUTHORS.AUTHOR_PSEUDONYM
     /* ------------------------------------------------------------------------------------------ */
-    public List<AuthorBean> getAuthorsListByBookId(int book_id){
+    public ArrayList<AuthorBean> getAuthorsListByBookId(int book_id){
         String query = "SELECT * FROM " + AUTHORS +
                 " INNER JOIN " + WRITING + " ON " + AUTHORS + "." + COLUMN_AUTHOR_ID + " = " + WRITING + "." + COLUMN_AUTHOR_ID +
                 " INNER JOIN " + BOOKS + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + WRITING + "." + COLUMN_BOOK_ID +
@@ -1517,7 +1517,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // GROUP BY AUTHORS.AUTHOR_ID
     // ORDER BY AUTHORS.AUTHOR_PSEUDONYM
     /* ------------------------------------------------------------------------------------------ */
-    public List<AuthorBean> getAuthorsListByEditorId(int editor_id){
+    public ArrayList<AuthorBean> getAuthorsListByEditorId(int editor_id){
         String query = "SELECT * FROM " + AUTHORS +
                 " INNER JOIN " + WRITING + " ON " + AUTHORS + "." + COLUMN_AUTHOR_ID + " = " + WRITING + "." + COLUMN_AUTHOR_ID +
                 " INNER JOIN " + BOOKS + " ON " + WRITING + "." + COLUMN_BOOK_ID + " = " + BOOKS + "." + COLUMN_BOOK_ID +
@@ -1539,7 +1539,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // GROUP BY AUTHORS.AUTHOR_ID
     // ORDER BY AUTHORS.AUTHOR_PSEUDONYM
     /* ------------------------------------------------------------------------------------------ */
-    public List<AuthorBean> getAuthorsListBySerieId(int serie_id){
+    public ArrayList<AuthorBean> getAuthorsListBySerieId(int serie_id){
         String query = "SELECT * FROM " + AUTHORS +
                 " INNER JOIN " + WRITING + " ON " + WRITING + "." + COLUMN_AUTHOR_ID + " = " + AUTHORS + "." + COLUMN_AUTHOR_ID +
                 " INNER JOIN " + BOOKS + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + WRITING + "." + COLUMN_BOOK_ID +
@@ -1562,7 +1562,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // AND A1.AUTHOR_ID <> A2.AUTHOR_ID
     // AND A2.AUTHOR_ID = author_id
     /* ------------------------------------------------------------------------------------------ */
-    public List<AuthorBean> getAuthorsTeam(int author_id){
+    public ArrayList<AuthorBean> getAuthorsTeam(int author_id){
         String query = "SELECT DISTINCT A1.* FROM " + AUTHORS + " A1" +
                 " INNER JOIN " + WRITING + " W1 ON A1." + COLUMN_AUTHOR_ID + " = W1." + COLUMN_AUTHOR_ID +
                 " INNER JOIN " + WRITING + " W2 ON W1." + COLUMN_BOOK_ID + " = W2." + COLUMN_BOOK_ID +
@@ -1593,7 +1593,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // GROUP BY SERIES.SERIE_ID
     // ORDER BY SERIES.SERIE_NAME
     /* ------------------------------------------------------------------------------------------ */
-    public List<SerieBean> getSeriesList(){
+    public ArrayList<SerieBean> getSeriesList(){
         String query = "SELECT * FROM " + SERIES +
                 " GROUP BY " + SERIES + "." + COLUMN_SERIE_ID +
                 " ORDER BY " + SERIES + "." + COLUMN_SERIE_NAME;
@@ -1606,7 +1606,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // GROUP BY SERIES.SERIE_ID
     // ORDER BY SERIES.SERIE_NAME
     /* ------------------------------------------------------------------------------------------ */
-    public List<SerieBean> getSeriesListByFilter(String filter){
+    public ArrayList<SerieBean> getSeriesListByFilter(String filter){
         String query = "SELECT * FROM " + SERIES +
                 " WHERE " + SERIES + "." + COLUMN_SERIE_NAME + " LIKE \'%" + filter +
                 "%\' GROUP BY " + SERIES + "." + COLUMN_SERIE_ID +
@@ -1633,7 +1633,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // GROUP BY SERIES.SERIE_ID
     // ORDER BY SERIES.SERIE_NAME
     /* ------------------------------------------------------------------------------------------ */
-    public List<SerieBean> getSeriesListByEditorId(int editor_id){
+    public ArrayList<SerieBean> getSeriesListByEditorId(int editor_id){
         String query = "SELECT DISTINCT * FROM " + SERIES +
                 " INNER JOIN " + BOOKS + " ON " + SERIES + "." + COLUMN_SERIE_ID + " = " + BOOKS + "." + COLUMN_SERIE_ID +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
@@ -1692,7 +1692,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // GROUP BY SERIES.SERIE_ID
     // ORDER BY SERIES.SERIE_NAME
     /* ------------------------------------------------------------------------------------------ */
-    public List<SerieBean> getSeriesListByAuthorId(int author_id){
+    public ArrayList<SerieBean> getSeriesListByAuthorId(int author_id){
         String query = "SELECT DISTINCT * FROM " + SERIES +
                 " INNER JOIN " + BOOKS + " ON " + BOOKS + "." + COLUMN_SERIE_ID + " = " + SERIES + "." + COLUMN_SERIE_ID +
                 " INNER JOIN " + WRITING + " ON " + WRITING + "." + COLUMN_BOOK_ID + " = " + BOOKS + "." + COLUMN_BOOK_ID +
@@ -1712,7 +1712,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // GROUP BY BOOKS.SERIE_ID
     // ORDER BY BOOKS.BOOK_NUMBER, BOOKS.BOOK_TITLE
     /* ------------------------------------------------------------------------------------------ */
-    public List<BookBean> getBooksList(){
+    public ArrayList<BookBean> getBooksList(){
         String query = "SELECT * FROM " + BOOKS +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
                 " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
@@ -1729,7 +1729,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // OR BOOKS.BOOK_NUMBER LIKE '%filter%')
     // ORDER BY BOOKS.BOOK_NUMBER, BOOKS.BOOK_TITLE
     /* ------------------------------------------------------------------------------------------ */
-    public List<BookBean> getBooksListByFilter(String filter){
+    public ArrayList<BookBean> getBooksListByFilter(String filter){
         String query = "SELECT * FROM " + BOOKS +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
                 " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
@@ -1769,7 +1769,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // ORDER BY SERIES.SERIE_NAME, BOOKS.BOOK_NUMBER, BOOKS.BOOK_TITLE
     /* ------------------------------------------------------------------------------------------ */
 
-    public List<BookSerieBean> getBooksAndBooksSeriesList(){
+    public ArrayList<BookSerieBean> getBooksAndBooksSeriesList(){
         String query = "SELECT DISTINCT " + BOOKS + ".*, " + COLUMN_SERIE_NAME + " FROM " + BOOKS + ", " + SERIES +
                 " LEFT JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
                 " LEFT JOIN " + PROFILE_ACTIVE + " ON " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID + " = " + DETAINING + "." + COLUMN_PROFILE_ID +
@@ -1797,7 +1797,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // OR SERIES.SERIE_NAME LIKE '%filter%')
     // ORDER BY SERIES.SERIE_NAME, BOOKS.BOOK_NUMBER, BOOKS.BOOK_TITLE
     /* ------------------------------------------------------------------------------------------ */
-    public List<BookSerieBean> getBooksAndSeriesListByFilter(String filtre){
+    public ArrayList<BookSerieBean> getBooksAndSeriesListByFilter(String filtre){
         String query = "SELECT " + BOOKS + ".*, " + SERIES + "." + COLUMN_SERIE_NAME + " FROM " + BOOKS + ", " + SERIES +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
                 " INNER JOIN " + PROFILE_ACTIVE + " ON " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID + " = " + DETAINING + "." + COLUMN_PROFILE_ID +
@@ -1817,7 +1817,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // AND BOOKS.EDITOR_ID = editor_id
     // AND BOOKS.SERIE_ID IS NULL
     /* ------------------------------------------------------------------------------------------ */
-    public List<BookBean> getBooksListByEditorIdNoSerie(int editor_id){
+    public ArrayList<BookBean> getBooksListByEditorIdNoSerie(int editor_id){
         String query = "SELECT * FROM " + BOOKS +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
                 " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
@@ -1834,7 +1834,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // AND WRITING.AUTEUR_ID = author_id
     // AND BOOKS.SERIE_ID IS NULL
     /* ------------------------------------------------------------------------------------------ */
-    public List<BookBean> getBooksListByAuthorIdNoSerie(int author_id){
+    public ArrayList<BookBean> getBooksListByAuthorIdNoSerie(int author_id){
         String query = "SELECT * FROM " + BOOKS +
                 " INNER JOIN " + WRITING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + WRITING + "." + COLUMN_BOOK_ID +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
@@ -1894,7 +1894,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
     // AND BOOKS.SERIE_ID = serie_id
     /* ------------------------------------------------------------------------------------------ */
-    public List<BookBean> getBooksListBySerieId(int serie_id){
+    public ArrayList<BookBean> getBooksListBySerieId(int serie_id){
         String query = "SELECT * FROM " + BOOKS +
                 " JOIN " + DETAINING +
                 " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +

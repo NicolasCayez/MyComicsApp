@@ -81,6 +81,8 @@
     <string name="BookDuplicateError">Book already exists, creation aborted</string>
     <string name="BookAuthorPairDuplicate">is already linked to the Book</string>
     <string name="Book">Book</string>
+    <string name="Books">Books</string>
+    <string name="BookNumber">N.</string>
     <string name="BookConfirmSerieRemoval">Confirm removal of Serie</string>
     <string name="BookConfirmEditorRemoval">Confirm removal of Editor</string>
     <string name="BookChooseAuthorRemoval">Choose Author to remove</string>
@@ -89,6 +91,8 @@
     <string name="BookTitleDoesntMatch">The title doesn\'t match</string>
     <string name="BookUpdateError">Book update error</string>
     <string name="BookUpdateSuccess">Book update success</string>
+    <string name="BookRemoveAuthorError">Author removal error</string>
+
 
     <!--  Authors  -->
     <string name="AuthorsFragmentTitle">AUTHORS</string>
@@ -137,8 +141,6 @@
     <string name="SettingsProfileChangeError">Active Profile change error</string>
     <string name="SettingsProfileChangeSuccess">Active Profile changed</string>
     <string name="SettingsChooseProfile">Choose a profile</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

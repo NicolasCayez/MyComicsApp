@@ -1,7 +1,5 @@
 package com.example.mycomics.beans;
 
-import static java.lang.Integer.parseInt;
-
 public class ProfileActiveBean {
     private Integer profile_id;
 

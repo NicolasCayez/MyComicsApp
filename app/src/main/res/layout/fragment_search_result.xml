@@ -86,13 +86,12 @@
                         android:textColor="@color/custom_blue"
                         android:textSize="14sp" />
 
-                    <ListView
-                        android:id="@+id/lvSearchResultSeriesList"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvSearchResultSeriesList"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_marginHorizontal="15dp"
-                        android:background="#eee"
-                        android:nestedScrollingEnabled="true" />
+                        android:background="#eee" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvSearchResultBooksListLabel"
@@ -106,13 +105,12 @@
                         android:textColor="@color/custom_blue"
                         android:textSize="14sp" />
 
-                    <ListView
-                        android:id="@+id/lvSearchResultBooksList"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvSearchResultBooksList"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_marginHorizontal="15dp"
-                        android:background="#eee"
-                        android:nestedScrollingEnabled="true" />
+                        android:background="#eee" />
 
                     <!-- Liste auteurs -->
 
@@ -141,12 +139,11 @@
                                 android:textColor="@color/custom_blue"
                                 android:textSize="14sp" />
 
-                            <ListView
-                                android:id="@+id/lvSearchResultAuthorsList"
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvSearchResultAuthorsList"
                                 android:layout_width="match_parent"
                                 android:layout_height="120dp"
-                                android:background="#eee"
-                                android:nestedScrollingEnabled="true" />
+                                android:background="#eee" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -169,12 +166,11 @@
                                 android:textColor="@color/custom_blue"
                                 android:textSize="14sp" />
 
-                            <ListView
-                                android:id="@+id/lvSearchResultEditorsList"
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvSearchResultEditorsList"
                                 android:layout_width="match_parent"
                                 android:layout_height="120dp"
-                                android:background="#eee"
-                                android:nestedScrollingEnabled="true" />
+                                android:background="#eee" />
                         </LinearLayout>
                     </LinearLayout>
 
