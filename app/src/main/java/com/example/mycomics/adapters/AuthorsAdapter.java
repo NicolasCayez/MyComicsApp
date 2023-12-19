@@ -16,12 +16,42 @@ import java.util.ArrayList;
 
 public class AuthorsAdapter extends ListAdapter<AuthorBean, AuthorsAdapter.ViewHolder> {
 
-    ArrayList<AuthorBean> list;
+
+    // List in the RecyclerView
+    final ArrayList<AuthorBean> list;
+    // Click listener to use like OnItemClickListener in ListViews
     private OnClickListener onClickListener;
 
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    //* ----------------------------------------------------------------------------------------- */
+    //* Constructor
+    //* ----------------------------------------------------------------------------------------- */
+    public AuthorsAdapter(ArrayList<AuthorBean> list) {
+        super(new Comparator());
+        this.list = list;
+    }
 
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Comparator - To generate a list sized for the RecyclerView and save memory
+    //* ----------------------------------------------------------------------------------------- */
+    static class Comparator extends DiffUtil.ItemCallback<AuthorBean> {
+        @Override
+        public boolean areItemsTheSame(@NonNull AuthorBean oldItem, @NonNull AuthorBean newItem) {
+            return false;
+        }
+        @Override
+        public boolean areContentsTheSame(@NonNull AuthorBean oldItem, @NonNull AuthorBean newItem) {
+            return false;
+        }
+    }
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* ViewHolder - Displays the list given by the Comparator
+    //* ----------------------------------------------------------------------------------------- */
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        // Binding the template to be inflated in the layout
         RecyclerviewAdapter1colBinding binding;
         public ViewHolder(RecyclerviewAdapter1colBinding binding) {
             super(binding.getRoot());
@@ -29,23 +59,10 @@ public class AuthorsAdapter extends ListAdapter<AuthorBean, AuthorsAdapter.ViewH
         }
     }
 
-    static class Comparator extends DiffUtil.ItemCallback<AuthorBean> {
 
-        @Override
-        public boolean areItemsTheSame(@NonNull AuthorBean oldItem, @NonNull AuthorBean newItem) {
-            return false;
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull AuthorBean oldItem, @NonNull AuthorBean newItem) {
-            return false;
-        }
-    }
-
-    public AuthorsAdapter(ArrayList<AuthorBean> list) {
-        super(new Comparator());
-        this.list = list;
-    }
+    //* ----------------------------------------------------------------------------------------- */
+    //* Method onCreateViewHolder - To inflate the Layout with the chosen XML template
+    //* ----------------------------------------------------------------------------------------- */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -53,11 +70,17 @@ public class AuthorsAdapter extends ListAdapter<AuthorBean, AuthorsAdapter.ViewH
         return new ViewHolder(RecyclerviewAdapter1colBinding.inflate(layoutInflater));
     }
 
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Method onBindViewHolder - The RecyclerView row gets the data and the OnClickListener
+    //* ----------------------------------------------------------------------------------------- */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // The item at this position is saved as a bean
         AuthorBean authorBean = getItem(position);
+        // The data is given to the layout items
         holder.binding.tvRecyclerView1colCol1.setText(authorBean.getAuthor_pseudonym());
-
+        // The OnclickListener for this position is linked to the data (bean)
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,17 +89,29 @@ public class AuthorsAdapter extends ListAdapter<AuthorBean, AuthorsAdapter.ViewH
                 }
             }
         });
-
     }
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Method getItem - returns the current item at the position for the OnClickListener
+    //* ----------------------------------------------------------------------------------------- */
     public AuthorBean getItem(int position) {
         return list.get(position);
     }
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Method setOnClickListener Constructor
+    //* ----------------------------------------------------------------------------------------- */
     public void setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
     }
 
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Interface OncLickListener, returns the clicked Item
+    //* ----------------------------------------------------------------------------------------- */
     public interface OnClickListener {
         void onClick(int position, AuthorBean authorBean);
     }
-
 }
