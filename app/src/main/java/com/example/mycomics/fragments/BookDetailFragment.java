@@ -34,7 +34,6 @@ import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -73,8 +72,7 @@ public class BookDetailFragment extends Fragment {
     //* ----------------------------------------------------------------------------------------- */
     FragmentBookDetailBinding binding;
 
-    private String picturePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/MyComics/";
-    int SELECT_PICTURE = 200;
+    final String picturePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/MyComics/";
     private String imgName = "";
 
     //* ----------------------------------------------------------------------------------------- */
@@ -504,7 +502,7 @@ public class BookDetailFragment extends Fragment {
             public void onClick(int position, AuthorBean authorBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("author_id", authorBean.getAuthor_id());;
+                bundle.putInt("author_id", authorBean.getAuthor_id());
                 // go to AuthorDetailFragment with the data bundle
                 findNavController(BookDetailFragment.this).navigate(R.id.action_bookDetail_to_authorDetail, bundle);
             }
@@ -801,9 +799,9 @@ public class BookDetailFragment extends Fragment {
         // Edition date
         binding.etBookDetailEditionDate.setText(bookBean.getBook_edition_date() == null ? "" : String.valueOf(bookBean.getBook_edition_date()));
         // Autographed ?
-        binding.chkBookDetailAutograph.setChecked(Boolean.valueOf(bookBean.isBook_autograph()));
+        binding.chkBookDetailAutograph.setChecked(bookBean.isBook_autograph());
         // Speciel Edition ?
-        binding.chkBookDetailSpecialEdition.setChecked(Boolean.valueOf(bookBean.isBook_special_edition()));
+        binding.chkBookDetailSpecialEdition.setChecked(bookBean.isBook_special_edition());
         // Special Edition Label
         binding.etBookDetailSpecialEditionLabel.setText(bookBean.getBook_special_edition_label() == null ? "" : String.valueOf( bookBean.getBook_special_edition_label()));
         // Picture from url
@@ -842,7 +840,7 @@ public class BookDetailFragment extends Fragment {
                 binding.etBookDetailBookTitle.getText().toString(),
                 binding.etBookDetailBookNumber.getText().length() == 0 ? null : Integer.parseInt(binding.etBookDetailBookNumber.getText().toString()),
                 binding.etBookDetailISBN.getText().toString(),
-                dataBaseHelper.getBookById(book_id).getBook_picture().replace("\"", ""),
+                dataBaseHelper.getBookById(book_id).getBook_picture(),
                 binding.etBookDetailEditorPrice.getText().length() == 0 ? 0.0 : Double.parseDouble(binding.etBookDetailEditorPrice.getText().toString()),
                 binding.etBookDetailValue.getText().length() == 0 ? 0.0 : Double.parseDouble(binding.etBookDetailValue.getText().toString()),
                 binding.etBookDetailEditionDate.getText().toString(),
@@ -854,9 +852,9 @@ public class BookDetailFragment extends Fragment {
         // Database update of the Book
         boolean updateOk = dataBaseHelper.updateBook(dataBaseHelper, bookBean);
         if (updateOk) {
-            Toast.makeText(getActivity(), getString(R.string.BookUpdateSuccess), Toast.LENGTH_SHORT);
+            Toast.makeText(getActivity(), getString(R.string.BookUpdateSuccess), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getActivity(), getString(R.string.BookUpdateError), Toast.LENGTH_SHORT);
+            Toast.makeText(getActivity(), getString(R.string.BookUpdateError), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -907,7 +905,7 @@ public class BookDetailFragment extends Fragment {
                 .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                 .build();
 
-        cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageCapture);
+        cameraProvider.bindToLifecycle( this, cameraSelector, preview, imageCapture);
     }
 
 
@@ -1073,7 +1071,9 @@ public class BookDetailFragment extends Fragment {
                 if (out != null) {
                     out.close();
                 }
-            }catch (IOException ex) {}
+            }catch (IOException ex) {
+                // Do nothing
+            }
         }
     }
     private File createImageFile() throws IOException {
