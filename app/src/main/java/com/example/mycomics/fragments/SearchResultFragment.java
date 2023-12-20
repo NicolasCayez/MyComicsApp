@@ -91,6 +91,7 @@ public class SearchResultFragment extends Fragment {
 
         /* Data sent from source fragments */
         String filter = getArguments().getString("filter");
+        System.out.println(filter);
 
         /* Display initialization */
         searchResultRefreshScreen(filter);
@@ -103,6 +104,7 @@ public class SearchResultFragment extends Fragment {
         binding.sbSearch.svSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String filter) {
+                binding.sbSearch.btnSearch.performClick();
                 return false;
             }
             @Override
@@ -178,11 +180,7 @@ public class SearchResultFragment extends Fragment {
     private void searchResultRefreshScreen(String filter){
         /* Series list adapters charged with data */
         // Creating the list to display
-        ArrayList<SerieBean> SeriesList = dataBaseHelper.getSeriesList();
-        // If the search bar contains a filter
-        if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            SeriesList = dataBaseHelper.getSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString());
-        }
+        ArrayList<SerieBean> SeriesList = dataBaseHelper.getSeriesListByFilter(filter);
         // The adapter gets the list and the string value "books" needed for translations
         seriesAdapter = new SeriesNbAdapter(SeriesList, getString(R.string.Books));
         // the adapter and the layout are defined for the RecyclerView
@@ -193,11 +191,7 @@ public class SearchResultFragment extends Fragment {
 
         /* Books list adapters charged with data */
         // Creating the list to display
-        ArrayList<BookBean> BooksList = dataBaseHelper.getBooksList();
-        // If the search bar contains a filter
-        if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            BooksList = dataBaseHelper.getBooksListByFilter(binding.sbSearch.svSearch.getQuery().toString());
-        }
+        ArrayList<BookBean> BooksList = dataBaseHelper.getBooksListByFilter(filter);
         // The adapter gets the list and the string value "books" needed for translations
         booksAdapter = new BooksBookNbAdapter(BooksList, getString(R.string.BookNumber));
         // the adapter and the layout are defined for the RecyclerView
@@ -208,11 +202,7 @@ public class SearchResultFragment extends Fragment {
 
         /* Authors list adapters charged with data */
         // Creating the list to display
-        ArrayList<AuthorBean> AuthorsList = dataBaseHelper.getAuthorsList();
-        // If the search bar contains a filter
-        if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            AuthorsList = dataBaseHelper.getAuthorsListByFilter(binding.sbSearch.svSearch.getQuery().toString());
-        }
+        ArrayList<AuthorBean> AuthorsList = dataBaseHelper.getAuthorsListByFilter(filter);
         // The adapter gets the list and the string value "books" needed for translations
         authorsAdapter = new AuthorsAdapter(AuthorsList);
         // the adapter and the layout are defined for the RecyclerView
@@ -223,11 +213,7 @@ public class SearchResultFragment extends Fragment {
 
         /* Editors list adapters charger with data */
         // Creating the list to display
-        ArrayList<EditorBean> EditorsList = dataBaseHelper.getEditorsList();
-        // If the search bar contains a filter
-        if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            EditorsList = dataBaseHelper.getEditorsListByFilter(binding.sbSearch.svSearch.getQuery().toString());
-        }
+        ArrayList<EditorBean> EditorsList = dataBaseHelper.getEditorsListByFilter(filter);
         // The adapter gets the list and the string value "books" needed for translations
         editorsAdapter = new EditorsAdapter(EditorsList);
         // the adapter and the layout are defined for the RecyclerView

@@ -12,18 +12,20 @@ import com.example.mycomics.R;
 
 
 public class PopupTextDialog extends Dialog {
-    /* -------------------------------------- */
-    // Référence to popup elements
-    /* -------------------------------------- */
+
+    //* ----------------------------------------------------------------------------------------- */
+    // Référence to popup elements in XML
+    //* ----------------------------------------------------------------------------------------- */
     private String title;
     private String hint;
     private TextView tvPopupTitle;
     private EditText etPopupText;
     private Button btnPopupConfirm, btnPopupAbort;
 
-    /* -------------------------------------- */
+
+    //* ----------------------------------------------------------------------------------------- */
     // Constructor
-    /* -------------------------------------- */
+    //* ----------------------------------------------------------------------------------------- */
     public PopupTextDialog(@NonNull Context context) {
         super(context, androidx.appcompat.R.style.Theme_AppCompat_Dialog);
         setContentView(R.layout.dialog_popup_txt);
@@ -35,9 +37,10 @@ public class PopupTextDialog extends Dialog {
         this.btnPopupAbort = findViewById(R.id.btnPopupAbort);
     }
 
-    /* -------------------------------------- */
+
+    //* ----------------------------------------------------------------------------------------- */
     // Get/Set
-    /* -------------------------------------- */
+    //* ----------------------------------------------------------------------------------------- */
     public void setTitle(String title) {
         this.title = title;
     }
@@ -54,9 +57,10 @@ public class PopupTextDialog extends Dialog {
         return btnPopupAbort;
     }
 
-    /* -------------------------------------- */
+
+    //* ----------------------------------------------------------------------------------------- */
     // Build Method
-    /* -------------------------------------- */
+    //* ----------------------------------------------------------------------------------------- */
     public void build(){
         show();
         tvPopupTitle.setText(title);

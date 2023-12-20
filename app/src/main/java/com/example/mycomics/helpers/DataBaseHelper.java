@@ -1354,15 +1354,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // SELECT * FROM EDITORS
     // INNER JOIN BOOKS ON BOOKS.EDITOR_ID = EDITORS.EDITOR_ID
     // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND EDITORS.EDITOR_NAME = editor_name LIMIT 1
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE EDITORS.EDITOR_NAME = editor_name LIMIT 1
     /* ------------------------------------------------------------------------------------------ */
     public EditorBean getEditorByName(String editor_name){
         String query = "SELECT * FROM " + EDITORS +
         " INNER JOIN " + BOOKS + " ON " + BOOKS + "." + COLUMN_EDITOR_ID + " = " + EDITORS + "." + COLUMN_EDITOR_ID +
         " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-        " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-        "\" AND " + EDITORS + "." + COLUMN_EDITOR_NAME + " = \"" + editor_name + "\" LIMIT 1";
+        " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+        " WHERE " + EDITORS + "." + COLUMN_EDITOR_NAME + " = \"" + editor_name + "\" LIMIT 1";
         return getEditorBean(query);
     }
 
@@ -1395,8 +1395,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // INNER JOIN BOOKS ON BOOKS.EDITOR_ID = EDITORS.EDITOR_ID
     // INNER JOIN WRITING ON WRITING.BOOK_ID = BOOKS.BOOK_ID
     // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND ECRIRE.AUTHOR_ID = author_id
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE ECRIRE.AUTHOR_ID = author_id
     // GROUP BY EDITORS.EDITOR_ID
     // ORDER BY EDITORS.EDITOR_NAME;
     /* ------------------------------------------------------------------------------------------ */
@@ -1405,8 +1405,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " INNER JOIN " + BOOKS + " ON " + BOOKS + "." + COLUMN_EDITOR_ID + " = " + EDITORS + "." + COLUMN_EDITOR_ID +
                 " INNER JOIN " + WRITING + " ON " + WRITING + "." + COLUMN_BOOK_ID + " = " + BOOKS + "." + COLUMN_BOOK_ID +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND " + WRITING + "." + COLUMN_AUTHOR_ID + " = \"" + author_id +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + WRITING + "." + COLUMN_AUTHOR_ID + " = \"" + author_id +
                 "\" GROUP BY " + EDITORS + "." + COLUMN_EDITOR_ID +
                 " ORDER BY " + EDITORS + "." + COLUMN_EDITOR_NAME;
         return getListEditorBean(query);
@@ -1416,15 +1416,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // SELECT * FROM EDITORS
     // JOIN BOOKS ON BOOKS.EDITOR_ID = EDITORS.EDITOR_ID
     // JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND BOOKS.SERIE_ID = serie_id
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE BOOKS.SERIE_ID = serie_id
     /* ------------------------------------------------------------------------------------------ */
     public ArrayList<EditorBean> getEditorsBySerieId(int serie_id){
         String query = "SELECT * FROM " + EDITORS +
                 " INNER JOIN " + BOOKS + " ON " + BOOKS + "." + COLUMN_EDITOR_ID + " = " + EDITORS + "." + COLUMN_EDITOR_ID +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND " + BOOKS + "." + COLUMN_SERIE_ID + " = \"" + serie_id + "\"";
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + BOOKS + "." + COLUMN_SERIE_ID + " = \"" + serie_id + "\"";
         return getListEditorBean(query);
     }
 
@@ -1490,8 +1490,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // INNER JOIN WRITING ON AUTHORS.AUTHOR_ID = WRITING.AUTHOR_ID
     // INNER JOIN BOOKS ON BOOKS.BOOK_ID = WRITING.BOOK_ID
     // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID +
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND WRITING.BOOK_ID = book_id
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE WRITING.BOOK_ID = book_id
     // GROUP BY AUTHORS.AUTHOR_ID
     // ORDER BY AUTHORS.AUTHOR_PSEUDONYM
     /* ------------------------------------------------------------------------------------------ */
@@ -1500,8 +1500,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " INNER JOIN " + WRITING + " ON " + AUTHORS + "." + COLUMN_AUTHOR_ID + " = " + WRITING + "." + COLUMN_AUTHOR_ID +
                 " INNER JOIN " + BOOKS + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + WRITING + "." + COLUMN_BOOK_ID +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND " + WRITING + "." + COLUMN_BOOK_ID + " = \"" + book_id +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + WRITING + "." + COLUMN_BOOK_ID + " = \"" + book_id +
                 "\" GROUP BY " + AUTHORS + "." + COLUMN_AUTHOR_ID +
                 " ORDER BY " + AUTHORS + "." + COLUMN_AUTHOR_PSEUDONYM;
         return getListAuthorBean(query);
@@ -1512,8 +1512,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // INNER JOIN WRITING ON AUTHORS.AUTHOR_ID = WRITING.AUTHOR_ID
     // INNER JOIN BOOKS ON WRITING.BOOK_ID = BOOKS.BOOK_ID
     // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND BOOKS.EDITOR_ID = editor_id
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE BOOKS.EDITOR_ID = editor_id
     // GROUP BY AUTHORS.AUTHOR_ID
     // ORDER BY AUTHORS.AUTHOR_PSEUDONYM
     /* ------------------------------------------------------------------------------------------ */
@@ -1522,8 +1522,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " INNER JOIN " + WRITING + " ON " + AUTHORS + "." + COLUMN_AUTHOR_ID + " = " + WRITING + "." + COLUMN_AUTHOR_ID +
                 " INNER JOIN " + BOOKS + " ON " + WRITING + "." + COLUMN_BOOK_ID + " = " + BOOKS + "." + COLUMN_BOOK_ID +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND " + BOOKS + "." + COLUMN_EDITOR_ID + " = \"" + editor_id +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + BOOKS + "." + COLUMN_EDITOR_ID + " = \"" + editor_id +
                 "\" GROUP BY " + AUTHORS + "." + COLUMN_AUTHOR_ID +
                 " ORDER BY " + AUTHORS + "." + COLUMN_AUTHOR_PSEUDONYM;
         return getListAuthorBean(query);
@@ -1534,8 +1534,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // INNER JOIN WRITING ON AUTHORS.AUTHOR_ID = WRITING.AUTHOR_ID
     // INNER JOIN BOOKS ON BOOKS.BOOK_ID = WRITING.BOOK_ID
     // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND BOOKS.SERIE_ID = serie_id
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE BOOKS.SERIE_ID = serie_id
     // GROUP BY AUTHORS.AUTHOR_ID
     // ORDER BY AUTHORS.AUTHOR_PSEUDONYM
     /* ------------------------------------------------------------------------------------------ */
@@ -1544,8 +1544,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " INNER JOIN " + WRITING + " ON " + WRITING + "." + COLUMN_AUTHOR_ID + " = " + AUTHORS + "." + COLUMN_AUTHOR_ID +
                 " INNER JOIN " + BOOKS + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + WRITING + "." + COLUMN_BOOK_ID +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND " + BOOKS + "." + COLUMN_SERIE_ID + " = \"" + serie_id +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + BOOKS + "." + COLUMN_SERIE_ID + " = \"" + serie_id +
                 "\" GROUP BY " + AUTHORS + "." + COLUMN_AUTHOR_ID +
                 " ORDER BY " + AUTHORS + "." + COLUMN_AUTHOR_PSEUDONYM;
         return getListAuthorBean(query);
@@ -1558,8 +1558,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // INNER JOIN AUTHORS A2 ON W2.AUTHOR_ID = A2.AUTHOR_ID
     // INNER JOIN BOOKS ON W1.BOOK_ID = BOOKS.BOOK_ID
     // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND A1.AUTHOR_ID <> A2.AUTHOR_ID
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE A1.AUTHOR_ID <> A2.AUTHOR_ID
     // AND A2.AUTHOR_ID = author_id
     /* ------------------------------------------------------------------------------------------ */
     public ArrayList<AuthorBean> getAuthorsTeam(int author_id){
@@ -1569,8 +1569,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " INNER JOIN " + AUTHORS + " A2 ON W2." + COLUMN_AUTHOR_ID + "= A2." + COLUMN_AUTHOR_ID +
                 " INNER JOIN " + BOOKS + " ON W1." + COLUMN_BOOK_ID + " = " + BOOKS + "." + COLUMN_BOOK_ID +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND A1." + COLUMN_AUTHOR_ID + " <> A2." + COLUMN_AUTHOR_ID +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE A1." + COLUMN_AUTHOR_ID + " <> A2." + COLUMN_AUTHOR_ID +
                 " AND A2." + COLUMN_AUTHOR_ID + " =\"" + author_id + "\"";
         return getListAuthorBean(query);
     }
@@ -1628,8 +1628,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // SELECT * FROM SERIES
     // INNER JOIN BOOKS ON BOOKS.SERIE_ID = SERIES.SERIE_ID
     // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND BOOKS.EDITOR_ID = editor_id
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE BOOKS.EDITOR_ID = editor_id
     // GROUP BY SERIES.SERIE_ID
     // ORDER BY SERIES.SERIE_NAME
     /* ------------------------------------------------------------------------------------------ */
@@ -1637,8 +1637,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         String query = "SELECT DISTINCT * FROM " + SERIES +
                 " INNER JOIN " + BOOKS + " ON " + SERIES + "." + COLUMN_SERIE_ID + " = " + BOOKS + "." + COLUMN_SERIE_ID +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND " + BOOKS + "." + COLUMN_EDITOR_ID + " = \"" + editor_id +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + BOOKS + "." + COLUMN_EDITOR_ID + " = \"" + editor_id +
                 "\" GROUP BY " + SERIES + "." + COLUMN_SERIE_ID +
                 " ORDER BY " + SERIES + "." + COLUMN_SERIE_NAME;
         return getListSerieBean(query);
@@ -1648,15 +1648,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // SELECT * FROM SERIES
     // INNER JOIN BOOKS ON BOOKS.SERIE_ID = SERIES.SERIE_ID
     // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND BOOKS.BOOK_ID = book_id LIMIT 1
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE BOOKS.BOOK_ID = book_id LIMIT 1
     /* ------------------------------------------------------------------------------------------ */
     public SerieBean getSerieByBookId(int book_id){
         String query = "SELECT * FROM " + SERIES +
                 " INNER JOIN " + BOOKS + " ON " + SERIES + "." + COLUMN_SERIE_ID + " = " + BOOKS + "." + COLUMN_SERIE_ID +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND " + BOOKS + "." + COLUMN_BOOK_ID + " = \"" + book_id + "\" LIMIT 1";
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + BOOKS + "." + COLUMN_BOOK_ID + " = \"" + book_id + "\" LIMIT 1";
         return getSerieBean(query);
     }
 
@@ -1687,8 +1687,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // INNER JOIN BOOKS ON BOOKS.SERIE_ID = SERIES.SERIE_ID
     // INNER JOIN WRITING ON WRITING.BOOK_ID = BOOKS.BOOK_ID
     // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND WRITING.AUTHOR_ID = author_id
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE WRITING.AUTHOR_ID = author_id
     // GROUP BY SERIES.SERIE_ID
     // ORDER BY SERIES.SERIE_NAME
     /* ------------------------------------------------------------------------------------------ */
@@ -1697,8 +1697,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " INNER JOIN " + BOOKS + " ON " + BOOKS + "." + COLUMN_SERIE_ID + " = " + SERIES + "." + COLUMN_SERIE_ID +
                 " INNER JOIN " + WRITING + " ON " + WRITING + "." + COLUMN_BOOK_ID + " = " + BOOKS + "." + COLUMN_BOOK_ID +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND " + WRITING + "." + COLUMN_AUTHOR_ID + " = \"" + author_id +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + WRITING + "." + COLUMN_AUTHOR_ID + " = \"" + author_id +
                 "\" GROUP BY " + SERIES + "." + COLUMN_SERIE_ID +
                 " ORDER BY " + SERIES + "." + COLUMN_SERIE_NAME;
         return getListSerieBean(query);
@@ -1708,15 +1708,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // SELECT * FROM BOOKS
     // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
     // GROUP BY BOOKS.SERIE_ID
     // ORDER BY BOOKS.BOOK_NUMBER, BOOKS.BOOK_TITLE
     /* ------------------------------------------------------------------------------------------ */
     public ArrayList<BookBean> getBooksList(){
         String query = "SELECT * FROM " + BOOKS +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" GROUP BY " + BOOKS + "." + COLUMN_SERIE_ID +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " GROUP BY " + BOOKS + "." + COLUMN_SERIE_ID +
                 " ORDER BY " + BOOKS + "." + COLUMN_BOOK_NUMBER + ", " + BOOKS + "." + COLUMN_BOOK_TITLE;
         return getListBookBean(query); // résultat de la requête
     }
@@ -1724,16 +1724,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // SELECT * FROM BOOKS
     // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND (BOOKS.BOOK_TITLE LIKE '%filter%'
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE (BOOKS.BOOK_TITLE LIKE '%filter%'
     // OR BOOKS.BOOK_NUMBER LIKE '%filter%')
     // ORDER BY BOOKS.BOOK_NUMBER, BOOKS.BOOK_TITLE
     /* ------------------------------------------------------------------------------------------ */
     public ArrayList<BookBean> getBooksListByFilter(String filter){
         String query = "SELECT * FROM " + BOOKS +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND (" + BOOKS + "." + COLUMN_BOOK_TITLE + " LIKE \'%" + filter +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE (" + BOOKS + "." + COLUMN_BOOK_TITLE + " LIKE \'%" + filter +
                 "%\' OR " + BOOKS + "." + COLUMN_BOOK_NUMBER + " LIKE \'%" + filter +
                 "%\') ORDER BY " + BOOKS + "." + COLUMN_BOOK_NUMBER + ", " + BOOKS + "." + COLUMN_BOOK_TITLE;
         return getListBookBean(query);
@@ -1742,56 +1742,51 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // SELECT * FROM BOOKS
     // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND BOOKS.BOOK_TITLE = book_title
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE BOOKS.BOOK_TITLE = book_title
     /* ------------------------------------------------------------------------------------------ */
     public boolean checkBookDuplicate(String book_title){
         String query = "SELECT COUNT(*) FROM " + BOOKS +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND " + BOOKS + "." + COLUMN_BOOK_TITLE + " = \"" + book_title + "\"";
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + BOOKS + "." + COLUMN_BOOK_TITLE + " = \"" + book_title + "\"";
         return checkDuplicate(query);
     }
 
     /* ------------------------------------------------------------------------------------------ */
     // SELECT DISTINCT BOOKS.*, SERIE_NAME FROM BOOKS, SERIES
     // LEFT JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // LEFT JOIN PROFILE_ACTIVE ON PROFILE_ACTIVE.PROFILE_ID = DETAINING.PROFILE_ID
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
     // WHERE BOOKS.SERIE_ID = SERIES.SERIE_ID
-    // AND DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
     // UNION
     // SELECT DISTINCT BOOKS.*, NULL AS SERIE_NAME FROM BOOKS
     // LEFT JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // LEFT JOIN PROFILE_ACTIVE ON PROFILE_ACTIVE.PROFILE_ID = DETAINING.PROFILE_ID
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
     // WHERE (BOOKS.SERIE_ID IS NULL
     // OR BOOKS.SERIE_ID = -1)
-    // AND DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
     // ORDER BY SERIES.SERIE_NAME, BOOKS.BOOK_NUMBER, BOOKS.BOOK_TITLE
     /* ------------------------------------------------------------------------------------------ */
 
     public ArrayList<BookSerieBean> getBooksAndBooksSeriesList(){
         String query = "SELECT DISTINCT " + BOOKS + ".*, " + COLUMN_SERIE_NAME + " FROM " + BOOKS + ", " + SERIES +
                 " LEFT JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " LEFT JOIN " + PROFILE_ACTIVE + " ON " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID + " = " + DETAINING + "." + COLUMN_PROFILE_ID +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
                 " WHERE " + BOOKS + "." + COLUMN_SERIE_ID + " = " + SERIES + "." + COLUMN_SERIE_ID +
-                 " AND " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" UNION " +
+                 " UNION " +
                 "SELECT DISTINCT " + BOOKS + ".*, NULL AS " + COLUMN_SERIE_NAME + " FROM " + BOOKS +
                 " LEFT JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " LEFT JOIN " + PROFILE_ACTIVE + " ON " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID + " = " + DETAINING + "." + COLUMN_PROFILE_ID +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
                 " WHERE (" + BOOKS + "." + COLUMN_SERIE_ID + " IS NULL" +
-                " OR " + BOOKS + "." + COLUMN_SERIE_ID + " = -1" +
-                ") AND " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" ORDER BY " + SERIES + "." + COLUMN_SERIE_NAME + ", " + BOOKS + "." + COLUMN_BOOK_NUMBER + ", " + BOOKS + "." + COLUMN_BOOK_TITLE;
+                " OR " + BOOKS + "." + COLUMN_SERIE_ID + " = -1)" +
+                " ORDER BY " + SERIES + "." + COLUMN_SERIE_NAME + ", " + BOOKS + "." + COLUMN_BOOK_NUMBER + ", " + BOOKS + "." + COLUMN_BOOK_TITLE;
         return getListBookSerieBean(query);
     }
 
     /* ------------------------------------------------------------------------------------------ */
     // SELECT BOOKS.*, SERIES.SERIE_NAME FROM BOOKS , SERIES
     // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // INNER JOIN PROFILE_ACTIVE ON PROFILE_ACTIVE.PROFILE_ID = DETAINING.PROFILE_ID
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
     // WHERE BOOKS.SERIE_ID = SERIES.SERIE_ID
-    // AND DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
     // AND (BOOKS.BOOK_TITLE LIKE '%filter%'
     // OR BOOKS.BOOK_NUMBER LIKE '%filter%'
     // OR SERIES.SERIE_NAME LIKE '%filter%')
@@ -1800,10 +1795,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public ArrayList<BookSerieBean> getBooksAndSeriesListByFilter(String filtre){
         String query = "SELECT " + BOOKS + ".*, " + SERIES + "." + COLUMN_SERIE_NAME + " FROM " + BOOKS + ", " + SERIES +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " INNER JOIN " + PROFILE_ACTIVE + " ON " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID + " = " + DETAINING + "." + COLUMN_PROFILE_ID +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
                 " WHERE " + BOOKS + "." + COLUMN_SERIE_ID + " = " + SERIES + "." + COLUMN_SERIE_ID +
-                " AND " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND (" + BOOKS + "." + COLUMN_BOOK_TITLE + " LIKE \'%" + filtre +
+                " AND (" + BOOKS + "." + COLUMN_BOOK_TITLE + " LIKE \'%" + filtre +
                 "%\' OR " + BOOKS + "." + COLUMN_BOOK_NUMBER + " LIKE \'%" + filtre +
                 "%\' OR " + SERIES + "." + COLUMN_SERIE_NAME + " LIKE \'%" + filtre +
                 "%\') ORDER BY " + SERIES + "." + COLUMN_SERIE_NAME + ", " + BOOKS + "." + COLUMN_BOOK_NUMBER + ", " + BOOKS + "." + COLUMN_BOOK_TITLE;
@@ -1813,15 +1807,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // SELECT * FROM BOOKS
     // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND BOOKS.EDITOR_ID = editor_id
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE BOOKS.EDITOR_ID = editor_id
     // AND BOOKS.SERIE_ID IS NULL
     /* ------------------------------------------------------------------------------------------ */
     public ArrayList<BookBean> getBooksListByEditorIdNoSerie(int editor_id){
         String query = "SELECT * FROM " + BOOKS +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND " + BOOKS + "." + COLUMN_EDITOR_ID + " = \"" + editor_id +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + BOOKS + "." + COLUMN_EDITOR_ID + " = \"" + editor_id +
                 "\" AND " + BOOKS + "." + COLUMN_SERIE_ID + " IS NULL";
         return getListBookBean(query);
     }
@@ -1830,16 +1824,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // SELECT * FROM BOOKS
     // INNER JOIN WRITING ON BOOKS.BOOK_ID = WRITING.BOOK_ID
     // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND WRITING.AUTEUR_ID = author_id
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE WRITING.AUTEUR_ID = author_id
     // AND BOOKS.SERIE_ID IS NULL
     /* ------------------------------------------------------------------------------------------ */
     public ArrayList<BookBean> getBooksListByAuthorIdNoSerie(int author_id){
         String query = "SELECT * FROM " + BOOKS +
                 " INNER JOIN " + WRITING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + WRITING + "." + COLUMN_BOOK_ID +
                 " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND " + WRITING + "." + COLUMN_AUTHOR_ID + " = \"" + author_id +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + WRITING + "." + COLUMN_AUTHOR_ID + " = \"" + author_id +
                 "\" AND " + BOOKS + "." + COLUMN_SERIE_ID + " IS NULL";
         return getListBookBean(query);
     }
@@ -1891,29 +1885,29 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // SELECT * FROM BOOKS
     // JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND BOOKS.SERIE_ID = serie_id
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE BOOKS.SERIE_ID = serie_id
     /* ------------------------------------------------------------------------------------------ */
     public ArrayList<BookBean> getBooksListBySerieId(int serie_id){
         String query = "SELECT * FROM " + BOOKS +
                 " JOIN " + DETAINING +
                 " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND " + BOOKS + "." + COLUMN_SERIE_ID + " = \"" + serie_id + "\"";
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + BOOKS + "." + COLUMN_SERIE_ID + " = \"" + serie_id + "\"";
         return getListBookBean(query);
     }
 
     /* ------------------------------------------------------------------------------------------ */
     // SELECT COUNT (*) FROM BOOKS
     // JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND BOOKS.SERIE_ID = serie_id
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE BOOKS.SERIE_ID = serie_id
     /* ------------------------------------------------------------------------------------------ */
     public int getNbBooksBySerieId(int serie_id){
         String query = "SELECT * FROM " + BOOKS +
                 " JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND " + BOOKS + "." + COLUMN_SERIE_ID + " = \"" + serie_id + "\"";
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + BOOKS + "." + COLUMN_SERIE_ID + " = \"" + serie_id + "\"";
         return getNbBooks(query);
     }
 
@@ -1921,29 +1915,29 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // SELECT COUNT (*) FROM BOOKS
     // JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
     // JOIN WRITING ON BOOKS.BOOK_ID = WRITING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND WRITING.AUTHOR_ID = author_id
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE WRITING.AUTHOR_ID = author_id
     /* ------------------------------------------------------------------------------------------ */
     public int getNbBooksByAuthorId(int author_id){
         String query = "SELECT * FROM " + BOOKS +
                 " JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
                 " JOIN " + WRITING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + WRITING + "." + COLUMN_AUTHOR_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND " + WRITING + "." + COLUMN_AUTHOR_ID + " = \"" + author_id + "\"";
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + WRITING + "." + COLUMN_AUTHOR_ID + " = \"" + author_id + "\"";
         return getNbBooks(query);
     }
 
     /* ------------------------------------------------------------------------------------------ */
     // SELECT COUNT (*) FROM BOOKS
     // JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
-    // WHERE DETAINING.PROFILE_ID = getActiveProfile().getProfile_id()
-    // AND BOOKS.EDITOR_ID = editor_id
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE BOOKS.EDITOR_ID = editor_id
     /* ------------------------------------------------------------------------------------------ */
     public int getNbBooksByEditorId(int editor_id) {
         String query = "SELECT * FROM " + BOOKS +
                 " JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
-                " WHERE " + DETAINING + "." + COLUMN_PROFILE_ID + " = \"" + getActiveProfile().getProfile_id() +
-                "\" AND " + BOOKS + "." + COLUMN_EDITOR_ID + " = \"" + editor_id + "\"";
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + BOOKS + "." + COLUMN_EDITOR_ID + " = \"" + editor_id + "\"";
         return getNbBooks(query);
     }
 }

@@ -13,9 +13,10 @@ import com.example.mycomics.R;
 
 
 public class PopupAddListDialog extends Dialog {
-    /* -------------------------------------- */
-    // Référence to popup elements
-    /* -------------------------------------- */
+
+    //* ----------------------------------------------------------------------------------------- */
+    // Référence to popup elements in XML
+    //* ----------------------------------------------------------------------------------------- */
     private String title;
     private String hint;
     private TextView tvPopupTitle;
@@ -23,10 +24,10 @@ public class PopupAddListDialog extends Dialog {
     private RecyclerView rvPopupList;
     private Button btnPopupConfirm, btnPopupAbort;
 
-    /* -------------------------------------- */
-    // Constructor
-    /* -------------------------------------- */
 
+    //* ----------------------------------------------------------------------------------------- */
+    // Constructor
+    //* ----------------------------------------------------------------------------------------- */
     public PopupAddListDialog(@NonNull Context context) {
         super(context, androidx.appcompat.R.style.Theme_AppCompat_Dialog);
         setContentView(R.layout.dialog_popup_txt_list);
@@ -38,36 +39,31 @@ public class PopupAddListDialog extends Dialog {
         this.btnPopupAbort = findViewById(R.id.btnPopupAbort);
     }
 
-    /* -------------------------------------- */
+
+    //* ----------------------------------------------------------------------------------------- */
     // Get/Set
-    /* -------------------------------------- */
+    //* ----------------------------------------------------------------------------------------- */
     public void setTitle(String title) {
         this.title = title;
     }
     public void setHint(String hint) {
         this.hint = hint;
     }
-
     public EditText getEtPopupText() {
         return etPopupText;
     }
-
-
     public TextView getTvPopupTitle() {
         return tvPopupTitle;
     }
     public void setTvPopupTitle(TextView tvPopupTitle) {
         this.tvPopupTitle = tvPopupTitle;
     }
-
     public RecyclerView getRvPopupList() {
         return rvPopupList;
     }
-
     public void setRvPopupList(RecyclerView rvPopupList) {
         this.rvPopupList = rvPopupList;
     }
-
     public Button getBtnPopupConfirm() {
         return btnPopupConfirm;
     }
@@ -76,9 +72,9 @@ public class PopupAddListDialog extends Dialog {
     }
 
 
-    /* -------------------------------------- */
+    //* ----------------------------------------------------------------------------------------- */
     // Build Method
-    /* -------------------------------------- */
+    //* ----------------------------------------------------------------------------------------- */
     public void Build(){
         show();
         tvPopupTitle.setText(title);

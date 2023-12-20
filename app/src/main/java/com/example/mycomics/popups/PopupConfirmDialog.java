@@ -10,16 +10,18 @@ import androidx.annotation.NonNull;
 import com.example.mycomics.R;
 
 public class PopupConfirmDialog extends Dialog {
-    /* -------------------------------------- */
-    // Référence to popup elements
-    /* -------------------------------------- */
+
+    //* ----------------------------------------------------------------------------------------- */
+    // Référence to popup elements in XML
+    //* ----------------------------------------------------------------------------------------- */
     private String title;
     private TextView tvPopupConfirmTitle;
     private Button btnPopupConfirmConfirm, btnPopupConfirmAbort;
 
-    /* -------------------------------------- */
+
+    //* ----------------------------------------------------------------------------------------- */
     // Constructor
-    /* -------------------------------------- */
+    //* ----------------------------------------------------------------------------------------- */
     public PopupConfirmDialog(@NonNull Context context) {
         super(context, androidx.appcompat.R.style.Theme_AppCompat_Dialog);
         setContentView(R.layout.dialog_popup_confirm);
@@ -29,9 +31,10 @@ public class PopupConfirmDialog extends Dialog {
         this.btnPopupConfirmAbort = findViewById(R.id.btnPopupAbort);
     }
 
-    /* -------------------------------------- */
+
+    //* ----------------------------------------------------------------------------------------- */
     // Get/Set
-    /* -------------------------------------- */
+    //* ----------------------------------------------------------------------------------------- */
     public void setTitle(String title) {
         this.title = title;
     }
@@ -42,9 +45,10 @@ public class PopupConfirmDialog extends Dialog {
         return btnPopupConfirmAbort;
     }
 
-    /* -------------------------------------- */
+
+    //* ----------------------------------------------------------------------------------------- */
     // Build Method
-    /* -------------------------------------- */
+    //* ----------------------------------------------------------------------------------------- */
     public void build(){
         show();
         tvPopupConfirmTitle.setText(title);

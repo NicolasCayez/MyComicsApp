@@ -105,6 +105,7 @@ public class EditorsFragment extends Fragment {
         binding.sbSearch.svSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                binding.sbSearch.btnSearch.performClick();
                 return false;
             }
             @Override
