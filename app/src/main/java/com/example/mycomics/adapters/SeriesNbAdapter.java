@@ -84,7 +84,6 @@ public class SeriesNbAdapter extends ListAdapter<SerieBean, SeriesNbAdapter.View
         holder.binding.tvRecyclerView2colCol1.setText(serieBean.getSerie_name());
         int nbBooks = 0;
         try {
-            System.out.println(serieBean);
             nbBooks = serieBean.getNb_books();
         } catch (Exception e) {
             // Do nothing

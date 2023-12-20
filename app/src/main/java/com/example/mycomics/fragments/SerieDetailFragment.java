@@ -234,7 +234,7 @@ public class SerieDetailFragment extends Fragment {
 
         // Authors list adapters charger with data
         // Creating the list to display
-        ArrayList<AuthorBean> AuthorsList = dataBaseHelper.getAuthorsList();
+        ArrayList<AuthorBean> AuthorsList = dataBaseHelper.getAuthorsListBySerieId(serieBean.getSerie_id());
         // The adapter gets the list and the string value "books" needed for translations
         authorsAdapter = new AuthorsAdapter(AuthorsList);
         // the adapter and the layout are defined for the RecyclerView
@@ -245,7 +245,7 @@ public class SerieDetailFragment extends Fragment {
 
         /* Editors list adapters charger with data */
         // Creating the list to display
-        ArrayList<EditorBean> EditorsList = dataBaseHelper.getEditorsList();
+        ArrayList<EditorBean> EditorsList = dataBaseHelper.getEditorsListBySerieId(serieBean.getSerie_id());
         // The adapter gets the list and the string value "books" needed for translations
         editorsAdapter = new EditorsAdapter(EditorsList);
         // the adapter and the layout are defined for the RecyclerView

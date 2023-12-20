@@ -84,7 +84,6 @@ public class EditorsNbAdapter extends ListAdapter<EditorBean, EditorsNbAdapter.V
         holder.binding.tvRecyclerView2colCol1.setText(editorBean.getEditor_name());
         int nbBooks = 0;
         try {
-            System.out.println(editorBean);
             nbBooks = editorBean.getNb_books();
         } catch (Exception e) {
             // Do nothing

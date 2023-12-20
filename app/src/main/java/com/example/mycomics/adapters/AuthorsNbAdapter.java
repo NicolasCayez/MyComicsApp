@@ -84,7 +84,6 @@ public class AuthorsNbAdapter extends ListAdapter<AuthorBean, AuthorsNbAdapter.V
         holder.binding.tvRecyclerView2colCol1.setText(authorBean.getAuthor_pseudonym());
         int nbBooks = 0;
         try {
-            System.out.println(authorBean);
             nbBooks = authorBean.getNb_books();
         } catch (Exception e) {
             // Do nothing

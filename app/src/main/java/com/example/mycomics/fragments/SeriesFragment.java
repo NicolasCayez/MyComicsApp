@@ -209,7 +209,7 @@ public class SeriesFragment extends Fragment {
     //* ----------------------------------------------------------------------------------------- */
     private void seriesRefreshScreen(){
         // Creating the list to display
-        ArrayList<SerieBean> SeriesList = dataBaseHelper.getSeriesList();
+        ArrayList<SerieBean> SeriesList = dataBaseHelper.getSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString());
         // If the search bar contains a filter
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
             SeriesList = dataBaseHelper.getSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString());

@@ -137,7 +137,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 /**************************************************************************************************/
 /** Entrées de Test
 /**************************************************************************************************/
-            // AUTHORS
+            /** AUTHORS */
             db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Buchet\");\n"); //author_id 1
             db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Crisse\");\n"); //author_id 2
             db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Duval\");\n"); //author_id 3
@@ -153,17 +153,35 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Color Twins\");\n"); //author_id 13
             db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Morvan\");\n"); //author_id 14
             db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Keramidas\");\n"); //author_id 15
+            db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Carrere\");\n"); //author_id 16
+            db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Nicoloff\");\n"); //author_id 17
+            db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Bar2\");\n"); //author_id 18
+            db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"\'Fane\");\n"); //author_id 19
+            db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Jenfevre\");\n"); //author_id 20
+            db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Perna\");\n"); //author_id 21
+            db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Turk\");\n"); //author_id 22
+            db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"De Groot\");\n"); //author_id 23
+            db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Bedu\");\n"); //author_id 24
+            db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Tome\");\n"); //author_id 25
+            db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Janry\");\n"); //author_id 26
+            db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Franquin\");\n"); //author_id 27
+            db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Peyo\");\n"); //author_id 28
+            db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Tota\");\n"); //author_id 29
 
-            // EDITORS
+            /** EDITORS */
             db.execSQL("INSERT INTO EDITORS(EDITOR_NAME) VALUES(\"Casterman\");\n"); //editor_id 1
             db.execSQL("INSERT INTO EDITORS(EDITOR_NAME) VALUES(\"Dargaud\");\n"); //editor_id 2
             db.execSQL("INSERT INTO EDITORS(EDITOR_NAME) VALUES(\"Delcourt\");\n"); //editor_id 3
             db.execSQL("INSERT INTO EDITORS(EDITOR_NAME) VALUES(\"Glenat\");\n"); //editor_id 4
             db.execSQL("INSERT INTO EDITORS(EDITOR_NAME) VALUES(\"Pilote\");\n"); //editor_id 5
             db.execSQL("INSERT INTO EDITORS(EDITOR_NAME) VALUES(\"Soleil Editions\");\n"); //editor_id 6
+            db.execSQL("INSERT INTO EDITORS(EDITOR_NAME) VALUES(\"Vent d'Ouest\");\n"); //editor_id 7
+            db.execSQL("INSERT INTO EDITORS(EDITOR_NAME) VALUES(\"Le Lombard\");\n"); //editor_id 8
+            db.execSQL("INSERT INTO EDITORS(EDITOR_NAME) VALUES(\"Dupuis\");\n"); //editor_id 9
+            db.execSQL("INSERT INTO EDITORS(EDITOR_NAME) VALUES(\"Albert René\");\n"); //editor_id 10
 
-            // SERIES
-            db.execSQL("INSERT INTO SERIES(SERIE_NAME) VALUES(\"Asterix\");\n"); //serie_id 1
+            /** SERIES */
+            db.execSQL("INSERT INTO SERIES(SERIE_NAME) VALUES(\"Astérix\");\n"); //serie_id 1
             db.execSQL("INSERT INTO SERIES(SERIE_NAME) VALUES(\"Carmen Mc Callum\");\n"); //serie_id 2
             db.execSQL("INSERT INTO SERIES(SERIE_NAME) VALUES(\"Clifton\");\n"); //serie_id 3
             db.execSQL("INSERT INTO SERIES(SERIE_NAME) VALUES(\"Kookaburra\");\n"); //serie_id 4
@@ -175,193 +193,236 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             db.execSQL("INSERT INTO SERIES(SERIE_NAME) VALUES(\"Trolls de Troy\");\n"); //serie_id 10
             db.execSQL("INSERT INTO SERIES(SERIE_NAME) VALUES(\"Les feux d'Askell\");\n"); //serie_id 11
             db.execSQL("INSERT INTO SERIES(SERIE_NAME) VALUES(\"Luuna\");\n"); //serie_id 12
+            db.execSQL("INSERT INTO SERIES(SERIE_NAME) VALUES(\"Leo Loden\");\n"); //serie_id 13
+            db.execSQL("INSERT INTO SERIES(SERIE_NAME) VALUES(\"Joe Bar Team\");\n"); //serie_id 14
+            db.execSQL("INSERT INTO SERIES(SERIE_NAME) VALUES(\"Spirou et Fantasio\");\n"); //serie_id 15
+            db.execSQL("INSERT INTO SERIES(SERIE_NAME) VALUES(\"Le petit Spirou\");\n"); //serie_id 16
+            db.execSQL("INSERT INTO SERIES(SERIE_NAME) VALUES(\"Les Schtroumpfs\");\n"); //serie_id 17
+            db.execSQL("INSERT INTO SERIES(SERIE_NAME) VALUES(\"Les Conquérants de Troy\");\n"); //serie_id 18
 
-            // BOOKS & DETAINING
+            /** BOOKS & DETAINING */
             // Lanfeust de Troy serie 5
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"L'ivoire du Magohamoth\", 1, 5, 6);\n"); //book_id 1
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(1, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Thanos l'incongru\", 2, 5, 6);\n"); //book_id 2
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(2, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Castel Or-Azur\", 3, 5, 6);\n"); //book_id 3
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(3, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Le paladin d'Eckmül\", 4, 5, 6);\n"); //book_id 4
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(4, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Le frisson de l'haruspice\", 5, 5, 6);\n"); //book_id 5
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(5, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Cixi impératrice\", 6, 5, 6);\n"); //book_id 6
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(6, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Les pétaures se cachent pour mourir\", 7, 5, 6);\n"); //book_id 7
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(7, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"La bête fabuleuse\", 8, 5, 6);\n"); //book_id 8
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(8, 1);\n");
             // Trolls de Troy serie 10
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Histoires Trolles\", 1, 10, 6);\n"); //book_id 9
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(9, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Le scalp du vénérable\", 2, 10, 6);\n"); //book_id 10
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(10, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Comme un vol de pétaures\", 3, 10, 6);\n"); //book_id 11
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(11, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Le feu occulte\", 4, 10, 6);\n"); //book_id 12
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(12, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Les maléfices de la thaumaturge\", 5, 10, 6);\n"); //book_id 13
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(13, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Trolls dans la brume\", 6, 10, 6);\n"); //book_id 14
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(14, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Plume de sage\", 7, 10, 6);\n"); //book_id 15
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(15, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Rock'n Troll attitude\", 8, 10, 6);\n"); //book_id 16
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(16, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Les prisonniers du Darshan I\", 9, 10, 6);\n"); //book_id 17
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(17, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Les prisonniers du Darshan II\", 10, 10, 6);\n"); //book_id 18
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(18, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Trollympiades\", 11, 10, 6);\n"); //book_id 19
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(19, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Sang famille I\", 12, 10, 6);\n"); //book_id 20
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(20, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Boules de poils I\", 15, 10, 6);\n"); //book_id 21
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(21, 1);\n");
             // Les feux d'askell série 11
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"L'onguent admirable\", 1, 11, 6);\n"); //book_id 22
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(22, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Retour à Vocable\", 2, 11, 6);\n"); //book_id 23
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(23, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Corail sanglant\", 3, 11, 6);\n"); //book_id 24
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(24, 1);\n");
             // Sillage série 9
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"A feu et à cendres\", 1, 9, 3);\n"); //book_id 25
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(25, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Collection privée\", 2, 9, 3);\n"); //book_id 26
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(26, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Engrenages\", 3, 9, 3);\n"); //book_id 27
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(27, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Le signe des démons\", 4, 9, 3);\n"); //book_id 28
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(28, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"FToRoSs\", 5, 9, 3);\n"); //book_id 29
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(29, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Artifices\", 6, 9, 3);\n"); //book_id 30
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(30, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Q.H.I.\", 7, 9, 3);\n"); //book_id 31
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(31, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Nature humaine\", 8, 9, 3);\n"); //book_id 32
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(32, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Infiltrations\", 9, 9, 3);\n"); //book_id 33
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(33, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_AUTOGRAPH, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Retour de flammes - Edition spéciale\", 10, true, 9, 3);\n"); //book_id 34
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(34, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Monde flottant\", 11, 9, 3);\n"); //book_id 35
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(35, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Zone franche\", 12, 9, 3);\n"); //book_id 36
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(36, 1);\n");
             // Luuna série 12
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"La nuit des totems\", 1, 12, 6);\n"); //book_id 37
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(37, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Le crépuscule du Lynx\", 2, 12, 6);\n"); //book_id 38
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(38, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Dans les traces d'Oh-mah-ah\", 3, 12, 6);\n"); //book_id 39
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(39, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Pok-ta-pok\", 4, 12, 6);\n"); //book_id 40
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(40, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Le cercle des miroirs\", 5, 12, 6);\n"); //book_id 41
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(41, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"La reine des loups\", 6, 12, 6);\n"); //book_id 42
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(42, 1);\n");
             db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"La source du temps\", 7, 12, 6);\n"); //book_id 43
-            db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(43, 1);\n");
+            // Leo Loden série 13
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Terminus Cannebière\", 1, 13, 6);\n"); //book_id 44
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Les sirènes du vieux-port\", 2, 13, 6);\n"); //book_id 45
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Adieu ma Joliette\", 3, 13, 6);\n"); //book_id 46
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Grillade Provençale\", 4, 13, 6);\n"); //book_id 47
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Kabbale dans les Traboules\", 5, 13, 6);\n"); //book_id 48
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Langoustines Breizhées\", 6, 13, 6);\n"); //book_id 49
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Fugue en rave mineure\", 7, 13, 6);\n"); //book_id 50
+            // Leo Loden série 14
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Joe Bar Team 1\", 1, 14, 7);\n"); //book_id 51
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Joe Bar Team 2\", 2, 14, 7);\n"); //book_id 52
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Joe Bar Team 3\", 3, 14, 7);\n"); //book_id 53
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Joe Bar Team 4\", 4, 14, 7);\n"); //book_id 54
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Joe Bar Team 5\", 5, 14, 7);\n"); //book_id 55
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Joe Bar Team 6\", 6, 14, 7);\n"); //book_id 56
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Joe Bar Team 7\", 7, 14, 7);\n"); //book_id 57
+            // Clifton série 3
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Le voleur qui ris\", 2, 3, 8);\n"); //book_id 58
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"7 jours pour mourir\", 3, 3, 8);\n"); //book_id 59
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Alias Lord X\", 4, 3, 8);\n"); //book_id 60
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Une panthère pour le Colonel\", 6, 3, 8);\n"); //book_id 61
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Sir Jason\", 7, 3, 8);\n"); //book_id 62
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Week-end à tuer\", 8, 3, 8);\n"); //book_id 63
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Kidnapping\", 9, 3, 8);\n"); //book_id 64
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"La mémoire brisée\", 11, 3, 8);\n"); //book_id 65
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Dernière séance\", 12, 3, 8);\n"); //book_id 66
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Matoutou-Falaise\", 13, 3, 8);\n"); //book_id 67
+            // Spirou et Fantasio série 15
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Spirou et les héritiers\", 4, 15, 9);\n"); //book_id 68
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Z comme Zorglub\", 15, 15, 9);\n"); //book_id 69
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"L'horloger de la comète\", 36, 15, 9);\n"); //book_id 70
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Le réveil du Z\", 37, 15, 9);\n"); //book_id 71
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Spirou à New-York\", 39, 15, 9);\n"); //book_id 72
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Le rayon noir\", 44, 15, 9);\n"); //book_id 73
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Luna fatale\", 45, 15, 9);\n"); //book_id 74
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Machine qui rêve\", 46, 15, 9);\n"); //book_id 75
+            // Le petit Spirou série 16
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\'\"Merci\" qui?\', 5, 16, 9);\n"); //book_id 76
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"N\'oublie pas ta capuche\", 6, 16, 9);\n"); //book_id 77
+            // Les Schtroumpfs série 17
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Les Schtroumpfs noirs\", 1, 17, 9);\n"); //book_id 78
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"La Schtroumpfette\", 3, 17, 9);\n"); //book_id 79
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"L'oeuf et les Schtroumpfs\", 4, 17, 9);\n"); //book_id 80
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Les Schtroumpfs et le cracoucass\", 5, 17, 9);\n"); //book_id 81
+            // Les Conquérants de Troy série 18
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Exil à Port-Fleuri\", 1, 18, 6);\n"); //book_id 82
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Eckmûl le bûcheron\", 2, 18, 6);\n"); //book_id 83
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"La bataille du Port-Fleuri\", 3, 18, 6);\n"); //book_id 84
+            // Astérix série 1
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Le vombat des chefs\", 7, 1, 2);\n"); //book_id 85
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Astérix légionnaire\", 10, 1, 2);\n"); //book_id 86
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Le bouclier Arverne\", 11, 1, 2);\n"); //book_id 87
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Le devin\", 19, 1, 2);\n"); //book_id 88
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Le cadeau de César\", 21, 1, 2);\n"); //book_id 89
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Le grand fossé\", 25, 1, 10);\n"); //book_id 90
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"La galère d'Obélix\", 30, 1, 10);\n"); //book_id 91
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Astérix et Latraviata\", 31, 1, 10);\n"); //book_id 92
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, BOOK_NUMBER, SERIE_ID, EDITOR_ID) VALUES(\"Le papyrus de César\", 36, 1, 10);\n"); //book_id 93
+            db.execSQL("INSERT INTO BOOKS(BOOK_TITLE, SERIE_ID, EDITOR_ID) VALUES(\"L'eau du ciel\", 1, 10);\n"); //book_id 94
 
-            // WRITING
-            //Lanfeust de Troy Arleston 9 Tarquin 11
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(1,9);\n"); //1
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(1,11);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(2, 9);\n"); //2
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(2, 11);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(3, 9);\n"); //3
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(3, 11);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(4, 9);\n"); //4
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(4, 11);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(5, 9);\n"); //5
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(5, 11);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(6, 9);\n"); //6
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(6, 11);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(7, 9);\n"); //7
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(7, 11);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(8, 9);\n"); //8
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(8, 11);\n");
-            //Trolls de Troy Arleston 9 Mourier 10
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(9, 9);\n"); //1
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(9, 10);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(10, 9);\n"); //2
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(10, 10);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(11, 9);\n"); //3
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(11, 10);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(12, 9);\n"); //4
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(12, 10);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(13, 9);\n"); //5
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(13, 10);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(14, 9);\n"); //6
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(14, 10);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(15, 9);\n"); //7
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(15, 10);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(16, 9);\n"); //8
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(16, 10);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(17, 9);\n"); //9
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(17, 10);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(18, 9);\n"); //10
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(18, 10);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(19, 9);\n"); //11
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(19, 10);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(20, 9);\n"); //12
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(20, 10);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(21, 9);\n"); //15
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(21, 10);\n");
-            //Les feux d'Askell Arleston 9 Mourier 10
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(22, 9);\n"); //1
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(22, 10);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(23, 9);\n"); //2
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(23, 10);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(24, 9);\n"); //3
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(24, 10);\n");
-            //Sillage Buchet 1 Morvan 14 Color Twins 13
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(25, 1);\n"); //1
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(25, 14);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(26, 1);\n"); //2
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(26, 14);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(26, 13);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(27, 1);\n"); //3
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(27, 14);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(28, 1);\n"); //4
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(28, 14);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(29, 1);\n"); //5
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(29, 14);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(30, 1);\n"); //6
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(30, 14);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(31, 1);\n"); //7
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(31, 14);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(32, 1);\n"); //8
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(32, 14);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(33, 1);\n"); //9
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(33, 14);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(34, 1);\n"); //10
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(34, 14);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(35, 1);\n"); //11
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(35, 14);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(36, 1);\n"); //12
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(36, 14);\n");
-            // Luuna Crisse 2 Keramidas 15
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(37, 2);\n"); //1
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(37, 15);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(38, 2);\n"); //2
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(38, 15);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(39, 2);\n"); //3
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(39, 15);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(40, 2);\n"); //4
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(40, 15);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(41, 2);\n"); //5
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(41, 15);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(42, 2);\n"); //6
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(42, 15);\n");
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(43, 2);\n"); //7
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(43, 15);\n");
+
+
+
+            /** DETAINING i -> dernier book_id */
+            for (int bookID = 1; bookID <= 94; bookID++) {
+                db.execSQL("INSERT INTO DETAINING(BOOK_ID, PROFILE_ID) VALUES(" + bookID + ", 1);\n");
+            }
+
+            /** WRITING */
+            //Lanfeust de Troy - Book_id 1-8
+            for (int bookID = 1; bookID <= 8; bookID++) {
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",9);\n"); // Arleston 9
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",11);\n"); // Tarquin 11
+            }
+            /*------------------------------------------------------------------------------------*/
+            //Trolls de Troy - Book_id 9-21
+            for (int bookID = 9; bookID <= 21; bookID++) {
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",9);\n"); // Arleston 9
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",10);\n"); // Mourier 10
+            }
+            /*------------------------------------------------------------------------------------*/
+            //Les feux d'Askell - Book_id 22-24
+            for (int bookID = 22; bookID <= 24; bookID++) {
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",9);\n"); // Arleston 9
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",10);\n"); // Mourier 10
+            }
+            /*------------------------------------------------------------------------------------*/
+            //Sillage - Book_id 25-36
+            for (int bookID = 25; bookID <= 36; bookID++) {
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",1);\n"); // Buchet 1
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",14);\n"); // Morvan 14
+            }
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(26, 13);\n"); // Color Twins 13
+            /*------------------------------------------------------------------------------------*/
+            // Luuna - Book_id 37-43
+            for (int bookID = 37; bookID <= 43; bookID++) {
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",2);\n"); // Crisse 2
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",15);\n"); // Keramidas 15
+            }
+            /*------------------------------------------------------------------------------------*/
+            // Leo Loden - Book_id 44-50
+            for (int bookID = 44; bookID <= 49; bookID++) {
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",9);\n"); // Arleston 9
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",16);\n"); // Carrere 16
+            }
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(49,17);\n"); // Nicoloff 17
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(50,16);\n"); // Carrere 16
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(50,17);\n"); // Nicoloff 17
+            /*------------------------------------------------------------------------------------*/
+            // Joe Bar Team - Book_id 51-57
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(51,18);\n"); // Bar2
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(52,19);\n"); // 'Fane
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(53,19);\n"); // 'Fane
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(54,19);\n"); // 'Fane
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(55,18);\n"); // Bar2
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(56,19);\n"); // 'Fane
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(57,20);\n"); // Jenfevre
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(57,21);\n"); // Perna
+            /*------------------------------------------------------------------------------------*/
+            // Clifton - Book_id 58-67
+            for (int bookID = 58; bookID <= 64; bookID++) {
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",22);\n"); // Turk 22
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",23);\n"); // De Groot 23
+            }
+            for (int bookID = 65; bookID <= 67; bookID++) {
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",23);\n"); // De Groot 23
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",24);\n"); // Bedu 24
+            }
+            /*------------------------------------------------------------------------------------*/
+            // Spirou et Fantasio - Book_id 68-75
+            for (int bookID = 68; bookID <= 69; bookID++) {
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",27);\n"); // Franquin 27
+            }
+            for (int bookID = 70; bookID <= 75; bookID++) {
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",25);\n"); // Tome 25
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",26);\n"); // Janry 26
+            }
+            /*------------------------------------------------------------------------------------*/
+            // Le petit Spirou - Book_id 76-77
+            for (int bookID = 76; bookID <= 77; bookID++) {
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",25);\n"); // Tome 25
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",26);\n"); // Janry 26
+            }
+            /*------------------------------------------------------------------------------------*/
+            // Les Schtroumpfs - Book_id 78-81
+            for (int bookID = 78; bookID <= 81; bookID++) {
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",28);\n"); // Peyo 28
+            }
+            /*------------------------------------------------------------------------------------*/
+            // Les Conquérants de Troy - Book_id 82-84
+            for (int bookID = 82; bookID <= 84; bookID++) {
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",9);\n"); // Arleston 9
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",29);\n"); // tota 29
+            }
+            /*------------------------------------------------------------------------------------*/
+            // Astérix - Book_id 85-94
+            for (int bookID = 85; bookID <= 89; bookID++) {
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",6);\n"); // Goscinny 6
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",8);\n"); // Uderzo 8
+            }
+            for (int bookID = 90; bookID <= 94; bookID++) {
+                db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",8);\n"); // Uderzo 8
+            }
+            /*------------------------------------------------------------------------------------*/
+
+
+
+
+
+
+
+
+
+
         }
 
     /* ------------------------------------------------------------------------------------------ */
@@ -1316,6 +1377,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return getListEditorBean(query);
     }
 
+    /* ------------------------------------------------------------------------------------------ */
+    // SELECT DISTINCT * FROM EDITORS
+    // INNER JOIN BOOKS ON BOOKS.EDITOR_ID = EDITORS.EDITOR_ID
+    // WHERE BOOKS.SERIE_ID = serie_id
+    // GROUP BY EDITORS.EDITOR_ID
+    // ORDER BY EDITORS.EDITOR_NAME
+    /* ------------------------------------------------------------------------------------------ */
+    public ArrayList<EditorBean> getEditorsListBySerieId(int serie_id){
+        String query = "SELECT DISTINCT * FROM " + EDITORS +
+                " INNER JOIN " + BOOKS + " ON " + BOOKS + "." + COLUMN_EDITOR_ID + " = " + EDITORS + "." + COLUMN_EDITOR_ID +
+                " WHERE " + BOOKS + "." + COLUMN_SERIE_ID + " = \"" + serie_id +
+                "\" GROUP BY " + EDITORS + "." + COLUMN_EDITOR_ID +
+                " ORDER BY " + EDITORS + "." + COLUMN_EDITOR_NAME;
+        return getListEditorBean(query);
+    }
     /* ------------------------------------------------------------------------------------------ */
     // SELECT DISTINCT * FROM EDITORS
     // WHERE EDITORS.EDITOR_NAME LIKE '%filter%'
