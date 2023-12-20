@@ -173,23 +173,7 @@ public class EditorDetailFragment extends Fragment {
                         // if "ENTER" key is pressed
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                            String editorConfirmDeleteName = "";
-                            try {
-                                editorConfirmDeleteName = popupTextDialog.getEtPopupText().getText().toString();
-                            } catch (Exception e) {
-                                // do nothing
-                            }
-                            popupTextDialog.dismiss(); // To close Popup
-                            if (!dataBaseHelper.getEditorById(editor_id).getEditor_name().equals(editorConfirmDeleteName)) {
-                                // Name does not match
-                                Toast.makeText(EditorDetailFragment.super.getActivity(), getString(R.string.EditorNameDoesntMatch), Toast.LENGTH_LONG).show();
-                            } else {
-                                // Name does match
-                                // The Editor is deleted from the Database (constraints too)
-                                boolean successUpdate = dataBaseHelper.deleteEditor(dataBaseHelper, editor_id);
-                                // go to BooksFragment since the BookDetail doesn't exist anymore
-                                findNavController(EditorDetailFragment.this).navigate(R.id.editorsFragment);
-                            }
+                            popupTextDialog.getBtnPopupConfirm().performClick();
                             return true; // inherited, necessary
                         }
                         return false; // inherited, necessary

@@ -227,6 +227,19 @@ public class BookDetailFragment extends Fragment {
                         bookDetailRefreshScreen(book_id); // To refresh display
                     }
                 });
+                // Key event, same behaviour as confirm button
+                popupAddListDialog.getEtPopupText().setOnKeyListener(new View.OnKeyListener() {
+                    @Override
+                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+                        // if "ENTER" key is pressed
+                        if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                                (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                            popupAddListDialog.getBtnPopupConfirm().performClick();
+                            return true; // inherited, necessary
+                        }
+                        return false; // inherited, necessary
+                    }
+                });
                 // Click event on abort button
                 popupAddListDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -673,23 +686,7 @@ public class BookDetailFragment extends Fragment {
                         // if "ENTER" key is pressed
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                            String bookConfirmDeleteTitle = "";
-                            try {
-                                bookConfirmDeleteTitle = popupTextDialog.getEtPopupText().getText().toString();
-                            } catch (Exception e) {
-                                // do nothing
-                            }
-                            popupTextDialog.dismiss(); // To close Popup
-                            if (!dataBaseHelper.getBookById(book_id).getBook_title().equals(bookConfirmDeleteTitle)) {
-                                // Title does not match
-                                Toast.makeText(BookDetailFragment.super.getActivity(), getString(R.string.BookTitleDoesntMatch), Toast.LENGTH_LONG).show();
-                            } else {
-                                // Title does match
-                                // The book is deleted from the Database (constraints too)
-                                boolean successUpdate = dataBaseHelper.deleteBook(dataBaseHelper, book_id);
-                                // go to BooksFragment since the BookDetail doesn't exist anymore
-                                findNavController(BookDetailFragment.this).navigate(R.id.booksFragment);
-                            }
+                            popupTextDialog.getBtnPopupConfirm().performClick();
                             return true; // inherited, necessary
                         }
                         return false; // inherited, necessary

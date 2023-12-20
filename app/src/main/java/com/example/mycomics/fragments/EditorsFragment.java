@@ -161,21 +161,7 @@ public class EditorsFragment extends Fragment {
                         // if "ENTER" key is pressed
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                            EditorBean editorBean;
-                            try {
-                                editorBean = new EditorBean(-1, popupTextDialog.getEtPopupText().getText().toString());
-                            } catch (Exception e) {
-                                Toast.makeText(getActivity(), getString(R.string.EditorCreationError), Toast.LENGTH_SHORT).show();
-                                editorBean = new EditorBean(-1, "error" );
-                            }
-                            if(dataBaseHelper.checkEditorDuplicate(editorBean.getEditor_name())){
-                                Toast.makeText(getActivity(), getString(R.string.EditorDuplicateError), Toast.LENGTH_LONG).show();
-                            } else {
-                                boolean success = dataBaseHelper.insertIntoEditors(editorBean);
-                                Toast.makeText(getActivity(), getString(R.string.EditorCreationSuccess), Toast.LENGTH_SHORT).show();
-                            }
-                            popupTextDialog.dismiss();
-                            editorsRefreshScreen();
+                            popupTextDialog.getBtnPopupConfirm().performClick();
                             return true; // inherited, necessary
                         }
                         return false; // inherited, necessary

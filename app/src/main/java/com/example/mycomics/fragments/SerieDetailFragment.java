@@ -173,23 +173,7 @@ public class SerieDetailFragment extends Fragment {
                         // if "ENTER" key is pressed
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                            String serieConfirmDeleteName = "";
-                            try {
-                                serieConfirmDeleteName = popupTextDialog.getEtPopupText().getText().toString();
-                            } catch (Exception e) {
-                                // do nothing
-                            }
-                            popupTextDialog.dismiss(); // To close Popup
-                            if (!dataBaseHelper.getSerieById(serie_id).getSerie_name().equals(serieConfirmDeleteName)) {
-                                // Name does not match
-                                Toast.makeText(SerieDetailFragment.super.getActivity(), getString(R.string.SerieNameDoesntMatch), Toast.LENGTH_LONG).show();
-                            } else {
-                                // Name does match
-                                // The serie is deleted from the Database (constraints too)
-                                boolean successUpdate = dataBaseHelper.deleteSerie(dataBaseHelper, serie_id);
-                                // go to BooksFragment since the BookDetail doesn't exist anymore
-                                findNavController(SerieDetailFragment.this).navigate(R.id.seriesFragment);
-                            }
+                            popupTextDialog.getBtnPopupConfirm().performClick();
                             return true; // inherited, necessary
                         }
                         return false; // inherited, necessary

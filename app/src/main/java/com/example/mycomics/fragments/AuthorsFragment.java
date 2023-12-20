@@ -161,21 +161,7 @@ public class AuthorsFragment extends Fragment {
                         // if "ENTER" key is pressed
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                            AuthorBean authorBean;
-                            try {
-                                authorBean = new AuthorBean(-1, popupTextDialog.getEtPopupText().getText().toString());
-                            } catch (Exception e) {
-                                Toast.makeText(getActivity(), getString(R.string.AuthorCreationError), Toast.LENGTH_SHORT).show();
-                                authorBean = new AuthorBean(-1, "error" );
-                            }
-                            if(dataBaseHelper.checkAuthorDuplicate(authorBean.getAuthor_pseudonym())){
-                                Toast.makeText(getActivity(), getString(R.string.AuthorDuplicateError), Toast.LENGTH_LONG).show();
-                            } else {
-                                boolean success = dataBaseHelper.insertIntoAuthors(authorBean);
-                                Toast.makeText(getActivity(), getString(R.string.AuthorCreationSuccess), Toast.LENGTH_SHORT).show();
-                            }
-                            popupTextDialog.dismiss();
-                            authorsRefreshScreen();
+                            popupTextDialog.getBtnPopupConfirm().performClick();
                             return true; // inherited, necessary
                         }
                         return false; // inherited, necessary

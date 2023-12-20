@@ -163,22 +163,7 @@ public class BooksFragment extends Fragment {
                         // if "ENTER" key is pressed
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                            BookBean bookBean;
-                            try {
-                                bookBean = new BookBean(-1, popupTextDialog.getEtPopupText().getText().toString());
-                            } catch (Exception e) {
-                                Toast.makeText(getActivity(), getString(R.string.BookCreationError), Toast.LENGTH_SHORT).show();
-                                bookBean = new BookBean(-1, "error" );
-                            }
-                            if (dataBaseHelper.checkBookDuplicate(bookBean.getBook_title())) {
-                                Toast.makeText(BooksFragment.super.getContext(), getString(R.string.BookDuplicateError), Toast.LENGTH_LONG).show();
-                            } else {
-                                boolean successInsertBooks = dataBaseHelper.insertIntoBooks(bookBean);
-                                boolean successInsertDetaining = dataBaseHelper.insertIntoDetaining(dataBaseHelper.getBookLatest(bookBean));
-                                Toast.makeText(getActivity(), getString(R.string.BookCreationSuccess), Toast.LENGTH_SHORT).show();
-                            }
-                            popupTextDialog.dismiss();
-                            booksRefreshScreen();
+                            popupTextDialog.getBtnPopupConfirm().performClick();
                             return true; // inherited, necessary
                         }
                         return false; // inherited, necessary

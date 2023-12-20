@@ -162,21 +162,7 @@ public class SeriesFragment extends Fragment {
                         // if "ENTER" key is pressed
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                            SerieBean serieBean;
-                            try {
-                                serieBean = new SerieBean(-1, popupTextDialog.getEtPopupText().getText().toString());
-                            } catch (Exception e) {
-                                Toast.makeText(getActivity(), getString(R.string.SerieCreationError), Toast.LENGTH_SHORT).show();
-                                serieBean = new SerieBean(-1, "error" );
-                            }
-                            if(dataBaseHelper.checkSerieDuplicate(serieBean.getSerie_name())){
-                                Toast.makeText(getActivity(), getString(R.string.SerieDuplicateError), Toast.LENGTH_LONG).show();
-                            } else {
-                                boolean success = dataBaseHelper.insertIntoSeries(serieBean);
-                                Toast.makeText(getActivity(), getString(R.string.SerieCreationSuccess), Toast.LENGTH_SHORT).show();
-                            }
-                            popupTextDialog.dismiss();
-                            seriesRefreshScreen();
+                            popupTextDialog.getBtnPopupConfirm().performClick();
                             return true; // inherited, necessary
                         }
                         return false; // inherited, necessary

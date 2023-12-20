@@ -135,20 +135,7 @@ public class SettingsFragment extends Fragment {
                         // if "ENTER" key is pressed
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                            ProfileBean profileBean;
-                            try {
-                                profileBean = new ProfileBean(-1, popupTextDialog.getEtPopupText().getText().toString());
-                            } catch (Exception e) {
-                                Toast.makeText(getActivity(), getString(R.string.SettingsProfileCreationError), Toast.LENGTH_SHORT).show();
-                                profileBean = new ProfileBean(-1, "error" );
-                            }
-                            if (dataBaseHelper.checkProfileDuplicate(profileBean.getProfile_name())) {
-                                Toast.makeText(SettingsFragment.super.getContext(), getString(R.string.SettingsProfileDuplicateError), Toast.LENGTH_LONG).show();
-                            } else {
-                                boolean success = dataBaseHelper.insertIntoProfiles(profileBean);
-                                Toast.makeText(getActivity(), getString(R.string.SettingsProfileCreationSuccess), Toast.LENGTH_SHORT).show();
-                            }
-                            popupTextDialog.dismiss();
+                            popupTextDialog.getBtnPopupConfirm().performClick();
                             return true; // inherited, necessary
                         }
                         return false; // inherited, necessary

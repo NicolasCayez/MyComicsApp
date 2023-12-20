@@ -187,23 +187,7 @@ public class AuthorDetailFragment extends Fragment {
                         // if "ENTER" key is pressed
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                            String authorConfirmDeletePseudonym = "";
-                            try {
-                                authorConfirmDeletePseudonym = popupTextDialog.getEtPopupText().getText().toString();
-                            } catch (Exception e) {
-                                // do nothing
-                            }
-                            popupTextDialog.dismiss(); // To close Popup
-                            if (!dataBaseHelper.getAuthorById(author_id).getAuthor_pseudonym().equals(authorConfirmDeletePseudonym)) {
-                                // Name does not match
-                                Toast.makeText(AuthorDetailFragment.super.getActivity(), getString(R.string.AuthorPseudonymDoesntMatch), Toast.LENGTH_LONG).show();
-                            } else {
-                                // Name does match
-                                // The serie is deleted from the Database (constraints too)
-                                boolean successUpdate = dataBaseHelper.deleteAuthor(dataBaseHelper, author_id);
-                                // go to BooksFragment since the BookDetail doesn't exist anymore
-                                findNavController(AuthorDetailFragment.this).navigate(R.id.authorsFragment);
-                            }
+                            popupTextDialog.getBtnPopupConfirm().performClick();
                             return true; // inherited, necessary
                         }
                         return false; // inherited, necessary
