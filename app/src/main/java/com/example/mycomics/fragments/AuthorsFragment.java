@@ -185,7 +185,7 @@ public class AuthorsFragment extends Fragment {
             public void onClick(int position, AuthorBean authorBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("author_id", authorBean.getAuthor_id());;
+                bundle.putInt("author_id", authorBean.getAuthor_id());
                 // go to AuthorDetailFragment with the data bundle
                 findNavController(AuthorsFragment.this).navigate(R.id.action_authors_to_authorDetail, bundle);
             }
@@ -211,7 +211,7 @@ public class AuthorsFragment extends Fragment {
         ArrayList<AuthorBean> AuthorsList = dataBaseHelper.getAuthorsList();
         // If the search bar contains a filter
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            AuthorsList = dataBaseHelper.getAuthorsListByFilter(binding.sbSearch.svSearch.getQuery().toString());
+            AuthorsList = dataBaseHelper.getAuthorsListByFilter(binding.sbSearch.svSearch.getQuery().toString().replace("'",""));
         }
         // The adapter gets the list and the string value "books" needed for translations
         authorsAdapter = new AuthorsNbAdapter(AuthorsList, getString(R.string.Books));

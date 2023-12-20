@@ -187,7 +187,7 @@ public class BooksFragment extends Fragment {
             public void onClick(int position, BookSerieBean bookSerieBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("book_id", bookSerieBean.getBook_id());;
+                bundle.putInt("book_id", bookSerieBean.getBook_id());
                 // go to AuthorDetailFragment with the data bundle
                 findNavController(BooksFragment.this).navigate(R.id.action_books_to_bookDetail, bundle);
             }
@@ -213,7 +213,7 @@ public class BooksFragment extends Fragment {
         ArrayList<BookSerieBean> BooksList = dataBaseHelper.getBooksAndBooksSeriesList();
         // If the search bar contains a filter
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            BooksList = dataBaseHelper.getBooksAndSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString());
+            BooksList = dataBaseHelper.getBooksAndSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString().replace("'",""));
         }
         // The adapter gets the list and the string value "books" needed for translations
         bookSerieAdapter = new BookSerieAdapter(BooksList, getString(R.string.BookNumber));

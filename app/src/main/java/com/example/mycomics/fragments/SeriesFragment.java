@@ -186,7 +186,7 @@ public class SeriesFragment extends Fragment {
             public void onClick(int position, SerieBean serieBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("serie_id", serieBean.getSerie_id());;
+                bundle.putInt("serie_id", serieBean.getSerie_id());
                 // go to AuthorDetailFragment with the data bundle
                 findNavController(SeriesFragment.this).navigate(R.id.action_series_to_serieDetail, bundle);
             }
@@ -209,10 +209,10 @@ public class SeriesFragment extends Fragment {
     //* ----------------------------------------------------------------------------------------- */
     private void seriesRefreshScreen(){
         // Creating the list to display
-        ArrayList<SerieBean> SeriesList = dataBaseHelper.getSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString());
+        ArrayList<SerieBean> SeriesList = dataBaseHelper.getSeriesList();
         // If the search bar contains a filter
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            SeriesList = dataBaseHelper.getSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString());
+            SeriesList = dataBaseHelper.getSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString().replace("'",""));
         }
         // The adapter gets the list and the string value "books" needed for translations
         seriesAdapter = new SeriesNbAdapter(SeriesList, getString(R.string.Books));

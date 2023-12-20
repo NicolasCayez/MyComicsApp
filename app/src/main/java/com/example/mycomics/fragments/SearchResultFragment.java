@@ -91,7 +91,6 @@ public class SearchResultFragment extends Fragment {
 
         /* Data sent from source fragments */
         String filter = getArguments().getString("filter");
-        System.out.println(filter);
 
         /* Display initialization */
         searchResultRefreshScreen(filter);
@@ -120,7 +119,7 @@ public class SearchResultFragment extends Fragment {
             public void onClick(int position, SerieBean serieBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("serie_id", serieBean.getSerie_id());;
+                bundle.putInt("serie_id", serieBean.getSerie_id());
                 // go to AuthorDetailFragment with the data bundle
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_serieDetail, bundle);
             }
@@ -132,7 +131,7 @@ public class SearchResultFragment extends Fragment {
             public void onClick(int position, BookBean bookBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("book_id", bookBean.getBook_id());;
+                bundle.putInt("book_id", bookBean.getBook_id());
                 // go to AuthorDetailFragment with the data bundle
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_bookDetail, bundle);
             }
@@ -144,7 +143,7 @@ public class SearchResultFragment extends Fragment {
             public void onClick(int position, AuthorBean authorBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("author_id", authorBean.getAuthor_id());;
+                bundle.putInt("author_id", authorBean.getAuthor_id());
                 // go to AuthorDetailFragment with the data bundle
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_authorDetail, bundle);
             }
@@ -156,7 +155,7 @@ public class SearchResultFragment extends Fragment {
             public void onClick(int position, EditorBean editorBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("editor_id", editorBean.getEditor_id());;
+                bundle.putInt("editor_id", editorBean.getEditor_id());
                 // go to AuthorDetailFragment with the data bundle
                 findNavController(SearchResultFragment.this).navigate(R.id.action_searchResult_to_editorDetail, bundle);
             }
@@ -180,7 +179,7 @@ public class SearchResultFragment extends Fragment {
     private void searchResultRefreshScreen(String filter){
         /* Series list adapters charged with data */
         // Creating the list to display
-        ArrayList<SerieBean> SeriesList = dataBaseHelper.getSeriesListByFilter(filter);
+        ArrayList<SerieBean> SeriesList = dataBaseHelper.getSeriesListByFilter(filter.replace("'",""));
         // The adapter gets the list and the string value "books" needed for translations
         seriesAdapter = new SeriesNbAdapter(SeriesList, getString(R.string.Books));
         // the adapter and the layout are defined for the RecyclerView
@@ -191,7 +190,7 @@ public class SearchResultFragment extends Fragment {
 
         /* Books list adapters charged with data */
         // Creating the list to display
-        ArrayList<BookBean> BooksList = dataBaseHelper.getBooksListByFilter(filter);
+        ArrayList<BookBean> BooksList = dataBaseHelper.getBooksListByFilter(filter.replace("'",""));
         // The adapter gets the list and the string value "books" needed for translations
         booksAdapter = new BooksBookNbAdapter(BooksList, getString(R.string.BookNumber));
         // the adapter and the layout are defined for the RecyclerView
@@ -202,7 +201,7 @@ public class SearchResultFragment extends Fragment {
 
         /* Authors list adapters charged with data */
         // Creating the list to display
-        ArrayList<AuthorBean> AuthorsList = dataBaseHelper.getAuthorsListByFilter(filter);
+        ArrayList<AuthorBean> AuthorsList = dataBaseHelper.getAuthorsListByFilter(filter.replace("'",""));
         // The adapter gets the list and the string value "books" needed for translations
         authorsAdapter = new AuthorsAdapter(AuthorsList);
         // the adapter and the layout are defined for the RecyclerView
@@ -213,7 +212,7 @@ public class SearchResultFragment extends Fragment {
 
         /* Editors list adapters charger with data */
         // Creating the list to display
-        ArrayList<EditorBean> EditorsList = dataBaseHelper.getEditorsListByFilter(filter);
+        ArrayList<EditorBean> EditorsList = dataBaseHelper.getEditorsListByFilter(filter.replace("'",""));
         // The adapter gets the list and the string value "books" needed for translations
         editorsAdapter = new EditorsAdapter(EditorsList);
         // the adapter and the layout are defined for the RecyclerView

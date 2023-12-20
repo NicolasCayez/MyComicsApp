@@ -185,7 +185,7 @@ public class EditorsFragment extends Fragment {
             public void onClick(int position, EditorBean editorBean) {
                 // Data bundle storing key-value pairs
                 Bundle bundle = new Bundle();
-                bundle.putInt("editor_id", editorBean.getEditor_id());;
+                bundle.putInt("editor_id", editorBean.getEditor_id());
                 // go to AuthorDetailFragment with the data bundle
                 findNavController(EditorsFragment.this).navigate(R.id.action_editors_to_editorDetail, bundle);
             }
@@ -211,7 +211,7 @@ public class EditorsFragment extends Fragment {
         ArrayList<EditorBean> EditorsList = dataBaseHelper.getEditorsList();
         // If the search bar contains a filter
         if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            EditorsList = dataBaseHelper.getEditorsListByFilter(binding.sbSearch.svSearch.getQuery().toString());
+            EditorsList = dataBaseHelper.getEditorsListByFilter(binding.sbSearch.svSearch.getQuery().toString().replace("'",""));
         }
         // The adapter gets the list and the string value "books" needed for translations
         editorsAdapter = new EditorsNbAdapter(EditorsList, getString(R.string.Books));
