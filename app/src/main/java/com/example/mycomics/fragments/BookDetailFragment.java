@@ -744,7 +744,7 @@ public class BookDetailFragment extends Fragment {
                             imgFileOld.delete();
                         }
                         // Removing picture from display because of physical delete delay
-                        binding.ivBookDetailPicture.setImageResource(R.drawable.books_blue);
+                        binding.ivBookDetailPicture.setImageResource(R.drawable.books);
                         popupConfirmDialog.dismiss(); // To close popup
                     }
                 });

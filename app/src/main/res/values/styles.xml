@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Base application theme  -->
+    <style name="Base.Theme.MyComics" parent="Theme.AppCompat.Light.NoActionBar">
+
+    </style>
+
+    <!--  Application theme  -->
+    <style name="Theme.MyComics" parent="Base.Theme.MyComics">
+
+    </style>
+</resources>

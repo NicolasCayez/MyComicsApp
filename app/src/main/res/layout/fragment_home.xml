@@ -6,7 +6,7 @@
     android:name="androidx.navigation.fragment.NavHostFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/custom_blue"
+    android:background="?attr/mc_secondary"
     app:defaultNavHost="true"
     app:navGraph="@navigation/nav_graph"
     tools:context=".fragments.HomeFragment">
@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginVertical="5dp"
-            android:background="@color/custom_beige"
+            android:background="?attr/mc_primary"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:src="@drawable/home_bleu" />
+                android:src="@drawable/home" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvFragSettingsTitle"
@@ -40,7 +40,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="50dp"
                 android:text="@string/HomeFragmentTitle"
-                android:textColor="@color/custom_blue"
+                android:textColor="?attr/mc_secondary"
                 android:textSize="20sp" />
         </LinearLayout>
         <!-- Search bar -->
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp"
-            android:background="@drawable/rounded_corner_custom_beige"
+            android:background="@drawable/mc_block"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -65,7 +65,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_weight="3"
-                android:src="@drawable/series_blue" />
+                android:src="@drawable/series" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvHomeMenuSeries"
@@ -75,7 +75,7 @@
                 android:layout_weight="6"
                 android:fontFamily="@font/kronika"
                 android:text="@string/HamburgerMenuSeries"
-                android:textColor="@color/custom_blue"
+                android:textColor="?attr/mc_secondary"
                 android:textSize="20sp" />
         </LinearLayout>
         <!-- Bouton TOMES -->
@@ -84,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp"
-            android:background="@drawable/rounded_corner_custom_beige"
+            android:background="@drawable/mc_block"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -93,7 +93,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_weight="3"
-                android:src="@drawable/books_blue" />
+                android:src="@drawable/books" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvHomeMenuBooks"
@@ -103,7 +103,7 @@
                 android:layout_weight="6"
                 android:fontFamily="@font/kronika"
                 android:text="@string/HamburgerMenuBooks"
-                android:textColor="@color/custom_blue"
+                android:textColor="?attr/mc_secondary"
                 android:textSize="20sp" />
         </LinearLayout>
         <!-- Bouton AUTEURS -->
@@ -112,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp"
-            android:background="@drawable/rounded_corner_custom_beige"
+            android:background="@drawable/mc_block"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -121,7 +121,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_weight="3"
-                android:src="@drawable/authors_blue" />
+                android:src="@drawable/authors" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvHomeMenuAuthors"
@@ -131,7 +131,7 @@
                 android:layout_weight="6"
                 android:fontFamily="@font/kronika"
                 android:text="@string/HamburgerMenuAuthors"
-                android:textColor="@color/custom_blue"
+                android:textColor="?attr/mc_secondary"
                 android:textSize="20sp" />
         </LinearLayout>
         <!-- Bouton EDITEURS -->
@@ -140,7 +140,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_margin="10dp"
-            android:background="@drawable/rounded_corner_custom_beige"
+            android:background="@drawable/mc_block"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -149,7 +149,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_weight="3"
-                android:src="@drawable/editors_blue" />
+                android:src="@drawable/editors" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvHomeMenuEditors"
@@ -159,7 +159,7 @@
                 android:layout_weight="6"
                 android:fontFamily="@font/kronika"
                 android:text="@string/HamburgerMenuEditors"
-                android:textColor="@color/custom_blue"
+                android:textColor="?attr/mc_secondary"
                 android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>

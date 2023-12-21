@@ -1,12 +1,20 @@
 <resources>
+
+
     <!-- Base application theme. -->
-    <style name="Base.Theme.MyComics" parent="Theme.AppCompat.DayNight.NoActionBar">
+<!--    <style name="Base.Theme.MyComics" parent="Theme.AppCompat.DayNight.NoActionBar">-->
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
-    </style>
+<!--    </style>-->
+
+
     <!-- Base application theme. -->
     <style name="Base.Theme.AppCompat.Light.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
+        <item name="mc_primary">#275f74</item>
+        <item name="mc_primary_border">#174f64</item>
+        <item name="mc_secondary">#f2dcc2</item>
+        <item name="mc_secondary_border">#a19382</item>
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
 </resources>

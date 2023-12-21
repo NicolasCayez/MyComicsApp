@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/custom_blue"
+        android:background="?attr/mc_secondary"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginVertical="5dp"
-            android:background="@color/custom_beige"
+            android:background="?attr/mc_primary"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:src="@drawable/series_blue" />
+                android:src="@drawable/series" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvFragSerieDetailTitle"
@@ -42,7 +42,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="50dp"
                 android:text="@string/SerieDetailFragmentTitle"
-                android:textColor="@color/custom_blue"
+                android:textColor="?attr/mc_secondary"
                 android:textSize="20sp" />
         </LinearLayout>
         <!-- Body -->
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/rounded_corner_custom_beige"
+                    android:background="@drawable/mc_block"
                     android:orientation="vertical"
                     android:padding="5dp">
                     <!-- Titre série -->
@@ -73,11 +73,11 @@
                         android:layout_marginHorizontal="15dp"
                         android:layout_marginVertical="15dp"
                         android:layout_weight="1"
-                        android:background="@drawable/rounded_corner_search"
+                        android:background="@drawable/mc_search_window"
                         android:fontFamily="@font/kronika"
                         android:gravity="center_horizontal"
                         android:text="@string/SerieDetailTitle"
-                        android:textColor="@color/custom_blue"
+                        android:textColor="?attr/mc_secondary"
                         android:textSize="16sp" />
                     <!-- Image et détail -->
                     <LinearLayout
@@ -90,7 +90,7 @@
                             android:id="@+id/ivSerieDetailPicture"
                             android:layout_width="250px"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/books_blue" />
+                            android:src="@drawable/books" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/textView6"
@@ -99,7 +99,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/kronika"
                             android:text="TextView"
-                            android:textColor="@color/custom_blue"
+                            android:textColor="?attr/mc_secondary"
                             android:textSize="14sp" />
                     </LinearLayout>
                     <!-- Liste tomes -->
@@ -112,7 +112,7 @@
                         android:fontFamily="@font/kronika"
                         android:text="@string/BooksListLabel"
                         android:textAlignment="textStart"
-                        android:textColor="@color/custom_blue"
+                        android:textColor="?attr/mc_secondary"
                         android:textSize="14sp" />
 
                     <LinearLayout
@@ -151,7 +151,7 @@
                                 android:fontFamily="@font/kronika"
                                 android:text="@string/AuthorsListLabel"
                                 android:textAlignment="textStart"
-                                android:textColor="@color/custom_blue"
+                                android:textColor="?attr/mc_secondary"
                                 android:textSize="14sp" />
 
                             <androidx.recyclerview.widget.RecyclerView
@@ -178,7 +178,7 @@
                                 android:fontFamily="@font/kronika"
                                 android:text="@string/EditorsListLabel"
                                 android:textAlignment="textStart"
-                                android:textColor="@color/custom_blue"
+                                android:textColor="?attr/mc_secondary"
                                 android:textSize="14sp" />
 
                             <androidx.recyclerview.widget.RecyclerView
@@ -199,7 +199,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/rounded_corner_custom_beige"
+                    android:background="@drawable/mc_block"
                     android:gravity="end"
                     android:orientation="horizontal"
                     android:padding="5dp">
@@ -210,7 +210,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
-                        android:src="@drawable/btn_save_blue" />
+                        android:src="@drawable/btn_save" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btnSerieDetailDeleteSerie"
@@ -219,7 +219,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:paddingEnd="15dp"
-                        android:src="@drawable/btn_delete_blue" />
+                        android:src="@drawable/btn_delete" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

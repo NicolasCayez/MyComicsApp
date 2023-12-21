@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/custom_blue">
+        android:background="?attr/mc_secondary">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -17,14 +17,14 @@
             android:layout_marginVertical="10dp"
             android:orientation="vertical"
             android:weightSum="1"
-            android:background="@drawable/rounded_corner_custom_beige">
+            android:background="@drawable/mc_block">
             <!-- Cadre -->
             <androidx.camera.view.PreviewView
                 android:id="@+id/pvPicture"
                 android:layout_width="225dp"
                 android:layout_height="300dp"
                 android:layout_gravity="center"
-                android:background="@color/custom_blue"
+                android:background="?attr/mc_secondary"
                 android:padding="5dp"
                 android:layout_margin="20dp" />
             <!-- Bouton plus -->
@@ -69,7 +69,7 @@
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/kronika"
                     android:gravity="center"
-                    android:textColor="@color/custom_blue"
+                    android:textColor="?attr/mc_secondary"
                     android:textSize="14sp"
                     android:text="On sauvegarde ?" />
 
@@ -84,28 +84,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_margin="5dp"
-                        android:background="@drawable/rounded_corner_button_blue"
+                        android:background="@drawable/mc_button"
                         android:fontFamily="@font/kronika"
                         android:text="@string/btnValider"
-                        android:textColor="@color/custom_beige" />
+                        android:textColor="?attr/mc_primary" />
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnPictureRotate"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_margin="5dp"
-                        android:background="@drawable/rounded_corner_button_blue"
+                        android:background="@drawable/mc_button"
                         android:fontFamily="@font/kronika"
                         android:text="Rotate"
-                        android:textColor="@color/custom_beige" />
+                        android:textColor="?attr/mc_primary" />
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnPictureAbort"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_margin="5dp"
-                        android:background="@drawable/rounded_corner_button_blue"
+                        android:background="@drawable/mc_button"
                         android:fontFamily="@font/kronika"
                         android:text="@string/btnAnnuler"
-                        android:textColor="@color/custom_beige" />
+                        android:textColor="?attr/mc_primary" />
                 </LinearLayout>
             </LinearLayout>
 

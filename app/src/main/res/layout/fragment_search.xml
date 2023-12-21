@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center_horizontal"
     android:layout_margin="10dp"
-    android:background="@drawable/rounded_corner_custom_beige"
+    android:background="@drawable/mc_block"
     android:orientation="vertical"
     tools:context=".fragments.SearchFragment">
 
@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/rounded_corner_search"
+            android:background="@drawable/mc_search_window"
             app:defaultQueryHint="@string/SearchHintFilterOrSearch"
             app:iconifiedByDefault="false"
             app:queryBackground="@android:color/transparent" />
@@ -42,9 +42,9 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_margin="5dp"
-            android:background="@drawable/rounded_corner_button_blue"
+            android:background="@drawable/mc_button"
             android:fontFamily="@font/kronika"
             android:text="@string/btnChercher"
-            android:textColor="@color/custom_beige" />
+            android:textColor="?attr/mc_primary" />
     </LinearLayout>
 </LinearLayout>

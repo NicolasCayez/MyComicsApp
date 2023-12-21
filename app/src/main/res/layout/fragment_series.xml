@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/custom_blue"
+        android:background="?attr/mc_secondary"
         tools:context=".SeriesActivity">
         <!-- Bandeau SERIES -->
         <LinearLayout
@@ -17,13 +17,13 @@
             android:layout_height="40dp"
             android:layout_marginVertical="5dp"
             android:orientation="horizontal"
-            android:background="@color/custom_beige">
+            android:background="?attr/mc_primary">
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivFragSeriesLogo"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
                 android:layout_height="30dp"
-                android:src="@drawable/series_blue" />
+                android:src="@drawable/series" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvFragSeriesTitle"
@@ -34,7 +34,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="50dp"
                 android:text="@string/SeriesFragmentTitle"
-                android:textColor="@color/custom_blue"
+                android:textColor="?attr/mc_secondary"
                 android:textSize="20sp" />
         </LinearLayout>
         <!-- Body -->
@@ -61,7 +61,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_corner_custom_beige"
+                    android:background="@drawable/mc_block"
                     android:orientation="vertical"
                     android:padding="5dp">
 
@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:layout_weight="1"
-                        android:src="@drawable/btn_add_beige" />
+                        android:src="@drawable/btn_add_blue" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

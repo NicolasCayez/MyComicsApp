@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/custom_blue"
+        android:background="?attr/mc_secondary"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginVertical="5dp"
-            android:background="@color/custom_beige"
+            android:background="?attr/mc_primary"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:src="@drawable/search_blue" />
+                android:src="@drawable/search" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvSearchResultTitle"
@@ -41,7 +41,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="50dp"
                 android:text="@string/SearchResultTitle"
-                android:textColor="@color/custom_blue"
+                android:textColor="?attr/mc_secondary"
                 android:textSize="20sp" />
         </LinearLayout>
         <!-- Body -->
@@ -53,7 +53,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/custom_blue"
+                android:background="?attr/mc_secondary"
                 android:orientation="vertical"
                 android:weightSum="1">
                 <!-- Search Bar -->
@@ -70,7 +70,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rounded_corner_custom_beige"
+                    android:background="@drawable/mc_block"
                     android:orientation="vertical"
                     android:padding="5dp">
 
@@ -83,7 +83,7 @@
                         android:fontFamily="@font/kronika"
                         android:text="@string/SeriesListLabel"
                         android:textAlignment="textStart"
-                        android:textColor="@color/custom_blue"
+                        android:textColor="?attr/mc_secondary"
                         android:textSize="14sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -102,7 +102,7 @@
                         android:fontFamily="@font/kronika"
                         android:text="@string/BooksListLabel"
                         android:textAlignment="textStart"
-                        android:textColor="@color/custom_blue"
+                        android:textColor="?attr/mc_secondary"
                         android:textSize="14sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -136,7 +136,7 @@
                                 android:fontFamily="@font/kronika"
                                 android:text="@string/AuthorsListLabel"
                                 android:textAlignment="textStart"
-                                android:textColor="@color/custom_blue"
+                                android:textColor="?attr/mc_secondary"
                                 android:textSize="14sp" />
 
                             <androidx.recyclerview.widget.RecyclerView
@@ -163,7 +163,7 @@
                                 android:fontFamily="@font/kronika"
                                 android:text="@string/EditorsListLabel"
                                 android:textAlignment="textStart"
-                                android:textColor="@color/custom_blue"
+                                android:textColor="?attr/mc_secondary"
                                 android:textSize="14sp" />
 
                             <androidx.recyclerview.widget.RecyclerView

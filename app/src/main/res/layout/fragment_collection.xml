@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/custom_blue"
+        android:background="?attr/mc_secondary"
         tools:context=".CollectionActivity">
 
         <!-- Bandeau COLLECTION -->
@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
                 android:layout_height="30dp"
-                android:src="@drawable/collection_blue" />
+                android:src="@drawable/collection" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvFragSettingsTitle"
@@ -52,7 +52,7 @@
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corner_custom_beige"
+                android:background="@drawable/mc_block"
                 android:orientation="vertical"
                 android:padding="5dp">
                 <!-- Nb tomes enregistrés -->
@@ -64,7 +64,7 @@
                     android:fontFamily="@font/kronika"
                     android:gravity="center_horizontal"
                     android:text="@string/CollectionProfileLabel"
-                    android:textColor="@color/custom_blue"
+                    android:textColor="?attr/mc_secondary"
                     android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -75,7 +75,7 @@
                     android:background="#eee"
                     android:fontFamily="@font/kronika"
                     android:gravity="center_horizontal"
-                    android:textColor="@color/custom_blue"
+                    android:textColor="?attr/mc_secondary"
                     android:textSize="14sp" />
 
                 <LinearLayout
@@ -90,7 +90,7 @@
                         android:layout_weight="5"
                         android:fontFamily="@font/kronika"
                         android:text="@string/CollectionNbBooks"
-                        android:textColor="@color/custom_blue"
+                        android:textColor="?attr/mc_secondary"
                         android:textSize="14sp" />
 
                     <androidx.appcompat.widget.AppCompatEditText
@@ -104,7 +104,7 @@
                         android:inputType="number"
                         android:text="@string/zero"
                         android:textAlignment="textEnd"
-                        android:textColor="@color/custom_blue"
+                        android:textColor="?attr/mc_secondary"
                         android:textSize="14sp" />
                 </LinearLayout>
                 <!-- Nb séries -->
@@ -120,7 +120,7 @@
                         android:layout_weight="5"
                         android:fontFamily="@font/kronika"
                         android:text="@string/CollectionNbSeries"
-                        android:textColor="@color/custom_blue"
+                        android:textColor="?attr/mc_secondary"
                         android:textSize="14sp" />
 
                     <androidx.appcompat.widget.AppCompatEditText
@@ -134,7 +134,7 @@
                         android:inputType="number"
                         android:text="@string/zero"
                         android:textAlignment="textEnd"
-                        android:textColor="@color/custom_blue"
+                        android:textColor="?attr/mc_secondary"
                         android:textSize="14sp" />
                 </LinearLayout>
                 <!-- Nb tomes seuls -->
@@ -151,7 +151,7 @@
                         android:layout_weight="2"
                         android:fontFamily="@font/kronika"
                         android:text="@string/CollectionNbBooksNoSerie"
-                        android:textColor="@color/custom_blue"
+                        android:textColor="?attr/mc_secondary"
                         android:textSize="14sp" />
 
                     <androidx.appcompat.widget.AppCompatEditText
@@ -165,7 +165,7 @@
                         android:inputType="number"
                         android:text="@string/zero"
                         android:textAlignment="textEnd"
-                        android:textColor="@color/custom_blue"
+                        android:textColor="?attr/mc_secondary"
                         android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -178,7 +178,7 @@
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corner_custom_beige"
+                android:background="@drawable/mc_block"
                 android:orientation="vertical"
                 android:padding="5dp">
 
@@ -191,7 +191,7 @@
                     android:fontFamily="@font/kronika"
                     android:text="@string/CollectionBookNameOnly"
                     android:textAlignment="center"
-                    android:textColor="@color/custom_blue"
+                    android:textColor="?attr/mc_secondary"
                     android:textSize="14sp" />
 
                 <LinearLayout
@@ -214,7 +214,7 @@
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corner_custom_beige"
+                android:background="@drawable/mc_block"
                 android:orientation="vertical"
                 android:padding="5dp">
 
@@ -227,7 +227,7 @@
                     android:fontFamily="@font/kronika"
                     android:text="@string/CollectionAloneItem"
                     android:textAlignment="center"
-                    android:textColor="@color/custom_blue"
+                    android:textColor="?attr/mc_secondary"
                     android:textSize="14sp" />
 
                 <LinearLayout

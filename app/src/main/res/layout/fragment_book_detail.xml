@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/custom_blue"
+        android:background="?attr/mc_secondary"
         android:orientation="vertical">
 
         <!-- Bandeau DETAIL TOME -->
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginVertical="5dp"
-            android:background="@color/custom_beige"
+            android:background="?attr/mc_primary"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:src="@drawable/books_blue" />
+                android:src="@drawable/books" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvFragBookDetailTitle"
@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/rounded_corner_custom_beige"
+                    android:background="@drawable/mc_block"
                     android:orientation="vertical"
                     android:padding="5dp">
                     <!-- Titre tome -->
@@ -68,7 +68,7 @@
                         android:layout_marginHorizontal="15dp"
                         android:layout_marginVertical="15dp"
                         android:layout_weight="1"
-                        android:background="@drawable/rounded_corner_search"
+                        android:background="@drawable/mc_search_window"
                         android:fontFamily="@font/kronika"
                         android:gravity="center_horizontal"
                         android:text="@string/BookDetailTitle"
@@ -164,7 +164,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_change_bleu" />
+                                android:src="@drawable/btn_change" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/btnBookDetailAddSerie"
@@ -178,7 +178,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_delete_blue" />
+                                android:src="@drawable/btn_delete" />
                         </LinearLayout>
                     </LinearLayout>
                     <androidx.appcompat.widget.AppCompatTextView
@@ -212,7 +212,7 @@
                                 android:layout_height="150dp"
                                 android:layout_marginStart="5dp"
                                 android:layout_gravity="left"
-                                android:src="@drawable/books_blue" />
+                                android:src="@drawable/books" />
                         </LinearLayout>
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -222,7 +222,7 @@
                             android:layout_margin="5dp"
                             android:layout_gravity="center_vertical"
 
-                            android:src="@drawable/btn_change_bleu" />
+                            android:src="@drawable/btn_change" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/btnBookDetailAddPicture"
@@ -238,7 +238,7 @@
                             android:layout_height="40dp"
                             android:layout_margin="5dp"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/btn_delete_blue" />
+                            android:src="@drawable/btn_delete" />
                     </LinearLayout>
                     <!-- ISBN -->
 
@@ -504,7 +504,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_delete_blue" />
+                                android:src="@drawable/btn_delete" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -560,7 +560,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_change_bleu" />
+                                android:src="@drawable/btn_change" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/btnBookDetailAddEditor"
@@ -574,7 +574,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_delete_blue" />
+                                android:src="@drawable/btn_delete" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -587,7 +587,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="10dp"
-                    android:background="@drawable/rounded_corner_custom_beige"
+                    android:background="@drawable/mc_block"
                     android:gravity="end"
                     android:orientation="horizontal"
                     android:padding="5dp">
@@ -598,7 +598,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
-                        android:src="@drawable/btn_save_blue" />
+                        android:src="@drawable/btn_save" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btnBookDetailDeleteBook"
@@ -607,7 +607,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:paddingEnd="15dp"
-                        android:src="@drawable/btn_delete_blue" />
+                        android:src="@drawable/btn_delete" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
