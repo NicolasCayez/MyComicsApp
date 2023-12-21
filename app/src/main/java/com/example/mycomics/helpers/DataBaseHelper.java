@@ -12,12 +12,14 @@ import com.example.mycomics.beans.AuthorBean;
 import com.example.mycomics.beans.BookBean;
 import com.example.mycomics.beans.BookSerieBean;
 import com.example.mycomics.beans.EditorBean;
+import com.example.mycomics.beans.NoLinkRecordBean;
 import com.example.mycomics.beans.ProfileActiveBean;
 import com.example.mycomics.beans.ProfileBean;
 import com.example.mycomics.beans.SerieBean;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**************************************************************************************************/
 /**  /!\ SQlite NAMING CONVENTION : UPPERCASE AND UNDERSCORES /!\
@@ -658,7 +660,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // get : List<ProfileBean>
     /* ------------------------------------------------------------------------------------------ */
-    public ArrayList<ProfileBean> getListProfileBean(String query){
+    private ArrayList<ProfileBean> getListProfileBean(String query){
         ArrayList<ProfileBean> returnList = new ArrayList<>(); // list to be returned
         SQLiteDatabase db = this.getReadableDatabase(); // Database read access
         Cursor cursor = db.rawQuery(query, null); // cursor = query result data
@@ -681,7 +683,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // get : ProfiBean
     // Only 1 result thanks to LIMIT 1 in queries
     /* -------------------------------------- */
-    public ProfileBean getProfileBean(String query){
+    private ProfileBean getProfileBean(String query){
         ProfileBean profileBean = null; // bean to be returned
         SQLiteDatabase db = this.getReadableDatabase(); // Database read access
         Cursor cursor = db.rawQuery(query, null); // cursor = query result data
@@ -703,7 +705,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // get : List<EditorBean>
     /* ------------------------------------------------------------------------------------------ */
-    public ArrayList<EditorBean> getListEditorBean(String query){
+    private ArrayList<EditorBean> getListEditorBean(String query){
         ArrayList<EditorBean> returnList = new ArrayList<>(); // list to be returned
         SQLiteDatabase db = this.getReadableDatabase(); // Database read access
         Cursor cursor = db.rawQuery(query, null); // cursor = query result data
@@ -726,7 +728,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // get : EditorBean
     // Only 1 result thanks to LIMIT 1 in queries
     /* ------------------------------------------------------------------------------------------ */
-    public EditorBean getEditorBean(String query){
+    private EditorBean getEditorBean(String query){
         EditorBean editorBean = new EditorBean();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -747,7 +749,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // get : List<AuthorBean>
     /* ------------------------------------------------------------------------------------------ */
-    public ArrayList<AuthorBean> getListAuthorBean(String query){
+    private ArrayList<AuthorBean> getListAuthorBean(String query){
         ArrayList<AuthorBean> returnList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -772,7 +774,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // get : AuthorBean
     // Only 1 result thanks to LIMIT 1 in queries
     /* ------------------------------------------------------------------------------------------ */
-    public AuthorBean getAuthorBean(String query){
+    private AuthorBean getAuthorBean(String query){
         AuthorBean authorBean = new AuthorBean();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -795,7 +797,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // get : List<SerieBean>
     /* ------------------------------------------------------------------------------------------ */
-    public ArrayList<SerieBean> getListSerieBean(String query){
+    private ArrayList<SerieBean> getListSerieBean(String query){
         ArrayList<SerieBean> returnList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -818,7 +820,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // get : SerieBean
     // Only 1 result thanks to LIMIT 1 in queries
     /* ------------------------------------------------------------------------------------------ */
-    public SerieBean getSerieBean(String query){
+    private SerieBean getSerieBean(String query){
         SerieBean serieBean = new SerieBean();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -839,7 +841,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // get : List<BookBean>
     /* ------------------------------------------------------------------------------------------ */
-    public ArrayList<BookBean> getListBookBean(String query){
+    private ArrayList<BookBean> getListBookBean(String query){
         ArrayList<BookBean> returnList = new ArrayList<BookBean>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -876,7 +878,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // get : BookBean
     // Only 1 result thanks to LIMIT 1 in queries
     /* ------------------------------------------------------------------------------------------ */
-    public BookBean getTomeBean(String query){
+    private BookBean getTomeBean(String query){
         BookBean bookBean = new BookBean();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -911,7 +913,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // get : List<BookSerieBean>
     /* ------------------------------------------------------------------------------------------ */
-    public ArrayList<BookSerieBean> getListBookSerieBean(String query){
+    private ArrayList<BookSerieBean> getListBookSerieBean(String query){
         ArrayList<BookSerieBean> returnList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -948,7 +950,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // get count : boolean
     /* ------------------------------------------------------------------------------------------ */
-    public boolean checkDuplicate(String query){
+    private boolean checkDuplicate(String query){
         int nbResult = 0; // integer to check number of duplicates
         SQLiteDatabase db = this.getReadableDatabase(); // Database read access
         Cursor cursor = db.rawQuery(query, null); // cursor = query result data
@@ -969,7 +971,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // get id : int
     /* ------------------------------------------------------------------------------------------ */
-    public int getId(String query){
+    private int getId(String query){
         int id = -1; // Result initialized
         SQLiteDatabase db = this.getReadableDatabase(); // Database read access
         Cursor cursor = db.rawQuery(query, null); // cursor = query result data
@@ -986,40 +988,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     /* ------------------------------------------------------------------------------------------ */
     // get count : int
     /* ------------------------------------------------------------------------------------------ */
-    public int getNbBooks(String query){
-        List<BookBean> returnList = new ArrayList<>(); // list to be returned
-        int nbBooks = 0; // Result initialized
+    private int getCount(String query){
+        int count = 0; // int to be returned
         SQLiteDatabase db = this.getReadableDatabase(); // Database read access
         Cursor cursor = db.rawQuery(query, null); // cursor = query result data
         if (cursor.moveToFirst()) { // true if there is at least 1 row
             do { // For each tuple in the cursor
-                Integer tome_id = cursor.getInt(0); // 1 key-value pair at index 0
-                String tome_titre = cursor.getString(1); // 1 key-value pair at index 1
-                int tome_numero = cursor.getInt(2); // ...
-                String tome_isbn = cursor.getString(3);
-                String tome_image = cursor.getString(4);
-                double tome_prix_achat = cursor.getDouble(5);
-                double tome_valeur_connue = cursor.getDouble(6);
-                String tome_date_edition = cursor.getString(7);
-                // ternary operator to convert Integer from database to boolean
-                boolean tome_dedicace = cursor.getInt(8) == 1;
-                boolean tome_edition_speciale = cursor.getInt(9) == 1;
-                String tome_edition_speciale_libelle = cursor.getString(10);
-                Integer serie_id = cursor.getInt(11);
-                Integer editeur_id = cursor.getInt(12);
-                // bean created from this tuple
-                BookBean bookBean = new BookBean(tome_id, tome_titre, tome_numero, tome_isbn,
-                        tome_image, tome_prix_achat, tome_valeur_connue, tome_date_edition,
-                        tome_dedicace, tome_edition_speciale, tome_edition_speciale_libelle,
-                        serie_id, editeur_id);
-                returnList.add(bookBean); // to put the bean in the list to be returned
+                count = cursor.getInt(0); // 1 key-value pair at index 0
             } while (cursor.moveToNext()); // go to next tuple if there is more results and repeat
         } else {
             // false, no results -> do nothing
         }
         cursor.close(); // close cursor
         db.close(); // close database
-        return returnList.size(); // the list length is returned
+        return count; // the list length is returned
     }
 
 /**************************************************************************************************/
@@ -1496,6 +1478,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return getListSerieBean(query);
     }
 
+    /* ------------------------------------------------------------------------------------------ */
+    // SELECT COUNT(DISTINCT SERIES.SERIE_ID) FROM SERIES
+    //  INNER JOIN BOOKS ON SERIES.SERIE_ID = BOOKS.SERIE_ID
+    //  INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
+    //  INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    //  WHERE SERIES.SERIE_ID = BOOKS.SERIE_ID
+    /* ------------------------------------------------------------------------------------------ */
+    public int getNbSeriesCollection(){
+        String query = "SELECT COUNT(DISTINCT " + SERIES + "." + COLUMN_SERIE_ID + ") FROM " + SERIES +
+                " INNER JOIN " + BOOKS + " ON " + SERIES + "." + COLUMN_SERIE_ID + " = " + BOOKS + "." + COLUMN_SERIE_ID +
+                " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID;
+        return getCount(query);
+    }
+
     /** BOOKS **/
     /* ------------------------------------------------------------------------------------------ */
     // SELECT * FROM BOOKS
@@ -1596,6 +1593,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return getListBookSerieBean(query);
     }
 
+
     /* ------------------------------------------------------------------------------------------ */
     // SELECT * FROM BOOKS
     // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
@@ -1640,6 +1638,38 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " WHERE " + COLUMN_BOOK_TITLE + " = \"" + bookBean.getBook_title() +
                 "\" ORDER BY " + COLUMN_BOOK_ID + " DESC LIMIT 1";
         return getBookById(getId(query));
+    }
+
+    /* ------------------------------------------------------------------------------------------ */
+    // SELECT * FROM BOOKS
+    // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE BOOKS.BOOK_NUMBER IS NULL
+    // AND BOOKS.BOOK_ISBN IS NULL
+    // AND BOOKS.BOOK_PICTURE IS NULL
+    // AND BOOKS.BOOK_EDITOR_PRICE IS NULL
+    // AND BOOKS.BOOK_EDITION_DATE IS NULL
+    // AND BOOKS.BOOK_AUTOGRAPH IS NULL
+    // AND BOOKS.BOOK_SPECIAL_EDITION IS NULL
+    // AND BOOKS.BOOK_SPECIAL_EDITION_LABEL IS NULL
+    // AND BOOKS.SERIE_ID IS NULL
+    // AND BOOKS.EDITOR_ID IS NULL
+    /* ------------------------------------------------------------------------------------------ */
+    public ArrayList<BookBean> getBooksWithNameOnly(){
+        String query = "SELECT * FROM " + BOOKS +
+                " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + BOOKS + "." + COLUMN_BOOK_NUMBER + " IS NULL" +
+                " AND " + BOOKS + "." + COLUMN_BOOK_ISBN + " IS NULL" +
+                " AND " + BOOKS + "." + COLUMN_BOOK_PICTURE + " IS NULL" +
+                " AND " + BOOKS + "." + COLUMN_BOOK_EDITOR_PRICE + " IS NULL" +
+                " AND " + BOOKS + "." + COLUMN_BOOK_EDITION_DATE + " IS NULL" +
+                " AND " + BOOKS + "." + COLUMN_BOOK_AUTOGRAPH + " IS NULL" +
+                " AND " + BOOKS + "." + COLUMN_BOOK_SPECIAL_EDITION + " IS NULL" +
+                " AND " + BOOKS + "." + COLUMN_BOOK_SPECIAL_EDITION_LABEL + " IS NULL" +
+                " AND " + BOOKS + "." + COLUMN_SERIE_ID + " IS NULL" +
+                " AND " + BOOKS + "." + COLUMN_EDITOR_ID + " IS NULL";
+        return getListBookBean(query);
     }
 
     /* ------------------------------------------------------------------------------------------ */
@@ -1693,14 +1723,41 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // SELECT COUNT (*) FROM BOOKS
     // JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
     // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    /* ------------------------------------------------------------------------------------------ */
+    public int getNbBooksCollection(){
+        String query = "SELECT COUNT(*) FROM " + BOOKS +
+                " JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID;
+        return getCount(query);
+    }
+
+    /* ------------------------------------------------------------------------------------------ */
+    // SELECT * FROM BOOKS
+    // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE BOOKS.EDITOR_ID = editor_id
+    // AND BOOKS.SERIE_ID IS NULL
+    /* ------------------------------------------------------------------------------------------ */
+    public int getNBBooksNoSerie(){
+        String query = "SELECT COUNT(*) FROM " + BOOKS +
+                " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + BOOKS + "." + COLUMN_SERIE_ID + " IS NULL";
+        return getCount(query);
+    }
+
+    /* ------------------------------------------------------------------------------------------ */
+    // SELECT COUNT (*) FROM BOOKS
+    // JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
     // WHERE BOOKS.SERIE_ID = serie_id
     /* ------------------------------------------------------------------------------------------ */
     public int getNbBooksBySerieId(int serie_id){
-        String query = "SELECT * FROM " + BOOKS +
+        String query = "SELECT COUNT(*) FROM " + BOOKS +
                 " JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
                 " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
                 " WHERE " + BOOKS + "." + COLUMN_SERIE_ID + " = \"" + serie_id + "\"";
-        return getNbBooks(query);
+        return getCount(query);
     }
 
     /* ------------------------------------------------------------------------------------------ */
@@ -1711,12 +1768,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // WHERE WRITING.AUTHOR_ID = author_id
     /* ------------------------------------------------------------------------------------------ */
     public int getNbBooksByAuthorId(int author_id){
-        String query = "SELECT * FROM " + BOOKS +
+        String query = "SELECT COUNT(*) FROM " + BOOKS +
                 " JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
                 " JOIN " + WRITING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + WRITING + "." + COLUMN_AUTHOR_ID +
                 " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
                 " WHERE " + WRITING + "." + COLUMN_AUTHOR_ID + " = \"" + author_id + "\"";
-        return getNbBooks(query);
+        return getCount(query);
     }
 
     /* ------------------------------------------------------------------------------------------ */
@@ -1726,11 +1783,130 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // WHERE BOOKS.EDITOR_ID = editor_id
     /* ------------------------------------------------------------------------------------------ */
     public int getNbBooksByEditorId(int editor_id) {
-        String query = "SELECT * FROM " + BOOKS +
+        String query = "SELECT COUNT(*) FROM " + BOOKS +
                 " JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
                 " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
                 " WHERE " + BOOKS + "." + COLUMN_EDITOR_ID + " = \"" + editor_id + "\"";
-        return getNbBooks(query);
+        return getCount(query);
+    }
+
+    /* ------------------------------------------------------------------------------------------ */
+    // Special case, the list is done with more than one request
+    // 1 each for books, series, authors, editors, the type is defined when adding the record in the list
+    //
+    // 1st : BOOKS
+    // SELECT BOOKS.BOOK_ID, BOOKS.BOOK_TITLE FROM BOOKS
+    // LEFT JOIN WRITING ON BOOKS.BOOK_ID = WRITING.BOOK_ID
+    // INNER JOIN DETAINING ON BOOKS.BOOK_ID = DETAINING.BOOK_ID
+    // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
+    // WHERE BOOKS.SERIE_ID IS NULL
+    // AND BOOKS.EDITOR_ID IS NULL
+    // AND BOOKS.BOOK_ID NOT IN (SELECT WRITING.BOOK_ID FROM WRITING)
+    //
+    // 2nd : SERIES
+    // SELECT SERIES.SERIE_ID, SERIES.SERIE_NAME FROM SERIES
+    //  LEFT JOIN BOOKS ON SERIES.SERIE_ID = BOOKS.SERIE_ID
+    //  WHERE SERIES.SERIE_ID NOT IN (SELECT BOOKS.SERIE_ID FROM BOOKS
+    //								WHERE BOOKS.SERIE_ID IS NOT NULL)
+    //
+    // 3rd : AUTHORS
+    // SELECT EDITORS.EDITOR_ID, EDITORS.EDITOR_NAME FROM EDITORS
+    //  LEFT JOIN BOOKS ON EDITORS.EDITOR_ID = BOOKS.EDITOR_ID
+    //  WHERE EDITORS.EDITOR_ID NOT IN (SELECT BOOKS.EDITOR_ID FROM BOOKS
+    //								WHERE BOOKS.EDITOR_ID IS NOT NULL)
+    //
+    // 4th : EDITORS
+    // SELECT EDITORS.EDITOR_ID, EDITORS.EDITOR_NAME FROM EDITORS
+    //  LEFT JOIN BOOKS ON EDITORS.EDITOR_ID = BOOKS.EDITOR_ID
+    //  WHERE EDITORS.EDITOR_ID NOT IN (SELECT BOOKS.EDITOR_ID FROM BOOKS
+    //								WHERE BOOKS.EDITOR_ID IS NOT NULL)
+    /* ------------------------------------------------------------------------------------------ */
+    public ArrayList<NoLinkRecordBean> getNoLinkRecordsList () {
+        ArrayList<NoLinkRecordBean> returnList = new ArrayList<>(); // list to be returned
+        SQLiteDatabase db = this.getReadableDatabase(); // Database read access
+        /* BOOKS with no link */
+        // The query to be used
+        String query = "SELECT " + BOOKS + "." + COLUMN_BOOK_ID + ", " + BOOKS + "." + COLUMN_BOOK_TITLE + " FROM " + BOOKS +
+                " LEFT JOIN " + WRITING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + WRITING + "." + COLUMN_BOOK_ID +
+                " INNER JOIN " + DETAINING + " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
+                " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
+                " WHERE " + BOOKS + "." + COLUMN_SERIE_ID + " IS NULL" +
+                " AND " + BOOKS + "." + COLUMN_EDITOR_ID + " IS NULL" +
+                " AND " + BOOKS + "." + COLUMN_BOOK_ID + " NOT IN (SELECT " + WRITING + "." + COLUMN_BOOK_ID + " FROM " + WRITING + ")";
+        Cursor cursor = db.rawQuery(query, null); // cursor = query result data
+        if (cursor.moveToFirst()) { // true if there is at least 1 row
+            do { // For each tuple in the cursor
+                int record_id = cursor.getInt(0); // 1 key-value pair at index 0
+                String record_label = cursor.getString(1); // 1 key-value pair at index 1
+                String record_type = "book"; // type of the record
+                NoLinkRecordBean noLinkRecordBean = new NoLinkRecordBean(record_id, record_label, record_type); // bean created from this tuple
+                returnList.add(noLinkRecordBean); // to put the bean in the list to be returned
+            } while (cursor.moveToNext()); // go to next tuple if there is more results and repeat
+        } else {
+            // false, no results -> do nothing
+        }
+        /* SERIES with no link */
+        // The query to be used
+        query = "SELECT " + SERIES + "." + COLUMN_SERIE_ID + ", " + SERIES + "." + COLUMN_SERIE_NAME + " FROM " + SERIES +
+                " LEFT JOIN " + BOOKS + " ON " + SERIES + "." + COLUMN_SERIE_ID + " = " + BOOKS + "." + COLUMN_SERIE_ID +
+                " WHERE " + SERIES + "." + COLUMN_SERIE_ID + " NOT IN (SELECT " + BOOKS + "." + COLUMN_SERIE_ID + " FROM " + BOOKS +
+                                                                        " WHERE " + BOOKS + "." + COLUMN_SERIE_ID + " IS NOT NULL)";
+        cursor = db.rawQuery(query, null); // cursor = query result data
+        if (cursor.moveToFirst()) { // true if there is at least 1 row
+            do { // For each tuple in the cursor
+                int record_id = cursor.getInt(0); // 1 key-value pair at index 0
+                String record_label = cursor.getString(1); // 1 key-value pair at index 1
+                String record_type = "serie"; // type of the record
+                NoLinkRecordBean noLinkRecordBean = new NoLinkRecordBean(record_id, record_label, record_type); // bean created from this tuple
+                returnList.add(noLinkRecordBean); // to put the bean in the list to be returned
+            } while (cursor.moveToNext()); // go to next tuple if there is more results and repeat
+        } else {
+            // false, no results -> do nothing
+        }
+        /* AUTHORS with no link */
+        // The query to be used
+        query = "SELECT DISTINCT " + AUTHORS + "." + COLUMN_AUTHOR_ID + ", " + AUTHORS + "." + COLUMN_AUTHOR_PSEUDONYM + " FROM " + AUTHORS +
+                " LEFT JOIN " + WRITING + " ON " + AUTHORS + "." + COLUMN_AUTHOR_ID + " = " + WRITING + "." + COLUMN_AUTHOR_ID +
+                " WHERE " + AUTHORS + "." + COLUMN_AUTHOR_ID + " NOT IN (SELECT " + WRITING + "." + COLUMN_AUTHOR_ID + " FROM " + WRITING + ")";
+        cursor = db.rawQuery(query, null); // cursor = query result data
+        if (cursor.moveToFirst()) { // true if there is at least 1 row
+            do { // For each tuple in the cursor
+                int record_id = cursor.getInt(0); // 1 key-value pair at index 0
+                String record_label = cursor.getString(1); // 1 key-value pair at index 1
+                String record_type = "author"; // type of the record
+                NoLinkRecordBean noLinkRecordBean = new NoLinkRecordBean(record_id, record_label, record_type); // bean created from this tuple
+                returnList.add(noLinkRecordBean); // to put the bean in the list to be returned
+            } while (cursor.moveToNext()); // go to next tuple if there is more results and repeat
+        } else {
+            // false, no results -> do nothing
+        }
+        /* EDITORS with no link */
+        // The query to be used
+        query = "SELECT " + EDITORS + "." + COLUMN_EDITOR_ID + ", " + EDITORS + "." + COLUMN_EDITOR_NAME + " FROM " + EDITORS +
+                " LEFT JOIN " + BOOKS + " ON " + EDITORS + "." + COLUMN_EDITOR_ID + " = " + BOOKS + "." + COLUMN_EDITOR_ID +
+                " WHERE " + EDITORS + "." + COLUMN_EDITOR_ID + " NOT IN (SELECT " + BOOKS + "." + COLUMN_EDITOR_ID + " FROM " + BOOKS +
+                                                                        " WHERE " + BOOKS + "." + COLUMN_EDITOR_ID + " IS NOT NULL)";
+        cursor = db.rawQuery(query, null); // cursor = query result data
+        if (cursor.moveToFirst()) { // true if there is at least 1 row
+            do { // For each tuple in the cursor
+                int record_id = cursor.getInt(0); // 1 key-value pair at index 0
+                String record_label = cursor.getString(1); // 1 key-value pair at index 1
+                String record_type = "editor"; // type of the record
+                NoLinkRecordBean noLinkRecordBean = new NoLinkRecordBean(record_id, record_label, record_type); // bean created from this tuple
+                returnList.add(noLinkRecordBean); // to put the bean in the list to be returned
+            } while (cursor.moveToNext()); // go to next tuple if there is more results and repeat
+        } else {
+            // false, no results -> do nothing
+        }
+        cursor.close(); // close cursor
+        db.close(); // close database
+        //Sorting the list alphabetically on the label whith a comparator
+        Collections.sort(returnList, new Comparator<NoLinkRecordBean>() {
+            public int compare(NoLinkRecordBean record1, NoLinkRecordBean record2) {
+                return record1.getRecord_label().compareTo(record2.getRecord_label());
+            }
+        });
+        return returnList; // the list is returned
     }
 
     public void feedDatabase(SQLiteDatabase db){
@@ -1773,48 +1949,47 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Gess\");\n"); //author_id 36
         db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Rabarot\");\n"); //author_id 37
         db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Breton\");\n"); //author_id 38
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Vatine\");\n"); //author_id 39
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Blanchard\");\n"); //author_id 40
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Emem\");\n"); //author_id 41
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Alex Alice\");\n"); //author_id 42
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Mitric\");\n"); //author_id 43
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Lamirand\");\n"); //author_id 44
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Ange\");\n"); //author_id 45
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Paty\");\n"); //author_id 46
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Gaudin\");\n"); //author_id 47
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Briones\");\n"); //author_id 48
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Tackian\");\n"); //author_id 49
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Miquel\");\n"); //author_id 50
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Ludolullabi\");\n"); //author_id 51
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Péru\");\n"); //author_id 52
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Runberg\");\n"); //author_id 53
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Ocaña\");\n"); //author_id 54
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Louis\");\n"); //author_id 55
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Mariolle\");\n"); //author_id 56
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"aurore\");\n"); //author_id 57
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Paille\");\n"); //author_id 58
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Campoy\");\n"); //author_id 59
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Alliel\");\n"); //author_id 60
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Morris\");\n"); //author_id 61
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Melanÿa\");\n"); //author_id 62
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Floch\");\n"); //author_id 63
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Pellet\");\n"); //author_id 64
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Dorison\");\n"); //author_id 65
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Diaz Canales\");\n"); //author_id 66
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Pellejero\");\n"); //author_id 67
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Olivier Delcroix\");\n"); //author_id 68
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Bajram\");\n"); //author_id 69
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Sokal\");\n"); //author_id 70
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Tardi\");\n"); //author_id 71
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Lob\");\n"); //author_id 72
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Rochette\");\n"); //author_id 73
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Legrand\");\n"); //author_id 74
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Koren Shadmi\");\n"); //author_id 75
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"W. Vance\");\n"); //author_id 76
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"J. Van Hamme\");\n"); //author_id 77
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"J. Giraud\");\n"); //author_id 78
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Francq\");\n"); //author_id 79
-        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Bourgeon\");\n"); //author_id 80
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Blanchard\");\n"); //author_id 39
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Emem\");\n"); //author_id 40
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Alex Alice\");\n"); //author_id 41
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Mitric\");\n"); //author_id 42
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Lamirand\");\n"); //author_id 43
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Ange\");\n"); //author_id 44
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Paty\");\n"); //author_id 45
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Gaudin\");\n"); //author_id 46
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Briones\");\n"); //author_id 47
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Tackian\");\n"); //author_id 48
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Miquel\");\n"); //author_id 49
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Ludolullabi\");\n"); //author_id 50
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Péru\");\n"); //author_id 51
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Runberg\");\n"); //author_id 52
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Ocaña\");\n"); //author_id 53
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Louis\");\n"); //author_id 54
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Mariolle\");\n"); //author_id 55
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"aurore\");\n"); //author_id 56
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Paille\");\n"); //author_id 57
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Campoy\");\n"); //author_id 58
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Alliel\");\n"); //author_id 59
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Morris\");\n"); //author_id 60
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Melanÿa\");\n"); //author_id 61
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Floch\");\n"); //author_id 62
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Pellet\");\n"); //author_id 63
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Dorison\");\n"); //author_id 64
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Diaz Canales\");\n"); //author_id 65
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Pellejero\");\n"); //author_id 66
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Olivier Delcroix\");\n"); //author_id 67
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Bajram\");\n"); //author_id 68
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Sokal\");\n"); //author_id 69
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Tardi\");\n"); //author_id 70
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Lob\");\n"); //author_id 71
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Rochette\");\n"); //author_id 72
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Legrand\");\n"); //author_id 73
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Koren Shadmi\");\n"); //author_id 74
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"W. Vance\");\n"); //author_id 75
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"J. Van Hamme\");\n"); //author_id 76
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"J. Giraud\");\n"); //author_id 77
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Francq\");\n"); //author_id 78
+        db.execSQL("INSERT INTO AUTHORS(AUTHOR_PSEUDONYM) VALUES(\"Bourgeon\");\n"); //author_id 79
 
         /** EDITORS */
         db.execSQL("INSERT INTO EDITORS(EDITOR_NAME) VALUES(\"Casterman\");\n"); //editor_id 1
@@ -2221,14 +2396,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(50,17);\n"); // Nicoloff 17
         /*------------------------------------------------------------------------------------*/
         // Joe Bar Team - Book_id 51-57
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(51,18);\n"); // Bar2
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(52,19);\n"); // 'Fane
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(53,19);\n"); // 'Fane
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(54,19);\n"); // 'Fane
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(55,18);\n"); // Bar2
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(56,19);\n"); // 'Fane
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(57,20);\n"); // Jenfevre
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(57,21);\n"); // Perna
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(51,18);\n"); // Bar2 18
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(52,19);\n"); // 'Fane 19
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(53,19);\n"); // 'Fane 19
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(54,19);\n"); // 'Fane 19
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(55,18);\n"); // Bar2 18
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(56,19);\n"); // 'Fane 19
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(57,20);\n"); // Jenfevre 20
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(57,21);\n"); // Perna 21
         /*------------------------------------------------------------------------------------*/
         // Clifton - Book_id 58-67
         for (int bookID = 58; bookID <= 64; bookID++) {
@@ -2303,8 +2478,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(105,33);\n"); // Guess 36
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(105,3);\n"); // Duval 3
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(105,38);\n"); // Breton 38
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(105,39);\n"); // Vatine 39
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(105,40);\n"); // Blanchard 40
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(105,12);\n"); // Vatine 12
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(105,39);\n"); // Blanchard 39
         //106
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(106,33);\n"); // Guess 36
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(106,3);\n"); // Duval 3
@@ -2324,13 +2499,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         for (int bookID = 114; bookID <= 115; bookID++) {
             db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",3);\n"); // Duval 3
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",41);\n"); // Emem 41
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",40);\n"); // Emem 40
             db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",32);\n"); // Schelle 32
         }
         /*------------------------------------------------------------------------------------*/
         // Siegfried - Book_id 116-117
         for (int bookID = 116; bookID <= 117; bookID++) {
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",42);\n"); // Alex Alice 42
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",41);\n"); // Alex Alice 41
         }
         /*------------------------------------------------------------------------------------*/
         // Kookaburra - Book_id 118-122
@@ -2338,68 +2513,68 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(118,2);\n"); // Crisse 2
         for (int bookID = 119; bookID <= 121; bookID++) {
             db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",2);\n"); // Crisse 2
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",43);\n"); // Mitric 43
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",42);\n"); // Mitric 42
         }
         //122
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(122,43);\n"); // Mitric 43
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(122,44);\n"); // Lamirand 44
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(122,42);\n"); // Mitric 42
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(122,43);\n"); // Lamirand 43
         /*------------------------------------------------------------------------------------*/
         // Kookaburra Universe - Book_id 123-133
         //123 T1
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(123,2);\n"); // Crisse 2
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(123,43);\n"); // Mitric 43
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(123,42);\n"); // Mitric 42
         //124-125 T2 T3
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(124,2);\n"); // Crisse 2
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(124,45);\n"); // Ange 45
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(124,46);\n"); // Paty 46
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(124,44);\n"); // Ange 44
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(124,45);\n"); // Paty 45
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(125,2);\n"); // Crisse 2
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(125,45);\n"); // Ange 45
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(125,46);\n"); // Paty 46
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(125,44);\n"); // Ange 44
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(125,45);\n"); // Paty 45
         //126 T4
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(126,2);\n"); // Crisse 2
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(126,47);\n"); // Gaudin 47
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(126,48);\n"); // Briones 48
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(126,46);\n"); // Gaudin 46
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(126,47);\n"); // Briones 47
         //127 T5
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(127,2);\n"); // Crisse 2
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(127,49);\n"); // Tackian 49
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(127,50);\n"); // Miquel 50
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(127,51);\n"); // Ludolullabi 51
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(127,48);\n"); // Tackian 48
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(127,49);\n"); // Miquel 49
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(127,50);\n"); // Ludolullabi 50
         //128 T6
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(128,2);\n"); // Crisse 2
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(128,43);\n"); // Mitric 43
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(128,52);\n"); // Péru 52
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(128,42);\n"); // Mitric 42
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(128,51);\n"); // Péru 51
         //129 T7
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(129,2);\n"); // Crisse 2
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(129,53);\n"); // Runberg 53
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(129,54);\n"); // Ocaña 54
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(129,52);\n"); // Runberg 52
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(129,53);\n"); // Ocaña 53
         //130 T9
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(130,2);\n"); // Crisse 2
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(130,43);\n"); // Mitric 43
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(130,55);\n"); // Louis 55
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(130,44);\n"); // Lamirand 44
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(130,42);\n"); // Mitric 42
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(130,54);\n"); // Louis 54
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(130,43);\n"); // Lamirand 43
         //131 T10
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(131,2);\n"); // Crisse 2
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(131,43);\n"); // Mitric 43
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(131,56);\n"); // Mariolle 56
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(131,57);\n"); // Aurore 57
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(131,42);\n"); // Mitric 42
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(131,55);\n"); // Mariolle 55
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(131,56);\n"); // Aurore 56
         //132 T11
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(132,2);\n"); // Crisse 2
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(132,43);\n"); // Mitric 43
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(132,58);\n"); // Paille 58
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(132,59);\n"); // Campoy 59
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(132,42);\n"); // Mitric 42
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(132,57);\n"); // Paille 57
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(132,58);\n"); // Campoy 58
         //133 T12
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(133,2);\n"); // Crisse 2
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(133,43);\n"); // Mitric 43
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(133,60);\n"); // Alliel 60
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(133,42);\n"); // Mitric 42
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(133,59);\n"); // Alliel 59
         /*------------------------------------------------------------------------------------*/
         // Lucky Luke - Book_id 134-137
         for (int bookID = 134; bookID <= 137; bookID++) {
             db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",5);\n"); // Goscinny 5
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",61);\n"); // Morris 61
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",60);\n"); // Morris 60
         }
         /*------------------------------------------------------------------------------------*/
         // angela - Book_id 138
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(138,39);\n"); // Vatine 39
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(138,12);\n"); // Vatine 12
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(138,30);\n"); // Pecqueur 30
         /*------------------------------------------------------------------------------------*/
         // Lanfeust des étoiles - Book_id 138-147
@@ -2414,25 +2589,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         /*------------------------------------------------------------------------------------*/
         // Cixi de Troy - Book_id 149
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(149,9);\n"); // Arleston 9
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(149,39);\n"); // Vatine 39
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(149,12);\n"); // Vatine 12
         /*------------------------------------------------------------------------------------*/
         // Tykko des sables - Book_id 150-151
         for (int bookID = 150; bookID <= 151; bookID++) {
             db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",9);\n"); // Arleston 9
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",62);\n"); // Melanÿa 62
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",61);\n"); // Melanÿa 61
             db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",15);\n"); // Keramidas 15
         }
         /*------------------------------------------------------------------------------------*/
         // Les naufragés d'Ythaq - Book_id 152-159
         for (int bookID = 152; bookID <= 159; bookID++) {
             db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",9);\n"); // Arleston 9
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",63);\n"); // Floch 63
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",62);\n"); // Floch 62
         }
         /*------------------------------------------------------------------------------------*/
         // Les forêts d'Opale - Book_id 160-168
         for (int bookID = 160; bookID <= 168; bookID++) {
             db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",9);\n"); // Arleston 9
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",64);\n"); // Pellet 64
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",63);\n"); // Pellet 63
         }
         /*------------------------------------------------------------------------------------*/
         // Streamliner - Book_id 169-170
@@ -2442,8 +2617,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         /*------------------------------------------------------------------------------------*/
         // Le troisième testament - Book_id 171-175
         for (int bookID = 171; bookID <= 175; bookID++) {
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",42);\n"); // Alex Alice 42
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",65);\n"); // dorison 65
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",41);\n"); // Alex Alice 41
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",64);\n"); // dorison 64
         }
         /*------------------------------------------------------------------------------------*/
         // Corto Maltese - Book_id 176-191
@@ -2451,52 +2626,52 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",7);\n"); // Hugo Pratt 7
         }
         for (int bookID = 186; bookID <= 189; bookID++) {
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",66);\n"); // Diaz Canales 66
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",67);\n"); // Pellejero 67
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",65);\n"); // Diaz Canales 65
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",66);\n"); // Pellejero 66
         }
         //190
         db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(190,7);\n"); // Hugo Pratt 7
         //191
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(191,68);\n"); // Olivier Delcroix
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(191,67);\n"); // Olivier Delcroix 67
         /*------------------------------------------------------------------------------------*/
         // Universal War One - Book_id 192-197
         for (int bookID = 192; bookID <= 197; bookID++) {
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",69);\n"); // Bajram 69
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",68);\n"); // Bajram 68
         }
         /*------------------------------------------------------------------------------------*/
         // Canardo - Book_id 198-207
         for (int bookID = 197; bookID <= 207; bookID++) {
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",70);\n"); // Sokal 70
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",69);\n"); // Sokal 69
         }
         /*------------------------------------------------------------------------------------*/
         // Les aventures extraordinaires d'Adèle Blanc-Sec - Book_id 208-213
         for (int bookID = 208; bookID <= 213; bookID++) {
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",71);\n"); // Tardi 71
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",70);\n"); // Tardi 70
         }
         /*------------------------------------------------------------------------------------*/
         // Le transperceneige - Book_id 214
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(214,72);\n"); // Lob 72
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(214,73);\n"); // Rochette 73
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(214,74);\n"); // Legrand 74
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(214,71);\n"); // Lob 71
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(214,72);\n"); // Rochette 72
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(214,73);\n"); // Legrand 73
         /*------------------------------------------------------------------------------------*/
         // Le Voyageur - Book_id 215
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(215,72);\n"); // Koren Shadmi 75
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(215,74);\n"); // Koren Shadmi 74
         /*------------------------------------------------------------------------------------*/
         // XIII - Book_id 216-234
         for (int bookID = 216; bookID <= 232; bookID++) {
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",76);\n"); // W. Vance 76
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",77);\n"); // J. Van Hamme 77
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",75);\n"); // W. Vance 75
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",76);\n"); // J. Van Hamme 76
         }
         //233
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(233,77);\n"); // J. Van Hamme 77
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(233,78);\n"); // J. Giraud 78
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(233,76);\n"); // J. Van Hamme 76
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(233,77);\n"); // J. Giraud 77
         //234
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(234,76);\n"); // W. Vance 76
-        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(234,77);\n"); // J. Van Hamme 77
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(234,75);\n"); // W. Vance 75
+        db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(234,76);\n"); // J. Van Hamme 76
         /*------------------------------------------------------------------------------------*/
         // Largo Winch - Book_id 235-244
         for (int bookID = 235; bookID <= 244; bookID++) {
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",79);\n"); // Francq 79
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",78);\n"); // Francq 78
             db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",77);\n"); // J. Van Hamme 77
         }
         /*------------------------------------------------------------------------------------*/
@@ -2508,7 +2683,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         /*------------------------------------------------------------------------------------*/
         // Largo Winch - Book_id 249-254
         for (int bookID = 249; bookID <= 254; bookID++) {
-            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",80);\n"); // Bourgeon 80
+            db.execSQL("INSERT INTO WRITING(BOOK_ID, AUTHOR_ID) VALUES(" + bookID + ",79);\n"); // Bourgeon 79
         }
 
 

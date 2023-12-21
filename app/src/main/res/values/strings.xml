@@ -16,6 +16,7 @@
     <string name="SearchResultTitle">SEARCH</string>
 
     <!--  Common data labels  -->
+    <string name="zero" translatable="false">0</string>
     <string name="SeriesListLabel">Series</string>
     <string name="SerieLabel">Serie :</string>
     <string name="BooksListLabel">Books</string>
@@ -37,6 +38,7 @@
 
     <!--  CollectionFragment  -->
     <string name="CollectionFragmentTitle">COLLECTION</string>
+    <string name="CollectionProfileLabel">Collection from profile</string>
     <string name="CollectionNbBooks">Number of Books</string>
     <string name="CollectionNbSeries">Number of Series</string>
     <string name="CollectionNbBooksNoSerie">Number of Book without Serie</string>
@@ -46,6 +48,7 @@
 
     <!--  Series  -->
     <string name="SeriesFragmentTitle">SERIES</string>
+    <string name="Serie">Serie</string>
     <string name="SerieDetailFragmentTitle">SERIE DETAIL</string>
     <string name="SerieDetailTitle">Serie name</string>
     <string name="SeriePopupAddTitle">Enter serie name</string>
@@ -96,6 +99,7 @@
 
     <!--  Authors  -->
     <string name="AuthorsFragmentTitle">AUTHORS</string>
+    <string name="Author">author</string>
     <string name="AuthorDetailFragmentTitle">AUTHOR DETAIL</string>
     <string name="AuthorDetailPseudonym">Author pseudonym</string>
     <string name="AuthorDetailLastNameTitle">Author last name</string>
@@ -116,6 +120,7 @@
 
     <!--  Editors  -->
     <string name="EditorsFragmentTitle">EDITORS</string>
+    <string name="Editor">Editor</string>
     <string name="EditorDetailFragmentTitle">EDITOR DETAIL</string>
     <string name="EditorDetailName">Editor name</string>
     <string name="EditorPopupAddTitle">Enter editor name</string>

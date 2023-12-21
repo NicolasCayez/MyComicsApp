@@ -117,4 +117,8 @@
     <string name="Books">Tomes</string>
     <string name="BookNumber">T.</string>
     <string name="BookRemoveAuthorError">Erreur retrait Auteur</string>
+    <string name="CollectionProfileLabel">Collection du profil</string>
+    <string name="Serie">Série</string>
+    <string name="Editor">Editeur</string>
+    <string name="Author">Auteur</string>
 </resources>

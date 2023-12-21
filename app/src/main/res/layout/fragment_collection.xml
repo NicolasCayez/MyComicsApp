@@ -39,225 +39,211 @@
                 android:textSize="20sp" />
         </LinearLayout>
         <!-- Body -->
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical"
             android:layout_weight="1">
+
             <LinearLayout
+                android:id="@+id/layColStats"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner_custom_beige"
                 android:orientation="vertical"
-                android:weightSum="10">
-                <LinearLayout
-                    android:id="@+id/layColStats"
+                android:padding="5dp">
+                <!-- Nb tomes enregistrés -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCollectionActiveProfileLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_corner_custom_beige"
-                    android:orientation="vertical"
-                    android:padding="5dp">
-                    <!-- Nb tomes enregistrés -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/kronika"
+                    android:gravity="center_horizontal"
+                    android:text="@string/CollectionProfileLabel"
+                    android:textColor="@color/custom_blue"
+                    android:textSize="14sp" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvCollectionNbBooksTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="5"
-                            android:fontFamily="@font/kronika"
-                            android:text="@string/CollectionNbBooks"
-                            android:textColor="@color/custom_blue"
-                            android:textSize="14sp" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/tvCollectionNbBooks"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@android:color/transparent"
-                            android:ems="10"
-                            android:fontFamily="@font/kronika"
-                            android:inputType="number"
-                            android:text="0"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/custom_blue"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-                    <!-- Nb séries -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvCollectionNbSeriesTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="5"
-                            android:fontFamily="@font/kronika"
-                            android:text="@string/CollectionNbSeries"
-                            android:textColor="@color/custom_blue"
-                            android:textSize="14sp" />
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/tvCollectionNbSeries"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@android:color/transparent"
-                            android:ems="10"
-                            android:fontFamily="@font/kronika"
-                            android:inputType="number"
-                            android:text="0"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/custom_blue"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-                    <!-- Nb tomes seuls -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvCollectionNbBooksNoSerieTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:fontFamily="@font/kronika"
-                            android:text="@string/CollectionNbBooksNoSerie"
-                            android:textColor="@color/custom_blue"
-                            android:textSize="14sp" />
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/tvCollectionNbBooksNoSerie"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@android:color/transparent"
-                            android:ems="10"
-                            android:fontFamily="@font/kronika"
-                            android:inputType="number"
-                            android:text="0"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/custom_blue"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-                </LinearLayout>
-                <!-- Dernier tome -->
-                <LinearLayout
-                    android:id="@+id/layColLast"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCollectionActiveProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_corner_custom_beige"
-                    android:orientation="vertical"
-                    android:padding="5dp">
+                    android:layout_marginBottom="10dp"
+                    android:background="#eee"
+                    android:fontFamily="@font/kronika"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/custom_blue"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvCollectionLastBookTitle"
-                        android:layout_width="match_parent"
+                        android:id="@+id/tvCollectionNbBooksTitle"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="5"
                         android:fontFamily="@font/kronika"
-                        android:text="@string/CollectionLastBook"
-                        android:textAlignment="center"
+                        android:text="@string/CollectionNbBooks"
                         android:textColor="@color/custom_blue"
                         android:textSize="14sp" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/tvCollectionNbBooks"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivCollectionLastBookPicture"
-                            android:layout_width="250px"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/books_blue" />
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/textView6"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/kronika"
-                            android:text="TextView"
-                            android:textColor="@color/custom_blue"
-                            android:textSize="14sp" />
-                    </LinearLayout>
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:fontFamily="@font/kronika"
+                        android:inputType="number"
+                        android:text="@string/zero"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/custom_blue"
+                        android:textSize="14sp" />
                 </LinearLayout>
-                <!-- Tomes à compléter -->
+                <!-- Nb séries -->
                 <LinearLayout
-                    android:id="@+id/layColCompleter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_corner_custom_beige"
-                    android:orientation="vertical"
-                    android:padding="5dp">
+                    android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvCollectionBookNameOnlyTitle"
-                        android:layout_width="match_parent"
+                        android:id="@+id/tvCollectionNbSeriesTitle"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="5"
                         android:fontFamily="@font/kronika"
-                        android:text="@string/CollectionBookNameOnly"
-                        android:textAlignment="center"
+                        android:text="@string/CollectionNbSeries"
                         android:textColor="@color/custom_blue"
                         android:textSize="14sp" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
 
-                        <ListView
-                            android:id="@+id/lvCollectionBooksNameOnly"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:background="#eee"
-                            android:nestedScrollingEnabled="true" />
-                    </LinearLayout>
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/tvCollectionNbSeries"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:fontFamily="@font/kronika"
+                        android:inputType="number"
+                        android:text="@string/zero"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/custom_blue"
+                        android:textSize="14sp" />
                 </LinearLayout>
-                <!-- enregistrements sans lien -->
+                <!-- Nb tomes seuls -->
                 <LinearLayout
-                    android:id="@+id/layColSansLien"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_corner_custom_beige"
-                    android:orientation="vertical"
-                    android:padding="5dp">
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvCollectionAloneItemTitle"
-                        android:layout_width="match_parent"
+                        android:id="@+id/tvCollectionNbBooksNoSerieTitle"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="2"
                         android:fontFamily="@font/kronika"
-                        android:text="@string/CollectionAloneItem"
-                        android:textAlignment="center"
+                        android:text="@string/CollectionNbBooksNoSerie"
                         android:textColor="@color/custom_blue"
                         android:textSize="14sp" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
 
-                        <ListView
-                            android:id="@+id/lvCollectionAloneItems"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:background="#eee"
-                            android:nestedScrollingEnabled="true" />
-                    </LinearLayout>
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/tvCollectionNbBooksNoSerie"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:fontFamily="@font/kronika"
+                        android:inputType="number"
+                        android:text="@string/zero"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/custom_blue"
+                        android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
-        </ScrollView>
+            <!-- Dernier tome -->
+            <!-- Tomes à compléter -->
+            <LinearLayout
+                android:id="@+id/layColCompleter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner_custom_beige"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCollectionBookNameOnlyTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/kronika"
+                    android:text="@string/CollectionBookNameOnly"
+                    android:textAlignment="center"
+                    android:textColor="@color/custom_blue"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvCollectionBooksNameOnly"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="#eee" />
+                </LinearLayout>
+            </LinearLayout>
+            <!-- enregistrements sans lien -->
+            <LinearLayout
+                android:id="@+id/layColSansLien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner_custom_beige"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCollectionAloneItemTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/kronika"
+                    android:text="@string/CollectionAloneItem"
+                    android:textAlignment="center"
+                    android:textColor="@color/custom_blue"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvCollectionAloneItems"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="#eee" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>
