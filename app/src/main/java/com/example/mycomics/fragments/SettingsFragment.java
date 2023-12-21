@@ -1,6 +1,9 @@
 package com.example.mycomics.fragments;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -13,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -88,7 +92,7 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         /* Display initialization */
-        ActiveProfileDisplay();
+        activeProfileDisplay();
 
         /* Add Profile button handler and Profile creation popup */
         // Click event on add button
@@ -149,7 +153,7 @@ public class SettingsFragment extends Fragment {
                     }
                 });
                 popupTextDialog.build(); // To build the popup
-                ActiveProfileDisplay(); // To refresh display
+                activeProfileDisplay(); // To refresh display
             }
         });
 
@@ -201,7 +205,7 @@ public class SettingsFragment extends Fragment {
                 popupListDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        ActiveProfileDisplay();
+                        activeProfileDisplay();
                     }
                 });
             }
@@ -229,6 +233,25 @@ public class SettingsFragment extends Fragment {
 //                startActivity(intent);
             }
         });
+
+        /* Dark mode switch click click */
+        binding.swSettingsDarkMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                if (binding.swSettingsDarkMode.isChecked()){
+                    // save mode
+                    editor.putInt("darkMode", 1);
+                    editor.apply();
+                } else {
+                    // save mode
+                    editor.putInt("darkMode", 0);
+                    editor.apply();
+                }
+                activeProfileDisplay();
+            }
+        });
     }
 
     @Override
@@ -236,9 +259,21 @@ public class SettingsFragment extends Fragment {
         super.onDestroy();
         binding = null;
     }
-    private void ActiveProfileDisplay() {
+    private void activeProfileDisplay() {
+        /* Dark mode */
+        // Fetching config file
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        int darkMode = sharedPref.getInt("darkMode", 0);
+        // Applying light / dark mode
+        if (darkMode == 1) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            binding.swSettingsDarkMode.setChecked(true);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            binding.swSettingsDarkMode.setChecked(false);
+        }
+        /* Active profile display */
         try {
-            System.out.println("test: " + dataBaseHelper.getProfileByActiveProfile().getProfile_name());
             binding.tvSettingsActiveProfile.setText(dataBaseHelper.getProfileByActiveProfile().getProfile_name());
         } catch (Exception e) {
 

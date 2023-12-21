@@ -1,5 +1,7 @@
 package com.example.mycomics;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -7,6 +9,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.navigation.fragment.NavHostFragment;
@@ -31,6 +34,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /** Dark mode initialization */
+        // Fetching config file
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        int darkMode = sharedPref.getInt("darkMode", 0);
+        // Applying light / dark mode
+        if (darkMode == 1) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
 
         /** Layout Inflater */
         binding = ActivityMainBinding.inflate(getLayoutInflater());
