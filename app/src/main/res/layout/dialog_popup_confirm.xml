@@ -30,7 +30,7 @@
             android:layout_margin="5dp"
             android:background="@drawable/mc_button"
             android:fontFamily="@font/kronika"
-            android:text="@string/btnValider"
+            android:text="@string/btnConfirm"
             android:textColor="?attr/mc_primary" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -40,7 +40,7 @@
             android:layout_margin="5dp"
             android:background="@drawable/mc_button"
             android:fontFamily="@font/kronika"
-            android:text="@string/btnAnnuler"
+            android:text="@string/btnAbort"
             android:textColor="?attr/mc_primary" />
 
     </LinearLayout>

@@ -12,7 +12,7 @@
         android:paddingVertical="10dp"
         android:textAlignment="textStart"
         android:paddingStart="10dp"
-        android:textColor="@color/custom_blue"
+        android:textColor="?attr/mc_secondary"
         android:textSize="14sp" />
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvRecyclerView_2col_col2"
@@ -22,6 +22,6 @@
         android:paddingVertical="10dp"
         android:paddingEnd="10dp"
         android:textAlignment="textEnd"
-        android:textColor="@color/custom_blue"
+        android:textColor="?attr/mc_secondary"
         android:textSize="14sp" />
 </LinearLayout>

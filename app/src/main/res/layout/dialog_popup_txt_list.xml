@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginBottom="20dp"
-        android:background="#eee"
+        android:background="?attr/mc_list_bg"
         android:fontFamily="@font/kronika"
         android:textColor="?attr/mc_secondary"
         android:textSize="14sp" />
@@ -32,13 +32,13 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:background="#eee"
+        android:background="?attr/mc_list_bg"
         android:ems="10"
         android:fontFamily="@font/kronika"
         android:gravity="center_horizontal"
         android:inputType="text"
         android:textColor="?attr/mc_secondary"
-        android:textColorHint="#999"
+        android:textColorHint="?attr/mc_secondary_border"
         android:textSize="14sp" />
 
 
@@ -55,7 +55,7 @@
             android:layout_margin="5dp"
             android:background="@drawable/mc_button"
             android:fontFamily="@font/kronika"
-            android:text="@string/btnValider"
+            android:text="@string/btnConfirm"
             android:textColor="?attr/mc_primary" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -65,7 +65,7 @@
             android:layout_margin="5dp"
             android:background="@drawable/mc_button"
             android:fontFamily="@font/kronika"
-            android:text="@string/btnAnnuler"
+            android:text="@string/btnAbort"
             android:textColor="?attr/mc_primary" />
 
     </LinearLayout>

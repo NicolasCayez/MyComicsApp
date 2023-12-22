@@ -9,6 +9,6 @@
     <stroke android:width="2dp" android:color="#ccc" />
 
     <!--- This is the background color -->
-    <solid android:color="#eee" />
+    <solid android:color="?attr/mc_list_bg" />
 
 </shape>

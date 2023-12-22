@@ -2,6 +2,7 @@ package com.example.mycomics.fragments;
 
 import static androidx.navigation.fragment.FragmentKt.findNavController;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -95,7 +97,24 @@ public class EditorDetailFragment extends Fragment {
 
         /* Display initialization */
         EditorBean editorBean = dataBaseHelper.getEditorById(editor_id);
-        editorDetailRefreshScreen(editorBean);
+        editorDetailInitialize(editorBean);
+
+        /* Enter key after modifying the editor name */
+        binding.etEditorDetailEditorName.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // if "ENTER" key is pressed
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    binding.btnEditorDetailSaveEditor.performClick();
+                    // Hide the keyboard
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    return true; // inherited, necessary
+                }
+                return false; // inherited, necessary
+            }
+        });
 
         /* Click on Serie in the list (RecyclerView) */
         seriesAdapter.setOnClickListener(new SeriesNbAdapter.OnClickListener() {
@@ -187,7 +206,7 @@ public class EditorDetailFragment extends Fragment {
                     }
                 });
                 popupTextDialog.build(); // To build the popup
-                editorDetailRefreshScreen(editorBean); // To refresh display
+                editorDetailReload(editor_id); // To refresh display
             }
         });
 
@@ -212,9 +231,9 @@ public class EditorDetailFragment extends Fragment {
 
 
     //* ----------------------------------------------------------------------------------------- */
-    //* Display initialization and refresh method
+    //* Display initialization and refresh methods
     //* ----------------------------------------------------------------------------------------- */
-    private void editorDetailRefreshScreen(EditorBean editorBean){
+    private void editorDetailInitialize(EditorBean editorBean){
 
         // Editor Name
         binding.etEditorDetailEditorName.setText(editorBean.getEditor_name());
@@ -251,6 +270,13 @@ public class EditorDetailFragment extends Fragment {
         binding.rvEditorDetailAuthorsList.setLayoutManager(new GridLayoutManager(getContext(),1));
         // The list is submitted to the adapter
         authorsAdapter.submitList(AuthorsList);
+    }
+    private void editorDetailReload(Integer editor_id) {
+        // Data bundle storing key-value pairs
+        Bundle bundle = new Bundle();
+        bundle.putInt("editor_id", editor_id);
+        // go to AuthorDetailFragment with the data bundle
+        findNavController(EditorDetailFragment.this).navigate(R.id.editorDetailFragment, bundle);
     }
 
     //* ----------------------------------------------------------------------------------------- */

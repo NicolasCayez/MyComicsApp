@@ -11,7 +11,7 @@
         android:fontFamily="@font/kronika"
         android:paddingVertical="10dp"
         android:textAlignment="center"
-        android:textColor="@color/custom_blue"
+        android:textColor="?attr/mc_secondary"
         android:textSize="14sp" />
 
 </LinearLayout>

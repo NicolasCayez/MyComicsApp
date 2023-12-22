@@ -18,7 +18,7 @@
             android:layout_height="40dp"
             android:layout_marginVertical="5dp"
             android:orientation="horizontal"
-            android:background="@color/custom_beige">
+            android:background="?attr/mc_primary">
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivFragAuthorsLogo"
                 android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="50dp"
                 android:text="@string/CollectionFragmentTitle"
-                android:textColor="@color/custom_blue"
+                android:textColor="?attr/mc_secondary"
                 android:textSize="20sp" />
         </LinearLayout>
         <!-- Body -->
@@ -72,7 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:background="#eee"
+                    android:background="?attr/mc_list_bg"
                     android:fontFamily="@font/kronika"
                     android:gravity="center_horizontal"
                     android:textColor="?attr/mc_secondary"
@@ -203,7 +203,7 @@
                         android:id="@+id/rvCollectionBooksNameOnly"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:background="#eee" />
+                        android:background="?attr/mc_list_bg" />
                 </LinearLayout>
             </LinearLayout>
             <!-- enregistrements sans lien -->
@@ -239,7 +239,7 @@
                         android:id="@+id/rvCollectionAloneItems"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:background="#eee" />
+                        android:background="?attr/mc_list_bg" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

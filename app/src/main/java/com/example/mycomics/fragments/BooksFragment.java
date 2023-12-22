@@ -2,6 +2,7 @@ package com.example.mycomics.fragments;
 
 import static androidx.navigation.fragment.FragmentKt.findNavController;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,6 +42,12 @@ public class BooksFragment extends Fragment {
     //* Database handler initialization
     //* ----------------------------------------------------------------------------------------- */
     DataBaseHelper dataBaseHelper;
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Filter needed for the list
+    //* ----------------------------------------------------------------------------------------- */
+    String filter = "";
 
 
     //* ----------------------------------------------------------------------------------------- */
@@ -86,10 +94,19 @@ public class BooksFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        /* Data sent from this fragment when filtering list */
+        try {
+            filter = getArguments().getString("filter");
+        } catch (Exception e) {
+            filter = "";
+        }
+
         /* Display initialization */
-        booksRefreshScreen();
+        booksInitialize(filter);
+
         /* Search bar */
         // Search Hint initialization
+//        binding.sbSearch.svSearch.setQueryHint(getString(R.string.SearchHintFilterOrSearch));
         binding.sbSearch.svSearch.setQueryHint(getString(R.string.SearchHintFilterOrSearch));
         // Click event on Search button
         binding.sbSearch.btnSearch.setOnClickListener(new View.OnClickListener() {
@@ -111,11 +128,19 @@ public class BooksFragment extends Fragment {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-                booksRefreshScreen(); // To refresh display
                 return false;
             }
         });
-
+        binding.sbSearch.btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Data bundle storing search string
+                Bundle bundle = new Bundle();
+                bundle.putString("filter", binding.sbSearch.svSearch.getQuery().toString());
+                // Go to SearchResultFragment with the data bundle
+                findNavController(BooksFragment.this).navigate(R.id.booksFragment, bundle);
+            }
+        });
         /* Add Book button handler and Book creation popup */
         // Click event on add button
         binding.btnBooksAddBook.setOnClickListener(new View.OnClickListener() {
@@ -153,7 +178,7 @@ public class BooksFragment extends Fragment {
                             Toast.makeText(getActivity(), getString(R.string.BookCreationSuccess), Toast.LENGTH_SHORT).show();
                         }
                         popupTextDialog.dismiss(); // To close popup
-                        booksRefreshScreen(); // To refresh display
+                        booksReload(filter); // To reload display
                     }
                 });
                 // Key event, same behaviour as confirm button
@@ -163,6 +188,9 @@ public class BooksFragment extends Fragment {
                         // if "ENTER" key is pressed
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                            // Hide the keyboard
+                            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                             popupTextDialog.getBtnPopupConfirm().performClick();
                             return true; // inherited, necessary
                         }
@@ -174,10 +202,11 @@ public class BooksFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         popupTextDialog.dismiss(); // To close popup
+                        booksReload(filter); // To reload display
                     }
                 });
                 popupTextDialog.build(); // To build the popup
-                booksRefreshScreen(); // To refresh display
+
             }
         });
 
@@ -208,19 +237,26 @@ public class BooksFragment extends Fragment {
     //* ----------------------------------------------------------------------------------------- */
     //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
-    private void booksRefreshScreen(){
+    private void booksInitialize(String filter){
         // Creating the list to display
-        ArrayList<BookSerieBean> BooksList = dataBaseHelper.getBooksAndBooksSeriesList();
+        ArrayList<BookSerieBean> booksList = dataBaseHelper.getBooksAndBooksSeriesList();
         // If the search bar contains a filter
-        if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            BooksList = dataBaseHelper.getBooksAndSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString().replace("'",""));
+        if (filter.length() > 0) {
+            booksList = dataBaseHelper.getBooksAndSeriesListByFilter(filter.replace("'",""));
         }
         // The adapter gets the list and the string value "books" needed for translations
-        bookSerieAdapter = new BookSerieAdapter(BooksList, getString(R.string.BookNumber));
+        bookSerieAdapter = new BookSerieAdapter(booksList, getString(R.string.BookNumber));
         // the adapter and the layout are defined for the RecyclerView
         binding.rvBooksBooksList.setAdapter(bookSerieAdapter);
         binding.rvBooksBooksList.setLayoutManager(new GridLayoutManager(getContext(),1));
         // The list is submitted to the adapter
-        bookSerieAdapter.submitList(BooksList);
+        bookSerieAdapter.submitList(booksList);
+    }
+    private void booksReload(String filter) {
+        // Data bundle storing key-value pairs
+        Bundle bundle = new Bundle();
+        bundle.putString("filter", filter);
+        // go to AuthorDetailFragment with the data bundle
+        findNavController(BooksFragment.this).navigate(R.id.booksFragment, bundle);
     }
 }

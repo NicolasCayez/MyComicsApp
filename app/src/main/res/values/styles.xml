@@ -2,8 +2,8 @@
 <resources>
     <!--  Base application theme  -->
     <style name="Base.Theme.MyComics" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:editTextColor">#275f74</item>
-        <item name="android:textColorHint">#275f74</item>
+        <item name="android:editTextColor">?attr/mc_secondary</item>
+        <item name="android:textColorHint">?attr/mc_secondary_border</item>
 
     </style>
 
@@ -11,4 +11,13 @@
     <style name="Theme.MyComics" parent="Base.Theme.MyComics">
 
     </style>
+    <style name="checkBoxStyle" parent="Base.Theme.AppCompat">
+        <item name="colorAccent">?attr/mc_secondary</item>
+        <item name="android:textColorSecondary">?attr/mc_secondary</item>
+    </style>
+    <style name="switchStyle" parent="Base.Theme.AppCompat">
+        <item name="colorAccent">?attr/mc_secondary</item>
+        <item name="android:textColorSecondary">?attr/mc_secondary</item>
+    </style>
+
 </resources>

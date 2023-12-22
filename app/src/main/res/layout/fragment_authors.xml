@@ -70,7 +70,7 @@
                         android:layout_height="400dp"
                         android:layout_marginHorizontal="15dp"
                         android:layout_marginVertical="15dp"
-                        android:background="#eee" />
+                        android:background="?attr/mc_list_bg" />
 
                 </LinearLayout>
                 <!-- Bouton plus -->

@@ -2,6 +2,7 @@ package com.example.mycomics.fragments;
 
 import static androidx.navigation.fragment.FragmentKt.findNavController;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,6 +41,12 @@ public class EditorsFragment extends Fragment {
     //* Database handler initialization
     //* ----------------------------------------------------------------------------------------- */
     DataBaseHelper dataBaseHelper;
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Filter needed for the list
+    //* ----------------------------------------------------------------------------------------- */
+    String filter = "";
 
 
     //* ----------------------------------------------------------------------------------------- */
@@ -85,8 +93,16 @@ public class EditorsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        /* Data sent from this fragment when filtering list */
+        try {
+            filter = getArguments().getString("filter");
+        } catch (Exception e) {
+            filter = "";
+        }
+
         /* Display initialization */
-        editorsRefreshScreen();
+        editorsInitialize();
+
         /* Search bar */
         // Search Hint initialization
         binding.sbSearch.svSearch.setQueryHint(getString(R.string.SearchHintFilterOrSearch));
@@ -110,7 +126,6 @@ public class EditorsFragment extends Fragment {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-                editorsRefreshScreen(); // To refresh display
                 return false;
             }
         });
@@ -151,7 +166,7 @@ public class EditorsFragment extends Fragment {
                             Toast.makeText(getActivity(), getString(R.string.EditorCreationSuccess), Toast.LENGTH_SHORT).show();
                         }
                         popupTextDialog.dismiss(); // To close popup
-                        editorsRefreshScreen(); // To refresh display
+                        editorsReload(filter); // To reload display
                     }
                 });
                 // Key event, same behaviour as confirm button
@@ -162,6 +177,9 @@ public class EditorsFragment extends Fragment {
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
                             popupTextDialog.getBtnPopupConfirm().performClick();
+                            // Hide the keyboard
+                            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                             return true; // inherited, necessary
                         }
                         return false; // inherited, necessary
@@ -172,10 +190,11 @@ public class EditorsFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         popupTextDialog.dismiss(); // To close popup
+                        editorsReload(filter); // To reload display
                     }
                 });
                 popupTextDialog.build(); // To build the popup
-                editorsRefreshScreen(); // To refresh display
+
             }
         });
 
@@ -206,12 +225,12 @@ public class EditorsFragment extends Fragment {
     //* ----------------------------------------------------------------------------------------- */
     //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
-    private void editorsRefreshScreen(){
+    private void editorsInitialize(){
         // Creating the list to display
         ArrayList<EditorBean> EditorsList = dataBaseHelper.getEditorsList();
         // If the search bar contains a filter
-        if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            EditorsList = dataBaseHelper.getEditorsListByFilter(binding.sbSearch.svSearch.getQuery().toString().replace("'",""));
+        if (filter.length() > 0) {
+            EditorsList = dataBaseHelper.getEditorsListByFilter(filter.replace("'",""));
         }
         // The adapter gets the list and the string value "books" needed for translations
         editorsAdapter = new EditorsNbAdapter(EditorsList, getString(R.string.Books));
@@ -220,5 +239,12 @@ public class EditorsFragment extends Fragment {
         binding.rvEditorsEditorsList.setLayoutManager(new GridLayoutManager(getContext(),1));
         // The list is submitted to the adapter
         editorsAdapter.submitList(EditorsList);
+    }
+    private void editorsReload(String filter) {
+        // Data bundle storing key-value pairs
+        Bundle bundle = new Bundle();
+        bundle.putString("filter", filter);
+        // go to AuthorDetailFragment with the data bundle
+        findNavController(EditorsFragment.this).navigate(R.id.editorsFragment, bundle);
     }
 }

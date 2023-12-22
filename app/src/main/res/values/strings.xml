@@ -29,9 +29,11 @@
     <string name="EditorLabelHint">Editor name</string>
 
     <!--  Popup Buttons  -->
-    <string name="btnValider">CONFIRM</string>
-    <string name="btnAnnuler">ABORT</string>
-    <string name="btnChercher">SEARCH</string>
+    <string name="btnConfirm">CONFIRM</string>
+    <string name="btnAbort">ABORT</string>
+    <string name="btnSearch">SEARCH</string>
+    <string name="btnFilter">FILTER</string>
+
 
     <!--  HomeFragment  -->
     <string name="HomeFragmentTitle">HOME</string>

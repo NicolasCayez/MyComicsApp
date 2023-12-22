@@ -2,6 +2,7 @@ package com.example.mycomics.fragments;
 
 import static androidx.navigation.fragment.FragmentKt.findNavController;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,6 +41,12 @@ public class AuthorsFragment extends Fragment {
     //* Database handler initialization
     //* ----------------------------------------------------------------------------------------- */
     DataBaseHelper dataBaseHelper;
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Filter needed for the list
+    //* ----------------------------------------------------------------------------------------- */
+    String filter = "";
 
 
     //* ----------------------------------------------------------------------------------------- */
@@ -85,8 +93,16 @@ public class AuthorsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        /* Data sent from this fragment when filtering list */
+        try {
+            filter = getArguments().getString("filter");
+        } catch (Exception e) {
+            filter = "";
+        }
+
         /* Display initialization */
-        authorsRefreshScreen();
+        authorsInitialize();
+
         /* Search bar */
         // Search Hint initialization
         binding.sbSearch.svSearch.setQueryHint(getString(R.string.SearchHintFilterOrSearch));
@@ -110,7 +126,6 @@ public class AuthorsFragment extends Fragment {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-                authorsRefreshScreen(); // To refresh display
                 return false;
             }
         });
@@ -151,7 +166,7 @@ public class AuthorsFragment extends Fragment {
                             Toast.makeText(getActivity(), getString(R.string.AuthorCreationSuccess), Toast.LENGTH_SHORT).show();
                         }
                         popupTextDialog.dismiss(); // To close popup
-                        authorsRefreshScreen(); // To refresh display
+                        authorsReload(filter); // To reload display
                     }
                 });
                 // Key event, same behaviour as confirm button
@@ -162,6 +177,9 @@ public class AuthorsFragment extends Fragment {
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
                             popupTextDialog.getBtnPopupConfirm().performClick();
+                            // Hide the keyboard
+                            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                             return true; // inherited, necessary
                         }
                         return false; // inherited, necessary
@@ -172,10 +190,10 @@ public class AuthorsFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         popupTextDialog.dismiss(); // To close popup
+                        authorsReload(filter); // To reload display
                     }
                 });
                 popupTextDialog.build(); // To build the popup
-                authorsRefreshScreen(); // To refresh display
             }
         });
 
@@ -206,12 +224,12 @@ public class AuthorsFragment extends Fragment {
     //* ----------------------------------------------------------------------------------------- */
     //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
-    private void authorsRefreshScreen(){
+    private void authorsInitialize(){
         // Creating the list to display
         ArrayList<AuthorBean> AuthorsList = dataBaseHelper.getAuthorsList();
         // If the search bar contains a filter
-        if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            AuthorsList = dataBaseHelper.getAuthorsListByFilter(binding.sbSearch.svSearch.getQuery().toString().replace("'",""));
+        if (filter.length() > 0) {
+            AuthorsList = dataBaseHelper.getAuthorsListByFilter(filter.replace("'",""));
         }
         // The adapter gets the list and the string value "books" needed for translations
         authorsAdapter = new AuthorsNbAdapter(AuthorsList, getString(R.string.Books));
@@ -220,5 +238,12 @@ public class AuthorsFragment extends Fragment {
         binding.rvAuthorsAuthorsList.setLayoutManager(new GridLayoutManager(getContext(),1));
         // The list is submitted to the adapter
         authorsAdapter.submitList(AuthorsList);
+    }
+    private void authorsReload(String filter) {
+        // Data bundle storing key-value pairs
+        Bundle bundle = new Bundle();
+        bundle.putString("filter", filter);
+        // go to AuthorDetailFragment with the data bundle
+        findNavController(AuthorsFragment.this).navigate(R.id.authorsFragment, bundle);
     }
 }

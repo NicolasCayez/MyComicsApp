@@ -101,7 +101,7 @@
                             android:id="@+id/etAuthorDetailAuthorLastName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="#eee"
+                            android:background="?attr/mc_list_bg"
                             android:fontFamily="@font/kronika"
                             android:hint="@string/AuthorDetailLastName"
                             android:textAlignment="center"
@@ -132,7 +132,7 @@
                             android:id="@+id/etAuthorDetailAuthorFirstName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="#eee"
+                            android:background="?attr/mc_list_bg"
                             android:fontFamily="@font/kronika"
                             android:hint="@string/AuthorDetailFirstName"
                             android:textAlignment="center"
@@ -163,7 +163,7 @@
                             android:id="@+id/rvAuthorDetailSeriesList"
                             android:layout_width="match_parent"
                             android:layout_height="150dp"
-                            android:background="#eee" />
+                            android:background="?attr/mc_list_bg" />
                     </LinearLayout>
                     <!-- Liste tomes -->
                     <androidx.appcompat.widget.AppCompatTextView
@@ -188,13 +188,13 @@
                             android:id="@+id/lvAuthorDetailBooksList"
                             android:layout_width="match_parent"
                             android:layout_height="150dp"
-                            android:background="#eee"
+                            android:background="?attr/mc_list_bg"
                             android:nestedScrollingEnabled="true" />
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rvAuthorDetailBooksList"
                             android:layout_width="match_parent"
                             android:layout_height="150dp"
-                            android:background="#eee" />
+                            android:background="?attr/mc_list_bg" />
                     </LinearLayout>
                     <!-- Liste Editeurs -->
                     <LinearLayout
@@ -254,7 +254,7 @@
                                 android:layout_height="120dp"
                                 android:layout_marginEnd="15dp"
                                 android:layout_weight="1"
-                                android:background="#eee" />
+                                android:background="?attr/mc_list_bg" />
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/rvAuthorDetailEditorsList"
@@ -262,7 +262,7 @@
                                 android:layout_height="120dp"
                                 android:layout_marginStart="15dp"
                                 android:layout_weight="1"
-                                android:background="#eee" />
+                                android:background="?attr/mc_list_bg" />
 
                         </LinearLayout>
                     </LinearLayout>

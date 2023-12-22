@@ -5,6 +5,7 @@
         <attr name="mc_primary_border" format="color"/>
         <attr name="mc_secondary" format="color"/>
         <attr name="mc_secondary_border" format="color"/>
+        <attr name="mc_list_bg" format="color"/>
     </declare-styleable>
 
 </resources>

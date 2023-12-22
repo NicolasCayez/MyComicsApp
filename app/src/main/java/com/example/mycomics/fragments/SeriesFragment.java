@@ -2,6 +2,7 @@ package com.example.mycomics.fragments;
 
 import static androidx.navigation.fragment.FragmentKt.findNavController;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,6 +41,12 @@ public class SeriesFragment extends Fragment {
     //* Database handler initialization
     //* ----------------------------------------------------------------------------------------- */
     DataBaseHelper dataBaseHelper;
+
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Filter needed for the list
+    //* ----------------------------------------------------------------------------------------- */
+    String filter = "";
 
 
     //* ----------------------------------------------------------------------------------------- */
@@ -85,8 +93,15 @@ public class SeriesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        /* Data sent from this fragment when filtering list */
+        try {
+            filter = getArguments().getString("filter");
+        } catch (Exception e) {
+            filter = "";
+        }
+
         /* Display initialization */
-        seriesRefreshScreen();
+        seriesInitialize();
 
         /* Search bar */
         // Search Hint initialization
@@ -111,7 +126,6 @@ public class SeriesFragment extends Fragment {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-                seriesRefreshScreen(); // To refresh display
                 return false;
             }
         });
@@ -152,7 +166,7 @@ public class SeriesFragment extends Fragment {
                             Toast.makeText(getActivity(), getString(R.string.SerieCreationSuccess), Toast.LENGTH_SHORT).show();
                         }
                         popupTextDialog.dismiss(); // To close popup
-                        seriesRefreshScreen(); // To refresh display
+                        seriesReload(filter); // To reload display
                     }
                 });
                 // Key event, same behaviour as confirm button
@@ -163,6 +177,9 @@ public class SeriesFragment extends Fragment {
                         if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
                             popupTextDialog.getBtnPopupConfirm().performClick();
+                            // Hide the keyboard
+                            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                             return true; // inherited, necessary
                         }
                         return false; // inherited, necessary
@@ -173,10 +190,10 @@ public class SeriesFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         popupTextDialog.dismiss(); // To close popup
+                        seriesReload(filter); // To reload display
                     }
                 });
                 popupTextDialog.build(); // To build the popup
-                seriesRefreshScreen(); // To refresh display
             }
         });
 
@@ -207,12 +224,12 @@ public class SeriesFragment extends Fragment {
     //* ----------------------------------------------------------------------------------------- */
     //* Display initialization and refresh method
     //* ----------------------------------------------------------------------------------------- */
-    private void seriesRefreshScreen(){
+    private void seriesInitialize(){
         // Creating the list to display
         ArrayList<SerieBean> SeriesList = dataBaseHelper.getSeriesList();
         // If the search bar contains a filter
-        if (binding.sbSearch.svSearch.getQuery().toString().length() > 0) {
-            SeriesList = dataBaseHelper.getSeriesListByFilter(binding.sbSearch.svSearch.getQuery().toString().replace("'",""));
+        if (filter.length() > 0) {
+            SeriesList = dataBaseHelper.getSeriesListByFilter(filter.replace("'",""));
         }
         // The adapter gets the list and the string value "books" needed for translations
         seriesAdapter = new SeriesNbAdapter(SeriesList, getString(R.string.Books));
@@ -221,5 +238,12 @@ public class SeriesFragment extends Fragment {
         binding.rvSeriesSeriesList.setLayoutManager(new GridLayoutManager(getContext(),1));
         // The list is submitted to the adapter
         seriesAdapter.submitList(SeriesList);
+    }
+    private void seriesReload(String filter) {
+        // Data bundle storing key-value pairs
+        Bundle bundle = new Bundle();
+        bundle.putString("filter", filter);
+        // go to AuthorDetailFragment with the data bundle
+        findNavController(SeriesFragment.this).navigate(R.id.seriesFragment, bundle);
     }
 }

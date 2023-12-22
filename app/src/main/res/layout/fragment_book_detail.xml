@@ -95,7 +95,7 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/kronika"
                                 android:text="@string/BookDetailNumber"
-                                android:textColor="@color/custom_blue"
+                                android:textColor="?attr/mc_secondary"
                                 android:textSize="14sp" />
 
                             <androidx.appcompat.widget.AppCompatEditText
@@ -104,14 +104,14 @@
                                 android:layout_height="25dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_weight="1"
-                                android:background="#eee"
+                                android:background="?attr/mc_list_bg"
                                 android:ems="10"
                                 android:fontFamily="@font/kronika"
                                 android:hint="@string/BookDetailNumberHint"
                                 android:inputType="number"
                                 android:textAlignment="textEnd"
-                                android:textColor="@color/custom_blue"
-                                android:textColorHint="#999"
+                                android:textColor="?attr/mc_secondary"
+                                android:textColorHint="?attr/mc_secondary_border"
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -131,7 +131,7 @@
                             android:fontFamily="@font/kronika"
                             android:text="@string/SerieLabel"
                             android:textAlignment="textStart"
-                            android:textColor="@color/custom_blue"
+                            android:textColor="?attr/mc_secondary"
                             android:textSize="14sp" />
 
                         <LinearLayout
@@ -143,11 +143,11 @@
                                 android:id="@+id/tvBookDetailSerie"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="#eee"
+                                android:background="?attr/mc_list_bg"
                                 android:fontFamily="@font/kronika"
                                 android:hint="@string/SeriePopupAddHint"
                                 android:textAlignment="center"
-                                android:textColor="@color/custom_blue"
+                                android:textColor="?attr/mc_secondary"
                                 android:textSize="14sp" />
 
                         </LinearLayout>
@@ -190,7 +190,7 @@
                         android:fontFamily="@font/kronika"
                         android:text="Picture"
                         android:textAlignment="textStart"
-                        android:textColor="@color/custom_blue"
+                        android:textColor="?attr/mc_secondary"
                         android:textSize="14sp" />
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -257,7 +257,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/kronika"
                             android:text="ISBN :"
-                            android:textColor="@color/custom_blue"
+                            android:textColor="?attr/mc_secondary"
                             android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -266,14 +266,14 @@
                             android:layout_height="25dp"
                             android:layout_marginTop="5dp"
                             android:layout_weight="1"
-                            android:background="#eee"
+                            android:background="?attr/mc_list_bg"
                             android:ems="10"
                             android:fontFamily="@font/kronika"
                             android:hint="ISBN"
                             android:inputType="text"
                             android:textAlignment="textEnd"
-                            android:textColor="@color/custom_blue"
-                            android:textColorHint="#999"
+                            android:textColor="?attr/mc_secondary"
+                            android:textColorHint="?attr/mc_secondary_border"
                             android:textSize="14sp" />
                     </LinearLayout>
 
@@ -291,7 +291,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/kronika"
                             android:text="@string/BookDetailEditorPrice"
-                            android:textColor="@color/custom_blue"
+                            android:textColor="?attr/mc_secondary"
                             android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -300,12 +300,12 @@
                             android:layout_height="25dp"
                             android:layout_marginTop="5dp"
                             android:layout_weight="1"
-                            android:background="#eee"
+                            android:background="?attr/mc_list_bg"
                             android:ems="10"
                             android:fontFamily="@font/kronika"
                             android:inputType="number|numberDecimal"
                             android:textAlignment="textEnd"
-                            android:textColor="@color/custom_blue"
+                            android:textColor="?attr/mc_secondary"
                             android:textSize="14sp" />
                     </LinearLayout>
                     <!-- Valeur actuelle -->
@@ -323,7 +323,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/kronika"
                             android:text="@string/BookDetailValue"
-                            android:textColor="@color/custom_blue"
+                            android:textColor="?attr/mc_secondary"
                             android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -332,12 +332,12 @@
                             android:layout_height="25dp"
                             android:layout_marginTop="5dp"
                             android:layout_weight="1"
-                            android:background="#eee"
+                            android:background="?attr/mc_list_bg"
                             android:ems="10"
                             android:fontFamily="@font/kronika"
                             android:inputType="number|numberDecimal"
                             android:textAlignment="textEnd"
-                            android:textColor="@color/custom_blue"
+                            android:textColor="?attr/mc_secondary"
                             android:textSize="14sp" />
                     </LinearLayout>
                     <!-- Date édition -->
@@ -355,7 +355,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/kronika"
                             android:text="@string/BookDetailEditionDate"
-                            android:textColor="@color/custom_blue"
+                            android:textColor="?attr/mc_secondary"
                             android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -364,14 +364,14 @@
                             android:layout_height="25dp"
                             android:layout_marginTop="5dp"
                             android:layout_weight="1"
-                            android:background="#eee"
+                            android:background="?attr/mc_list_bg"
                             android:ems="10"
                             android:fontFamily="@font/kronika"
                             android:hint="@string/BookDetailEditionDateHint"
                             android:inputType="datetime|date"
                             android:textAlignment="textEnd"
-                            android:textColor="@color/custom_blue"
-                            android:textColorHint="#999"
+                            android:textColor="?attr/mc_secondary"
+                            android:textColorHint="?attr/mc_secondary_border"
                             android:textSize="14sp" />
                     </LinearLayout>
                     <!-- Dédicassé -->
@@ -390,11 +390,12 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/kronika"
                             android:text="@string/BookDetailAutograph"
-                            android:textColor="@color/custom_blue"
+                            android:textColor="?attr/mc_secondary"
                             android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/chkBookDetailAutograph"
+                            android:theme="@style/checkBoxStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="25dp" />
                         <!--                                        app:buttonTint="@color/custom_blue"            -->
@@ -421,11 +422,12 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/kronika"
                                 android:text="@string/BookDetailSpecialEdition"
-                                android:textColor="@color/custom_blue"
+                                android:textColor="?attr/mc_secondary"
                                 android:textSize="14sp" />
 
                             <androidx.appcompat.widget.AppCompatCheckBox
                                 android:id="@+id/chkBookDetailSpecialEdition"
+                                android:theme="@style/checkBoxStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="25dp" />
                             <!--                                              app:buttonTint="@color/custom_blue"      -->
@@ -437,13 +439,13 @@
                             android:layout_height="25dp"
                             android:layout_marginTop="5dp"
                             android:layout_weight="1"
-                            android:background="#eee"
+                            android:background="?attr/mc_list_bg"
                             android:ems="10"
                             android:fontFamily="@font/kronika"
                             android:hint="@string/BookDetailSpecialEditionHint"
                             android:inputType="text"
-                            android:textColor="@color/custom_blue"
-                            android:textColorHint="#999"
+                            android:textColor="?attr/mc_secondary"
+                            android:textColorHint="?attr/mc_secondary_border"
                             android:textSize="14sp" />
                     </LinearLayout>
 
@@ -466,7 +468,7 @@
                             android:fontFamily="@font/kronika"
                             android:text="@string/AuthorLabel"
                             android:textAlignment="textStart"
-                            android:textColor="@color/custom_blue"
+                            android:textColor="?attr/mc_secondary"
                             android:textSize="14sp" />
 
                         <LinearLayout
@@ -478,7 +480,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginBottom="20dp"
-                                android:background="#eee"
+                                android:background="?attr/mc_list_bg"
                                 android:fontFamily="@font/kronika"
                                 android:nestedScrollingEnabled="true"
                                 android:textColor="@color/custom_blue"
@@ -527,7 +529,7 @@
                             android:fontFamily="@font/kronika"
                             android:text="@string/EditorLabel"
                             android:textAlignment="textStart"
-                            android:textColor="@color/custom_blue"
+                            android:textColor="?attr/mc_secondary"
                             android:textSize="14sp" />
 
                         <LinearLayout
@@ -539,11 +541,11 @@
                                 android:id="@+id/tvBookDetailEditor"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="#eee"
+                                android:background="?attr/mc_list_bg"
                                 android:fontFamily="@font/kronika"
                                 android:hint="@string/EditorLabelHint"
                                 android:textAlignment="center"
-                                android:textColor="@color/custom_blue"
+                                android:textColor="?attr/mc_secondary"
                                 android:textSize="14sp" />
 
                         </LinearLayout>

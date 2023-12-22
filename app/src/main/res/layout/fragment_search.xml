@@ -27,8 +27,8 @@
             app:defaultQueryHint="@string/SearchHintFilterOrSearch"
             app:iconifiedByDefault="false"
             app:queryBackground="@android:color/transparent"
-            app:searchHintIcon="@drawable/search_icon"
-            app:searchIcon="@drawable/search_icon" />
+            app:searchHintIcon="@drawable/search"
+            app:searchIcon="@drawable/search" />
     </LinearLayout>
 
     <LinearLayout
@@ -38,7 +38,15 @@
         android:gravity="end"
         android:orientation="horizontal"
         android:paddingHorizontal="15dp">
-
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/mc_button"
+            android:fontFamily="@font/kronika"
+            android:text="@string/btnFilter"
+            android:textColor="?attr/mc_primary" />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSearch"
             android:layout_width="wrap_content"
@@ -46,7 +54,7 @@
             android:layout_margin="5dp"
             android:background="@drawable/mc_button"
             android:fontFamily="@font/kronika"
-            android:text="@string/btnChercher"
+            android:text="@string/btnSearch"
             android:textColor="?attr/mc_primary" />
     </LinearLayout>
 </LinearLayout>

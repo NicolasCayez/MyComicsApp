@@ -50,6 +50,10 @@
         <action
             android:id="@+id/action_series_to_bookDetail"
             app:destination="@id/bookDetailFragment" />
+        <argument
+            android:name="filter"
+            app:argType="string"
+            app:nullable="true" />
 
     </fragment>
     <fragment
@@ -75,6 +79,10 @@
         <action
             android:id="@+id/action_authors_to_bookDetail"
             app:destination="@id/bookDetailFragment" />
+        <argument
+            android:name="filter"
+            app:argType="string"
+            app:nullable="true" />
 
     </fragment>
 
@@ -104,6 +112,10 @@
         <action
             android:id="@+id/action_editors_to_bookDetail"
             app:destination="@id/bookDetailFragment" />
+        <argument
+            android:name="filter"
+            app:argType="string"
+            app:nullable="true" />
 
     </fragment>
     <fragment
@@ -156,6 +168,10 @@
         <action
             android:id="@+id/action_books_to_bookDetail"
             app:destination="@id/bookDetailFragment" />
+        <argument
+            android:name="filter"
+            app:argType="string"
+            app:nullable="true" />
 
     </fragment>
     <fragment
@@ -263,4 +279,8 @@
             android:name="book_id"
             app:argType="integer" />
     </fragment>
+    <argument
+        android:name="filter"
+        app:argType="string"
+        app:nullable="true" />
 </navigation>

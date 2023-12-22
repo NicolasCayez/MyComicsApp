@@ -100,7 +100,7 @@
                             android:id="@+id/rvEditorDetailSeriesList"
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
-                            android:background="#eee" />
+                            android:background="?attr/mc_list_bg" />
                     </LinearLayout>
                     <!-- Liste tomes -->
                     <androidx.appcompat.widget.AppCompatTextView
@@ -125,7 +125,7 @@
                             android:id="@+id/rvEditorDetailBooksList"
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
-                            android:background="#eee" />
+                            android:background="?attr/mc_list_bg" />
                     </LinearLayout>
                     <!-- Liste auteurs -->
                     <androidx.appcompat.widget.AppCompatTextView
@@ -151,7 +151,7 @@
                             android:id="@+id/rvEditorDetailAuthorsList"
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
-                            android:background="#eee" />
+                            android:background="?attr/mc_list_bg" />
                     </LinearLayout>
                 </LinearLayout>
                 <!-- Boutons -->

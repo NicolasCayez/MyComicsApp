@@ -43,6 +43,12 @@ public class SearchResultFragment extends Fragment {
 
 
     //* ----------------------------------------------------------------------------------------- */
+    //* Filter needed for the list
+    //* ----------------------------------------------------------------------------------------- */
+    String filter = "";
+
+
+    //* ----------------------------------------------------------------------------------------- */
     //* Adapters handling RecycleViews data display
     //* ----------------------------------------------------------------------------------------- */
     SeriesNbAdapter seriesAdapter;
@@ -90,7 +96,7 @@ public class SearchResultFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         /* Data sent from source fragments */
-        String filter = getArguments().getString("filter");
+        filter = getArguments().getString("filter");
 
         /* Display initialization */
         searchResultRefreshScreen(filter);
@@ -108,8 +114,18 @@ public class SearchResultFragment extends Fragment {
             }
             @Override
             public boolean onQueryTextChange(String filter) {
-                searchResultRefreshScreen(filter); // To refresh display, depending on filter
                 return false;
+            }
+        });
+        // Filter button click
+        binding.sbSearch.btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Data bundle storing search string
+                Bundle bundle = new Bundle();
+                bundle.putString("filter", binding.sbSearch.svSearch.getQuery().toString());
+                // Go to SearchResultFragment with the data bundle
+                findNavController(SearchResultFragment.this).navigate(R.id.searchResultFragment, bundle);
             }
         });
 

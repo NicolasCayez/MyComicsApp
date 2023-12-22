@@ -2,6 +2,7 @@ package com.example.mycomics.fragments;
 
 import static androidx.navigation.fragment.FragmentKt.findNavController;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +20,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -151,13 +153,132 @@ public class BookDetailFragment extends Fragment {
 
         /* Display initialization */
         BookBean bookBean = dataBaseHelper.getBookById(book_id);
-        bookDetailRefreshScreen(book_id);
+        bookDetailInitialize(book_id);
 
         /* Click event on Save Book button */
         binding.btnBookDetailSaveBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveBook(book_id);
+            }
+        });
+
+        /* Enter key event on Book name */
+        binding.etBookDetailBookTitle.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // if "ENTER" key is pressed
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    binding.btnBookDetailSaveBook.performClick();
+                    // Hide the keyboard
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    return true; // inherited, necessary
+                }
+                return false; // inherited, necessary
+            }
+        });
+
+        /* Enter key event on Book number */
+        binding.etBookDetailBookNumber.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // if "ENTER" key is pressed
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    binding.btnBookDetailSaveBook.performClick();
+                    // Hide the keyboard
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    return true; // inherited, necessary
+                }
+                return false; // inherited, necessary
+            }
+        });
+
+        /* Enter key event on isbn */
+        binding.etBookDetailISBN.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // if "ENTER" key is pressed
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    binding.btnBookDetailSaveBook.performClick();
+                    // Hide the keyboard
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    return true; // inherited, necessary
+                }
+                return false; // inherited, necessary
+            }
+        });
+
+        /* Enter key event on editor price */
+        binding.etBookDetailEditorPrice.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // if "ENTER" key is pressed
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    binding.btnBookDetailSaveBook.performClick();
+                    // Hide the keyboard
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    return true; // inherited, necessary
+                }
+                return false; // inherited, necessary
+            }
+        });
+
+        /* Enter key event on value */
+        binding.etBookDetailValue.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // if "ENTER" key is pressed
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    binding.btnBookDetailSaveBook.performClick();
+                    // Hide the keyboard
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    return true; // inherited, necessary
+                }
+                return false; // inherited, necessary
+            }
+        });
+
+        /* Enter key event on date */
+        binding.etBookDetailEditionDate.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // if "ENTER" key is pressed
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    binding.btnBookDetailSaveBook.performClick();
+                    // Hide the keyboard
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    return true; // inherited, necessary
+                }
+                return false; // inherited, necessary
+            }
+        });
+
+        /* Enter key event on special edition */
+        binding.etBookDetailSpecialEditionLabel.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // if "ENTER" key is pressed
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    binding.btnBookDetailSaveBook.performClick();
+                    // Hide the keyboard
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    return true; // inherited, necessary
+                }
+                return false; // inherited, necessary
             }
         });
 
@@ -197,7 +318,7 @@ public class BookDetailFragment extends Fragment {
                             boolean successInsertWriting = dataBaseHelper.insertIntoWriting(book_id, authorBean.getAuthor_id());
                         }
                         popupAddListDialog.dismiss();  // To close popup
-                        bookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailReload(book_id); // To refresh display
                     }
                 });
                 // Click event on confirm button (new Author)
@@ -224,7 +345,7 @@ public class BookDetailFragment extends Fragment {
                             // insertion of the Book-Author pair in WRITING Table
                             boolean successInsertEcrire = dataBaseHelper.insertIntoWriting(book_id, dataBaseHelper.getAuthorLatest(authorBean).getAuthor_id());
                         }
-                        bookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailReload(book_id); // To refresh display
                     }
                 });
                 // Key event, same behaviour as confirm button
@@ -252,7 +373,7 @@ public class BookDetailFragment extends Fragment {
                 popupAddListDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        bookDetailRefreshScreen(book_id);
+                        bookDetailReload(book_id);
                     }
                 });
             }
@@ -313,7 +434,7 @@ public class BookDetailFragment extends Fragment {
                             // Do nothing
                         }
                         popupListDialog.dismiss(); // To close popup
-                        bookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailReload(book_id); // To refresh display
                     }
                 });
                 // Click event on abort button
@@ -324,7 +445,7 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupListDialog.Build(); // To build the popup
-                bookDetailRefreshScreen(book_id); // To refresh display
+                bookDetailReload(book_id); // To refresh display
             }
         });
 
@@ -368,7 +489,7 @@ public class BookDetailFragment extends Fragment {
                             boolean successUpdate = dataBaseHelper.updateBookEditor(dataBaseHelper, dataBaseHelper.getEditorLatest(editorBean), book_id);
                         }
                         popupTextDialog.dismiss(); // To close popup
-                        bookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailReload(book_id); // To refresh display
                     }
                 });
                 // Click event on abort button
@@ -379,7 +500,7 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupTextDialog.build(); // To build the popup
-                bookDetailRefreshScreen(book_id); // To refresh display
+                bookDetailReload(book_id); // To refresh display
             }
         });
 
@@ -439,7 +560,7 @@ public class BookDetailFragment extends Fragment {
                             // Do nothing
                         }
                         popupListDialog.dismiss(); // To close popup
-                        bookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailReload(book_id);
                     }
                 });
                 // Click event on abort button
@@ -450,7 +571,7 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupListDialog.Build(); // To build the popup
-                bookDetailRefreshScreen(book_id); // To refresh display
+                bookDetailReload(book_id); // To refresh display
             }
         });
 
@@ -494,7 +615,7 @@ public class BookDetailFragment extends Fragment {
                             boolean successUpdate = dataBaseHelper.updateBookSerie(dataBaseHelper, dataBaseHelper.getSerieLatest(serieBean), book_id);
                         }
                         popupTextDialog.dismiss(); // To close popup
-                        bookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailReload(book_id); // To refresh display
                     }
                 });
                 // Click event on abort button
@@ -505,7 +626,7 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupTextDialog.build(); // To build the popup
-                bookDetailRefreshScreen(book_id); // To refresh display
+                bookDetailReload(book_id); // To refresh display
             }
         });
 
@@ -541,7 +662,7 @@ public class BookDetailFragment extends Fragment {
                         popupConfirmDialog.dismiss(); // To close popup
                         // Database delete Serie_id from Book
                         boolean successUpdate = dataBaseHelper.deleteBookSerie(dataBaseHelper, book_id);
-                        bookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailReload(book_id); // To refresh display
                     }
                 });
                 // Click event on abort button
@@ -552,7 +673,7 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupConfirmDialog.build(); // To build the popup
-                bookDetailRefreshScreen(book_id); // To refresh display
+                bookDetailReload(book_id); // To refresh display
             }
         });
 
@@ -576,7 +697,7 @@ public class BookDetailFragment extends Fragment {
                         popupConfirmDialog.dismiss(); // To close popup
                         // Database delete Editor_id from Book
                         boolean successUpdate = dataBaseHelper.deleteBookEditor(dataBaseHelper, book_id);
-                        bookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailReload(book_id); // To refresh display
                     }
                 });
                 // Click event on abort button
@@ -587,7 +708,7 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupConfirmDialog.build(); // To build the popup
-                bookDetailRefreshScreen(book_id); // To refresh display
+                bookDetailReload(book_id); // To refresh display
             }
         });
 
@@ -626,7 +747,7 @@ public class BookDetailFragment extends Fragment {
                             Toast.makeText(getActivity(), getString(R.string.BookRemoveAuthorError), Toast.LENGTH_SHORT).show();
                         }
                         popupListDialog.dismiss(); // To close popup
-                        bookDetailRefreshScreen(book_id); // To refresh display
+                        bookDetailReload(book_id); // To refresh display
                     }
                 });
                 // Click event on abort button
@@ -637,7 +758,7 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupListDialog.Build(); // To build the popup
-                bookDetailRefreshScreen(book_id); // To refresh display
+                bookDetailReload(book_id); // To refresh display
             }
         });
 
@@ -700,7 +821,7 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupTextDialog.build(); // To build the popup
-                bookDetailRefreshScreen(book_id); // To refresh display
+                bookDetailReload(book_id); // To refresh display
             }
         });
 
@@ -756,7 +877,7 @@ public class BookDetailFragment extends Fragment {
                     }
                 });
                 popupConfirmDialog.build(); // To build the popup
-                bookDetailRefreshScreen(book_id); // To refresh display
+                bookDetailReload(book_id); // To refresh display
             }
         });
     }
@@ -772,9 +893,9 @@ public class BookDetailFragment extends Fragment {
 
 
     //* ----------------------------------------------------------------------------------------- */
-    //* Display initialization and refresh method
+    //* Display initialization and refresh methods
     //* ----------------------------------------------------------------------------------------- */
-    private void bookDetailRefreshScreen(Integer book_id){
+    private void bookDetailInitialize(Integer book_id){
         // Bookbean from the Database thanks to ID
         BookBean bookBean = dataBaseHelper.getBookById(book_id);
         // Book Title
@@ -824,6 +945,13 @@ public class BookDetailFragment extends Fragment {
 
         // Editor Name
         binding.tvBookDetailEditor.setText(dataBaseHelper.getEditorByBookId(book_id).getEditor_name());
+    }
+    private void bookDetailReload(Integer book_id) {
+        // Data bundle storing key-value pairs
+        Bundle bundle = new Bundle();
+        bundle.putInt("book_id", book_id);
+        // go to AuthorDetailFragment with the data bundle
+        findNavController(BookDetailFragment.this).navigate(R.id.bookDetailFragment, bundle);
     }
 
 

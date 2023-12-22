@@ -95,8 +95,12 @@ public class MainActivity extends AppCompatActivity {
         binding.btnMenuSeries.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Data bundle storing search string
+                Bundle bundle = new Bundle();
+                bundle.putString("filter", "");
+                // go to CollectionFragment with the data bundle
                 // go to SeriesFragment
-                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.seriesFragment);
+                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.seriesFragment, bundle);
                 // set Hamburger visibility to invisible
                 binding.menuHamburger.setVisibility(View.INVISIBLE);
             }
@@ -106,8 +110,11 @@ public class MainActivity extends AppCompatActivity {
         binding.btnMenuBooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // go to BooksFragment
-                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.booksFragment);
+                // Data bundle storing search string
+                Bundle bundle = new Bundle();
+                bundle.putString("filter", "");
+                // go to BooksFragment with the data bundle
+                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.booksFragment, bundle);
                 // set Hamburger visibility to invisible
                 binding.menuHamburger.setVisibility(View.INVISIBLE);
             }
@@ -117,8 +124,11 @@ public class MainActivity extends AppCompatActivity {
         binding.btnMenuAuthors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // go to AuthorsFragment
-                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.authorsFragment);
+                // Data bundle storing search string
+                Bundle bundle = new Bundle();
+                bundle.putString("filter", "");
+                // go to AuthorsFragment with the data bundle
+                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.authorsFragment, bundle);
                 // set Hamburger visibility to invisible
                 binding.menuHamburger.setVisibility(View.INVISIBLE);
             }
@@ -128,8 +138,11 @@ public class MainActivity extends AppCompatActivity {
         binding.btnMenuEditors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // go to EditorsFragment
-                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.editorsFragment);
+                // Data bundle storing search string
+                Bundle bundle = new Bundle();
+                bundle.putString("filter", "");
+                // go to EditorsFragment with the data bundle
+                NavHostFragment.findNavController(binding.navHostFragment.getFragment()).navigate(R.id.editorsFragment, bundle);
                 // set Hamburger visibility to invisible
                 binding.menuHamburger.setVisibility(View.INVISIBLE);
             }

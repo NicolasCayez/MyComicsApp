@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.SettingsFragment">
 
     <LinearLayout
@@ -79,7 +80,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="25dp"
                             android:layout_marginHorizontal="15dp"
-                            android:background="#eee"
+                            android:background="?attr/mc_list_bg"
                             android:fontFamily="@font/kronika"
                             android:textAlignment="center"
                             android:textColor="?attr/mc_secondary"
@@ -126,12 +127,15 @@
 
                     <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/swSettingsDarkMode"
+                        android:theme="@style/switchStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="15dp"
                         android:fontFamily="@font/kronika"
                         android:text="@string/SettingsDarkModeLabel"
                         android:textColor="?attr/mc_secondary"
+                        app:thumbTint="?attr/mc_secondary"
+                        app:trackTint="?attr/mc_primary_border"
                         android:textSize="14sp" />
 
                 </LinearLayout>

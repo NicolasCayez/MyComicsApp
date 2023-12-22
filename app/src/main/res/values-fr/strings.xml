@@ -8,9 +8,9 @@
     <string name="HamburgerMenuAuthors">AUTEURS</string>
     <string name="HamburgerMenuEditors">EDITEURS</string>
     <string name="HamburgerMenuSettings">REGLAGES</string>
-    <string name="btnValider">VALIDER</string>
-    <string name="btnAnnuler">ANNULER</string>
-    <string name="btnChercher">CHERCHER</string>
+    <string name="btnConfirm">VALIDER</string>
+    <string name="btnAbort">ANNULER</string>
+    <string name="btnSearch">CHERCHER</string>
     <string name="HomeFragmentTitle">ACCUEIL</string>
     <string name="SearchHintFilterOrSearch">Filtrer ou rechercher</string>
     <string name="AuthorPopupAddTitle">Entrez le Pseudonyme (ou le Nom) de l\'auteur</string>
@@ -121,4 +121,5 @@
     <string name="Serie">Série</string>
     <string name="Editor">Editeur</string>
     <string name="Author">Auteur</string>
+    <string name="btnFilter">FILTRER</string>
 </resources>

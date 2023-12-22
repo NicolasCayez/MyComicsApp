@@ -1,13 +1,4 @@
 <resources>
-
-
-    <!-- Base application theme. -->
-<!--    <style name="Base.Theme.MyComics" parent="Theme.AppCompat.Light.NoActionBar">-->
-<!--         Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-<!--    </style>-->
-
-
     <!-- Base application theme. -->
     <style name="Base.Theme.AppCompat.Light.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
@@ -15,7 +6,6 @@
         <item name="mc_primary_border">#a19382</item>
         <item name="mc_secondary">#275f74</item>
         <item name="mc_secondary_border">#174f64</item>
-
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="mc_list_bg">@color/custom_lightgrey</item>
     </style>
 </resources>
