@@ -82,7 +82,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // Table PROFILES (profile_id, profile_name) initialized on first profile
         db.execSQL("CREATE TABLE " + PROFILES + " (" + COLUMN_PROFILE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_PROFILE_NAME + " TEXT NOT NULL)");
-        db.execSQL("INSERT INTO " + PROFILES + " ("+ COLUMN_PROFILE_NAME + ") " + "VALUES (\"Profil 1\")");
+        db.execSQL("INSERT INTO " + PROFILES + " ("+ COLUMN_PROFILE_NAME + ") " + "VALUES (\"Profile 1\")");
 
 
         // Table PROFILE_ACTIVE (profile_active_id, profile_id) only 1 row initialized on first profile
@@ -463,7 +463,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // INSERT INTO DETAINING (book_id, profile_id)
     /* ------------------------------------------------------------------------------------------ */
     public boolean insertIntoDetaining(BookBean bookBean){
-        int profile_id = this.getActiveProfile().getProfile_id(); // fetching active profile id
+        int profile_id = this.getProfileByActiveProfile().getProfile_id(); // fetching active profile id
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_BOOK_ID, bookBean.getBook_id());
@@ -649,6 +649,59 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /* ------------------------------------------------------------------------------------------ */
+    // DELETE * FROM EDITORS
+    // WHERE EDITOR_ID = editor_id
+    /* ------------------------------------------------------------------------------------------ */
+    public boolean deleteProfile(DataBaseHelper dataBaseHelper, Integer delete_profile_id){
+        //get all profiles
+        ArrayList<ProfileBean> profilesList = getProfilesList();
+        // Get all the books from the active profile
+        ArrayList<BookBean> profileBooksList = profileBooksList = getBooksList();
+        // do while because or Arraylists limit in size. If not only some books would be deleted
+        do {
+                        // Delete those books
+            for (int i = 0; i< profileBooksList.size(); i++) {
+                boolean bookdeleted = this.deleteBook(dataBaseHelper, profileBooksList.get(i).getBook_id());
+            }
+            profileBooksList = getBooksList();
+        } while (profileBooksList.size() > 0);
+
+        // Change active profile
+        SQLiteDatabase db = this.getWritableDatabase();
+        // check if last profile or not
+        if (profilesList.size() > 1) { // there are at least 2 profiles
+            // change active profile to a new one
+            if (profilesList.get(0) == dataBaseHelper.getProfileByActiveProfile()){
+                // if the profile to delete is the first of the list, the second becomes active
+                updateActiveProfile(dataBaseHelper, profilesList.get(1).getProfile_id());
+                db.close();
+            } else {
+                // else the first one becomes active
+                updateActiveProfile(dataBaseHelper, profilesList.get(0).getProfile_id());
+                db.close();
+            }
+            // Then delete the profile
+            // Whrere clause creation, used three times
+            db = this.getWritableDatabase();
+            String whereClause = COLUMN_PROFILE_ID + " = ?";
+            String[] whereArgs = new String[]{String.valueOf(delete_profile_id)};
+            int numRowsDeletedBooks = db.delete(PROFILES, whereClause, whereArgs);
+            db.close();
+            if (numRowsDeletedBooks >= 1) { // Test if at least 1 row from Books got deleted -> OK
+                db.close();
+                return true;
+            } else {
+                db.close();
+                return false;
+            }
+        } else { // The profile is the last one, no deleting but resetting its name
+            ProfileBean profileBean = getProfileByActiveProfile();
+            profileBean.setProfile_name("Profile 1");
+            updateProfile(dataBaseHelper,profileBean);
+            return true;
+        }
+    }
 
 /**************************************************************************************************/
 /** get methods for SELECT queries with the query as argument

@@ -11,6 +11,9 @@ public class ProfileBean {
         this.profile_id = profile_id;
         this.profile_name = profile_name;
     }
+    public ProfileBean(String profile_name) {
+        this.profile_name = profile_name;
+    }
     public ProfileBean() {
     }
 

@@ -148,6 +148,10 @@
     <string name="SettingsProfileChangeError">Active Profile change error</string>
     <string name="SettingsProfileChangeSuccess">Active Profile changed</string>
     <string name="SettingsChooseProfile">Choose a profile</string>
+    <string name="SettingsWarningProfileDelete">If you delete this Profile, all the profile collection will be erased Final operation, confirm to delete</string>
+    <string name="SettingsDeleteConfirmName">Name of the profile to be deleted</string>
+    <string name="ProfileNameDoesntMatch">The name doesn\'t match</string>
+
 
 
 </resources>

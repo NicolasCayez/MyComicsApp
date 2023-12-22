@@ -1,5 +1,7 @@
 package com.example.mycomics.fragments;
 
+import static androidx.navigation.fragment.FragmentKt.findNavController;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -7,6 +9,8 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +33,10 @@ import com.example.mycomics.helpers.DataBaseHelper;
 import com.example.mycomics.popups.PopupListDialog;
 import com.example.mycomics.popups.PopupTextDialog;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 public class SettingsFragment extends Fragment {
@@ -210,29 +218,54 @@ public class SettingsFragment extends Fragment {
                 });
             }
         });
-
-
-
-
-
-        /*TODO*************************************************************************************/
-        /** Clic sur bouton DeleteProfil*/
+        /* Clic sur bouton DeleteProfil*/
         binding.btnSettingsDeleteProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                //Création Popup
-//                PopupMenuDialog popupMenuDialog = new PopupMenuDialog(ReglagesActivity.this);
-//                Window window = popupMenuDialog.getWindow();
-//                WindowManager.LayoutParams wlp = window.getAttributes();
-//                wlp.gravity = Gravity.TOP;
-//                window.setLayout(wlp.MATCH_PARENT, wlp.WRAP_CONTENT);
-//                //clic listeners
-//                popupMenuDialog.build();
-
-//                Intent intent = new Intent(ReglagesActivity.this, MainActivity2.class);
-//                startActivity(intent);
+                // Popup for deleting a profile
+                PopupTextDialog popupTextDialog = new PopupTextDialog(getActivity());
+                popupTextDialog.setTitle(getString(R.string.Book) + "\n"
+                        + dataBaseHelper.getProfileByActiveProfile().getProfile_name() + "\n"
+                        + getString(R.string.SettingsWarningProfileDelete));
+                // Hint to ask user to write name of the profile to be deleted
+                popupTextDialog.setHint(getString(R.string.SettingsDeleteConfirmName));
+                popupTextDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                // Click event on confirm button
+                popupTextDialog.getBtnPopupConfirm().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // String to fetch the name written in the EditText
+                        String profileConfirmDeleteName = "";
+                        try {
+                            profileConfirmDeleteName = popupTextDialog.getEtPopupText().getText().toString();
+                        } catch (Exception e) {
+                            // do nothing
+                        }
+                        popupTextDialog.dismiss(); // To close Popup
+                        if (!dataBaseHelper.getProfileByActiveProfile().getProfile_name().equals(profileConfirmDeleteName)) {
+                            // Name does not match
+                            Toast.makeText(SettingsFragment.super.getActivity(), getString(R.string.ProfileNameDoesntMatch), Toast.LENGTH_LONG).show();
+                        } else {
+                            // Name does match
+                            // The profile is deleted from the Database (constraints too)
+                            int profile_id = dataBaseHelper.getProfileByActiveProfile().getProfile_id();
+                            boolean successUpdate = dataBaseHelper.deleteProfile(dataBaseHelper, profile_id);
+                            // go to BooksFragment since the BookDetail doesn't exist anymore
+                            findNavController(SettingsFragment.this).navigate(R.id.settingsFragment);
+                        }
+                    }
+                });
+                popupTextDialog.getBtnPopupAbort().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupTextDialog.dismiss(); // To close Popup
+                    }
+                });
+                popupTextDialog.build(); // To build the popup
+                activeProfileDisplay(); // To refresh display
             }
         });
+
 
         /* Dark mode switch click click */
         binding.swSettingsDarkMode.setOnClickListener(new View.OnClickListener() {
@@ -279,4 +312,66 @@ public class SettingsFragment extends Fragment {
 
         }
     }
+
+
+
+
+
+
+    /******** A TESTER **********/
+
+    public void backUp() {
+        try {
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+
+            if (sd.canWrite()) {
+                String currentDBPath = "//data//your package     name//databases//dbname.db";
+                String backupDBPath = "dbname.db";
+
+                File currentDB = new File(data, currentDBPath);
+                File backupDB = new File(sd, backupDBPath);
+
+                Log.d("backupDB path", "" + backupDB.getAbsolutePath());
+
+                if (currentDB.exists()) {
+                    FileChannel src = new     FileInputStream(currentDB).getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                    Toast.makeText(getContext(), "Backup is successful to SD card", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void restore() {
+        try {
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+
+            if (sd.canWrite()) {
+                String currentDBPath = "//data//your package name//databases//dbname.db";;
+                String backupDBPath = "dbname.db";
+                File currentDB = new File(data, currentDBPath);
+                File backupDB = new File(sd, backupDBPath);
+
+                if (currentDB.exists()) {
+                    FileChannel src = new FileInputStream(backupDB).getChannel();
+                    FileChannel dst = new FileOutputStream(currentDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                    Toast.makeText(getContext(), "Database Restored successfully", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

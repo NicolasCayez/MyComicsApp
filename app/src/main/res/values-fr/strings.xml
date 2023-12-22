@@ -122,4 +122,7 @@
     <string name="Editor">Editeur</string>
     <string name="Author">Auteur</string>
     <string name="btnFilter">FILTRER</string>
+    <string name="SettingsWarningProfileDelete">Si vous supprimez ce profil, toute la collection de ce profil sera effacée, confirmez pour effacer</string>
+    <string name="SettingsDeleteConfirmName">Nom du profil à supprimer</string>
+    <string name="ProfileNameDoesntMatch">Le nom ne correspond pas</string>
 </resources>
