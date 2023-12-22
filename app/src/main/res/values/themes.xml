@@ -15,6 +15,7 @@
         <item name="mc_primary_border">#a19382</item>
         <item name="mc_secondary">#275f74</item>
         <item name="mc_secondary_border">#174f64</item>
+
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 </resources>

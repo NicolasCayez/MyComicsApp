@@ -83,6 +83,9 @@
                             android:fontFamily="@font/kronika"
                             android:textAlignment="center"
                             android:textColor="?attr/mc_secondary"
+                            android:textColorHighlight="?attr/mc_secondary"
+                            android:textColorHint="?attr/mc_secondary"
+                            android:textColorLink="?attr/mc_secondary"
                             android:textSize="14sp" />
 
                         <LinearLayout
@@ -100,7 +103,7 @@
                                 android:layout_height="40dp"
                                 android:layout_gravity="end"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_add_blue" />
+                                android:src="@drawable/btn_add_alt" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/btnSettingsDeleteProfile"
@@ -108,7 +111,7 @@
                                 android:layout_height="40dp"
                                 android:layout_gravity="end"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_delete" />
+                                android:src="@drawable/btn_delete_alt" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>

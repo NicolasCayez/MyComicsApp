@@ -164,21 +164,21 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_change" />
+                                android:src="@drawable/btn_change_alt" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/btnBookDetailAddSerie"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_add_blue" />
+                                android:src="@drawable/btn_add_alt" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/btnBookDetailDeleteSerie"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_delete" />
+                                android:src="@drawable/btn_delete_alt" />
                         </LinearLayout>
                     </LinearLayout>
                     <androidx.appcompat.widget.AppCompatTextView
@@ -222,7 +222,7 @@
                             android:layout_margin="5dp"
                             android:layout_gravity="center_vertical"
 
-                            android:src="@drawable/btn_change" />
+                            android:src="@drawable/btn_change_alt" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/btnBookDetailAddPicture"
@@ -230,7 +230,7 @@
                             android:layout_height="40dp"
                             android:layout_margin="5dp"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/btn_add_blue" />
+                            android:src="@drawable/btn_add_alt" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/btnBookDetailDeletePicture"
@@ -238,7 +238,7 @@
                             android:layout_height="40dp"
                             android:layout_margin="5dp"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/btn_delete" />
+                            android:src="@drawable/btn_delete_alt" />
                     </LinearLayout>
                     <!-- ISBN -->
 
@@ -497,14 +497,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_add_blue" />
+                                android:src="@drawable/btn_add_alt" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/btnBookDetailDeleteAuthor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_delete" />
+                                android:src="@drawable/btn_delete_alt" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -560,21 +560,21 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_change" />
+                                android:src="@drawable/btn_change_alt" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/btnBookDetailAddEditor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_add_blue" />
+                                android:src="@drawable/btn_add_alt" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/btnBookDetailDeleteEditor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/btn_delete" />
+                                android:src="@drawable/btn_delete_alt" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -598,7 +598,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
-                        android:src="@drawable/btn_save" />
+                        android:src="@drawable/btn_save_alt" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btnBookDetailDeleteBook"
@@ -607,7 +607,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:paddingEnd="15dp"
-                        android:src="@drawable/btn_delete" />
+                        android:src="@drawable/btn_delete_alt" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

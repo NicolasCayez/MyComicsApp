@@ -26,7 +26,9 @@
             android:background="@drawable/mc_search_window"
             app:defaultQueryHint="@string/SearchHintFilterOrSearch"
             app:iconifiedByDefault="false"
-            app:queryBackground="@android:color/transparent" />
+            app:queryBackground="@android:color/transparent"
+            app:searchHintIcon="@drawable/search_icon"
+            app:searchIcon="@drawable/search_icon" />
     </LinearLayout>
 
     <LinearLayout

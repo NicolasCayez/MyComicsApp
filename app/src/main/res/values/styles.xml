@@ -2,6 +2,8 @@
 <resources>
     <!--  Base application theme  -->
     <style name="Base.Theme.MyComics" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:editTextColor">#275f74</item>
+        <item name="android:textColorHint">#275f74</item>
 
     </style>
 

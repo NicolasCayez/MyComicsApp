@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:layout_weight="1"
-                        android:src="@drawable/btn_add_blue" />
+                        android:src="@drawable/btn_add" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
