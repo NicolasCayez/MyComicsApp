@@ -152,6 +152,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_bookDetail_to_picture">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_bookDetail_to_serieDetail">
                               <value>
                                 <LayoutPositions />
@@ -372,9 +377,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1871" />
-                            <option name="y" value="336" />
+                            <option name="x" value="2267" />
+                            <option name="y" value="388" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_picture_to_bookDetail">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -420,8 +434,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1476" />
-                            <option name="y" value="801" />
+                            <option name="x" value="1652" />
+                            <option name="y" value="911" />
                           </Point>
                         </option>
                         <option name="myPositions">

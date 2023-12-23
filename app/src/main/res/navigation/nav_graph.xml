@@ -245,6 +245,9 @@
         <argument
             android:name="serie_id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_serieDetail_to_picture"
+            app:destination="@id/pictureFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookDetailFragment"
@@ -277,6 +280,12 @@
             app:destination="@id/bookDetailFragment" />
         <argument
             android:name="book_id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_picture_to_serieDetail"
+            app:destination="@id/serieDetailFragment" />
+        <argument
+            android:name="serie_id"
             app:argType="integer" />
     </fragment>
     <argument

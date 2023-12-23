@@ -82,25 +82,50 @@
                     <!-- Image et détail -->
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="150dp"
                         android:layout_marginHorizontal="15dp"
+                        android:layout_weight="1"
                         android:orientation="horizontal">
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivSerieDetailPicture"
-                            android:layout_width="250px"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/books" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_marginVertical="5dp"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivSerieDetailPicture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="150dp"
+                                android:layout_marginStart="5dp"
+                                android:layout_gravity="left"
+                                android:src="@drawable/books" />
+                        </LinearLayout>
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/textView6"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/kronika"
-                            android:text="TextView"
-                            android:textColor="?attr/mc_secondary"
-                            android:textSize="14sp" />
+                            android:id="@+id/btnSerieDetailAddPicture"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/btn_camera_alt" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/btnSerieDetailChangePicture"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/btn_change_alt" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/btnSerieDetailDeletePicture"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/btn_delete_alt" />
                     </LinearLayout>
                     <!-- Liste tomes -->
                     <androidx.appcompat.widget.AppCompatTextView

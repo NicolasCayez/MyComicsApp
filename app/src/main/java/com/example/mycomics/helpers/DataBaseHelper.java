@@ -1569,7 +1569,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // INNER JOIN PROFILE_ACTIVE ON DETAINING.PROFILE_ID = PROFILE_ACTIVE.PROFILE_ID
     // WHERE (BOOKS.BOOK_TITLE LIKE '%filter%'
     // OR BOOKS.BOOK_NUMBER LIKE '%filter%')
-    // ORDER BY BOOKS.BOOK_NUMBER, BOOKS.BOOK_TITLE
+    // ORDER BY BOOKS.BOOK_TITLE, BOOKS.BOOK_NUMBER
     /* ------------------------------------------------------------------------------------------ */
     public ArrayList<BookBean> getBooksListByFilter(String filter){
         String query = "SELECT * FROM " + BOOKS +
@@ -1577,7 +1577,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
                 " WHERE (" + BOOKS + "." + COLUMN_BOOK_TITLE + " LIKE \'%" + filter +
                 "%\' OR " + BOOKS + "." + COLUMN_BOOK_NUMBER + " LIKE \'%" + filter +
-                "%\') ORDER BY " + BOOKS + "." + COLUMN_BOOK_NUMBER + ", " + BOOKS + "." + COLUMN_BOOK_TITLE;
+                "%\') ORDER BY " + BOOKS + "." + COLUMN_BOOK_TITLE + ", " + BOOKS + "." + COLUMN_BOOK_NUMBER;
         return getListBookBean(query);
     }
 
@@ -1620,7 +1620,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
                 " WHERE (" + BOOKS + "." + COLUMN_SERIE_ID + " IS NULL" +
                 " OR " + BOOKS + "." + COLUMN_SERIE_ID + " = -1)" +
-                " ORDER BY " + SERIES + "." + COLUMN_SERIE_NAME + ", " + BOOKS + "." + COLUMN_BOOK_NUMBER + ", " + BOOKS + "." + COLUMN_BOOK_TITLE;
+                " ORDER BY " + BOOKS + "." + COLUMN_BOOK_TITLE + ", " + BOOKS + "." + COLUMN_BOOK_NUMBER;
         return getListBookSerieBean(query);
     }
 
@@ -1632,7 +1632,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // AND (BOOKS.BOOK_TITLE LIKE '%filter%'
     // OR BOOKS.BOOK_NUMBER LIKE '%filter%'
     // OR SERIES.SERIE_NAME LIKE '%filter%')
-    // ORDER BY SERIES.SERIE_NAME, BOOKS.BOOK_NUMBER, BOOKS.BOOK_TITLE
+    // ORDER BY BOOKS.BOOK_TITLE, BOOKS.BOOK_NUMBER
     /* ------------------------------------------------------------------------------------------ */
     public ArrayList<BookSerieBean> getBooksAndSeriesListByFilter(String filtre){
         String query = "SELECT " + BOOKS + ".*, " + SERIES + "." + COLUMN_SERIE_NAME + " FROM " + BOOKS + ", " + SERIES +
@@ -1642,7 +1642,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " AND (" + BOOKS + "." + COLUMN_BOOK_TITLE + " LIKE \'%" + filtre +
                 "%\' OR " + BOOKS + "." + COLUMN_BOOK_NUMBER + " LIKE \'%" + filtre +
                 "%\' OR " + SERIES + "." + COLUMN_SERIE_NAME + " LIKE \'%" + filtre +
-                "%\') ORDER BY " + SERIES + "." + COLUMN_SERIE_NAME + ", " + BOOKS + "." + COLUMN_BOOK_NUMBER + ", " + BOOKS + "." + COLUMN_BOOK_TITLE;
+                "%\') ORDER BY " + BOOKS + "." + COLUMN_BOOK_TITLE + ", " + BOOKS + "." + COLUMN_BOOK_NUMBER;
         return getListBookSerieBean(query);
     }
 
@@ -1768,7 +1768,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 " JOIN " + DETAINING +
                 " ON " + BOOKS + "." + COLUMN_BOOK_ID + " = " + DETAINING + "." + COLUMN_BOOK_ID +
                 " INNER JOIN " + PROFILE_ACTIVE + " ON " + DETAINING + "." + COLUMN_PROFILE_ID + " = " + PROFILE_ACTIVE + "." + COLUMN_PROFILE_ID +
-                " WHERE " + BOOKS + "." + COLUMN_SERIE_ID + " = \"" + serie_id + "\"";
+                " WHERE " + BOOKS + "." + COLUMN_SERIE_ID + " = \"" + serie_id +
+                "\" ORDER BY " + BOOKS + "." + COLUMN_BOOK_NUMBER + ", " + BOOKS + "." + COLUMN_BOOK_TITLE;
         return getListBookBean(query);
     }
 

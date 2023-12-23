@@ -63,6 +63,8 @@
     <string name="SerieNameDoesntMatch">The Serie Name doesn\'t match</string>
     <string name="SerieUpdateError">Serie update error</string>
     <string name="SerieUpdateSuccess">Serie update success</string>
+    <string name="SerieConfirmPictureRemoval">Confirm removal of Picture</string>
+
 
 
     <!--  Books  -->
@@ -90,6 +92,7 @@
     <string name="BookNumber">N.</string>
     <string name="BookConfirmSerieRemoval">Confirm removal of Serie</string>
     <string name="BookConfirmEditorRemoval">Confirm removal of Editor</string>
+    <string name="BookConfirmPictureRemoval">Confirm removal of Picture</string>
     <string name="BookChooseAuthorRemoval">Choose Author to remove</string>
     <string name="BookWarningBookDelete">Final operation, confirm to delete</string>
     <string name="BookDeleteConfirmTitle">Title of the book to be deleted</string>

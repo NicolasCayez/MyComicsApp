@@ -125,4 +125,6 @@
     <string name="SettingsWarningProfileDelete">Si vous supprimez ce profil, toute la collection de ce profil sera effacée, confirmez pour effacer</string>
     <string name="SettingsDeleteConfirmName">Nom du profil à supprimer</string>
     <string name="ProfileNameDoesntMatch">Le nom ne correspond pas</string>
+    <string name="BookConfirmPictureRemoval">Confirmer le retrait de l\'image</string>
+    <string name="SerieConfirmPictureRemoval">Confirmer le retrait de l\'image</string>
 </resources>

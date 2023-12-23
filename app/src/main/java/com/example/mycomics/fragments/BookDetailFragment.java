@@ -74,8 +74,13 @@ public class BookDetailFragment extends Fragment {
     //* ----------------------------------------------------------------------------------------- */
     FragmentBookDetailBinding binding;
 
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Pictures path and attribute initialization
+    //* ----------------------------------------------------------------------------------------- */
     final String picturePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/MyComics/";
     private String imgName = "";
+
 
     //* ----------------------------------------------------------------------------------------- */
     //* Database handler initialization
@@ -126,7 +131,6 @@ public class BookDetailFragment extends Fragment {
                 throw new RuntimeException(e);
             }
         }, getExecutor());
-
     }
 
 
@@ -838,6 +842,7 @@ public class BookDetailFragment extends Fragment {
                 // Data bundle to give book_id to the Picture Fragment
                 Bundle bundle = new Bundle();
                 bundle.putInt("book_id", book_id);
+                bundle.putInt("serie_id", -1);
                 // Go to SearchResultFragment with the data bundle
                 findNavController(BookDetailFragment.this).navigate(R.id.action_bookDetail_to_picture, bundle);
             }
@@ -853,7 +858,7 @@ public class BookDetailFragment extends Fragment {
                 PopupConfirmDialog popupConfirmDialog = new PopupConfirmDialog(getActivity());
                 popupConfirmDialog.setTitle(getString(R.string.Book) + "\n"
                         + dataBaseHelper.getBookById(book_id).getBook_title() + "\n"
-                        + getString(R.string.BookConfirmEditorRemoval));
+                        + getString(R.string.BookConfirmPictureRemoval));
                 popupConfirmDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 // Click event on confirm button
                 popupConfirmDialog.getBtnPopupConfirm().setOnClickListener(new View.OnClickListener() {
@@ -923,7 +928,6 @@ public class BookDetailFragment extends Fragment {
         // Special Edition Label
         binding.etBookDetailSpecialEditionLabel.setText(bookBean.getBook_special_edition_label() == null ? "" : String.valueOf( bookBean.getBook_special_edition_label()));
         // Picture from url
-        /* TODO **************************       binding.ivBookDetailPicture; */
         File imgBook = new File(picturePath + bookBean.getBook_picture());
         System.out.println(picturePath + bookBean.getBook_picture());
         if (imgBook.exists()){
@@ -983,24 +987,17 @@ public class BookDetailFragment extends Fragment {
         }
     }
 
+
+    //* ----------------------------------------------------------------------------------------- */
+    //* Refresh gallery to keep phone gallery up to date
+    //* ----------------------------------------------------------------------------------------- */
     public static void refreshGallery(Context mContext, File file) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         Uri contentUri = Uri.fromFile(file);
         mediaScanIntent.setData(contentUri);
         mContext.sendBroadcast(mediaScanIntent);
     }
-    /* Glide picture picker */
-//    ActivityResultLauncher<PickVisualMediaRequest> launcher = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), new ActivityResultCallback<Uri>() {
-//        @SuppressLint("RestrictedApi")
-//        @Override
-//        public void onActivityResult(Uri o) {
-//            if (o == null) {
-//                Toast.makeText(getContext(), "No image Selected", Toast.LENGTH_SHORT).show();
-//            } else {
-//                Glide.with(getApplicationContext(getContext())).load(o).into(binding.ivBookDetailPicture);
-//            }
-//        }
-//    });
+
 
     //* ----------------------------------------------------------------------------------------- */
     //* Camera : Executor
@@ -1120,7 +1117,7 @@ public class BookDetailFragment extends Fragment {
                             ByteArrayOutputStream outStream = new ByteArrayOutputStream();
                             imgNew.compress(Bitmap.CompressFormat.JPEG,70 , outStream);
                             String timeStamp=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                            imgName = "BookId_" + book_id + "_" + timeStamp + ".jpg";
+                            imgName = "bookId_" + book_id + "_" + timeStamp + ".jpg";
                             File imgResized = new File(picturePath + imgName);
                             try {
                                 imgResized.createNewFile();
@@ -1152,13 +1149,6 @@ public class BookDetailFragment extends Fragment {
                             // update gallery
                             //sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(myNewFile)));
                             refreshGallery(getContext(), imgResized);
-
-
-
-                            /************************************************/
-
-
-
                         } catch (Exception e) {
                             Toast.makeText(getActivity(), "No Image selected", Toast.LENGTH_SHORT).show();
                         }

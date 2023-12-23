@@ -160,18 +160,18 @@
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btnBookDetailChangeSerie"
-                                android:layout_width="wrap_content"
-                                android:layout_height="40dp"
-                                android:layout_margin="5dp"
-                                android:src="@drawable/btn_change_alt" />
-
-                            <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/btnBookDetailAddSerie"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:src="@drawable/btn_add_alt" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/btnBookDetailChangeSerie"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_margin="5dp"
+                                android:src="@drawable/btn_change_alt" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/btnBookDetailDeleteSerie"
@@ -216,21 +216,20 @@
                         </LinearLayout>
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/btnBookDetailChangePicture"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:layout_margin="5dp"
-                            android:layout_gravity="center_vertical"
-
-                            android:src="@drawable/btn_change_alt" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/btnBookDetailAddPicture"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_margin="5dp"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/btn_add_alt" />
+                            android:src="@drawable/btn_camera_alt" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/btnBookDetailChangePicture"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_margin="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/btn_change_alt" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/btnBookDetailDeletePicture"
@@ -558,18 +557,18 @@
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/btnBookDetailChangeEditor"
-                                android:layout_width="wrap_content"
-                                android:layout_height="40dp"
-                                android:layout_margin="5dp"
-                                android:src="@drawable/btn_change_alt" />
-
-                            <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/btnBookDetailAddEditor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:src="@drawable/btn_add_alt" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/btnBookDetailChangeEditor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_margin="5dp"
+                                android:src="@drawable/btn_change_alt" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/btnBookDetailDeleteEditor"

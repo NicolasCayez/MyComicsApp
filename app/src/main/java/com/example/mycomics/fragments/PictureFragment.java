@@ -67,7 +67,6 @@ public class PictureFragment extends Fragment {
     private ImageCapture imageCapture;
     private String picturePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/MyComics/";
     private String imgName = "";
-//    private File imgFile = null;
 
 
     //* ----------------------------------------------------------------------------------------- */
@@ -130,6 +129,7 @@ public class PictureFragment extends Fragment {
 
         /* Data sent from source fragments */
         Integer book_id = getArguments().getInt("book_id");
+        Integer serie_id = getArguments().getInt("serie_id");
 
         /* click  take picture */
         binding.btnPictureAddPicture.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +155,11 @@ public class PictureFragment extends Fragment {
                     // Get old book picture
                     String imgToDelete = null;
                     try {
-                        imgToDelete = dataBaseHelper.getBookById(book_id).getBook_picture();
+                        if (book_id != -1  && serie_id == -1){
+                            imgToDelete = dataBaseHelper.getBookById(book_id).getBook_picture();
+                        } else {
+                            imgToDelete = "serie_ID" + serie_id;
+                        }
                     } catch (Exception e) {
                         // no picture in database for this book
                     }
@@ -184,8 +188,13 @@ public class PictureFragment extends Fragment {
                     }
                     ByteArrayOutputStream outStream = new ByteArrayOutputStream();
                     imgNew.compress(Bitmap.CompressFormat.JPEG,70 , outStream);
+                if (book_id != -1  && serie_id == -1){
                     String timeStamp=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     imgName = "BookId_" + book_id + "_" + timeStamp + ".jpg";
+                } else {
+                    imgName = "serieId_" + serie_id + ".jpg";
+                }
+
                     File imgResized = new File(picturePath + imgName);
                     try {
                         imgResized.createNewFile();
@@ -217,11 +226,18 @@ public class PictureFragment extends Fragment {
                     // update gallery
                     //sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(myNewFile)));
                     refreshGallery(getContext(), imgResized);
-                // Data bundle storing search string
+                // Data bundle storing id
                 Bundle bundle = new Bundle();
-                bundle.putInt("book_id", book_id);
-                // Go to SearchResultFragment with the data bundle
-                findNavController(PictureFragment.this).navigate(R.id.action_picture_to_bookDetail, bundle);
+                if (book_id != -1  && serie_id == -1){
+                    bundle.putInt("book_id", book_id);
+                    // Go to SearchResultFragment with the data bundle
+                    findNavController(PictureFragment.this).navigate(R.id.action_picture_to_bookDetail, bundle);
+                } else {
+                    bundle.putInt("serie_id", serie_id);
+                    // Go to SearchResultFragment with the data bundle
+                    findNavController(PictureFragment.this).navigate(R.id.action_picture_to_serieDetail, bundle);
+                }
+
             }
         });
 
@@ -257,9 +273,15 @@ public class PictureFragment extends Fragment {
             public void onClick(View v) {
                 // Data bundle storing search string
                 Bundle bundle = new Bundle();
-                bundle.putInt("book_id", book_id);
-                // Go to SearchResultFragment with the data bundle
-                findNavController(PictureFragment.this).navigate(R.id.action_picture_to_bookDetail, bundle);
+                if (book_id != -1  && serie_id == -1){
+                    bundle.putInt("book_id", book_id);
+                    // Go to SearchResultFragment with the data bundle
+                    findNavController(PictureFragment.this).navigate(R.id.action_picture_to_bookDetail, bundle);
+                } else {
+                    bundle.putInt("serie_id", serie_id);
+                    // Go to SearchResultFragment with the data bundle
+                    findNavController(PictureFragment.this).navigate(R.id.action_picture_to_serieDetail, bundle);
+                }
             }
         });
 

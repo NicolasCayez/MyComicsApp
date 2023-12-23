@@ -1,31 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvRecyclerView_alt_2col_col1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/kronika"
-            android:paddingVertical="10dp"
-            android:textAlignment="textStart"
-            android:paddingStart="10dp"
-            android:textColor="?attr/mc_secondary"
-            android:textSize="14sp" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvRecyclerView_alt_2col_col1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/kronika"
+                    android:paddingVertical="10dp"
+                    android:paddingStart="10dp"
+                    android:textAlignment="textStart"
+                    android:textColor="?attr/mc_secondary"
+                    android:textSize="14sp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvRecyclerView_alt_2col_col2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/kronika"
-            android:paddingVertical="10dp"
-            android:paddingEnd="10dp"
-            android:textAlignment="textEnd"
-            android:textColor="?attr/mc_secondary"
-            android:textSize="14sp" />
-    </LinearLayout>
-</layout>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvRecyclerView_alt_2col_col2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/kronika"
+                    android:paddingVertical="10dp"
+                    android:paddingEnd="10dp"
+                    android:textAlignment="textEnd"
+                    android:textColor="?attr/mc_secondary"
+                    android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?attr/mc_primary" />
+</LinearLayout>
